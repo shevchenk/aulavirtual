@@ -44,7 +44,7 @@ return [
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'root'), //forge
-            'username' => env('DB_USERNAME', 'certificacioness'), //forge
+            'username' => env('DB_USERNAME', 'virtual'), //forge
             'password' => env('DB_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
