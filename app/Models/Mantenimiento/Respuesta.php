@@ -49,6 +49,7 @@ class Respuesta extends Model
             ->join('v_preguntas as vp','vp.id','=','v_respuestas.pregunta_id')
             ->join('v_tipos_respuestas as vtr','vtr.id','=','v_respuestas.tipo_respuesta_id')
             ->where( 
+                    
                 function($query) use ($r){
                     if( $r->has("pregunta") ){
                         $pregunta=trim($r->pregunta);
