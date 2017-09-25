@@ -26,7 +26,7 @@ $(document).ready(function() {
         else{
             $(this).find('.modal-footer .btn-primary').text('Actualizar').attr('onClick','AgregarEditarAjax();');
             $("#ModalTipoRespuestaForm").append("<input type='hidden' value='"+TipoRespuestaG.id+"' name='id'>");
-        }alert(TipoRespuestaG.tipo_respuesta);
+        }
         $('#ModalTipoRespuestaForm #txt_tipo_respuesta').val( TipoRespuestaG.tipo_respuesta );
         $('#ModalTipoRespuestaForm #slct_estado').selectpicker( 'val',TipoRespuestaG.estado );
         $('#ModalTipoRespuestaForm #txt_tipo_respuesta').focus();
