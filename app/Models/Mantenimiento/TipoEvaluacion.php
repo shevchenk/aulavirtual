@@ -9,7 +9,7 @@ use DB;
 class TipoEvaluacion extends Model
 {
     protected   $table = 'v_tipos_evaluaciones';
-    
+
     public static function runEditStatus($r)
     {
         $tipo_evaluacion = TipoEvaluacion::find($r->id);
@@ -41,17 +41,17 @@ class TipoEvaluacion extends Model
     {
         $sql=TipoEvaluacion::select('v_tipos_evaluaciones.id','v_tipos_evaluaciones.tipo_evaluacion','v_tipos_evaluaciones.estado')
 
-            ->where( 
-                    
+            ->where(
+
                 function($query) use ($r){
 
                     if( $r->has("tipo_evaluacion") ){
                         $tipo_evaluacion=trim($r->tipo_evaluacion);
                         if( $tipo_evaluacion !='' ){
                             $query->where('v_tipos_evaluaciones.tipo_evaluacion','like','%'.$tipo_evaluacion.'%');
-                        }   
+                        }
                     }
-                    
+
                     if( $r->has("estado") ){
                         $estado=trim($r->estado);
                         if( $estado !='' ){
@@ -61,6 +61,14 @@ class TipoEvaluacion extends Model
                 }
             );
         $result = $sql->orderBy('v_tipos_evaluaciones.tipo_evaluacion','asc')->paginate(10);
+        return $result;
+    }
+
+    public static function ListTipoEvaluacion($r)
+    {
+        $sql=TipoEvaluacion::select('id','tipo_evaluacion','estado')
+            ->where('estado','=','1');
+        $result = $sql->orderBy('tipo_evaluacion','asc')->get();
         return $result;
     }
 }
