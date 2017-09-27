@@ -1,8 +1,6 @@
 <?php
-// Ruta para Servicio Rest de carga de Alumnos.
-//Route::post('alumnosws', 'Proceso\ServicioCargaPR@index');
-//Route::match(['post'], 'input', 'Proceso\ServicioCargaPR@index');
-Route::resource('alumnosws', 'Proceso\ServicioCargaPR',
+// Rutas de Servicios Rest.
+Route::resource('personas', 'Api\ApiPersonas',
                 ['only' => ['index', 'store', 'update', 'destroy', 'show']]);
 
 // --
