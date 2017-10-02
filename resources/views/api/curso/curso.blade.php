@@ -33,7 +33,7 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <h3>Redireccionamiento ok:</h3>
+                <h3>Redireccionamiento ok: | {{ $mensaje }}</h3>
             </div><!-- .box -->
         </div><!-- .col -->
     </div><!-- .row -->

@@ -105,5 +105,63 @@ class ApiCurso extends Controller
         }
         return $msg;
     }
+       
+    public function Validaracceso(Request $r )
+    { 
+        $ruta='api.curso.curso';
+        $valores['valida_ruta_url'] = $ruta;
+        
+        if (empty($r))
+        {
+            $valores['mensaje']='Ingrese sus datos de envio';
+        }
+        else if( $r->has('id') && $r->has('dni') )
+        { 
+            $tab_cli = DB::table('clientes_accesos')->where('id','=',$r->id)
+                                                    ->first();
+            if( count($tab_cli)==0 ){
+                $valores['mensaje']=' Error de registro';
+            }
+            else {
+            $key=$this->Curl('localhost/Cliente/CCurso.php?action=key');
+            $valores['mensaje']=$key." =>BD ".$tab_cli->key;
+//            if($obj->key[0]->id == @$tab_cli->id && $obj->key[0]->token == @$tab_cli->key && $obj->key[0]->url == @$tab_cli->url && $obj->key[0]->ip == @$tab_cli->ip)
+//            {
+//                $val = $this->insertCurso($objArr);
+//                if($val == true)
+//                     $valores['mensaje']='Proceso ejecutado satisfactoriamente';
+//                else
+//                    $valores['mensaje']='Revisa tus parametros de envio';      
+//            }
+//            else
+//            {
+//                $valores['mensaje']='Su Key no es valido';
+//            }
+            }
+        }
+        else
+        {
+            $valores['mensaje']='Revisa tus parametros de envio';
+        }
+//        return redirect($ruta)->with($valores);
+        return view($ruta)->with($valores);
+
+    }
+    
+    public function Curl($url,$data=array()){
+                
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        //curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        return json_decode($result);
+    }
 
 }
