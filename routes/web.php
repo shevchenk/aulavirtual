@@ -3,7 +3,10 @@
 Route::resource('personas', 'Api\ApiPersonas',
                 ['only' => ['index', 'store', 'update', 'destroy', 'show']]);
 
+Route::resource('cursos', 'Api\ApiCurso',
+                ['only' => ['index', 'store', 'update', 'destroy', 'show']]);
 // --
+
 
 Route::get('/', function () {
     return view('secureaccess.login');
