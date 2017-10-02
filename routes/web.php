@@ -7,6 +7,7 @@ Route::resource('cursos', 'Api\ApiCurso',
                 ['only' => ['index', 'store', 'update', 'destroy', 'show']]);
 // --
 
+//Route::controller('curso', 'Mantenimiento/CursoEM');
 
 Route::get('/', function () {
     return view('secureaccess.login');
