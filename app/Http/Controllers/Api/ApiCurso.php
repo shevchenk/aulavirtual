@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Api\Curso;
+use App\Models\Mantenimiento\Persona;
 
 class ApiCurso extends Controller
 {
@@ -125,7 +126,27 @@ class ApiCurso extends Controller
             else {
             $key=$this->Curl('localhost/Cliente/CCurso.php?action=key');
 
-            $valores['mensaje']=$key->key." =>BD ".$tab_cli->key;
+            if($key->key==$tab_cli->key){
+              //  $valores['mensaje']=$key->key." =>BD ".$tab_cli->key;
+                $persona=DB::table('personas')->where('dni','=',$r->dni)
+                                              ->first();
+                if($persona){
+                   //sesion
+                     $valores['mensaje']='Usuario existe';
+                }else{
+                    $pe=new Persona;
+                    $pe->dni=$r->dni;
+                    $pe->paterno='-';
+                    $pe->materno='-';
+                    $pe->nombre='-';
+                    $pe->sexo='M';
+                    $pe->password=bcrypt($r->dni);
+                    $pe->persona_id_created_at=1;
+                    $pe->save();
+                      $valores['mensaje']='Usuario Creado';
+                }
+                
+            }
 //            if($obj->key[0]->id == @$tab_cli->id && $obj->key[0]->token == @$tab_cli->key && $obj->key[0]->url == @$tab_cli->url && $obj->key[0]->ip == @$tab_cli->ip)
 //            {
 //                $val = $this->insertCurso($objArr);
@@ -144,7 +165,7 @@ class ApiCurso extends Controller
         {
             $valores['mensaje']='Revisa tus parametros de envio';
         }
-//        return redirect($ruta)->with($valores);
+//      return redirect($ruta)->with($valores);
         return view($ruta)->with($valores);
 
     }

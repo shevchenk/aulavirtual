@@ -20,7 +20,7 @@
 
 @section('content')
 <section class="content-header">
-    <h1>Tipo Respuesta
+    <h1>API
         <small>Mantenimiento</small>
     </h1>
     <ol class="breadcrumb">
