@@ -124,7 +124,8 @@ class ApiCurso extends Controller
             }
             else {
             $key=$this->Curl('localhost/Cliente/CCurso.php?action=key');
-            $valores['mensaje']=$key." =>BD ".$tab_cli->key;
+
+            $valores['mensaje']=$key->key." =>BD ".$tab_cli->key;
 //            if($obj->key[0]->id == @$tab_cli->id && $obj->key[0]->token == @$tab_cli->key && $obj->key[0]->url == @$tab_cli->url && $obj->key[0]->ip == @$tab_cli->ip)
 //            {
 //                $val = $this->insertCurso($objArr);
