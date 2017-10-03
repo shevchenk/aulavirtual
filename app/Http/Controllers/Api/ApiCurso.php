@@ -7,11 +7,18 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Api\Curso;
-use App\Models\Mantenimiento\Persona;
+//use App\Models\Mantenimiento\Persona;
+
+// Auth
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Models\SecureAccess\Persona;
+
+
 
 class ApiCurso extends Controller
 {
     //use WithoutMiddleware;
+    use AuthenticatesUsers;
 
     public function __construct()
     {
@@ -106,72 +113,100 @@ class ApiCurso extends Controller
         }
         return $msg;
     }
-       
+
     public function Validaracceso(Request $r )
-    { 
+    {
         $ruta='api.curso.curso';
         $valores['valida_ruta_url'] = $ruta;
-        
+
         if (empty($r))
         {
             $valores['mensaje']='Ingrese sus datos de envio';
         }
         else if( $r->has('id') && $r->has('dni') )
-        { 
+        {
             $tab_cli = DB::table('clientes_accesos')->where('id','=',$r->id)
                                                     ->first();
-            if( count($tab_cli)==0 ){
+            if(count($tab_cli) == 0)
                 $valores['mensaje']=' Error de registro';
-            }
-            else {
-            $key=$this->Curl('localhost/Cliente/CCurso.php?action=key');
+            else
+            {
+              $key = $this->curl('localhost/Cliente/CCurso.php?action=key');
 
-            if($key->key==$tab_cli->key){
-              //  $valores['mensaje']=$key->key." =>BD ".$tab_cli->key;
-                $persona=DB::table('personas')->where('dni','=',$r->dni)
-                                              ->first();
-                if($persona){
-                   //sesion
-                     $valores['mensaje']='Usuario existe';
-                }else{
-                    $pe=new Persona;
-                    $pe->dni=$r->dni;
-                    $pe->paterno='-';
-                    $pe->materno='-';
-                    $pe->nombre='-';
-                    $pe->sexo='M';
-                    $pe->password=bcrypt($r->dni);
-                    $pe->persona_id_created_at=1;
-                    $pe->save();
+              if($key->key == $tab_cli->key)
+              {
+                  //$valores['mensaje']=$key->key." =>BD ".$tab_cli->key;
+                  $persona = DB::table('personas')->where('dni','=',$r->dni)
+                                                  ->first();
+                  if($persona){
+                     //sesion
+                       $valores['mensaje']='Usuario existe';
+
+                       // Auth User
+                       /*
+                       $result['rst'] = 1;
+                       $menu = Persona::Menu();
+                       $opciones=array();
+                       foreach ($menu as $key => $value) {
+                           array_push($opciones, $value->opciones);
+                       }
+                       $opciones = implode("||", $opciones);
+                       $session = array(
+                           'menu'=>$menu,
+                           'opciones'=>$opciones,
+                           'dni'=>$r->dni
+                       );
+                       session($session);
+                       */
+                       //--
+                  }
+                  else
+                  {
+                      $pe = new Persona;
+                      $pe->dni=$r->dni;
+                      $pe->paterno='-';
+                      $pe->materno='-';
+                      $pe->nombre='-';
+                      $pe->sexo='M';
+                      $pe->password=bcrypt($r->dni);
+                      $pe->persona_id_created_at=1;
+                      $pe->save();
                       $valores['mensaje']='Usuario Creado';
-                }
-                
-            }
-//            if($obj->key[0]->id == @$tab_cli->id && $obj->key[0]->token == @$tab_cli->key && $obj->key[0]->url == @$tab_cli->url && $obj->key[0]->ip == @$tab_cli->ip)
-//            {
-//                $val = $this->insertCurso($objArr);
-//                if($val == true)
-//                     $valores['mensaje']='Proceso ejecutado satisfactoriamente';
-//                else
-//                    $valores['mensaje']='Revisa tus parametros de envio';      
-//            }
-//            else
-//            {
-//                $valores['mensaje']='Su Key no es valido';
-//            }
+
+                      // Auth User
+                      /*
+                      $result['rst'] = 1;
+                      $menu = Persona::Menu();
+                      $opciones=array();
+                      foreach ($menu as $key => $value) {
+                          array_push($opciones, $value->opciones);
+                      }
+                      $opciones = implode("||", $opciones);
+                      $session = array(
+                          'menu'=>$menu,
+                          'opciones'=>$opciones,
+                          'dni'=>$r->dni
+                      );
+                      session($session);
+                      */
+                      // --
+                  }
+              }
+              else
+                $valores['mensaje']='Su Key no es valido';
             }
         }
         else
         {
             $valores['mensaje']='Revisa tus parametros de envio';
         }
-//      return redirect($ruta)->with($valores);
+        //return redirect($ruta)->with($valores);
         return view($ruta)->with($valores);
 
     }
-    
-    public function Curl($url,$data=array()){
-                
+
+    public function curl($url, $data=array()){
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -182,7 +217,6 @@ class ApiCurso extends Controller
 
         $result = curl_exec($ch);
         curl_close($ch);
-
         return json_decode($result);
     }
 

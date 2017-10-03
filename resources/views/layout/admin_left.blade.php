@@ -3,7 +3,10 @@
         <img src="img/user2-160x160.jpg" class="img-circle" alt="User Image">
     </div>
     <div class="pull-left info">
-        <p>{{ Auth::user()->paterno.' '.Auth::user()->materno.', '.Auth::user()->nombre }}</p>
+        <p>
+        @if(Auth::check())
+          {{ Auth::user()->paterno.' '.Auth::user()->materno.', '.Auth::user()->nombre }}
+        @endif </p>
         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
     </div>
 </div-->

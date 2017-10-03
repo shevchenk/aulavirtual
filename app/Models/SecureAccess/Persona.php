@@ -53,7 +53,7 @@ class Persona extends Authenticatable
                 })
                 ->select('m.menu',
                     DB::raw(
-                    'GROUP_CONCAT( 
+                    'GROUP_CONCAT(
                         DISTINCT( CONCAT_WS("|",o.opcion,o.ruta,o.class_icono) )
                         ORDER BY o.opcion SEPARATOR "||"
                         ) opciones, min(m.class_icono) icono'

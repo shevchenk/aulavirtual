@@ -26,14 +26,19 @@
             <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <!--img src="img/user2-160x160.jpg" class="user-image" alt="User Image"-->
-                    <span class="hidden-xs">{{ Auth::user()->paterno.' '.Auth::user()->materno.', '.Auth::user()->nombre }}</span>
+                    <span class="hidden-xs">
+                        @if(Auth::check())
+                          {{Auth::user()->paterno.' '.Auth::user()->materno.', '.Auth::user()->nombre}}
+                        @endif </span>
                 </a>
                 <ul class="dropdown-menu">
                     <li class="user-header">
                         <!--img src="img/user2-160x160.jpg" class="img-circle" alt="User Image"-->
                         <p>
-                          {{ Auth::user()->paterno.' '.Auth::user()->materno.', '.Auth::user()->nombre }}
-                          <small>Miembro desde {{ Auth::user()->created_at }}</small>
+                           @if(Auth::check())
+                              {{Auth::user()->paterno.' '.Auth::user()->materno.', '.Auth::user()->nombre }}
+                           @endif
+                          <small>Miembro desde @if(Auth::check()) {{ Auth::user()->created_at }} @endif</small>
                         </p>
                     </li>
 
