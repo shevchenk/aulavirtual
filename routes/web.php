@@ -9,9 +9,10 @@ Route::resource('cursos', 'Api\ApiCurso',
 /*
 Route::group(['middleware' => ['web']], function () {
     Route::auth();
-    //Route::get('/home', '/Api/ApiCurso@Validaracceso');
+    Route::get('/Validaracceso', '/Api/ApiCurso@Validaracceso');
 });
 */
+//Route::post( 'curso', '/Api/ApiCurso@Validaracceso');
 /*
 Route::group(['middleware' => ['auth:api']], function () {
     Route::get('test', function () {

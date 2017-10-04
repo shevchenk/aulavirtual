@@ -32,7 +32,11 @@ class Persona extends Authenticatable
 
     public static function Menu()
     {
-        $persona=Auth::user()->id;
+       if(Auth::check())
+         $persona = Auth::user()->id;
+       else
+         $persona = '';
+
         $set=DB::statement('SET group_concat_max_len := @@max_allowed_packet');
         $result=DB::table('opciones as o')
                 ->join('menus as m', function($join){

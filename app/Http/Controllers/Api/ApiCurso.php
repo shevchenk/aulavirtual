@@ -10,15 +10,15 @@ use App\Models\Api\Curso;
 //use App\Models\Mantenimiento\Persona;
 
 // Auth
+use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\SecureAccess\Persona;
-
-
 
 class ApiCurso extends Controller
 {
     //use WithoutMiddleware;
     use AuthenticatesUsers;
+    //use Session;
 
     public function __construct()
     {
@@ -116,34 +116,33 @@ class ApiCurso extends Controller
 
     public function Validaracceso(Request $r )
     {
-        $ruta='api.curso.curso';
+        $ruta = 'api.curso.curso';
         $valores['valida_ruta_url'] = $ruta;
 
         if (empty($r))
         {
-            $valores['mensaje']='Ingrese sus datos de envio';
+            $valores['mensaje'] = 'Ingrese sus datos de envio';
         }
         else if( $r->has('id') && $r->has('dni') )
         {
             $tab_cli = DB::table('clientes_accesos')->where('id','=',$r->id)
                                                     ->first();
             if(count($tab_cli) == 0)
-                $valores['mensaje']=' Error de registro';
+                $valores['mensaje'] =' Error de registro';
             else
             {
               $key = $this->curl('localhost/Cliente/CCurso.php?action=key');
 
-              if($key->key == $tab_cli->key)
+              if($key->key == $tab_cli->key) // Se iguala el KEY del Cliente con el Key del Servidor
               {
-                  //$valores['mensaje']=$key->key." =>BD ".$tab_cli->key;
                   $persona = DB::table('personas')->where('dni','=',$r->dni)
                                                   ->first();
-                  if($persona){
-                     //sesion
-                       $valores['mensaje']='Usuario existe';
-
+                  if($persona)
+                  {
+                       //$valores['mensaje']='Usuario existe';
                        // Auth User
-                       /*
+                       $user = Auth::user();
+
                        $result['rst'] = 1;
                        $menu = Persona::Menu();
                        $opciones=array();
@@ -157,7 +156,11 @@ class ApiCurso extends Controller
                            'dni'=>$r->dni
                        );
                        session($session);
-                       */
+                       //echo '<pre>';
+                       //print_r(Session::all());
+                       //exit;
+
+                       $valores['mensaje'] = 'Usuario existe ';
                        //--
                   }
                   else
@@ -171,34 +174,16 @@ class ApiCurso extends Controller
                       $pe->password=bcrypt($r->dni);
                       $pe->persona_id_created_at=1;
                       $pe->save();
-                      $valores['mensaje']='Usuario Creado';
-
-                      // Auth User
-                      /*
-                      $result['rst'] = 1;
-                      $menu = Persona::Menu();
-                      $opciones=array();
-                      foreach ($menu as $key => $value) {
-                          array_push($opciones, $value->opciones);
-                      }
-                      $opciones = implode("||", $opciones);
-                      $session = array(
-                          'menu'=>$menu,
-                          'opciones'=>$opciones,
-                          'dni'=>$r->dni
-                      );
-                      session($session);
-                      */
-                      // --
+                      $valores['mensaje'] = 'Usuario Creado';
                   }
               }
               else
-                $valores['mensaje']='Su Key no es valido';
+                $valores['mensaje'] = 'Su Key no es valido';
             }
         }
         else
         {
-            $valores['mensaje']='Revisa tus parametros de envio';
+            $valores['mensaje'] = 'Revisa tus parametros de envio';
         }
         //return redirect($ruta)->with($valores);
         return view($ruta)->with($valores);

@@ -1,5 +1,5 @@
 <script type="text/javascript">
-$(document).ready(function() {  
+$(document).ready(function() {
     $("#btnIniciar").click(IniciarSession);
     $("#mensaje_msj").fadeOut(3500);
 });
@@ -55,9 +55,9 @@ var masterG={
         tecla = (document.all) ? e.keyCode : e.which; // 2
         if (tecla==13){
             e.preventDefault();
-            $(etiqueta).click(); 
+            $(etiqueta).click();
             if( typeof(selecciona)!='undefined' ){
-                $(etiqueta).focus(); 
+                $(etiqueta).focus();
             }
         }
     }
