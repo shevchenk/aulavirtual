@@ -128,7 +128,7 @@ class ApiCurso extends Controller
             $tab_cli = DB::table('clientes_accesos')->where('id','=',$r->id)
                                                     ->first();
             if(count($tab_cli) == 0)
-                $valores['mensaje'] =' Error de registro';
+                $valores['mensaje'] = 'Cliente no Registrado!';
             else
             {
               $key = $this->curl('localhost/Cliente/CCurso.php?action=key');
@@ -164,18 +164,7 @@ class ApiCurso extends Controller
                        //--
                   }
                   else
-                  {
-                      $pe = new Persona;
-                      $pe->dni=$r->dni;
-                      $pe->paterno='-';
-                      $pe->materno='-';
-                      $pe->nombre='-';
-                      $pe->sexo='M';
-                      $pe->password=bcrypt($r->dni);
-                      $pe->persona_id_created_at=1;
-                      $pe->save();
-                      $valores['mensaje'] = 'Usuario Creado';
-                  }
+                      return redirect('http://localhost/Cliente/index.php?dni='.$r->dni.'&return=true');
               }
               else
                 $valores['mensaje'] = 'Su Key no es valido';
@@ -187,17 +176,54 @@ class ApiCurso extends Controller
         }
         //return redirect($ruta)->with($valores);
         return view($ruta)->with($valores);
-
     }
 
-    public function curl($url, $data=array()){
 
+    public function registrarPersona(Request $r )
+    {
+        $ruta = 'api.curso.curso';
+        $valores['valida_ruta_url'] = $ruta;
+
+        if (empty($r))
+        {
+            $valores['mensaje'] = 'Ingrese sus datos de envio';
+        }
+        else if($r->has('dni') && $r->has('nombre') && $r->has('paterno') && $r->has('materno'))
+        {
+            $key = $this->curl('localhost/Cliente/CCurso.php?action=key');
+            $tab_cli = DB::table('clientes_accesos')->where('key','=',$key->key)
+                                                    ->first();
+            if(count($tab_cli) == 0 || $key->key !== $tab_cli->key)
+                $valores['mensaje'] = 'Su Key no es valido';
+            else
+            {
+                $pe = new Persona;
+                $pe->dni = $r->dni;
+                $pe->paterno = $r->paterno;
+                $pe->materno = $r->materno;
+                $pe->nombre = $r->nombre;
+                $pe->sexo = 'M';
+                $pe->password = bcrypt($r->dni);
+                $pe->persona_id_created_at = 1;
+                $pe->save();
+                $valores['mensaje'] = 'Usuario Creado';
+            }
+        }
+        else
+        {
+            $valores['mensaje'] = 'Revisa tus parametros de envio';
+        }
+        return view($ruta)->with($valores);
+    }
+
+
+    public function curl($url, $data=array())
+    {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-        //curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
         $result = curl_exec($ch);
