@@ -6,22 +6,6 @@ Route::resource('personas', 'Api\ApiPersonas',
 Route::resource('cursos', 'Api\ApiCurso',
                 ['only' => ['index', 'store', 'update', 'destroy', 'show']]);
 // --
-/*
-Route::group(['middleware' => ['web']], function () {
-    Route::auth();
-    Route::get('/Validaracceso', '/Api/ApiCurso@Validaracceso');
-});
-*/
-//Route::post( 'curso', '/Api/ApiCurso@Validaracceso');
-/*
-Route::group(['middleware' => ['auth:api']], function () {
-    Route::get('test', function () {
-        $user = \Auth::user();
-        return $user;
-    });
-});
-*/
-
 //Route::get('/api', function () {
 //    $ruta='api.curso.curso';
 //    $valores['valida_ruta_url'] = $ruta;

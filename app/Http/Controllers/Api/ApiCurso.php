@@ -10,7 +10,7 @@ use App\Models\Api\Curso;
 //use App\Models\Mantenimiento\Persona;
 
 // Auth
-use Illuminate\Support\Facades\Session;
+//use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\SecureAccess\Persona;
 
@@ -123,12 +123,12 @@ class ApiCurso extends Controller
         {
             $valores['mensaje'] = 'Ingrese sus datos de envio';
         }
-        else if( $r->has('id') && $r->has('dni') )
+        else if( $r->has('id') && $r->has('dni') &&  $r->has('cargo'))
         {
             $tab_cli = DB::table('clientes_accesos')->where('id','=',$r->id)
                                                     ->first();
             if(count($tab_cli) == 0)
-                $valores['mensaje'] = 'Cliente no Registrado!';
+                $valores['mensaje'] = 'ID Cliente no Registrado!';
             else
             {
               $key = $this->curl('localhost/Cliente/CCurso.php?action=key');
@@ -139,32 +139,89 @@ class ApiCurso extends Controller
                                                   ->first();
                   if($persona)
                   {
-                       //$valores['mensaje']='Usuario existe';
+                      //$priv_cliente = DB::table('privilegios_clientes')::find($r->cargo);
+                      $priv_cliente = DB::table('privilegios_clientes')->where('id','=',$r->cargo)
+                                                      ->first();
+
+                      $privilegios_suc = DB::table('personas_privilegios_sucursales')
+                                        ->where('persona_id','=',$persona->id)
+                                        ->where('privilegio_id','=',$priv_cliente->id_priv_interno)
+                                        ->first();
+
+                      DB::table('personas_privilegios_sucursales')
+                          ->where('persona_id', $persona->id)->update(['estado' => 0]);
+
+                      if(count($privilegios_suc) > 0)
+                      {
+                        DB::table('personas_privilegios_sucursales')
+                            ->where('persona_id', $persona->id)
+                            ->where('privilegio_id', $r->cargo)
+                            ->update(['estado' => 1]);
+                      }
+                      else
+                      {
+                        DB::table('personas_privilegios_sucursales')->insert([
+                                  ['persona_id' => $persona->id,
+                                    'privilegio_id' =>  $r->cargo,
+                                    'estado' => 1,
+                                    'created_at' => date("Y-m-d H:i:s"),
+                                    'persona_id_created_at' => 1]
+                              ]);
+                      }
                        // Auth User
-                       $user = Auth::user();
-
-                       $result['rst'] = 1;
-                       $menu = Persona::Menu();
-                       $opciones=array();
-                       foreach ($menu as $key => $value) {
-                           array_push($opciones, $value->opciones);
-                       }
-                       $opciones = implode("||", $opciones);
-                       $session = array(
-                           'menu'=>$menu,
-                           'opciones'=>$opciones,
-                           'dni'=>$r->dni
-                       );
-                       session($session);
-                       //echo '<pre>';
-                       //print_r(Session::all());
-                       //exit;
-
-                       $valores['mensaje'] = 'Usuario existe ';
-                       //--
+                       Auth::loginUsingId($persona->id);
+                       $this->logeo($r->dni);
+                       return redirect('secureaccess.inicio');
+                       // --
                   }
                   else
-                      return redirect('http://localhost/Cliente/index.php?dni='.$r->dni.'&return=true');
+                  {
+                      $lista = $this->curl('localhost/Cliente/CCurso.php?key='.$key->key.'&dni='.$r->dni);
+
+                      $pe = new Persona;
+                      $pe->dni = $r->dni;
+                      $pe->paterno = $lista->paterno;
+                      $pe->materno = $lista->materno;
+                      $pe->sexo = $lista->sexo;
+                      $pe->nombre = $lista->nombre;
+                      $pe->password = bcrypt($r->dni);
+                      $pe->persona_id_created_at = 1;
+                      $pe->save();
+
+                      // Proceso de Carga de Opciones y Privilegios
+                      $priv_cliente = DB::table('privilegios_clientes')->where('id','=',$r->cargo)
+                                                      ->first();
+
+                      $privilegios_suc = DB::table('personas_privilegios_sucursales')
+                                        ->where('persona_id','=',$pe->id)
+                                        ->where('privilegio_id','=',$priv_cliente->id_priv_interno)
+                                        ->first();
+
+                      DB::table('personas_privilegios_sucursales')
+                          ->where('persona_id', $pe->id)->update(['estado' => 0]);
+
+                      if(count($privilegios_suc) > 0)
+                      {
+                        DB::table('personas_privilegios_sucursales')
+                            ->where('persona_id', $pe->id)
+                            ->where('privilegio_id', $r->cargo)
+                            ->update(['estado' => 1]);
+                      }
+                      else
+                      {
+                        DB::table('personas_privilegios_sucursales')->insert([
+                                  ['persona_id' => $pe->id,
+                                    'privilegio_id' =>  $r->cargo,
+                                    'estado' => 1,
+                                    'created_at' => date("Y-m-d H:i:s"),
+                                    'persona_id_created_at' => 1]
+                              ]);
+                      }
+                      Auth::loginUsingId($pe->id);
+                      $this->logeo($r->dni);
+                      return redirect('secureaccess.inicio');
+                      // --
+                  }
               }
               else
                 $valores['mensaje'] = 'Su Key no es valido';
@@ -174,48 +231,26 @@ class ApiCurso extends Controller
         {
             $valores['mensaje'] = 'Revisa tus parametros de envio';
         }
-        //return redirect($ruta)->with($valores);
         return view($ruta)->with($valores);
     }
 
 
-    public function registrarPersona(Request $r )
+    public function logeo($dni)
     {
-        $ruta = 'api.curso.curso';
-        $valores['valida_ruta_url'] = $ruta;
-
-        if (empty($r))
-        {
-            $valores['mensaje'] = 'Ingrese sus datos de envio';
+        $menu = Persona::Menu();
+        $opciones=array();
+        foreach ($menu as $key => $value) {
+            array_push($opciones, $value->opciones);
         }
-        else if($r->has('dni') && $r->has('nombre') && $r->has('paterno') && $r->has('materno'))
-        {
-            $key = $this->curl('localhost/Cliente/CCurso.php?action=key');
-            $tab_cli = DB::table('clientes_accesos')->where('key','=',$key->key)
-                                                    ->first();
-            if(count($tab_cli) == 0 || $key->key !== $tab_cli->key)
-                $valores['mensaje'] = 'Su Key no es valido';
-            else
-            {
-                $pe = new Persona;
-                $pe->dni = $r->dni;
-                $pe->paterno = $r->paterno;
-                $pe->materno = $r->materno;
-                $pe->nombre = $r->nombre;
-                $pe->sexo = 'M';
-                $pe->password = bcrypt($r->dni);
-                $pe->persona_id_created_at = 1;
-                $pe->save();
-                $valores['mensaje'] = 'Usuario Creado';
-            }
-        }
-        else
-        {
-            $valores['mensaje'] = 'Revisa tus parametros de envio';
-        }
-        return view($ruta)->with($valores);
+        $opciones=implode("||", $opciones);
+        $session= array(
+            'menu'=>$menu,
+            'opciones'=>$opciones,
+            'dni'=>$dni
+        );
+        session($session);
+        return true;
     }
-
 
     public function curl($url, $data=array())
     {
@@ -225,7 +260,6 @@ class ApiCurso extends Controller
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-
         $result = curl_exec($ch);
         curl_close($ch);
         return json_decode($result);
