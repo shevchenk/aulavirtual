@@ -73,7 +73,7 @@ class ApiCurso extends Controller
         {
             $response = array(
                         "status" => $status ,
-                        "message"=>$message,
+                        "message" => $message,
                         "server" => $_SERVER['REMOTE_ADDR']
                     );
             echo json_encode($response, JSON_PRETTY_PRINT);
@@ -174,7 +174,7 @@ class ApiCurso extends Controller
                        return redirect('secureaccess.inicio');
                        // --
                   }
-                  else
+                  else // Nueva Persona
                   {
                       $lista = $this->curl('localhost/Cliente/CCurso.php?key='.$key->key.'&dni='.$r->dni);
 
