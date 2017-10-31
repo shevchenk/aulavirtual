@@ -1,6 +1,6 @@
 <script type="text/javascript">
 var AddEdit=0; //0: Editar | 1: Agregar
-var TipoEvaluacionG={id:0,curso:"",estado:1}; // Datos Globales
+var TipoEvaluacionG={id:0, dni:"", alumno:"", curso:"", fecha_inicio:"", fecha_final:"", docente:"", estado:1}; // estado:1
 $(document).ready(function() {
 
     $("#TableTipoEvaluacion").DataTable({
@@ -11,7 +11,6 @@ $(document).ready(function() {
         "info": true,
         "autoWidth": false
     });
-
 
     AjaxTipoEvaluacion.Cargar(HTMLCargarTipoEvaluacion);
 
@@ -27,8 +26,13 @@ $(document).ready(function() {
             $(this).find('.modal-footer .btn-primary').text('Actualizar').attr('onClick','AgregarEditarAjax();');
             $("#ModalTipoEvaluacionForm").append("<input type='hidden' value='"+TipoEvaluacionG.id+"' name='id'>");
         }
+        $('#ModalTipoEvaluacionForm #txt_dni').val( TipoEvaluacionG.dni );
+        $('#ModalTipoEvaluacionForm #txt_alumno').val( TipoEvaluacionG.alumno );
         $('#ModalTipoEvaluacionForm #txt_curso').val( TipoEvaluacionG.curso );
-        $('#ModalTipoEvaluacionForm #slct_estado').selectpicker( 'val',TipoEvaluacionG.estado );
+        $('#ModalTipoEvaluacionForm #txt_fecha_inicio').val( TipoEvaluacionG.fecha_inicio );
+        $('#ModalTipoEvaluacionForm #txt_fecha_final').val( TipoEvaluacionG.fecha_final );
+        $('#ModalTipoEvaluacionForm #txt_docente').val( TipoEvaluacionG.docente );
+        //$('#ModalTipoEvaluacionForm #slct_estado').selectpicker( 'val',TipoEvaluacionG.estado );
         $('#ModalTipoEvaluacionForm #txt_curso').focus();
     });
 
@@ -94,17 +98,22 @@ HTMLCargarTipoEvaluacion=function(result){
     $('#TableTipoEvaluacion').DataTable().destroy();
 
     $.each(result.data.data,function(index,r){
-        estadohtml='<span id="'+r.id+'" onClick="CambiarEstado(1,'+r.id+')" class="btn btn-danger">Inactivo</span>';
-        if(r.estado==1){
+        //estadohtml='<span id="'+r.id+'" onClick="CambiarEstado(1,'+r.id+')" class="btn btn-danger">Inactivo</span>';
+        /*if(r.estado==1){
             estadohtml='<span id="'+r.id+'" onClick="CambiarEstado(0,'+r.id+')" class="btn btn-success">Activo</span>';
-        }
+        }*/
 
         html+="<tr id='trid_"+r.id+"'>"+
+            "<td class='dni'>"+r.dni+"</td>"+
+            "<td class='alumno'>"+r.alumno+"</td>"+
             "<td class='curso'>"+r.curso+"</td>"+
+            "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
+            "<td class='fecha_final'>"+r.fecha_final+"</td>"+
+            "<td class='docente'>"+r.docente+"</td>"+
             "<td>";
 
-        html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
-            '<td><a class="btn btn-default btn-sm" onClick="AgregarEditar(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
+        //html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
+        html+='<td><a class="btn btn-default btn-sm" onClick="AgregarEditar(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
         html+="</tr>";
     });
     $("#TableTipoEvaluacion tbody").html(html);

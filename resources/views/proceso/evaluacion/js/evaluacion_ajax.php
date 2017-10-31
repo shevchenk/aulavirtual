@@ -14,10 +14,10 @@ var AjaxTipoEvaluacion={
         }
         data=$("#TipoEvaluacionForm").serialize().split("txt_").join("").split("slct_").join("");
         $("#TipoEvaluacionForm input[type='hidden']").not('.mant').remove();
-        if($('#txt_curso').val() != '')
+        //if($('#txt_curso').val() != '')
           url='AjaxDinamic/Proceso.EvaluacionPR@Load';
-        else
-          url='AjaxDinamic/Proceso.EvaluacionPR@validarCurso';
+        //else
+          //url='AjaxDinamic/Proceso.EvaluacionPR@validarCurso';
 
         masterG.postAjax(url,data,evento);
     },

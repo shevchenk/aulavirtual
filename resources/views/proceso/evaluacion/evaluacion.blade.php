@@ -22,12 +22,12 @@
 
 @section('content')
 <section class="content-header">
-    <h1>Cursos
+    <h1>Evaluaciones
         <small>Mantenimiento</small>
     </h1>
     <ol class="breadcrumb">
         <li><i class="fa fa-sitemap"></i> Mantenimiento</a></li>
-        <li class="active">Cursos</li>
+        <li class="active">Evaluaciones</li>
     </ol>
 </section>
 
@@ -43,14 +43,60 @@
 
                                     <th class="col-xs-2">
                                         <div class="form-group">
-                                            <label><h4>Curso:</h4></label>
+                                            <label><h4>DNI</h4></label>
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                                <input type="text" class="form-control" name="txt_curso" id="txt_curso" placeholder="Nombre Curso" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
+                                                <input type="text" class="form-control" name="txt_dni" id="txt_dni" placeholder="DNI" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th class="col-xs-2">
+                                        <div class="form-group">
+                                            <label><h4>Alumno</h4></label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                <input type="text" class="form-control" name="txt_alumno" id="txt_alumno" placeholder="Alumno" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th class="col-xs-2">
+                                        <div class="form-group">
+                                            <label><h4>Curso</h4></label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                <input type="text" class="form-control" name="txt_curso" id="txt_curso" placeholder="Curso" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th class="col-xs-2">
+                                        <div class="form-group">
+                                            <label><h4>Docente</h4></label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                <input type="text" class="form-control" name="txt_docente" id="txt_docente" placeholder="Docente" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th class="col-xs-2">
+                                        <div class="form-group">
+                                            <label><h4>Hora Inicio</h4></label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                <input type="text" class="form-control" name="txt_fecha_inicio" id="txt_fecha_inicio" placeholder="Hora Inicial" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th class="col-xs-2">
+                                        <div class="form-group">
+                                            <label><h4>Hora Final</h4></label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                <input type="text" class="form-control" name="txt_fecha_final" id="txt_fecha_final" placeholder="Hora Final" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
                                             </div>
                                         </div>
                                     </th>
 
+                                <!--
                                     <th class="col-xs-2">
                                         <div class="form-group">
                                             <label><h4>Estado:</h4></label>
@@ -63,6 +109,7 @@
                                             </div>
                                         </div>
                                     </th>
+                                  -->
                                     <th class="col-xs-1">[-]</th>
                                 </tr>
                             </thead>
@@ -70,15 +117,21 @@
                             </tbody>
                             <tfoot>
                                 <tr class="cabecera">
+                                  <th>DNI</th>
+                                  <th>Alumno</th>
                                   <th>Curso</th>
-                                  <th>Estado</th>
+                                  <th>Docente</th>
+                                  <th>Hora Inicio</th>
+                                  <th>Hora Final</th>
                                   <th>[-]</th>
                                 </tr>
                             </tfoot>
                         </table>
+                      <!--
                         <div class='btn btn-primary btn-sm' class="btn btn-primary" onClick="AgregarEditar(1)" >
                             <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
                         </div>
+                      -->
                     </div><!-- .box-body -->
                 </form><!-- .form -->
             </div><!-- .box -->

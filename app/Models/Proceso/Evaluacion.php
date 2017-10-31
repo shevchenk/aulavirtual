@@ -5,11 +5,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
+use DB;
 
 class Evaluacion extends Model
 {
     protected   $table = 'v_cursos';
-
+    /*
     public static function runLoad($r)
     {
         $sql=Evaluacion::select('v_cursos.id','v_cursos.curso','v_cursos.estado')
@@ -34,8 +35,8 @@ class Evaluacion extends Model
         $result = $sql->orderBy('v_cursos.curso','asc')->paginate(10);
         return $result;
     }
-    
-    /*
+    */
+
     public static function runLoad($r)
     {
         $sql=DB::table('v_programaciones as p')
@@ -52,7 +53,7 @@ class Evaluacion extends Model
                 $join->on('pu.persona_id','=','pdoc.id');
             })
             ->select(
-            'p.id as id',
+            'p.id',
             'palu.dni',
             DB::raw("CONCAT(palu.nombre,' ', palu.paterno,' ', palu.materno) as alumno"),
             'c.curso',
@@ -62,6 +63,20 @@ class Evaluacion extends Model
             )
             ->where(
                 function($query) use ($r){
+                  if( $r->has("dni") ){
+                      $dni=trim($r->dni);
+                      if( $dni !='' ){
+                          $query->where('palu.dni','=', $dni);
+                      }
+                  }
+
+                  if( $r->has("alumno") ){
+                      $alumno=trim($r->alumno);
+                      if( $alumno !='' ){
+                          $query->where("CONCAT(palu.nombre,' ', palu.paterno,' ', palu.materno)",'like','%'.$alumno.'%');
+                      }
+                  }
+
                   if( $r->has("curso") ){
                       $curso=trim($r->curso);
                       if( $curso !='' ){
@@ -69,16 +84,38 @@ class Evaluacion extends Model
                       }
                   }
 
+                  if( $r->has("docente") ){
+                      $docente=trim($r->docente);
+                      if( $docente !='' ){
+                          $query->where("CONCAT(pdoc.nombre,' ', pdoc.paterno,' ', pdoc.materno)",'like','%'.$docente.'%');
+                      }
+                  }
+
+                  if( $r->has("fecha_inicio") ){
+                      $fecha_inicio=trim($r->fecha_inicio);
+                      if( $fecha_inicio !='' ){
+                          $query->where('pu.fecha_inicio','like','%'.$fecha_inicio.'%');
+                      }
+                  }
+
+                  if( $r->has("fecha_final") ){
+                      $fecha_final=trim($r->fecha_final);
+                      if( $fecha_final !='' ){
+                          $query->where('pu.fecha_final','like','%'.$fecha_final.'%');
+                      }
+                  }
+                  /*
                   if( $r->has("estado") ){
                       $estado=trim($r->estado);
                       if( $estado !='' ){
                           $query->where('v_cursos.estado','=',''.$estado.'');
                       }
                   }
+                  */
                 }
             );
         $result = $sql->orderBy('p.id','asc')->paginate(10);
         return $result;
     }
-    */
+
 }
