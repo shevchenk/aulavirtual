@@ -5,7 +5,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+
 use App\Models\Proceso\Evaluacion;
+use App\Models\Proceso\ProgramacionUnica;
+use App\Models\Proceso\Persona;
+use App\Models\Proceso\Programacion;
 
 class EvaluacionPR extends Controller
 {
@@ -31,44 +35,7 @@ class EvaluacionPR extends Controller
         }
     }
 
-    /*
-    public function store()
-    {
-        $obj = json_decode( file_get_contents('php://input') );
-        $objArr = (array)$obj;
 
-        if (empty($objArr))
-        {
-            $this->response(422,"error","Ingrese sus datos de envio");
-        }
-        else if(isset($obj->key[0]->id) && isset($obj->key[0]->token))
-        {
-            $tab_cli = DB::table('clientes_accesos')->select('id', 'nombre', 'key', 'url', 'ip')
-                                                    ->where('id','=', $obj->key[0]->id)
-                                                    ->where('key','=', $obj->key[0]->token)
-                                                    ->where('url','=', $obj->key[0]->url)
-                                                    ->where('ip','=', $obj->key[0]->ip)
-                                                    ->first();
-
-            if($obj->key[0]->id == @$tab_cli->id && $obj->key[0]->token == @$tab_cli->key && $obj->key[0]->url == @$tab_cli->url && $obj->key[0]->ip == @$tab_cli->ip)
-            {
-                $val = $this->insertCurso($objArr);
-                if($val == true)
-                    $this->response(200,"success","Proceso ejecutado satisfactoriamente");
-                else
-                    $this->response(422,"error","Revisa tus parametros de envio");
-            }
-            else
-            {
-                $this->response(422 ,"error","Su Key no es valido");
-            }
-        }
-        else
-        {
-            $this->response(422,"error","Revisa tus parametros de envio");
-        }
-    }
-    */
     public function response($code=200, $status="", $message="")
     {
         http_response_code($code);
@@ -121,7 +88,7 @@ class EvaluacionPR extends Controller
             $return_response = $this->response(422,"error","Revisa tus parametros de envio");
         }
 
-        // Creación de un archivo TXT para dar respuesta al cliente
+        // Creación de un archivo JSON para dar respuesta al cliente
           $uploadFolder = 'txt/api';
           $nombre_archivo = "cliente.json";
           $file = $uploadFolder . '/' . $nombre_archivo;
@@ -148,20 +115,100 @@ class EvaluacionPR extends Controller
         {
           foreach ($objArr->cursos as $k=>$value)
           {
-              $cursos = Evaluacion::where('curso', '=', trim($value->curso))
+              $curso = Evaluacion::where('curso', '=', trim($value->curso))
+                                    ->where('curso_externo_id','=', trim($value->curso_externo_id))
                                     ->first();
-              if (count($cursos) == 0)
+              if (count($curso) == 0)
               {
-                  // Graba datos
-                  $obj = new Evaluacion;
-                  $obj->curso = trim( $value->curso );
-                  $obj->curso_externo_id = 1;
-                  $obj->estado = 1;
-                  $obj->persona_id_created_at=1;
-                  $obj->save();
-                  // --
+                $val_curso = Evaluacion::where('curso_externo_id', '=', trim($value->curso_externo_id))
+                                        ->first();
+                if(count($val_curso) == 0) //Insert
+                {
+                  $curso = new Evaluacion();
+                  $curso->curso = trim($value->curso);
+                  $curso->curso_externo_id = trim($value->curso_externo_id);
+                  $curso->estado = 1;
+                  $curso->persona_id_created_at=1;
+                  $curso->save();
+                }
+                else //Update
+                {
+                  $curso = Evaluacion::find($val_curso->id);
+                  $curso->curso = trim($value->curso);
+                  $curso->estado = 1;
+                  $curso->persona_id_created_at=1;
+                  $curso->save();
+                }
               }
+
+              // Proceso Persona Docente
+              $docente = Persona::where('dni', '=', trim($value->docente_dni))
+                                  ->first();
+              if (count($docente) == 0)
+              {
+                  $docente = new Persona();
+                  $docente->dni = trim($value->docente_dni);
+                  $docente->paterno = trim($value->docente_paterno);
+                  $docente->materno = trim($value->docente_materno);
+                  $docente->nombre = trim($value->docente_nombre);
+                  $docente->persona_externo_id = trim($value->docente_persona_externo_id);
+                  $docente->estado = 1;
+                  $docente->persona_id_created_at=1;
+                  $docente->save();
+              }
+              // --
+
+              // Proceso Programación Unica
+              $programacion_unica = ProgramacionUnica::where('programacion_unica_externo_id', '=', trim($value->programacion_unica_externo_id))
+                                                      ->first();
+              if (count($programacion_unica) == 0)
+              {
+                  $programacion_unica = new ProgramacionUnica();
+                  $programacion_unica->curso_id = $curso->id;
+                  $programacion_unica->persona_id = $docente->id;
+                  $programacion_unica->programacion_unica_externo_id = trim($value->programacion_unica_externo_id);
+                  $programacion_unica->fecha_inicio = $value->fecha_inicio;
+                  $programacion_unica->fecha_final = $value->fecha_final;
+                  $programacion_unica->estado = 1;
+                  $programacion_unica->persona_id_created_at=1;
+                  $programacion_unica->save();
+              }
+              // --
+
+              // Proceso Persona Alumno
+              $alumno = Persona::where('dni', '=', trim($value->alumno_dni))
+                                  ->first();
+              if (count($alumno) == 0)
+              {
+                  $alumno = new Persona();
+                  $alumno->dni = trim($value->alumno_dni);
+                  $alumno->paterno = trim($value->alumno_paterno);
+                  $alumno->materno = trim($value->alumno_materno);
+                  $alumno->nombre = trim($value->alumno_nombre);
+                  $alumno->persona_externo_id = trim($value->alumno_persona_externo_id);
+                  $alumno->estado = 1;
+                  $alumno->persona_id_created_at=1;
+                  $alumno->save();
+              }
+              // --
+
+              // Proceso Programación
+              $programacion = Programacion::where('programacion_externo_id', '=', trim($value->programacion_externo_id))
+                                                      ->first();
+              if (count($programacion) == 0)
+              {
+                  $programacion = new Programacion();
+                  $programacion->programacion_externo_id = trim($value->programacion_externo_id);
+                  $programacion->programacion_unica_id = $programacion_unica->id;
+                  $programacion->curso_id = $curso->id;
+                  $programacion->persona_id = $alumno->id;
+                  $programacion->estado = 1;
+                  $programacion->persona_id_created_at=1;
+                  $programacion->save();
+              }
+              // --
           }
+
           DB::commit();
           $return = true;
         }
