@@ -13,5 +13,5 @@ class CursoEM extends Controller
     {
     //    $this->middleware('auth');  //Esto debe activarse cuando estemos con sessión
     } 
-
-}
+    
+        }

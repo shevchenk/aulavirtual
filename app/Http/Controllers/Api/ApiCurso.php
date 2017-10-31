@@ -132,7 +132,7 @@ class ApiCurso extends Controller
             else
             {
               $key = $this->curl('localhost/Cliente/CCurso.php?action=key');
-
+              
               if($key->key == $tab_cli->key) // Se iguala el KEY del Cliente con el Key del Servidor
               {
                   $persona = DB::table('personas')->where('dni','=',$r->dni)
