@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use DB;
 
-class Evaluacion extends Model
+class Curso extends Model
 {
     protected   $table = 'v_cursos';
     /*
@@ -44,7 +44,7 @@ class Evaluacion extends Model
                 $join->on('p.programacion_unica_id','=','pu.id');
             })
             ->Join('v_cursos AS c', function($join){
-                $join->on('p.curso_id','=','c.id');
+                $join->on('pu.curso_id','=','c.id');
             })
             ->Join('v_personas AS palu', function($join){
                 $join->on('p.persona_id','=','palu.id');

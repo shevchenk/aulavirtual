@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\Proceso\Evaluacion;
+use App\Models\Proceso\Curso;
 use App\Models\Proceso\ProgramacionUnica;
 use App\Models\Proceso\Persona;
 use App\Models\Proceso\Programacion;
@@ -27,7 +27,7 @@ class EvaluacionPR extends Controller
     public function Load(Request $r )
     {
         if ( $r->ajax() ) {
-            $renturnModel = Evaluacion::runLoad($r);
+            $renturnModel = Curso::runLoad($r);
             $return['rst'] = 1;
             $return['data'] = $renturnModel;
             $return['msj'] = "No hay registros aún";
@@ -54,8 +54,13 @@ class EvaluacionPR extends Controller
 
     public function validarCurso(Request $r)
     {
-        $objArr = $this->curl('localhost/Cliente/Curso.php');
+        $datos=array(
+          'dni'=> Auth::user()->dni
+        );
+        
+        $objArr = $this->curl('localhost/Cliente/Curso.php',$datos);
         $return_response = '';
+
         if (empty($objArr))
         {
             $return_response = $this->response(422,"error","Ingrese sus datos de envio");
@@ -72,7 +77,7 @@ class EvaluacionPR extends Controller
 
             if($objArr->key[0]->id == @$tab_cli->id && $objArr->key[0]->token == @$tab_cli->key)
             {
-                $val = $this->insertarCurso($objArr);
+                $val = $this->insertarEvaluacion($objArr);
                 if($val == true)
                     $return_response = $this->response(200,"success","Proceso ejecutado satisfactoriamente");
                 else
@@ -80,7 +85,7 @@ class EvaluacionPR extends Controller
             }
             else
             {
-                $return_response = $this->response(422 ,"error","Su Key no es valido");
+                $return_response = $this->response(422 ,"error","Su Parametro de seguridad son incorrectos");
             }
         }
         else
@@ -99,8 +104,8 @@ class EvaluacionPR extends Controller
             fclose($archivo);
           }
         // --
-
-        $renturnModel = Evaluacion::runLoad($r);
+        $r['dni']=Auth::user()->dni;
+        $renturnModel = Curso::runLoad($r);
         $return['rst'] = 1;
         $return['data'] = $renturnModel;
         $return['msj'] = "No hay registros aún";
@@ -108,37 +113,31 @@ class EvaluacionPR extends Controller
     }
 
 
-    public function insertarCurso($objArr)
+    public function insertarEvaluacion($objArr)
     {
         DB::beginTransaction();
         try
         {
           foreach ($objArr->cursos as $k=>$value)
           {
-              $curso = Evaluacion::where('curso', '=', trim($value->curso))
+              $curso = Curso::where('curso', '=', trim($value->curso))
                                     ->where('curso_externo_id','=', trim($value->curso_externo_id))
                                     ->first();
               if (count($curso) == 0)
               {
-                $val_curso = Evaluacion::where('curso_externo_id', '=', trim($value->curso_externo_id))
+                $curso = Curso::where('curso_externo_id', '=', trim($value->curso_externo_id))
                                         ->first();
-                if(count($val_curso) == 0) //Insert
+                if(count($curso) == 0) //Insert
                 {
-                  $curso = new Evaluacion();
-                  $curso->curso = trim($value->curso);
+                  $curso = new Curso();
                   $curso->curso_externo_id = trim($value->curso_externo_id);
-                  $curso->estado = 1;
                   $curso->persona_id_created_at=1;
-                  $curso->save();
                 }
-                else //Update
-                {
-                  $curso = Evaluacion::find($val_curso->id);
+                else //UPDATE
+                  $curso->persona_id_updated_at=1;
+
                   $curso->curso = trim($value->curso);
-                  $curso->estado = 1;
-                  $curso->persona_id_created_at=1;
                   $curso->save();
-                }
               }
 
               // Proceso Persona Docente
@@ -148,14 +147,15 @@ class EvaluacionPR extends Controller
               {
                   $docente = new Persona();
                   $docente->dni = trim($value->docente_dni);
+                  $docente->persona_id_created_at=1;
+              }
+              else
+                  $docente->persona_id_updated_at=1;
+
                   $docente->paterno = trim($value->docente_paterno);
                   $docente->materno = trim($value->docente_materno);
                   $docente->nombre = trim($value->docente_nombre);
-                  $docente->persona_externo_id = trim($value->docente_persona_externo_id);
-                  $docente->estado = 1;
-                  $docente->persona_id_created_at=1;
                   $docente->save();
-              }
               // --
 
               // Proceso Programación Unica
@@ -164,15 +164,20 @@ class EvaluacionPR extends Controller
               if (count($programacion_unica) == 0)
               {
                   $programacion_unica = new ProgramacionUnica();
+                  $programacion_unica->programacion_unica_externo_id = trim($value->programacion_unica_externo_id);
+                  $programacion_unica->persona_id_created_at=1;
+              }
+              else{
+                  $programacion_unica->estado=$value->programacion_unica_estado;
+                  $programacion_unica->persona_id_updated_at=1;
+              }
+
                   $programacion_unica->curso_id = $curso->id;
                   $programacion_unica->persona_id = $docente->id;
-                  $programacion_unica->programacion_unica_externo_id = trim($value->programacion_unica_externo_id);
                   $programacion_unica->fecha_inicio = $value->fecha_inicio;
                   $programacion_unica->fecha_final = $value->fecha_final;
-                  $programacion_unica->estado = 1;
-                  $programacion_unica->persona_id_created_at=1;
                   $programacion_unica->save();
-              }
+
               // --
 
               // Proceso Persona Alumno
@@ -182,30 +187,34 @@ class EvaluacionPR extends Controller
               {
                   $alumno = new Persona();
                   $alumno->dni = trim($value->alumno_dni);
+                  $alumno->persona_id_created_at=1;
+              }
+              else
+                  $alumno->persona_id_updated_at=1;
+
                   $alumno->paterno = trim($value->alumno_paterno);
                   $alumno->materno = trim($value->alumno_materno);
                   $alumno->nombre = trim($value->alumno_nombre);
-                  $alumno->persona_externo_id = trim($value->alumno_persona_externo_id);
-                  $alumno->estado = 1;
-                  $alumno->persona_id_created_at=1;
                   $alumno->save();
-              }
               // --
 
               // Proceso Programación
               $programacion = Programacion::where('programacion_externo_id', '=', trim($value->programacion_externo_id))
                                                       ->first();
-              if (count($programacion) == 0)
+              if (count($programacion) == 0) //Insert
               {
                   $programacion = new Programacion();
                   $programacion->programacion_externo_id = trim($value->programacion_externo_id);
                   $programacion->programacion_unica_id = $programacion_unica->id;
-                  $programacion->curso_id = $curso->id;
                   $programacion->persona_id = $alumno->id;
-                  $programacion->estado = 1;
                   $programacion->persona_id_created_at=1;
-                  $programacion->save();
               }
+              else //Update
+              {
+                  $programacion->estado = $value->programacion_estado;
+                  $programacion->persona_id_created_at=1;
+              }
+                  $programacion->save();
               // --
           }
 
@@ -214,8 +223,9 @@ class EvaluacionPR extends Controller
         }
         catch (\Exception $e)
         {
-            $return = false;
             DB::rollback();
+            dd($e);
+            $return = false;
         }
         return $return;
     }

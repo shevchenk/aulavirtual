@@ -8,9 +8,9 @@ use DB;
 
 class Persona extends Model
 {
-    protected   $table = 'personas';
+    protected   $table = 'v_personas';
 
-      
+
 
     public static function runEditStatus($r)
     {
@@ -43,7 +43,7 @@ class Persona extends Model
         $persona->estado = trim( $r->estado );
         $persona->persona_id_created_at=$persona_id;
         $persona->save();
-        
+
         if ($r->cargos_selec) {
                 $cargos=$r->cargos_selec;
                 $cargos = explode(',', $cargos);
@@ -85,11 +85,11 @@ class Persona extends Model
         $persona->email = trim( $r->email );
         if(trim( $r->password )!=''){
         $persona->password=bcrypt($r->password);}
-        
+
         $persona->telefono = trim( $r->telefono );
         $persona->celular = trim( $r->celular );
 
-        if(trim( $r->fecha_nacimiento )!='') 
+        if(trim( $r->fecha_nacimiento )!='')
         {
         $persona->fecha_nacimiento = trim( $r->fecha_nacimiento );
         }
@@ -101,12 +101,12 @@ class Persona extends Model
         $persona->estado = trim( $r->estado );
         $persona->persona_id_updated_at=$persona_id;
         $persona->save();
-        
+
         DB::table('personas_privilegios_sucursales')
                 ->where('persona_id', $r->id)
                 ->update(array('estado' => 0,
                     'persona_id_updated_at' => Auth::user()->id));
-        
+
         $cargos = $r->cargos_selec;
          if ($cargos) {//si selecciono algun cargo
                 $cargos = explode(',', $cargos);
@@ -126,7 +126,7 @@ class Persona extends Model
                                     'persona_id_updated_at' => Auth::user()->id
                                     )
                                 );
-                    
+
                     //almacenar las areas seleccionadas
                     for ($j=0; $j<count($areas); $j++) {
                         //recorrer las areas y buscar si exten
@@ -161,7 +161,7 @@ class Persona extends Model
                     }
                 }
             }
-        
+
     }
 
 
@@ -170,7 +170,7 @@ class Persona extends Model
         $sql=Persona::select('id','paterno','materno','nombre','dni',
             'email',DB::raw('IFNULL(fecha_nacimiento,"") as fecha_nacimiento'),'sexo','telefono',
             'celular','password','estado')
-            ->where( 
+            ->where(
                 function($query) use ($r){
                     if( $r->has("paterno") ){
                         $paterno=trim($r->paterno);
@@ -213,7 +213,7 @@ class Persona extends Model
         $result = $sql->orderBy('paterno','asc')->paginate(10);
         return $result;
     }
-    
+
      public static function getAreas($personaId) {
         //subconsulta
         $sql = DB::table('personas_privilegios_sucursales as cp')
@@ -245,7 +245,7 @@ class Persona extends Model
 
         return $areas;
     }
-    
+
 
 
 }

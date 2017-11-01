@@ -37,7 +37,7 @@
             <div class="box">
                 <form id="TipoEvaluacionForm">
                     <div class="box-body table-responsive no-padding">
-                        <table id="TableTipoEvaluacion" class="table table-bordered table-hover">
+                        <table id="TableEvaluacion" class="table table-bordered table-hover">
                             <thead>
                                 <tr class="cabecera">
 

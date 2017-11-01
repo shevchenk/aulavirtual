@@ -3,7 +3,7 @@ var AddEdit=0; //0: Editar | 1: Agregar
 var TipoEvaluacionG={id:0, dni:"", alumno:"", curso:"", fecha_inicio:"", fecha_final:"", docente:"", estado:1}; // estado:1
 $(document).ready(function() {
 
-    $("#TableTipoEvaluacion").DataTable({
+    $("#TableEvaluacion").DataTable({
         "paging": true,
         "lengthChange": false,
         "searching": false,
@@ -12,10 +12,10 @@ $(document).ready(function() {
         "autoWidth": false
     });
 
-    AjaxTipoEvaluacion.Cargar(HTMLCargarTipoEvaluacion);
+    AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
 
-    $("#TipoEvaluacionForm #TableTipoEvaluacion select").change(function(){ AjaxTipoEvaluacion.Cargar(HTMLCargarTipoEvaluacion); });
-    $("#TipoEvaluacionForm #TableTipoEvaluacion input").blur(function(){ AjaxTipoEvaluacion.Cargar(HTMLCargarTipoEvaluacion); });
+    $("#TipoEvaluacionForm #TableEvaluacion select").change(function(){ AjaxEvaluacion.Cargar(HTMLCargarEvaluacion); });
+    $("#TipoEvaluacionForm #TableEvaluacion input").blur(function(){ AjaxEvaluacion.Cargar(HTMLCargarEvaluacion); });
 
     $('#ModalTipoEvaluacion').on('shown.bs.modal', function (event) {
 
@@ -60,26 +60,26 @@ AgregarEditar=function(val,id){
     TipoEvaluacionG.estado='1';
     if( val==0 ){
         TipoEvaluacionG.id=id;
-        TipoEvaluacionG.curso=$("#TableTipoEvaluacion #trid_"+id+" .curso").text();
-        TipoEvaluacionG.estado=$("#TableTipoEvaluacion #trid_"+id+" .estado").val();
+        TipoEvaluacionG.curso=$("#TableEvaluacion #trid_"+id+" .curso").text();
+        TipoEvaluacionG.estado=$("#TableEvaluacion #trid_"+id+" .estado").val();
     }
     $('#ModalTipoEvaluacion').modal('show');
 }
 
 CambiarEstado=function(estado,id){
-    AjaxTipoEvaluacion.CambiarEstado(HTMLCambiarEstado,estado,id);
+    AjaxEvaluacion.CambiarEstado(HTMLCambiarEstado,estado,id);
 }
 
 HTMLCambiarEstado=function(result){
     if( result.rst==1 ){
         msjG.mensaje('success',result.msj,4000);
-        AjaxTipoEvaluacion.Cargar(HTMLCargarTipoEvaluacion);
+        AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
     }
 }
 
 AgregarEditarAjax=function(){
     if( ValidaForm() ){
-        AjaxTipoEvaluacion.AgregarEditar(HTMLAgregarEditar);
+        AjaxEvaluacion.AgregarEditar(HTMLAgregarEditar);
     }
 }
 
@@ -87,15 +87,15 @@ HTMLAgregarEditar=function(result){
     if( result.rst==1 ){
         msjG.mensaje('success',result.msj,4000);
         $('#ModalTipoEvaluacion').modal('hide');
-        AjaxTipoEvaluacion.Cargar(HTMLCargarTipoEvaluacion);
+        AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
     }else{
         msjG.mensaje('warning',result.msj,3000);
     }
 }
 
-HTMLCargarTipoEvaluacion=function(result){
+HTMLCargarEvaluacion=function(result){
     var html="";
-    $('#TableTipoEvaluacion').DataTable().destroy();
+    $('#TableEvaluacion').DataTable().destroy();
 
     $.each(result.data.data,function(index,r){
         //estadohtml='<span id="'+r.id+'" onClick="CambiarEstado(1,'+r.id+')" class="btn btn-danger">Inactivo</span>';
@@ -107,17 +107,18 @@ HTMLCargarTipoEvaluacion=function(result){
             "<td class='dni'>"+r.dni+"</td>"+
             "<td class='alumno'>"+r.alumno+"</td>"+
             "<td class='curso'>"+r.curso+"</td>"+
+            "<td class='docente'>"+r.docente+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
             "<td class='fecha_final'>"+r.fecha_final+"</td>"+
-            "<td class='docente'>"+r.docente+"</td>"+
             "<td>";
 
         //html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
-        html+='<td><a class="btn btn-default btn-sm" onClick="AgregarEditar(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
+        //html+='<td><a class="btn btn-default btn-sm" onClick="AgregarEditar(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
+        html+='<a class="btn btn-default btn-sm" onClick="verContenido(0,'+r.id+')"><i class="fa fa-plus fa-lg"></i> </a></td>';
         html+="</tr>";
     });
-    $("#TableTipoEvaluacion tbody").html(html);
-    $("#TableTipoEvaluacion").DataTable({
+    $("#TableEvaluacion tbody").html(html);
+    $("#TableEvaluacion").DataTable({
         "paging": true,
         "lengthChange": false,
         "searching": false,
@@ -130,8 +131,8 @@ HTMLCargarTipoEvaluacion=function(result){
             "infoEmpty": "No éxite registro(s) aún",
         },
         "initComplete": function () {
-            $('#TableTipoEvaluacion_paginate ul').remove();
-            masterG.CargarPaginacion('HTMLCargarTipoEvaluacion','AjaxTipoEvaluacion',result.data,'#TableTipoEvaluacion_paginate');
+            $('#TableEvaluacion_paginate ul').remove();
+            masterG.CargarPaginacion('HTMLCargarEvaluacion','AjaxEvaluacion',result.data,'#TableEvaluacion_paginate');
         }
     });
 

@@ -131,11 +131,16 @@ class ApiCurso extends Controller
                 $valores['mensaje'] = 'ID Cliente no Registrado!';
             else
             {
-              $key = $this->curl('localhost/Cliente/CCurso.php?action=key');
-              
+              // URL (CURL)
+              $cli_links = DB::table('clientes_accesos_links')->where('cliente_acceso_id','=',$r->id)
+                                                              ->where('tipo','=', 1)
+                                                              ->first();
+              $key = $this->curl($cli_links->url);
+              // --
+
               if($key->key == $tab_cli->key) // Se iguala el KEY del Cliente con el Key del Servidor
               {
-                  $persona = DB::table('personas')->where('dni','=',$r->dni)
+                  $persona = DB::table('v_personas')->where('dni','=',$r->dni)
                                                   ->first();
                   if($persona)
                   {
@@ -176,7 +181,15 @@ class ApiCurso extends Controller
                   }
                   else // Nueva Persona
                   {
-                      $lista = $this->curl('localhost/Cliente/CCurso.php?key='.$key->key.'&dni='.$r->dni);
+                      // URL (CURL)
+                      $cli_links = DB::table('clientes_accesos_links')->where('cliente_acceso_id','=',$r->id)
+                                                                    ->where('tipo','=', 2)
+                                                                    ->first();
+                      $buscar = array("pkey", "pdni");
+                      $reemplazar = array($key->key, $r->dni);
+                      $url = str_replace($buscar, $reemplazar, $cli_links->url);
+                      $lista = $this->curl($url); //'localhost/Cliente/CCurso.php?key='.$key->key.'&dni='.$r->dni
+                      // --
 
                       $pe = new Persona;
                       $pe->dni = $r->dni;

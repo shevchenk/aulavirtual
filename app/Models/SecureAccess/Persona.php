@@ -11,7 +11,7 @@ use DB;
 class Persona extends Authenticatable
 {
     use Notifiable;
-    protected   $table = 'personas';
+    protected   $table = 'v_personas';
 
 
     public static function runEditPassword($r)
