@@ -39,7 +39,7 @@ HTMLCargarProgramacionUnica=function(result){
             "<td class='curso'>"+r.curso+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
             "<td class='fecha_final'>"+r.fecha_final+"</td>"+
-            '<td><a class="btn btn-primary btn-sm" onClick="CargarContenido('+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
+            '<td><a class="btn btn-info btn-sm" onClick="CargarContenido('+r.id+')"><i class="fa fa-th-list fa-lg"></i> </a></td>';
         html+="</tr>";
     });
     $("#TableProgramacionUnica tbody").html(html); 

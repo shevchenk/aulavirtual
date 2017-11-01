@@ -18,8 +18,10 @@
     @include( 'proceso.gestor.js.gestor' )
     @include( 'proceso.gestor.js.contenido_ajax' )
     @include( 'proceso.gestor.js.contenido' )
-    @include( 'proceso.gestor.js.contenidorespuesta_ajax' )
-    @include( 'proceso.gestor.js.contenidorespuesta' )
+    @include( 'proceso.gestor.js.contenidoprogramacion_ajax' )
+    @include( 'proceso.gestor.js.contenidoprogramacion' )
+    @include( 'proceso.gestor.js.listapersona_ajax' )
+    @include( 'proceso.gestor.js.listapersona' )
     
 
 @stop
@@ -129,14 +131,14 @@
                         </div><!-- .box-body -->
                     </form><!-- .form --> 
                     <hr>
-                    <form id="ContenidoRespuestaForm" style="display: none">
+                    <form id="ContenidoProgramacionForm" style="display: none">
                         <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" > 
                         <div class="box-body table-responsive no-padding">
-                            <table id="TableContenidoRespuesta" class="table table-bordered table-hover">
+                            <table id="TableContenidoProgramacion" class="table table-bordered table-hover">
                                 <thead>
                                     <tr class="cabecera">
-                                      <th>Respuesta</th>
-                                      <th>Ruta Respuesta</th>
+                                      <th>Alumno</th>
+                                      <th>Fecha de Ampliación</th>
                                       <th>[-]</th>
                                       <th>[-]</th>
                                     </tr>
@@ -145,8 +147,8 @@
                                 </tbody>
                                 <tfoot>
                                     <tr class="cabecera">
-                                      <th>Respuesta</th>
-                                      <th>Ruta Respuesta</th>
+                                      <th>Alumno</th>
+                                      <th>Fecha de Ampliación</th>
                                       <th>[-]</th>
                                       <th>[-]</th>
                                     </tr>
@@ -167,5 +169,6 @@
 @section('form')
      @include( 'proceso.gestor.form.gestor' )
      @include( 'proceso.gestor.form.contenido' )
-     @include( 'proceso.gestor.form.contenidorespuesta' )
+     @include( 'proceso.gestor.form.contenidoprogramacion' )
+     @include( 'proceso.gestor.form.listapersona' )
 @stop
