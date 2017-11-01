@@ -1,6 +1,6 @@
 <script type="text/javascript">
 var AddEdit=0; //0: Editar | 1: Agregar
-var ContenidoProgramacionG={id:0,programacion_id:0,respuesta:'',ruta_respuesta:'',estado:1}; // Datos Globales
+var ContenidoProgramacionG={id:0,programacion_id:0,persona:'',fecha_ampliacion:'',estado:1}; // Datos Globales
 $(document).ready(function() {
      $("#TableContenidoProgramacion").DataTable({
         "paging": true,
@@ -21,8 +21,9 @@ $(document).ready(function() {
             $("#ModalContenidoProgramacionForm").append("<input type='hidden' value='"+ContenidoProgramacionG.id+"' name='id'>");
         }
 
-        $('#ModalContenidoProgramacionForm #txt_respuesta').val( ContenidoProgramacionG.respuesta );
-        $('#ModalContenidoProgramacionForm #txt_ruta_respuesta').val( ContenidoProgramacionG.ruta_respuesta );
+        $('#ModalContenidoProgramacionForm #txt_persona').val(ContenidoProgramacionG.persona);
+        $('#ModalContenidoProgramacionForm #txt_programacion_id').val(ContenidoProgramacionG.programacion_id);
+        $('#ModalContenidoProgramacionForm #txt_fecha_ampliacion').val( ContenidoProgramacionG.fecha_ampliacion );
         $('#ModalContenidoProgramacionForm #slct_estado').selectpicker( 'val',ContenidoProgramacionG.estado );
         //$('#ModalContenidoProgramacionForm #txt_razon_social').focus();
     });
@@ -35,9 +36,9 @@ $(document).ready(function() {
 ValidaForm2=function(){
     var r=true;
 
-    if( $.trim( $("#ModalContenidoProgramacionForm #txt_persona").val() )=='' ){
+    if( $.trim( $("#ModalContenidoProgramacionForm #txt_programacion_id").val() )=='' ){
         r=false;
-        msjG.mensaje('warning','Seleccione Persona',4000);
+        msjG.mensaje('warning','Seleccione Alumno',4000);
     }
     else if( $.trim( $("#ModalContenidoProgramacionForm #txt_fecha_ampliacion").val() )=='' ){
         r=false;
@@ -49,15 +50,17 @@ ValidaForm2=function(){
 AgregarEditar2=function(val,id){
     AddEdit=val;
     ContenidoProgramacionG.id='';
-    ContenidoProgramacionG.respuesta='';
-    ContenidoProgramacionG.ruta_respuesta='';
+    ContenidoProgramacionG.persona='';
+    ContenidoProgramacionG.programacion_id='';
+    ContenidoProgramacionG.fecha_ampliacion='';
     ContenidoProgramacionG.estado='1';
 
     if( val==0 ){
 
         ContenidoProgramacionG.id=id;
-        ContenidoProgramacionG.respuesta=$("#TableContenidoProgramacion #trid_"+id+" .respuesta").text();
-        ContenidoProgramacionG.ruta_respuesta=$("#TableContenidoProgramacion #trid_"+id+" .ruta_respuesta").text();
+        ContenidoProgramacionG.persona=$("#TableContenidoProgramacion #trid_"+id+" .alumno").text();
+        ContenidoProgramacionG.programacion_id=$("#TableContenidoProgramacion #trid_"+id+" .programacion_id").val();
+        ContenidoProgramacionG.fecha_ampliacion=$("#TableContenidoProgramacion #trid_"+id+" .fecha_ampliacion").text();
         ContenidoProgramacionG.estado=$("#TableContenidoProgramacion #trid_"+id+" .estado").val();
 
 
@@ -106,8 +109,8 @@ HTMLCargarContenidoProgramacion=function(result){
         }
 
         html+="<tr id='trid_"+r.id+"'>"+
-            "<td class='respuesta'>"+r.alumno+"</td>"+
-            "<td class='ruta_respuesta'>"+r.fecha_ampliacion+"</td>"+
+            "<td class='alumno'>"+r.alumno+"</td>"+
+            "<td class='fecha_ampliacion'>"+r.fecha_ampliacion+"</td>"+
             "<input type='hidden' class='programacion_id' value='"+r.programacion_id+"'>"+
             "<td>";
             html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+

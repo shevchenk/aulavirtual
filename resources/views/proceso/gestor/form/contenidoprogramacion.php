@@ -17,7 +17,7 @@
                         <input type="text" class="form-control" id="txt_persona" name="txt_persona" disabled="">
 
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#ModalListapersona" data-filtros="estado:1" data-programacionid="ModalContenidoProgramacionForm #txt_programacion_id" data-persona="ModalContenidoProgramacionForm #txt_persona">Buscar</button>
+                            <button type="button" id="btn_listarpersona" class="btn btn-info btn-flat" data-toggle="modal" data-target="#ModalListapersona" data-personaid="ModalContenidoProgramacionForm #txt_programacion_id" data-persona="ModalContenidoProgramacionForm #txt_persona">Buscar</button>
                         </span>
 
                     </div>    

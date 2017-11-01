@@ -168,7 +168,7 @@ HTMLCargarContenido=function(result){
             "<td>";
             html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
             '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar3(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>'+
-            '<td><a class="btn btn-info btn-sm" onClick="CargarContenidoProgramacion('+r.id+')"><i class="fa fa-th-list fa-lg"></i> </a></td>';
+            '<td><a class="btn btn-info btn-sm" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')"><i class="fa fa-th-list fa-lg"></i> </a></td>';
         html+="</tr>";
     });
     $("#TableContenido tbody").html(html); 
@@ -196,9 +196,10 @@ SlctCargarCurso=function(result){
     $("#ModalContenidoForm #slct_curso_id").selectpicker('refresh');
 
 };
-CargarContenidoProgramacion=function(id){
+CargarContenidoProgramacion=function(id,programacion_unica_id){
      $("#ContenidoProgramacionForm #txt_contenido_id").val(id);
      $("#ModalContenidoProgramacionForm #txt_contenido_id").val(id);
+     $("#ModalContenidoProgramacionForm #btn_listarpersona").data( 'filtros', 'estado:1|programacion_unica_id:'+programacion_unica_id );
      AjaxContenidoProgramacion.Cargar(HTMLCargarContenidoProgramacion);
      $("#ContenidoProgramacionForm").css("display","");
      

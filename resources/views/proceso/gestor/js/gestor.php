@@ -27,7 +27,7 @@ CargarContenido=function(id,curso_id,curso){
      $("#ModalContenidoForm #txt_curso").val(curso);
      AjaxContenido.Cargar(HTMLCargarContenido);
      $("#ContenidoForm").css("display","");
-     $("#ContenidoRespuestaForm").css("display","none");
+     $("#ContenidoProgramacionForm").css("display","none");
      
 };
 
