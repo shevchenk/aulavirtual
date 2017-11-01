@@ -12,9 +12,11 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label id="label_curso">Curso</label>
-                            <select  class="form-control selectpicker show-menu-arrow" data-live-search="true" id="slct_curso_id" name="slct_curso_id">
+                            <input  type="hidden" class="form-control mant"  id="txt_curso_id" name="txt_curso_id" readonly="">
+                            <input type="text"  class="form-control mant" id="txt_curso" name="txt_curso" disabled="">
+<!--                            <select  class="form-control selectpicker show-menu-arrow" data-live-search="true" id="slct_curso_id" name="slct_curso_id">
                                 <option value="0">.::Seleccione::.</option>
-                            </select>
+                            </select>-->
                         </div> 
                     </div>
                     <div class="col-md-12">

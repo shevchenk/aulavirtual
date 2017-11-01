@@ -20,9 +20,11 @@ $(document).ready(function() {
     
 });
 
-CargarContenido=function(id){
+CargarContenido=function(id,curso_id,curso){
      $("#ContenidoForm #txt_programacion_unica_id").val(id);
      $("#ModalContenidoForm #txt_programacion_unica_id").val(id);
+     $("#ModalContenidoForm #txt_curso_id").val(curso_id);
+     $("#ModalContenidoForm #txt_curso").val(curso);
      AjaxContenido.Cargar(HTMLCargarContenido);
      $("#ContenidoForm").css("display","");
      $("#ContenidoRespuestaForm").css("display","none");
@@ -39,7 +41,7 @@ HTMLCargarProgramacionUnica=function(result){
             "<td class='curso'>"+r.curso+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
             "<td class='fecha_final'>"+r.fecha_final+"</td>"+
-            '<td><a class="btn btn-info btn-sm" onClick="CargarContenido('+r.id+')"><i class="fa fa-th-list fa-lg"></i> </a></td>';
+            '<td><a class="btn btn-info btn-sm" onClick="CargarContenido('+r.id+','+r.curso_id+',\''+r.curso+'\')"><i class="fa fa-th-list fa-lg"></i> </a></td>';
         html+="</tr>";
     });
     $("#TableProgramacionUnica tbody").html(html); 

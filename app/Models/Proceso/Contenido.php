@@ -29,8 +29,6 @@ class Contenido extends Model
             $url = "file/content/".$r->file_nombre; 
             $ftf=new Contenido;
             $ftf->fileToFile($r->file_archivo, $url);
-        }else{
-            $contenido->ruta_contenido = null;    
         }
         $contenido->tipo_respuesta = trim( $r->tipo_respuesta );
         if($r->tipo_respuesta==1){
@@ -50,15 +48,12 @@ class Contenido extends Model
     public static function runEdit($r){
         
         $contenido = Contenido::find($r->id);
-        $contenido->curso_id = trim( $r->curso_id );
         $contenido->contenido = trim( $r->contenido ); 
         if(trim($r->file_nombre)!='' and trim($r->file_archivo)!=''){
             $contenido->ruta_contenido = trim( $r->file_nombre );
             $url = "file/content/".$r->file_nombre; 
             $ftf=new Contenido;
             $ftf->fileToFile($r->file_archivo, $url);
-        }else{
-            $contenido->ruta_contenido = null;    
         }
         $contenido->tipo_respuesta = trim( $r->tipo_respuesta );
         if($r->tipo_respuesta==1){

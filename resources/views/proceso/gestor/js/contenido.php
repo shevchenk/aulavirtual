@@ -21,7 +21,7 @@ $(document).ready(function() {
         autoclose: true,
         todayBtn: false
     }); 
-    CargarSlct(1); //Cursos
+
     $('#ModalContenido').on('shown.bs.modal', function (event) {
         if( AddEdit==1 ){
             $(this).find('.modal-footer .btn-primary').text('Guardar').attr('onClick','AgregarEditarAjax3();');
@@ -32,7 +32,6 @@ $(document).ready(function() {
             $("#ModalContenidoForm").append("<input type='hidden' value='"+ContenidoG.id+"' name='id'>");
         }
 
-        $('#ModalContenidoForm #slct_curso_id').selectpicker('val', ContenidoG.curso_id );
         $('#ModalContenidoForm #txt_contenido').val( ContenidoG.contenido );
         $('#ModalContenidoForm #txt_file_nombre').val( ContenidoG.ruta_contenido );
         $('#ModalContenidoForm #txt_file_archivo').val( ContenidoG.file_archivo );
@@ -61,11 +60,7 @@ $(document).ready(function() {
 ValidaForm3=function(){
     var r=true;
 
-    if( $.trim( $("#ModalContenidoForm #slct_curso_id").val() )=='0' ){
-        r=false;
-        msjG.mensaje('warning','Seleccione Curso',4000);
-    }
-    else if( $.trim( $("#ModalContenidoForm #txt_contenido").val() )=='' ){
+    if( $.trim( $("#ModalContenidoForm #txt_contenido").val() )=='' ){
         r=false;
         msjG.mensaje('warning','Ingrese Contenido',4000);
     }
@@ -95,7 +90,6 @@ ValidaForm3=function(){
 AgregarEditar3=function(val,id){
     AddEdit=val;
     ContenidoG.id='';
-    ContenidoG.curso_id='0';
     ContenidoG.contenido='';
     ContenidoG.ruta_contenido='';
     ContenidoG.file_archivo='';
@@ -108,7 +102,6 @@ AgregarEditar3=function(val,id){
     if( val==0 ){
 
         ContenidoG.id=id;
-        ContenidoG.curso_id=$("#TableContenido #trid_"+id+" .curso_id").val();
         ContenidoG.contenido=$("#TableContenido #trid_"+id+" .contenido").text();
         ContenidoG.ruta_contenido=$("#TableContenido #trid_"+id+" .ruta_contenido").text();
         ContenidoG.tipo_respuesta=$("#TableContenido #trid_"+id+" .tipo_respuesta").val();
