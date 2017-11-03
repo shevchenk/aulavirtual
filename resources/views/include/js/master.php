@@ -377,7 +377,8 @@ var sweetalertG = {
           title: titulo,
           text: descripcion,
           showCancelButton: true,
-          confirmButtonText: "Procesar",
+          type: 'warning',
+          confirmButtonText: "Eliminar",
           closeOnConfirm: true
       },
       consulta

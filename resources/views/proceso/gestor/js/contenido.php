@@ -1,6 +1,6 @@
 <script type="text/javascript">
 var AddEdit=0; //0: Editar | 1: Agregar
-var ContenidoG={id:0,curso_id:0,contenido:'',ruta_contenido:'',tipo_respuesta:0,fecha_inicio:'',
+var ContenidoG={id:0,curso_id:0,contenido:'',ruta_contenido:'',file_archivo:'',tipo_respuesta:0,fecha_inicio:'',
 fecha_final:'',fecha_ampliada:'',estado:1}; // Datos Globales
 $(document).ready(function() {
      $("#TableContenido").DataTable({
@@ -21,7 +21,7 @@ $(document).ready(function() {
         autoclose: true,
         todayBtn: false
     }); 
-    CargarSlct(1); //Cursos
+
     $('#ModalContenido').on('shown.bs.modal', function (event) {
         if( AddEdit==1 ){
             $(this).find('.modal-footer .btn-primary').text('Guardar').attr('onClick','AgregarEditarAjax3();');
@@ -32,9 +32,9 @@ $(document).ready(function() {
             $("#ModalContenidoForm").append("<input type='hidden' value='"+ContenidoG.id+"' name='id'>");
         }
 
-        $('#ModalContenidoForm #slct_curso_id').selectpicker('val', ContenidoG.curso_id );
         $('#ModalContenidoForm #txt_contenido').val( ContenidoG.contenido );
-        $('#ModalContenidoForm #txt_ruta_contenido').val( ContenidoG.ruta_contenido );
+        $('#ModalContenidoForm #txt_file_nombre').val( ContenidoG.ruta_contenido );
+        $('#ModalContenidoForm #txt_file_archivo').val( ContenidoG.file_archivo );
         $('#ModalContenidoForm #slct_tipo_respuesta').selectpicker('val', ContenidoG.tipo_respuesta );
         $('#ModalContenidoForm #txt_fecha_inicio').val( ContenidoG.fecha_inicio );
         $('#ModalContenidoForm #txt_fecha_final').val( ContenidoG.fecha_final );
@@ -46,20 +46,25 @@ $(document).ready(function() {
     $('#ModalContenido').on('hidden.bs.modal', function (event) {
         $("#ModalContenidoForm input[type='hidden']").not('.mant').remove();
     });
+    
+    $( "#ModalContenidoForm #slct_tipo_respuesta" ).change(function() {
+        if( $('#ModalContenidoForm #slct_tipo_respuesta').val()=='1' ) {
+            $( "#ModalContenidoForm #respuesta" ).css("display","");
+        }else{
+            $( "#ModalContenidoForm #respuesta" ).css("display","none");
+        }
+
+    });
 });
 
 ValidaForm3=function(){
     var r=true;
 
-    if( $.trim( $("#ModalContenidoForm #slct_curso_id").val() )=='0' ){
-        r=false;
-        msjG.mensaje('warning','Seleccione Curso',4000);
-    }
-    else if( $.trim( $("#ModalContenidoForm #txt_contenido").val() )=='' ){
+    if( $.trim( $("#ModalContenidoForm #txt_contenido").val() )=='' ){
         r=false;
         msjG.mensaje('warning','Ingrese Contenido',4000);
     }
-     else if( $.trim( $("#ModalContenidoForm #txt_ruta_contenido").val() )=='' ){
+     else if( $.trim( $("#ModalContenidoForm #txt_file_nombre").val() )=='' ){
         r=false;
         msjG.mensaje('warning','Ingrese Ruta de Contenido',4000);
     }
@@ -67,15 +72,15 @@ ValidaForm3=function(){
         r=false;
         msjG.mensaje('warning','Seleccione Tipo de Respuesta',4000);
     }
-    else if( $.trim( $("#ModalContenidoForm #txt_fecha_inicio").val() )=='' ){
+    else if( $.trim( $("#ModalContenidoForm #txt_fecha_inicio").val() )=='' && $.trim( $("#ModalContenidoForm #slct_tipo_respuesta").val() )=='1'){
         r=false;
         msjG.mensaje('warning','Ingrese Fecha Inicio',4000);
     }
-    else if( $.trim( $("#ModalContenidoForm #txt_fecha_final").val() )=='' ){
+    else if( $.trim( $("#ModalContenidoForm #txt_fecha_final").val() )=='' && $.trim( $("#ModalContenidoForm #slct_tipo_respuesta").val() )=='1' ){
         r=false;
         msjG.mensaje('warning','Ingrese Fecha Final',4000);
     }
-    else if( $.trim( $("#ModalContenidoForm #txt_fecha_ampliada").val() )=='' ){
+    else if( $.trim( $("#ModalContenidoForm #txt_fecha_ampliada").val() )=='' && $.trim( $("#ModalContenidoForm #slct_tipo_respuesta").val() )=='1'){
         r=false;
         msjG.mensaje('warning','Ingrese Fecha Ampliada',4000);
     }
@@ -85,19 +90,18 @@ ValidaForm3=function(){
 AgregarEditar3=function(val,id){
     AddEdit=val;
     ContenidoG.id='';
-    ContenidoG.curso_id='0';
     ContenidoG.contenido='';
     ContenidoG.ruta_contenido='';
+    ContenidoG.file_archivo='';
     ContenidoG.tipo_respuesta='';
     ContenidoG.fecha_inicio='';
     ContenidoG.fecha_final='';
     ContenidoG.fecha_ampliada='';
     ContenidoG.estado='1';
-
+    $('#respuesta').css("display","none");
     if( val==0 ){
 
         ContenidoG.id=id;
-        ContenidoG.curso_id=$("#TableContenido #trid_"+id+" .curso_id").val();
         ContenidoG.contenido=$("#TableContenido #trid_"+id+" .contenido").text();
         ContenidoG.ruta_contenido=$("#TableContenido #trid_"+id+" .ruta_contenido").text();
         ContenidoG.tipo_respuesta=$("#TableContenido #trid_"+id+" .tipo_respuesta").val();
@@ -105,14 +109,17 @@ AgregarEditar3=function(val,id){
         ContenidoG.fecha_final=$("#TableContenido #trid_"+id+" .fecha_final").text();
         ContenidoG.fecha_ampliada=$("#TableContenido #trid_"+id+" .fecha_ampliada").text();
         ContenidoG.estado=$("#TableContenido #trid_"+id+" .estado").val();
-
-
+        if(ContenidoG.tipo_respuesta=='1'){
+                $('#respuesta').css("display","");
+        }
     }
     $('#ModalContenido').modal('show');
 }
 
 CambiarEstado3=function(estado,id){
-    AjaxContenido.CambiarEstado(HTMLCambiarEstado3,estado,id);
+    sweetalertG.confirm("¿Estás seguro?", "Confirme la eliminación", function(){
+        AjaxContenido.CambiarEstado(HTMLCambiarEstado3,estado,id);
+    });
 }
 
 HTMLCambiarEstado3=function(result){
@@ -144,9 +151,9 @@ HTMLCargarContenido=function(result){
     $('#TableContenido').DataTable().destroy();
 
     $.each(result.data,function(index,r){
-        estadohtml='<span id="'+r.id+'" onClick="CambiarEstado3(1,'+r.id+')" class="btn btn-danger">Inactivo</span>';
+        estadohtml='<a id="'+r.id+'" onClick="CambiarEstado3(1,'+r.id+')" class="btn btn-danger btn-sm"><i class="fa fa-trash fa-lg"></i></a>';
         if(r.estado==1){
-            estadohtml='<span id="'+r.id+'" onClick="CambiarEstado3(0,'+r.id+')" class="btn btn-success">Activo</span>';
+            estadohtml='<a id="'+r.id+'" onClick="CambiarEstado3(0,'+r.id+')" class="btn btn-danger btn-sm"><i class="fa fa-trash fa-lg"></i></a>';
         }
 
         html+="<tr id='trid_"+r.id+"'>"+
@@ -161,7 +168,7 @@ HTMLCargarContenido=function(result){
             "<td>";
             html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
             '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar3(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>'+
-            '<td><a class="btn btn-primary btn-sm" onClick="CargarContenidoRespuesta('+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
+            '<td><a class="btn btn-info btn-sm" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')"><i class="fa fa-th-list fa-lg"></i> </a></td>';
         html+="</tr>";
     });
     $("#TableContenido tbody").html(html); 
@@ -189,11 +196,26 @@ SlctCargarCurso=function(result){
     $("#ModalContenidoForm #slct_curso_id").selectpicker('refresh');
 
 };
-CargarContenidoRespuesta=function(id){
-     $("#ContenidoRespuestaForm #txt_contenido_id").val(id);
-     $("#ModalContenidoRespuestaForm #txt_contenido_id").val(id);
-     AjaxContenidoRespuesta.Cargar(HTMLCargarContenidoRespuesta);
-     $("#ContenidoRespuestaForm").css("display","");
+CargarContenidoProgramacion=function(id,programacion_unica_id){
+     $("#ContenidoProgramacionForm #txt_contenido_id").val(id);
+     $("#ModalContenidoProgramacionForm #txt_contenido_id").val(id);
+     $("#ModalContenidoProgramacionForm #btn_listarpersona").data( 'filtros', 'estado:1|programacion_unica_id:'+programacion_unica_id );
+     AjaxContenidoProgramacion.Cargar(HTMLCargarContenidoProgramacion);
+     $("#ContenidoProgramacionForm").css("display","");
      
+};
+onImagen = function (event) {
+        var files = event.target.files || event.dataTransfer.files;
+        if (!files.length)
+            return;
+        var image = new Image();
+        var reader = new FileReader();
+        reader.onload = (e) => {
+            $('#ModalContenidoForm #txt_file_archivo').val(e.target.result);
+            $('#ModalContenidoForm .img-circle').attr('src',e.target.result);
+        };
+        reader.readAsDataURL(files[0]);
+        $('#ModalContenidoForm #txt_file_nombre').val(files[0].name);
+        console.log(files[0].name);
 };
 </script>

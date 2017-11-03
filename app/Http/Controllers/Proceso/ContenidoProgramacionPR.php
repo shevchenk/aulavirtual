@@ -3,11 +3,11 @@ namespace App\Http\Controllers\Proceso;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Proceso\ContenidoRespuesta;
+use App\Models\Proceso\ContenidoProgramacion;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class ContenidoRespuestaPR extends Controller
+class ContenidoProgramacionPR extends Controller
 {
     public function __construct()
     {
@@ -17,7 +17,7 @@ class ContenidoRespuestaPR extends Controller
     public function EditStatus(Request $r )
     {
         if ( $r->ajax() ) {
-            ContenidoRespuesta::runEditStatus($r);
+            ContenidoProgramacion::runEditStatus($r);
             $return['rst'] = 1;
             $return['msj'] = 'Registro actualizado';
             return response()->json($return);
@@ -43,7 +43,7 @@ class ContenidoRespuestaPR extends Controller
             $validator=Validator::make($r->all(), $rules,$mensaje);
 
             if ( !$validator->fails() ) {
-                ContenidoRespuesta::runNew($r);
+                ContenidoProgramacion::runNew($r);
                 $return['rst'] = 1;
                 $return['msj'] = 'Registro creado';
             }
@@ -72,7 +72,7 @@ class ContenidoRespuestaPR extends Controller
             $validator=Validator::make($r->all(), $rules,$mensaje);
 
             if ( !$validator->fails() ) {
-                ContenidoRespuesta::runEdit($r);
+                ContenidoProgramacion::runEdit($r);
                 $return['rst'] = 1;
                 $return['msj'] = 'Registro actualizado';
             }
@@ -87,7 +87,7 @@ class ContenidoRespuestaPR extends Controller
     public function Load(Request $r )
     {
         if ( $r->ajax() ) {
-            $renturnModel = ContenidoRespuesta::runLoad($r);
+            $renturnModel = ContenidoProgramacion::runLoad($r);
             $return['rst'] = 1;
             $return['data'] = $renturnModel;
             $return['msj'] = "No hay registros aún";    

@@ -13,7 +13,7 @@ class ProgramacionUnica extends Model
     public static function runLoad($r)
     {
         $result=ProgramacionUnica::select('v_programaciones_unicas.id','v_programaciones_unicas.fecha_inicio',
-                                'v_programaciones_unicas.fecha_final','vc.curso')
+                                'v_programaciones_unicas.fecha_final','vc.curso','v_programaciones_unicas.curso_id')
                                 ->join('v_cursos as vc','vc.id','=','v_programaciones_unicas.curso_id')
                                 ->where(
                                     function($query) use ($r){
