@@ -114,10 +114,13 @@ class ApiCurso extends Controller
         return $msg;
     }
 
-    public function Validaracceso(Request $r )
+    public function Validaracceso(Request $r)
     {
         $ruta = 'api.curso.curso';
         $valores['valida_ruta_url'] = $ruta;
+        $url = url()->previous(); //url anterior Cliente
+        session(['idcliente' => $r->id, 'urlcliente' => $url]);
+        //Session::put('grupo', $grupo);
 
         if (empty($r))
         {
@@ -125,14 +128,17 @@ class ApiCurso extends Controller
         }
         else if( $r->has('id') && $r->has('dni') &&  $r->has('cargo'))
         {
-            $tab_cli = DB::table('clientes_accesos')->where('id','=',$r->id)
+            $tab_cli = DB::table('clientes_accesos')->where('id','=', $r->id)
+                                                    ->where('url','=', $url)
+                                                    ->where('ip','=', $this->getIPCliente())
+                                                    ->where('estado','=', 1)
                                                     ->first();
             if(count($tab_cli) == 0)
                 $valores['mensaje'] = 'ID Cliente no Registrado!';
             else
             {
               // URL (CURL)
-              $cli_links = DB::table('clientes_accesos_links')->where('cliente_acceso_id','=',$r->id)
+              $cli_links = DB::table('clientes_accesos_links')->where('cliente_acceso_id','=', $r->id)
                                                               ->where('tipo','=', 1)
                                                               ->first();
               $key = $this->curl($cli_links->url);
@@ -276,6 +282,22 @@ class ApiCurso extends Controller
         $result = curl_exec($ch);
         curl_close($ch);
         return json_decode($result);
+    }
+
+    private function getIPCliente()
+    {
+        if (isset($_SERVER["HTTP_CLIENT_IP"]))
+            return $_SERVER["HTTP_CLIENT_IP"];
+        elseif (isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
+            return $_SERVER["HTTP_X_FORWARDED_FOR"];
+        elseif (isset($_SERVER["HTTP_X_FORWARDED"]))
+            return $_SERVER["HTTP_X_FORWARDED"];
+        elseif (isset($_SERVER["HTTP_FORWARDED_FOR"]))
+            return $_SERVER["HTTP_FORWARDED_FOR"];
+        elseif (isset($_SERVER["HTTP_FORWARDED"]))
+            return $_SERVER["HTTP_FORWARDED"];
+        else
+            return $_SERVER["REMOTE_ADDR"];
     }
 
 }

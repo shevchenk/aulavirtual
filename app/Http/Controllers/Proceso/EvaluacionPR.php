@@ -27,6 +27,7 @@ class EvaluacionPR extends Controller
     public function Load(Request $r )
     {
         if ( $r->ajax() ) {
+            $r['dni'] = Auth::user()->dni;
             $renturnModel = Curso::runLoad($r);
             $return['rst'] = 1;
             $return['data'] = $renturnModel;
@@ -54,11 +55,16 @@ class EvaluacionPR extends Controller
 
     public function validarCurso(Request $r)
     {
-        $datos=array(
-          'dni'=> Auth::user()->dni
-        );
-        
-        $objArr = $this->curl('localhost/Cliente/Curso.php',$datos);
+        $idcliente = session('idcliente');
+        $urlcliente = session('urlcliente');
+        $param_data = array('dni' => Auth::user()->dni);
+
+        // URL (CURL)
+        $cli_links = DB::table('clientes_accesos_links')->where('cliente_acceso_id','=', $idcliente)
+                                                        ->where('tipo','=', 3)
+                                                        ->first();
+        $objArr = $this->curl($cli_links->url, $param_data);
+        // --
         $return_response = '';
 
         if (empty($objArr))
@@ -70,7 +76,7 @@ class EvaluacionPR extends Controller
             $tab_cli = DB::table('clientes_accesos')->select('id', 'nombre', 'key', 'url', 'ip')
                                                     ->where('id','=', $objArr->key[0]->id)
                                                     ->where('key','=', $objArr->key[0]->token)
-                                                    //->where('url','=', $objArr->key[0]->url)
+                                                    ->where('url','=', $urlcliente)
                                                     ->where('ip','=', $this->getIPCliente())
                                                     ->where('estado','=', 1)
                                                     ->first();
@@ -104,7 +110,7 @@ class EvaluacionPR extends Controller
             fclose($archivo);
           }
         // --
-        $r['dni']=Auth::user()->dni;
+        $r['dni'] = Auth::user()->dni;
         $renturnModel = Curso::runLoad($r);
         $return['rst'] = 1;
         $return['data'] = $renturnModel;
@@ -118,7 +124,7 @@ class EvaluacionPR extends Controller
         DB::beginTransaction();
         try
         {
-          foreach ($objArr->cursos as $k=>$value)
+          foreach ($objArr->evaluacion as $k=>$value)
           {
               $curso = Curso::where('curso', '=', trim($value->curso))
                                     ->where('curso_externo_id','=', trim($value->curso_externo_id))
@@ -133,11 +139,11 @@ class EvaluacionPR extends Controller
                   $curso->curso_externo_id = trim($value->curso_externo_id);
                   $curso->persona_id_created_at=1;
                 }
-                else //UPDATE
+                else //Update
                   $curso->persona_id_updated_at=1;
 
-                  $curso->curso = trim($value->curso);
-                  $curso->save();
+                $curso->curso = trim($value->curso);
+                $curso->save();
               }
 
               // Proceso Persona Docente
@@ -152,10 +158,10 @@ class EvaluacionPR extends Controller
               else
                   $docente->persona_id_updated_at=1;
 
-                  $docente->paterno = trim($value->docente_paterno);
-                  $docente->materno = trim($value->docente_materno);
-                  $docente->nombre = trim($value->docente_nombre);
-                  $docente->save();
+              $docente->paterno = trim($value->docente_paterno);
+              $docente->materno = trim($value->docente_materno);
+              $docente->nombre = trim($value->docente_nombre);
+              $docente->save();
               // --
 
               // Proceso Programación Unica
@@ -172,12 +178,11 @@ class EvaluacionPR extends Controller
                   $programacion_unica->persona_id_updated_at=1;
               }
 
-                  $programacion_unica->curso_id = $curso->id;
-                  $programacion_unica->persona_id = $docente->id;
-                  $programacion_unica->fecha_inicio = $value->fecha_inicio;
-                  $programacion_unica->fecha_final = $value->fecha_final;
-                  $programacion_unica->save();
-
+              $programacion_unica->curso_id = $curso->id;
+              $programacion_unica->persona_id = $docente->id;
+              $programacion_unica->fecha_inicio = $value->fecha_inicio;
+              $programacion_unica->fecha_final = $value->fecha_final;
+              $programacion_unica->save();
               // --
 
               // Proceso Persona Alumno
@@ -192,10 +197,10 @@ class EvaluacionPR extends Controller
               else
                   $alumno->persona_id_updated_at=1;
 
-                  $alumno->paterno = trim($value->alumno_paterno);
-                  $alumno->materno = trim($value->alumno_materno);
-                  $alumno->nombre = trim($value->alumno_nombre);
-                  $alumno->save();
+              $alumno->paterno = trim($value->alumno_paterno);
+              $alumno->materno = trim($value->alumno_materno);
+              $alumno->nombre = trim($value->alumno_nombre);
+              $alumno->save();
               // --
 
               // Proceso Programación
@@ -214,7 +219,7 @@ class EvaluacionPR extends Controller
                   $programacion->estado = $value->programacion_estado;
                   $programacion->persona_id_created_at=1;
               }
-                  $programacion->save();
+              $programacion->save();
               // --
           }
 
@@ -224,7 +229,7 @@ class EvaluacionPR extends Controller
         catch (\Exception $e)
         {
             DB::rollback();
-            dd($e);
+            //dd($e);
             $return = false;
         }
         return $return;
