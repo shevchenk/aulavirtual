@@ -56,7 +56,6 @@ class EvaluacionPR extends Controller
     public function validarCurso(Request $r)
     {
         $idcliente = session('idcliente');
-        $urlcliente = session('urlcliente');
         $param_data = array('dni' => Auth::user()->dni);
 
         // URL (CURL)
@@ -76,7 +75,6 @@ class EvaluacionPR extends Controller
             $tab_cli = DB::table('clientes_accesos')->select('id', 'nombre', 'key', 'url', 'ip')
                                                     ->where('id','=', $objArr->key[0]->id)
                                                     ->where('key','=', $objArr->key[0]->token)
-                                                    ->where('url','=', $urlcliente)
                                                     ->where('ip','=', $this->getIPCliente())
                                                     ->where('estado','=', 1)
                                                     ->first();

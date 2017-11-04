@@ -119,7 +119,7 @@ class ApiCurso extends Controller
         $ruta = 'api.curso.curso';
         $valores['valida_ruta_url'] = $ruta;
         $url = url()->previous(); //url anterior Cliente
-        session(['idcliente' => $r->id, 'urlcliente' => $url]);
+        session(['idcliente' => $r->id]);
         //Session::put('grupo', $grupo);
 
         if (empty($r))
