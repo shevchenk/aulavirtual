@@ -1,20 +1,18 @@
 <script type="text/javascript">
 var AjaxEvaluacion={
-    /*AgregarEditar:function(evento){
-        var data=$("#ModalTipoEvaluacionForm").serialize().split("txt_").join("").split("slct_").join("");
-        url='AjaxDinamic/Mantenimiento.TipoEvaluacionEM@New';
-        if(AddEdit==0){
-            url='AjaxDinamic/Mantenimiento.TipoEvaluacionEM@Edit';
-        }
-        masterG.postAjax(url,data,evento);
-    },*/
     Cargar:function(evento,pag){
         if( typeof(pag)!='undefined' ){
             $("#TipoEvaluacionForm").append("<input type='hidden' value='"+pag+"' name='page'>");
         }
         data=$("#TipoEvaluacionForm").serialize().split("txt_").join("").split("slct_").join("");
         $("#TipoEvaluacionForm input[type='hidden']").not('.mant').remove();
-        if($('#txt_curso').val() != '')
+
+        if($('#txt_dni').val() != ''
+              || $('#txt_alumno').val() != ''
+              || $('#txt_curso').val() != ''
+              || $('#txt_docente').val() != ''
+              || $('#txt_fecha_inicio').val() != ''
+              || $('#txt_fecha_final').val() != '')
           url='AjaxDinamic/Proceso.EvaluacionPR@Load';
         else
           url='AjaxDinamic/Proceso.EvaluacionPR@validarCurso';

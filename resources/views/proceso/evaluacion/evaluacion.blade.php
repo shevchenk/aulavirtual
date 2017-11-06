@@ -17,6 +17,12 @@
     @include( 'proceso.evaluacion.js.evaluacion_ajax' )
     @include( 'proceso.evaluacion.js.evaluacion' )
 
+    @include( 'proceso.gestor.js.contenido_ajax' )
+    @include( 'proceso.gestor.js.contenido' )
+    @include( 'proceso.gestor.js.contenidoprogramacion_ajax' )
+    @include( 'proceso.gestor.js.contenidoprogramacion' )
+    @include( 'proceso.gestor.js.listapersona_ajax' )
+    @include( 'proceso.gestor.js.listapersona' )
 
 @stop
 
@@ -134,6 +140,75 @@
                       -->
                     </div><!-- .box-body -->
                 </form><!-- .form -->
+                <hr>
+                <form id="ContenidoForm" style="display: none">
+                    <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant" >
+                    <div class="box-body table-responsive no-padding">
+                        <table id="TableContenido" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="cabecera">
+                                  <th>Curso</th>
+                                  <th>Contenido</th>
+                                  <th>Ruta Contenido</th>
+                                  <th>Fecha Inicio</th>
+                                  <th>Fecha Final</th>
+                                  <th>Fecha Ampliada</th>
+                                  <th>[-]</th>
+                                  <th>[-]</th>
+                                  <th>[-]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                <tr class="cabecera">
+                                  <th>Curso</th>
+                                  <th>Contenido</th>
+                                  <th>Ruta Contenido</th>
+                                  <th>Fecha Inicio</th>
+                                  <th>Fecha Final</th>
+                                  <th>Fecha Ampliada</th>
+                                  <th>[-]</th>
+                                  <th>[-]</th>
+                                  <th>[-]</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div class='btn btn-primary btn-sm' class="btn btn-primary" onClick="AgregarEditar3(1)" >
+                            <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
+                        </div>
+                    </div><!-- .box-body -->
+                </form><!-- .form -->
+                <hr>
+                <form id="ContenidoProgramacionForm" style="display: none">
+                    <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" >
+                    <div class="box-body table-responsive no-padding">
+                        <table id="TableContenidoProgramacion" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="cabecera">
+                                  <th>Alumno</th>
+                                  <th>Fecha de Ampliación</th>
+                                  <th>[-]</th>
+                                  <th>[-]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                <tr class="cabecera">
+                                  <th>Alumno</th>
+                                  <th>Fecha de Ampliación</th>
+                                  <th>[-]</th>
+                                  <th>[-]</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div class='btn btn-primary btn-sm' class="btn btn-primary" onClick="AgregarEditar2(1)" >
+                            <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
+                        </div>
+                    </div><!-- .box-body -->
+                </form><!-- .form --> 
+
             </div><!-- .box -->
         </div><!-- .col -->
     </div><!-- .row -->
@@ -141,5 +216,7 @@
 @stop
 
 @section('form')
-     @include( 'mantenimiento.evaluacion.form.tipoevaluacion' )
+     @include( 'proceso.gestor.form.contenido' )
+     @include( 'proceso.gestor.form.contenidoprogramacion' )
+     @include( 'proceso.gestor.form.listapersona' )
 @stop

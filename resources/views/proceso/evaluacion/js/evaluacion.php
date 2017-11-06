@@ -111,10 +111,8 @@ HTMLCargarEvaluacion=function(result){
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
             "<td class='fecha_final'>"+r.fecha_final+"</td>"+
             "<td>";
-
-        //html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
-        //html+='<td><a class="btn btn-default btn-sm" onClick="AgregarEditar(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
-        html+='<a class="btn btn-default btn-sm" onClick="verContenido(0,'+r.id+')"><i class="fa fa-plus fa-lg"></i> </a></td>';
+        //html+='<a class="btn btn-default btn-sm" onClick="verContenido(0,'+r.id+')"><i class="fa fa-plus fa-lg"></i> </a></td>';
+        html +='<a class="btn btn-info btn-sm" onClick="CargarContenido('+r.pu_id+','+r.curso_id+',\''+r.curso+'\')"><i class="fa fa-plus fa-lg"></i> </a></td>';
         html+="</tr>";
     });
     $("#TableEvaluacion tbody").html(html);
@@ -135,7 +133,17 @@ HTMLCargarEvaluacion=function(result){
             masterG.CargarPaginacion('HTMLCargarEvaluacion','AjaxEvaluacion',result.data,'#TableEvaluacion_paginate');
         }
     });
+};
 
+
+CargarContenido=function(id,curso_id,curso){
+     $("#ContenidoForm #txt_programacion_unica_id").val(id);
+     $("#ModalContenidoForm #txt_programacion_unica_id").val(id);
+     $("#ModalContenidoForm #txt_curso_id").val(curso_id);
+     $("#ModalContenidoForm #txt_curso").val(curso);
+     AjaxContenido.Cargar(HTMLCargarContenido);
+     $("#ContenidoForm").css("display","");
+     $("#ContenidoProgramacionForm").css("display","none");
 };
 
 </script>
