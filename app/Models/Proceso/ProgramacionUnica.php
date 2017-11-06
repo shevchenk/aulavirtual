@@ -2,9 +2,7 @@
 namespace App\Models\Proceso;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Input;
+use DB;
 
 class ProgramacionUnica extends Model
 {
@@ -13,8 +11,10 @@ class ProgramacionUnica extends Model
     public static function runLoad($r)
     {
         $result=ProgramacionUnica::select('v_programaciones_unicas.id','v_programaciones_unicas.fecha_inicio',
-                                'v_programaciones_unicas.fecha_final','vc.curso','v_programaciones_unicas.curso_id')
+                                'v_programaciones_unicas.fecha_final','vc.curso','v_programaciones_unicas.curso_id',
+                                DB::raw('CONCAT_WS(" ",vp.paterno,vp.materno,vp.nombre) as docente'),'vp.dni')
                                 ->join('v_cursos as vc','vc.id','=','v_programaciones_unicas.curso_id')
+                                ->join('v_personas as vp','vp.id','=','v_programaciones_unicas.persona_id')
                                 ->where(
                                     function($query) use ($r){
 
