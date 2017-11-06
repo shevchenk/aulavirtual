@@ -47,8 +47,25 @@
                             <table id="TableProgramacionUnica" class="table table-bordered table-hover">
                                 <thead>
                                     <tr class="cabecera">
-
-                                        <th class="col-xs-5">
+                                        <th class="col-xs-2">
+                                            <div class="form-group">
+                                                <label><h4>DNI:</h4></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                    <input type="text" class="form-control" name="txt_dni" id="txt_dni" placeholder="DNI" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th class="col-xs-3">
+                                            <div class="form-group">
+                                                <label><h4>Docente:</h4></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                    <input type="text" class="form-control" name="txt_docente" id="txt_docente" placeholder="Docente" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th class="col-xs-3">
                                             <div class="form-group">
                                                 <label><h4>Curso:</h4></label>
                                                 <div class="input-group">
@@ -57,7 +74,7 @@
                                                 </div>
                                             </div>
                                         </th>
-                                        <th class="col-xs-3">
+                                        <th class="col-xs-2">
                                             <div class="form-group">
                                                 <label><h4>Fecha Inicio:</h4></label>
                                                 <div class="input-group">
@@ -66,7 +83,7 @@
                                                 </div>
                                             </div>
                                         </th>
-                                        <th class="col-xs-3">
+                                        <th class="col-xs-2">
                                             <div class="form-group">
                                                 <label><h4>Fecha Final:</h4></label>
                                                 <div class="input-group">
@@ -81,7 +98,9 @@
                                 <tbody>
                                 </tbody>
                                 <tfoot>
-                                    <tr class="cabecera">                               
+                                    <tr class="cabecera"> 
+                                      <th>DNI</th>
+                                      <th>Docente</th>
                                       <th>Curso</th>
                                       <th>Fecha Inicio</th>
                                       <th>Fecha Final</th>

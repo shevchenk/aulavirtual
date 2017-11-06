@@ -38,6 +38,8 @@ HTMLCargarProgramacionUnica=function(result){
     $.each(result.data.data,function(index,r){
 
         html+="<tr id='trid_"+r.id+"'>"+
+            "<td class='curso'>"+r.dni+"</td>"+
+            "<td class='curso'>"+r.docente+"</td>"+
             "<td class='curso'>"+r.curso+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
             "<td class='fecha_final'>"+r.fecha_final+"</td>"+
