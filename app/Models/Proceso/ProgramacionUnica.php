@@ -19,7 +19,12 @@ class ProgramacionUnica extends Model
                                     function($query) use ($r){
 
                                        // $query->where('vc.curso','like','%'.$curso.'%');
-
+                                       if( $r->has("dni") ){
+                                              $dni=trim($r->dni);
+                                              if( $dni !='' ){
+                                                  $query->where('vp.dni','=', $dni);
+                                              }
+                                        }
                                         if( $r->has("curso") ){
                                             $curso=trim($r->curso);
                                             if( $curso !='' ){
