@@ -14,7 +14,6 @@ use App\Models\Proceso\Programacion;
 
 class EvaluacionPR extends Controller
 {
-    //use WithoutMiddleware;
     private $api;
 
     public function __construct()

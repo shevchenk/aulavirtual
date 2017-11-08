@@ -17,7 +17,6 @@ class ProgramacionUnicaPR extends Controller
 
     public function __construct()
     {
-        //$this->middleware('auth');  //Esto debe activarse cuando estemos con sessión
         $this->api = new Api();
     }
 
