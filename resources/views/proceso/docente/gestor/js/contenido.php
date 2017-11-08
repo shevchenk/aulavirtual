@@ -167,8 +167,12 @@ HTMLCargarContenido=function(result){
             "<input type='hidden' class='curso_id' value='"+r.curso_id+"'>"+
             "<td>";
             html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
-            '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar3(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>'+
-            '<td><a class="btn btn-info btn-sm" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')"><i class="fa fa-th-list fa-lg"></i> </a></td>';
+            '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar3(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
+            html+="<td>";
+            if(r.tipo_respuesta!=0){
+                 html+='<a class="btn btn-info btn-sm" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')"><i class="fa fa-th-list fa-lg"></i> </a>';
+            }
+            html+='</td>';
         html+="</tr>";
     });
     $("#TableContenido tbody").html(html); 
