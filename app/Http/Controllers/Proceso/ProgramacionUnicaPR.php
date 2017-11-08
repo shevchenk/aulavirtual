@@ -1,20 +1,25 @@
 <?php
 namespace App\Http\Controllers\Proceso;
 
+use DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\Api\Api;
 use App\Models\Proceso\ProgramacionUnica;
 use App\Models\Proceso\Curso;
 use App\Models\Proceso\Persona;
-use Illuminate\Support\Facades\Auth;
-use DB;
 
 class ProgramacionUnicaPR extends Controller
 {
+    private $api;
+
     public function __construct()
     {
-        $this->middleware('auth');  //Esto debe activarse cuando estemos con sessión
-    } 
+        //$this->middleware('auth');  //Esto debe activarse cuando estemos con sessión
+        $this->api = new Api();
+    }
 
     public function Load(Request $r )
     {
@@ -22,23 +27,8 @@ class ProgramacionUnicaPR extends Controller
             $renturnModel = ProgramacionUnica::runLoad($r);
             $return['rst'] = 1;
             $return['data'] = $renturnModel;
-            $return['msj'] = "No hay registros aún";    
-            return response()->json($return);   
-        }
-    }
-    
-        public function response($code=200, $status="", $message="")
-    {
-        http_response_code($code);
-        if( !empty($status) && !empty($message) )
-        {
-            $response = array(
-                        "status" => $status ,
-                        "message"=>$message,
-                        "server" => $this->getIPCliente()
-                    );
-            //echo json_encode($response, JSON_PRETTY_PRINT);
-            return json_encode($response, JSON_PRETTY_PRINT);
+            $return['msj'] = "No hay registros aún";
+            return response()->json($return);
         }
     }
 
@@ -52,20 +42,20 @@ class ProgramacionUnicaPR extends Controller
         $cli_links = DB::table('clientes_accesos_links')->where('cliente_acceso_id','=', $idcliente)
                                                         ->where('tipo','=', 3)
                                                         ->first();
-        $objArr = $this->curl($cli_links->url, $param_data);
+        $objArr = $this->api->curl($cli_links->url, $param_data);
         // --
         $return_response = '';
 
         if (empty($objArr))
         {
-            $return_response = $this->response(422,"error","Ingrese sus datos de envio");
+            $return_response = $this->api->response(422,"error","Ingrese sus datos de envio");
         }
         else if(isset($objArr->key[0]->id) && isset($objArr->key[0]->token))
         {
             $tab_cli = DB::table('clientes_accesos')->select('id', 'nombre', 'key', 'url', 'ip')
                                                     ->where('id','=', $objArr->key[0]->id)
                                                     ->where('key','=', $objArr->key[0]->token)
-                                                    ->where('ip','=', $this->getIPCliente())
+                                                    ->where('ip','=', $this->api->getIPCliente())
                                                     ->where('estado','=', 1)
                                                     ->first();
 
@@ -73,18 +63,18 @@ class ProgramacionUnicaPR extends Controller
             {
                 $val = $this->insertarEvaluacion($objArr);
                 if($val == true)
-                    $return_response = $this->response(200,"success","Proceso ejecutado satisfactoriamente");
+                    $return_response = $this->api->response(200,"success","Proceso ejecutado satisfactoriamente");
                 else
-                    $return_response = $this->response(422,"error","Revisa tus parametros de envio");
+                    $return_response = $this->api->response(422,"error","Revisa tus parametros de envio");
             }
             else
             {
-                $return_response = $this->response(422 ,"error","Su Parametro de seguridad son incorrectos");
+                $return_response = $this->api->response(422 ,"error","Su Parametro de seguridad son incorrectos");
             }
         }
         else
         {
-            $return_response = $this->response(422,"error","Revisa tus parametros de envio");
+            $return_response = $this->api->response(422,"error","Revisa tus parametros de envio");
         }
 
         // Creación de un archivo JSON para dar respuesta al cliente
@@ -102,8 +92,8 @@ class ProgramacionUnicaPR extends Controller
         $renturnModel = ProgramacionUnica::runLoad($r);
         $return['rst'] = 1;
         $return['data'] = $renturnModel;
-        $return['msj'] = "No hay registros aún";    
-        return response()->json($return);   
+        $return['msj'] = "No hay registros aún";
+        return response()->json($return);
     }
 
 
@@ -185,37 +175,6 @@ class ProgramacionUnicaPR extends Controller
             $return = false;
         }
         return $return;
-    }
-
-
-
-    public function curl($url, $data=array())
-    {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        $result = curl_exec($ch);
-        curl_close($ch);
-        return json_decode($result);
-    }
-
-    private function getIPCliente()
-    {
-        if (isset($_SERVER["HTTP_CLIENT_IP"]))
-            return $_SERVER["HTTP_CLIENT_IP"];
-        elseif (isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
-            return $_SERVER["HTTP_X_FORWARDED_FOR"];
-        elseif (isset($_SERVER["HTTP_X_FORWARDED"]))
-            return $_SERVER["HTTP_X_FORWARDED"];
-        elseif (isset($_SERVER["HTTP_FORWARDED_FOR"]))
-            return $_SERVER["HTTP_FORWARDED_FOR"];
-        elseif (isset($_SERVER["HTTP_FORWARDED"]))
-            return $_SERVER["HTTP_FORWARDED"];
-        else
-            return $_SERVER["REMOTE_ADDR"];
     }
 
 }
