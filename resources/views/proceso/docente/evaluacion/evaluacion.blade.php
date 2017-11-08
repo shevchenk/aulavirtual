@@ -14,15 +14,15 @@
     {{ Html::script('lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}
     {{ Html::script('lib/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js') }}
 
-    @include( 'proceso.evaluacion.js.evaluacion_ajax' )
-    @include( 'proceso.evaluacion.js.evaluacion' )
+    @include( 'proceso.docente.evaluacion.js.evaluacion_ajax' )
+    @include( 'proceso.docente.evaluacion.js.evaluacion' )
 
-    @include( 'proceso.gestor.js.contenido_ajax' )
-    @include( 'proceso.gestor.js.contenido' )
-    @include( 'proceso.gestor.js.contenidoprogramacion_ajax' )
-    @include( 'proceso.gestor.js.contenidoprogramacion' )
-    @include( 'proceso.gestor.js.listapersona_ajax' )
-    @include( 'proceso.gestor.js.listapersona' )
+    @include( 'proceso.docente.gestor.js.contenido_ajax' )
+    @include( 'proceso.docente.gestor.js.contenido' )
+    @include( 'proceso.docente.gestor.js.contenidoprogramacion_ajax' )
+    @include( 'proceso.docente.gestor.js.contenidoprogramacion' )
+    @include( 'proceso.docente.gestor.js.listapersona_ajax' )
+    @include( 'proceso.docente.gestor.js.listapersona' )
 
 @stop
 
@@ -216,7 +216,7 @@
 @stop
 
 @section('form')
-     @include( 'proceso.gestor.form.contenido' )
-     @include( 'proceso.gestor.form.contenidoprogramacion' )
-     @include( 'proceso.gestor.form.listapersona' )
+     @include( 'proceso.docente.gestor.form.contenido' )
+     @include( 'proceso.docente.gestor.form.contenidoprogramacion' )
+     @include( 'proceso.docente.gestor.form.listapersona' )
 @stop
