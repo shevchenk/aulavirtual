@@ -119,7 +119,7 @@
                                     <tr class="cabecera">
                                       <th>Curso</th>
                                       <th>Contenido</th>
-                                      <th>Ruta Contenido</th>
+                                      <th>Tipo Respuesta</th>
                                       <th>Fecha Inicio</th>
                                       <th>Fecha Final</th>
                                       <th>Fecha Ampliada</th>
@@ -134,7 +134,7 @@
                                     <tr class="cabecera">
                                       <th>Curso</th>
                                       <th>Contenido</th>
-                                      <th>Ruta Contenido</th>
+                                      <th>Tipo Respuesta</th>
                                       <th>Fecha Inicio</th>
                                       <th>Fecha Final</th>
                                       <th>Fecha Ampliada</th>

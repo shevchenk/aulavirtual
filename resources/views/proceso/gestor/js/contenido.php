@@ -158,8 +158,8 @@ HTMLCargarContenido=function(result){
 
         html+="<tr id='trid_"+r.id+"'>"+
             "<td class='curso'>"+r.curso+"</td>"+
-            "<td class='contenido'>"+r.contenido+"</td>"+
-            "<td class='ruta_contenido'>"+r.ruta_contenido+"</td>"+
+            "<td class='contenido'><a href='file/content/"+r.ruta_contenido+"'>"+r.contenido+"</a></td>"+
+            "<td class='tipo_respuesta_nombre'>"+r.tipo_respuesta_nombre+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
             "<td class='fecha_final'>"+r.fecha_final+"</td>"+
             "<td class='fecha_ampliada'>"+r.fecha_ampliada+"</td>"+
