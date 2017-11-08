@@ -14,15 +14,15 @@
     {{ Html::script('lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}
     {{ Html::script('lib/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js') }}
 
-    @include( 'proceso.evaluacion.js.evaluacion_ajax' )
-    @include( 'proceso.evaluacion.js.evaluacion' )
+    @include( 'proceso.alumno.evaluacion.js.evaluacion_ajax' )
+    @include( 'proceso.alumno.evaluacion.js.evaluacion' )
 
-    @include( 'proceso.gestor.js.contenido_ajax' )
-    @include( 'proceso.gestor.js.contenido' )
-    @include( 'proceso.gestor.js.contenidoprogramacion_ajax' )
-    @include( 'proceso.gestor.js.contenidoprogramacion' )
-    @include( 'proceso.gestor.js.listapersona_ajax' )
-    @include( 'proceso.gestor.js.listapersona' )
+    @include( 'proceso.alumno.gestor.js.contenido_ajax' )
+    @include( 'proceso.alumno.gestor.js.contenido' )
+    @include( 'proceso.alumno.gestor.js.contenidoprogramacion_ajax' )
+    @include( 'proceso.alumno.gestor.js.contenidoprogramacion' )
+    @include( 'proceso.alumno.gestor.js.listapersona_ajax' )
+    @include( 'proceso.alumno.gestor.js.listapersona' )
 
 @stop
 
@@ -133,13 +133,10 @@
                                 </tr>
                             </tfoot>
                         </table>
-                      <!--
-                        <div class='btn btn-primary btn-sm' class="btn btn-primary" onClick="AgregarEditar(1)" >
-                            <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
-                        </div>
-                      -->
+
                     </div><!-- .box-body -->
                 </form><!-- .form -->
+
                 <hr>
                 <form id="ContenidoForm" style="display: none">
                     <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant" >
@@ -154,8 +151,8 @@
                                   <th>Fecha Final</th>
                                   <th>Fecha Ampliada</th>
                                   <th>[-]</th>
-                                  <th>[-]</th>
-                                  <th>[-]</th>
+                                  <!-- <th>[-]</th>
+                                  <th>[-]</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -169,14 +166,16 @@
                                   <th>Fecha Final</th>
                                   <th>Fecha Ampliada</th>
                                   <th>[-]</th>
-                                  <th>[-]</th>
-                                  <th>[-]</th>
+                                  <!-- <th>[-]</th>
+                                  <th>[-]</th> -->
                                 </tr>
                             </tfoot>
                         </table>
+                    <!--
                         <div class='btn btn-primary btn-sm' class="btn btn-primary" onClick="AgregarEditar3(1)" >
                             <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
                         </div>
+                      -->
                     </div><!-- .box-body -->
                 </form><!-- .form -->
                 <hr>
@@ -207,7 +206,7 @@
                             <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
                         </div>
                     </div><!-- .box-body -->
-                </form><!-- .form --> 
+                </form><!-- .form -->
 
             </div><!-- .box -->
         </div><!-- .col -->
@@ -216,7 +215,7 @@
 @stop
 
 @section('form')
-     @include( 'proceso.gestor.form.contenido' )
-     @include( 'proceso.gestor.form.contenidoprogramacion' )
-     @include( 'proceso.gestor.form.listapersona' )
+     @include( 'proceso.alumno.gestor.form.contenido' )
+     @include( 'proceso.alumno.gestor.form.contenidoprogramacion' )
+     @include( 'proceso.alumno.gestor.form.listapersona' )
 @stop

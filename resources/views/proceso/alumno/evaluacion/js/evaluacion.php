@@ -112,7 +112,7 @@ HTMLCargarEvaluacion=function(result){
             "<td class='fecha_final'>"+r.fecha_final+"</td>"+
             "<td>";
         //html+='<a class="btn btn-default btn-sm" onClick="verContenido(0,'+r.id+')"><i class="fa fa-plus fa-lg"></i> </a></td>';
-        html +='<a class="btn btn-info btn-sm" onClick="CargarContenido('+r.pu_id+','+r.curso_id+',\''+r.curso+'\')"><i class="fa fa-plus fa-lg"></i> </a></td>';
+        html +='<a class="btn btn-primary btn-sm" onClick="CargarContenido('+r.pu_id+','+r.curso_id+',\''+r.curso+'\')"><i class="fa fa-plus fa-lg"></i> </a></td>';
         html+="</tr>";
     });
     $("#TableEvaluacion tbody").html(html);

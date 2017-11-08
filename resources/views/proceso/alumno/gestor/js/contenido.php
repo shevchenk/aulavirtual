@@ -11,7 +11,7 @@ $(document).ready(function() {
         "info": true,
         "autoWidth": false
     });
-    
+
     $(".fecha").datetimepicker({
         format: "yyyy-mm-dd",
         language: 'es',
@@ -20,14 +20,14 @@ $(document).ready(function() {
         minView:2,
         autoclose: true,
         todayBtn: false
-    }); 
+    });
 
     $('#ModalContenido').on('shown.bs.modal', function (event) {
         if( AddEdit==1 ){
             $(this).find('.modal-footer .btn-primary').text('Guardar').attr('onClick','AgregarEditarAjax3();');
         }
         else{
-            
+
             $(this).find('.modal-footer .btn-primary').text('Actualizar').attr('onClick','AgregarEditarAjax3();');
             $("#ModalContenidoForm").append("<input type='hidden' value='"+ContenidoG.id+"' name='id'>");
         }
@@ -46,7 +46,7 @@ $(document).ready(function() {
     $('#ModalContenido').on('hidden.bs.modal', function (event) {
         $("#ModalContenidoForm input[type='hidden']").not('.mant').remove();
     });
-    
+
     $( "#ModalContenidoForm #slct_tipo_respuesta" ).change(function() {
         if( $('#ModalContenidoForm #slct_tipo_respuesta').val()=='1' ) {
             $( "#ModalContenidoForm #respuesta" ).css("display","");
@@ -164,14 +164,12 @@ HTMLCargarContenido=function(result){
             "<td class='fecha_final'>"+r.fecha_final+"</td>"+
             "<td class='fecha_ampliada'>"+r.fecha_ampliada+"</td>"+
             "<input type='hidden' class='tipo_respuesta' value='"+r.tipo_respuesta+"'>"+
-            "<input type='hidden' class='curso_id' value='"+r.curso_id+"'>"+
-            "<td>";
-            html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
-            '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar3(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>'+
-            '<td><a class="btn btn-info btn-sm" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')"><i class="fa fa-th-list fa-lg"></i> </a></td>';
+            "<input type='hidden' class='curso_id' value='"+r.curso_id+"'>";
+        html+='<td><a class="btn btn-info btn-sm" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')"><i class="fa fa-th-list fa-lg"></i> </a></td>';
+
         html+="</tr>";
     });
-    $("#TableContenido tbody").html(html); 
+    $("#TableContenido tbody").html(html);
     $("#TableContenido").DataTable({
         "paging": true,
         "lengthChange": false,
@@ -179,7 +177,7 @@ HTMLCargarContenido=function(result){
         "ordering": true,
         "info": true,
         "autoWidth": false
-        
+
     });
 };
 CargarSlct=function(slct){
@@ -202,7 +200,7 @@ CargarContenidoProgramacion=function(id,programacion_unica_id){
      $("#ModalContenidoProgramacionForm #btn_listarpersona").data( 'filtros', 'estado:1|programacion_unica_id:'+programacion_unica_id );
      AjaxContenidoProgramacion.Cargar(HTMLCargarContenidoProgramacion);
      $("#ContenidoProgramacionForm").css("display","");
-     
+
 };
 onImagen = function (event) {
         var files = event.target.files || event.dataTransfer.files;

@@ -31,6 +31,7 @@ class ApiCurso extends Controller
 
     public function store()
     {
+      /*
         $obj = json_decode( file_get_contents('php://input') );
         $objArr = (array)$obj;
 
@@ -64,6 +65,7 @@ class ApiCurso extends Controller
         {
             $this->response(422,"error","Revisa tus parametros de envio");
         }
+        */
     }
 
     public function response($code=200, $status="", $message="")
@@ -80,6 +82,7 @@ class ApiCurso extends Controller
         }
     }
 
+    /*
     public function insertCurso($objArr)
     {
         DB::beginTransaction();
@@ -113,7 +116,7 @@ class ApiCurso extends Controller
         }
         return $msg;
     }
-
+    */
     public function Validaracceso(Request $r)
     {
         $ruta = 'api.curso.curso';
