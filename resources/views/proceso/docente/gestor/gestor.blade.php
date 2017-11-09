@@ -20,6 +20,8 @@
     @include( 'proceso.docente.gestor.js.contenido' )
     @include( 'proceso.docente.gestor.js.contenidoprogramacion_ajax' )
     @include( 'proceso.docente.gestor.js.contenidoprogramacion' )
+    @include( 'proceso.docente.gestor.js.contenidorespuesta_ajax' )
+    @include( 'proceso.docente.gestor.js.contenidorespuesta' )
     @include( 'proceso.docente.gestor.js.listapersona_ajax' )
     @include( 'proceso.docente.gestor.js.listapersona' )
     
@@ -126,6 +128,7 @@
                                       <th>[-]</th>
                                       <th>[-]</th>
                                       <th>[-]</th>
+                                      <th>[-]</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -138,6 +141,7 @@
                                       <th>Fecha Inicio</th>
                                       <th>Fecha Final</th>
                                       <th>Fecha Ampliada</th>
+                                      <th>[-]</th>
                                       <th>[-]</th>
                                       <th>[-]</th>
                                       <th>[-]</th>
@@ -176,6 +180,32 @@
                             <div class='btn btn-primary btn-sm' class="btn btn-primary" onClick="AgregarEditar2(1)" >
                                 <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
                             </div>
+                        </div><!-- .box-body -->
+                    </form><!-- .form --> 
+                    <hr>
+                    <form id="ContenidoRespuestaForm" style="display: none">
+                        <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" > 
+                        <div class="box-body table-responsive no-padding">
+                            <table id="TableContenidoRespuesta" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr class="cabecera">
+                                      <th>Alumno</th>
+                                      <th>Respuesta</th>
+                                      <th>Ruta Respuesta</th>
+                                      <th>Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="cabecera">
+                                      <th>Alumno</th>
+                                      <th>Respuesta</th>
+                                      <th>Ruta Respuesta</th>
+                                      <th>Fecha</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div><!-- .box-body -->
                     </form><!-- .form --> 
                 </div><!-- .box -->

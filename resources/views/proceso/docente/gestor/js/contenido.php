@@ -173,6 +173,11 @@ HTMLCargarContenido=function(result){
                  html+='<a class="btn btn-info btn-sm" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')"><i class="fa fa-th-list fa-lg"></i> </a>';
             }
             html+='</td>';
+            html+="<td>";
+            if(r.tipo_respuesta!=0){
+                 html+='<a class="btn btn-info btn-sm" onClick="CargarContenidoRespuesta('+r.id+')"><i class="fa fa-th-list fa-lg"></i> </a>';
+            }
+            html+='</td>';
         html+="</tr>";
     });
     $("#TableContenido tbody").html(html); 
@@ -206,6 +211,12 @@ CargarContenidoProgramacion=function(id,programacion_unica_id){
      $("#ModalContenidoProgramacionForm #btn_listarpersona").data( 'filtros', 'estado:1|programacion_unica_id:'+programacion_unica_id );
      AjaxContenidoProgramacion.Cargar(HTMLCargarContenidoProgramacion);
      $("#ContenidoProgramacionForm").css("display","");
+     
+};
+CargarContenidoRespuesta=function(id){
+     $("#ContenidoRespuestaForm #txt_contenido_id").val(id);
+     AjaxContenidoRespuesta.Cargar(HTMLCargarContenidoRespuesta);
+     $("#ContenidoRespuestaForm").css("display","");
      
 };
 onImagen = function (event) {
