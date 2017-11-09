@@ -211,12 +211,14 @@ CargarContenidoProgramacion=function(id,programacion_unica_id){
      $("#ModalContenidoProgramacionForm #btn_listarpersona").data( 'filtros', 'estado:1|programacion_unica_id:'+programacion_unica_id );
      AjaxContenidoProgramacion.Cargar(HTMLCargarContenidoProgramacion);
      $("#ContenidoProgramacionForm").css("display","");
+     $("#ContenidoRespuestaForm").css("display","none");
      
 };
 CargarContenidoRespuesta=function(id){
      $("#ContenidoRespuestaForm #txt_contenido_id").val(id);
      AjaxContenidoRespuesta.Cargar(HTMLCargarContenidoRespuesta);
      $("#ContenidoRespuestaForm").css("display","");
+     $("#ContenidoProgramacionForm").css("display","none");
      
 };
 onImagen = function (event) {
