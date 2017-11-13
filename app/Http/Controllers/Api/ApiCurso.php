@@ -151,7 +151,7 @@ class ApiCurso extends Controller
               {
                   $persona = DB::table('v_personas')->where('dni','=',$r->dni)
                                                   ->first();
-                  if($persona)
+                  if($persona) // Existe Persona
                   {
                       //$priv_cliente = DB::table('privilegios_clientes')::find($r->cargo);
                       $priv_cliente = DB::table('privilegios_clientes')->where('id','=',$r->cargo)

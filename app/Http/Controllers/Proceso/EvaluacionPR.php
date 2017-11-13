@@ -106,7 +106,26 @@ class EvaluacionPR extends Controller
         DB::beginTransaction();
         try
         {
-          foreach ($objArr->evaluacion as $k=>$value)
+          foreach ($objArr->alumno as $k=>$value)
+          {
+              $alumno = Persona::where('dni', '=', trim($value->alumno_dni))
+                                  ->first();
+              if (count($alumno) == 0)
+              {
+                  $alumno = new Persona();
+                  $alumno->dni = trim($value->alumno_dni);
+                  $alumno->persona_id_created_at=1;
+              }
+              else
+                  $alumno->persona_id_updated_at=1;
+
+              $alumno->paterno = trim($value->alumno_paterno);
+              $alumno->materno = trim($value->alumno_materno);
+              $alumno->nombre = trim($value->alumno_nombre);
+              $alumno->save();
+          }
+
+          foreach ($objArr->programacion as $k=>$value)
           {
               $curso = Curso::where('curso', '=', trim($value->curso))
                                     ->where('curso_externo_id','=', trim($value->curso_externo_id))
@@ -168,6 +187,7 @@ class EvaluacionPR extends Controller
               // --
 
               // Proceso Persona Alumno
+              /*
               $alumno = Persona::where('dni', '=', trim($value->alumno_dni))
                                   ->first();
               if (count($alumno) == 0)
@@ -183,6 +203,7 @@ class EvaluacionPR extends Controller
               $alumno->materno = trim($value->alumno_materno);
               $alumno->nombre = trim($value->alumno_nombre);
               $alumno->save();
+              */
               // --
 
               // Proceso Programación
