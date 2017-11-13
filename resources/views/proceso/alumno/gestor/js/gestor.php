@@ -141,9 +141,12 @@ CargarContenido=function(id,curso_id,curso){
      $("#ModalContenidoForm #txt_programacion_unica_id").val(id);
      $("#ModalContenidoForm #txt_curso_id").val(curso_id);
      $("#ModalContenidoForm #txt_curso").val(curso);
+
      AjaxContenido.Cargar(HTMLCargarContenido);
      $("#ContenidoForm").css("display","");
      $("#ContenidoProgramacionForm").css("display","none");
+
+     $('#div_contenido_respuesta').hide();
 };
 
 </script>

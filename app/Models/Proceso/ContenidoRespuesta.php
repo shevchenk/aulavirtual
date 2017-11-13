@@ -13,12 +13,20 @@ class ContenidoRespuesta extends Model
     public static function runLoad($r){
         $result=ContenidoRespuesta::select('v_contenidos_respuestas.id',
                 DB::raw("CONCAT_WS(' ',vpe.paterno,vpe.materno,vpe.nombre) as alumno"),
-                'v_contenidos_respuestas.created_at','v_contenidos_respuestas.respuesta','v_contenidos_respuestas.ruta_respuesta')
+                'v_contenidos_respuestas.created_at','v_contenidos_respuestas.respuesta','v_contenidos_respuestas.ruta_respuesta', 'v_contenidos_respuestas.estado')
             ->join('v_programaciones as vpr','vpr.id','=','v_contenidos_respuestas.programacion_id')
             ->join('v_personas as vpe','vpe.id','=','vpr.persona_id')
             ->where('v_contenidos_respuestas.contenido_id','=',$r->contenido_id)
             ->where('v_contenidos_respuestas.estado','=',1)->get();
         return $result;
+    }
+
+    public static function runEditStatus($r){
+
+        $contenido = ContenidoRespuesta::find($r->id);
+        $contenido->estado = trim( $r->estadof );
+        $contenido->persona_id_updated_at=Auth::user()->id;
+        $contenido->save();
     }
 
     // --

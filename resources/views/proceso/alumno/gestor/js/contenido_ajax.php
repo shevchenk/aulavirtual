@@ -40,6 +40,15 @@ var AjaxContenido={
         url='AjaxDinamic/Proceso.ContenidoRespuestaPR@Load';
         $("#frmRepuestaAlum input[type='hidden']").not('.mant').remove();
         masterG.postAjax(url,data,evento);
-    }
+    },
+    CambiarEstadoRespuestaContenido:function(evento,AI,id){
+        $("#frmRepuestaAlum").append("<input type='hidden' value='"+AI+"' name='estadof'>");
+        $("#frmRepuestaAlum").append("<input type='hidden' value='"+id+"' name='id'>");
+
+        var data=$("#frmRepuestaAlum").serialize().split("txt_").join("").split("slct_").join("");
+        $("#frmRepuestaAlum input[type='hidden']").not('.mant').remove();
+        url='AjaxDinamic/Proceso.ContenidoRespuestaPR@EditStatus';
+        masterG.postAjax(url,data,evento);
+    },
 };
 </script>

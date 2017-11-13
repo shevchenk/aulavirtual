@@ -128,17 +128,19 @@ AgregarEditar3=function(val,id){
 
 CambiarEstado3=function(estado,id){
     sweetalertG.confirm("¿Estás seguro?", "Confirme la eliminación", function(){
-        AjaxContenido.CambiarEstado(HTMLCambiarEstado3,estado,id);
+        AjaxContenido.CambiarEstadoRespuestaContenido(HTMLCambiarEstado3,estado,id);
     });
 }
 
 HTMLCambiarEstado3=function(result){
     if( result.rst==1 ){
         msjG.mensaje('success',result.msj,4000);
-        AjaxContenido.Cargar(HTMLCargarContenido);
+        //AjaxContenido.Cargar(HTMLCargarContenido);
+        AjaxContenido.CargarRespuestaContenido(HTMLCargarContenidoRpta);
     }
 }
 
+/*
 AgregarEditarAjax3=function(){
     if( ValidaForm3() ){
         AjaxContenido.AgregarEditar(HTMLAgregarEditar3);
@@ -155,11 +157,14 @@ HTMLAgregarEditar3=function(result){
         msjG.mensaje('warning',result.msj,3000);
     }
 }
+*/
 
 HTMLCargarContenRpta=function(result){
     if( result.rst==1 ){
         msjG.mensaje('success',result.msj,4000);
-        //$('#ModalContenido').modal('hide');
+        AjaxContenido.CargarRespuestaContenido(HTMLCargarContenidoRpta);
+    }else if( result.rst==3 ){
+        msjG.mensaje('warning',result.msj,5000);
         AjaxContenido.CargarRespuestaContenido(HTMLCargarContenidoRpta);
     }
     else{
@@ -179,7 +184,7 @@ HTMLCargarContenido=function(result){
 
         html+="<tr id='trid_"+r.id+"'>"+
             "<td class='curso'>"+r.curso+"</td>"+
-            "<td class='contenido'><a href='file/content/"+r.ruta_contenido+"'>"+r.contenido+"</a></td>"+
+            "<td class='contenido'><a href='file/content/"+r.ruta_contenido+"' target='blank'>"+r.contenido+"</a></td>"+
             "<td class='tipo_respuesta_nombre'>"+r.tipo_respuesta_nombre+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
             "<td class='fecha_final'>"+r.fecha_final+"</td>"+
@@ -210,10 +215,16 @@ HTMLCargarContenidoRpta=function(result){
     $('#TableRespuestaAlu').DataTable().destroy();
 
     $.each(result.data,function(index,r){
+        estadohtml='<a id="'+r.id+'" onClick="CambiarEstado3(1,'+r.id+')" class="btn btn-danger btn-sm"><i class="fa fa-trash fa-lg"></i></a>';
+        if(r.estado==1){
+            estadohtml='<a id="'+r.id+'" onClick="CambiarEstado3(0,'+r.id+')" class="btn btn-danger btn-sm"><i class="fa fa-trash fa-lg"></i></a>';
+        }
+
         html+="<tr id='trid_"+r.id+"'>"+
             "<td class='alumno'>"+r.alumno+"</td>"+
             "<td class='respuesta'>"+r.respuesta+"</td>"+
-            "<td class='ruta_respuesta'><a href='file/content/"+r.ruta_respuesta+"' target='blank'>"+r.ruta_respuesta+"</a></td>";           ;
+            "<td class='ruta_respuesta'><a href='file/content/"+r.ruta_respuesta+"' target='blank'>"+r.ruta_respuesta+"</a></td>";
+        html+="<td><input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>";
         html+="</tr>";
     });
     $("#TableRespuestaAlu tbody").html(html);
