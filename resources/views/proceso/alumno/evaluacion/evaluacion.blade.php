@@ -19,10 +19,6 @@
 
     @include( 'proceso.alumno.gestor.js.contenido_ajax' )
     @include( 'proceso.alumno.gestor.js.contenido' )
-    @include( 'proceso.alumno.gestor.js.contenidoprogramacion_ajax' )
-    @include( 'proceso.alumno.gestor.js.contenidoprogramacion' )
-    @include( 'proceso.alumno.gestor.js.listapersona_ajax' )
-    @include( 'proceso.alumno.gestor.js.listapersona' )
 
 @stop
 
@@ -179,34 +175,59 @@
                     </div><!-- .box-body -->
                 </form><!-- .form -->
                 <hr>
-                <form id="ContenidoProgramacionForm" style="display: none">
-                    <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" >
-                    <div class="box-body table-responsive no-padding">
-                        <table id="TableContenidoProgramacion" class="table table-bordered table-hover">
-                            <thead>
-                                <tr class="cabecera">
-                                  <th>Alumno</th>
-                                  <th>Fecha de Ampliación</th>
-                                  <th>[-]</th>
-                                  <th>[-]</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                            <tfoot>
-                                <tr class="cabecera">
-                                  <th>Alumno</th>
-                                  <th>Fecha de Ampliación</th>
-                                  <th>[-]</th>
-                                  <th>[-]</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                        <div class='btn btn-primary btn-sm' class="btn btn-primary" onClick="AgregarEditar2(1)" >
-                            <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
+                <div id="div_contenido_respuesta" class="box-body no-padding">
+                  <div class="col-md-4">
+                      <div class="panel panel-info">
+                        <div class="panel-heading text-center">POR FAVOR INSERTAR SU RESPUESTA</div>
+                        <div class="panel-body">
+                            <form id="frmRepuestaAlum" name="frmRepuestaAlum" class="form-inline">
+                              <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" >
+                              <input type= "hidden" name="txt_programacion_id" id="txt_programacion_id" class="form-control mant" >
+                              <div class="form-group">
+                                <label class="sr-only" for="Respuesta">Respuesta</label>
+                                <div class="input-group">
+                                  <div class="input-group-addon" style="background-color: #F5F5F5;">Rpta:</div>
+                                  <textarea class="form-control" id="txt_respuesta" name="txt_respuesta" placeholder="" style="width: 350px;" rows="3"></textarea>
+                                </div>
+                              </div>
+
+                              <div class="form-group" style="margin-top:10px;">
+                                  <label>Ruta</label>
+                                  <input type="text" style="width: 330px;" readonly="" class="form-control input-sm" id="txt_file_nombre" name="txt_file_nombre" value="">
+                                  <input type="text" style="display: none;" id="txt_file_archivo" name="txt_file_archivo">
+                                  <label class="btn btn-default btn-flat margin btn-xs">
+                                      <i class="fa fa-file-image-o fa-lg"></i>
+                                      <input type="file" style="display: none;" onchange="onImagen(event);">
+                                  </label>
+                              </div>
+
+                              <div class="form-group" style="padding-left: 110px; margin-top:10px;">
+                                <button type="button" id="btnCancelRpta" name="btnCancelRpta" class="btn btn-default">Cancelar</button>&nbsp;&nbsp;
+                                <button type="button" id="btnGrabarRpta" name="btnGrabarRpta" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Grabar</button>
+                              </div>
+                            </form>
                         </div>
-                    </div><!-- .box-body -->
-                </form><!-- .form -->
+                      </div>
+                  </div>
+                  <div class="col-md-8">
+                        <table id="TableRespuestaAlu" class="table table-bordered table-hover">
+                          <thead>
+                            <tr class="cabecera">
+                              <th>Alumno</th>
+                              <th>Respuesta</th>
+                              <th>Ruta</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>-</td>
+                              <td>-</td>
+                              <td>-</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                  </div>
+                </div>
 
             </div><!-- .box -->
         </div><!-- .col -->
@@ -216,6 +237,4 @@
 
 @section('form')
      @include( 'proceso.alumno.gestor.form.contenido' )
-     @include( 'proceso.alumno.gestor.form.contenidoprogramacion' )
-     @include( 'proceso.alumno.gestor.form.listapersona' )
 @stop

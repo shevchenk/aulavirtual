@@ -12,7 +12,7 @@ class ContenidoPR extends Controller
     public function __construct()
     {
         $this->middleware('auth');  //Esto debe activarse cuando estemos con sessión
-    } 
+    }
 
     public function EditStatus(Request $r )
     {
@@ -34,12 +34,12 @@ class ContenidoPR extends Controller
             );
 
             $rules = array(
-                'curso_id' => 
+                'curso_id' =>
                        ['required',
                         ],
             );
 
-            
+
             $validator=Validator::make($r->all(), $rules,$mensaje);
 
             if ( !$validator->fails() ) {
@@ -64,7 +64,7 @@ class ContenidoPR extends Controller
             );
 
             $rules = array(
-                'curso_id' => 
+                'curso_id' =>
                        ['required',
                         ],
             );
@@ -90,11 +90,22 @@ class ContenidoPR extends Controller
             $renturnModel = Contenido::runLoad($r);
             $return['rst'] = 1;
             $return['data'] = $renturnModel;
-            $return['msj'] = "No hay registros aún";    
-            return response()->json($return);   
+            $return['msj'] = "No hay registros aún";
+            return response()->json($return);
         }
     }
 
-
+    // --
+    public function LoadContenidoProgra(Request $r )
+    {
+        if ( $r->ajax() ) {
+            $renturnModel = Contenido::runLoadContenidoProgra($r);
+            $return['rst'] = 1;
+            $return['data'] = $renturnModel;
+            $return['msj'] = "No hay registros aún";
+            return response()->json($return);
+        }
+    }
+    // --
 
 }

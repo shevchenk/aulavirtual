@@ -11,7 +11,7 @@ class Contenido extends Model
     protected   $table = 'v_contenidos';
 
     public static function runEditStatus($r){
-        
+
         $contenido = Contenido::find($r->id);
         $contenido->estado = trim( $r->estadof );
         $contenido->persona_id_updated_at=Auth::user()->id;
@@ -19,14 +19,14 @@ class Contenido extends Model
     }
 
     public static function runNew($r){
-        
+
         $contenido = new Contenido;
         $contenido->programacion_unica_id = trim( $r->programacion_unica_id );
         $contenido->curso_id = trim( $r->curso_id );
         $contenido->contenido = trim( $r->contenido );
         if(trim($r->file_nombre)!='' and trim($r->file_archivo)!=''){
             $contenido->ruta_contenido = trim( $r->file_nombre );
-            $url = "file/content/".$r->file_nombre; 
+            $url = "file/content/".$r->file_nombre;
             $ftf=new Contenido;
             $ftf->fileToFile($r->file_archivo, $url);
         }
@@ -46,12 +46,12 @@ class Contenido extends Model
     }
 
     public static function runEdit($r){
-        
+
         $contenido = Contenido::find($r->id);
-        $contenido->contenido = trim( $r->contenido ); 
+        $contenido->contenido = trim( $r->contenido );
         if(trim($r->file_nombre)!='' and trim($r->file_archivo)!=''){
             $contenido->ruta_contenido = trim( $r->file_nombre );
-            $url = "file/content/".$r->file_nombre; 
+            $url = "file/content/".$r->file_nombre;
             $ftf=new Contenido;
             $ftf->fileToFile($r->file_archivo, $url);
         }
@@ -73,8 +73,10 @@ class Contenido extends Model
 
     public static function runLoad($r){
         $result=Contenido::select('v_contenidos.id','v_contenidos.contenido','v_contenidos.ruta_contenido',
-                'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),
-                DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),'vc.curso','v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
+                'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),
+                DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),
+                DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),
+                'vc.curso','v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
                 DB::raw('CASE v_contenidos.tipo_respuesta  WHEN 0 THEN "Solo vista" WHEN 1 THEN "Requiere Respuesta" END AS tipo_respuesta_nombre'))
             ->join('v_cursos as vc','vc.id','=','v_contenidos.curso_id')
             ->where('v_contenidos.programacion_unica_id','=',$r->programacion_unica_id)
@@ -82,7 +84,7 @@ class Contenido extends Model
             ->orderBy('v_contenidos.id','asc')->get();
         return $result;
     }
-    
+
     public function fileToFile($file, $url){
         if ( !is_dir('file') ) {
             mkdir('file',0777);
@@ -102,5 +104,23 @@ class Contenido extends Model
         file_put_contents($url , $file);
         return $url. $type;
     }
+
+    // --
+    public static function runLoadContenidoProgra($r){
+        $result=Contenido::select('v_contenidos.id','v_contenidos.contenido','v_contenidos.ruta_contenido',
+                'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),
+                DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),
+                DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),
+                DB::raw('vp.id as programacion_id'),
+                'vc.curso','v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
+                DB::raw('CASE v_contenidos.tipo_respuesta  WHEN 0 THEN "Solo vista" WHEN 1 THEN "Requiere Respuesta" END AS tipo_respuesta_nombre'))
+            ->join('v_cursos as vc','vc.id','=','v_contenidos.curso_id')
+            ->join('v_programaciones as vp','vp.programacion_unica_id','=','v_contenidos.programacion_unica_id')
+            ->where('v_contenidos.programacion_unica_id','=',$r->programacion_unica_id)
+            ->where('v_contenidos.estado','=',1)
+            ->orderBy('v_contenidos.id','asc')->get();
+        return $result;
+    }
+    // --
 
 }

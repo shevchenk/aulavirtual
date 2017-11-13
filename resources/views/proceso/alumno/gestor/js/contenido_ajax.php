@@ -11,14 +11,14 @@ var AjaxContenido={
     Cargar:function(evento){
         var programacion_unica_id=$("#ContenidoForm #txt_programacion_unica_id").val();
         var data={programacion_unica_id:programacion_unica_id};
-        url='AjaxDinamic/Proceso.ContenidoPR@Load';
+        url='AjaxDinamic/Proceso.ContenidoPR@LoadContenidoProgra';
         $("#ContenidoForm input[type='hidden']").not('.mant').remove();
         masterG.postAjax(url,data,evento);
     },
     CambiarEstado:function(evento,AI,id){
         $("#ModalContenidoForm").append("<input type='hidden' value='"+AI+"' name='estadof'>");
         $("#ModalContenidoForm").append("<input type='hidden' value='"+id+"' name='id'>");
-  
+
         var data=$("#ModalContenidoForm").serialize().split("txt_").join("").split("slct_").join("");
         $("#ModalContenidoForm input[type='hidden']").not('.mant').remove();
         url='AjaxDinamic/Proceso.ContenidoPR@EditStatus';
@@ -29,5 +29,17 @@ var AjaxContenido={
         data={};
         masterG.postAjax(url,data,evento);
     },
+    AgregarRespuestaContenido:function(evento){
+        var data=$("#frmRepuestaAlum").serialize().split("txt_").join("").split("slct_").join("");
+        url='AjaxDinamic/Proceso.ContenidoRespuestaPR@New';
+        masterG.postAjax(url,data,evento);
+    },
+    CargarRespuestaContenido:function(evento){
+        var contenido_id=$("#frmRepuestaAlum #txt_contenido_id").val();
+        var data={contenido_id:contenido_id};
+        url='AjaxDinamic/Proceso.ContenidoRespuestaPR@Load';
+        $("#frmRepuestaAlum input[type='hidden']").not('.mant').remove();
+        masterG.postAjax(url,data,evento);
+    }
 };
 </script>
