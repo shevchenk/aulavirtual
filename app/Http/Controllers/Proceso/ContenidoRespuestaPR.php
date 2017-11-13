@@ -3,9 +3,12 @@ namespace App\Http\Controllers\Proceso;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Proceso\ContenidoRespuesta;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+
+use App\Models\Proceso\Contenido;
+use App\Models\Proceso\ContenidoRespuesta;
+use App\Models\Proceso\ContenidoProgramacion;
 
 class ContenidoRespuestaPR extends Controller
 {
@@ -27,8 +30,8 @@ class ContenidoRespuestaPR extends Controller
 
     public function New(Request $r )
      {
-         if ( $r->ajax() ) {
-
+         if($r->ajax())
+         {
              $mensaje= array(
                  'required'    => ':attribute es requerido',
                  'unique'      => ':attribute solo debe ser único',
@@ -36,21 +39,61 @@ class ContenidoRespuestaPR extends Controller
 
              $rules = array(
                  'contenido_id' =>
-                        ['required',
-                         ],
+                        ['required'],
              );
 
              $validator=Validator::make($r->all(), $rules,$mensaje);
+             $msj = false;
+             $fecha_actual = date('Y-m-d');
 
-             if ( !$validator->fails() ) {
-                 ContenidoRespuesta::runNew($r);
-                 $return['rst'] = 1;
-                 $return['msj'] = 'Registro creado';
+             if(!$validator->fails())
+             {
+                 //Proceso de validación
+                 $contenido = Contenido::find($r->contenido_id);
+                 if($contenido->fecha_final >= $fecha_actual) {
+                    ContenidoRespuesta::runNew($r);
+                    $msj = true;
+                 } else if($contenido->fecha_ampliada >= $fecha_actual) {
+                    ContenidoRespuesta::runNew($r);
+                    $msj = true;
+                 } else {
+
+                   $contenidoprogra = ContenidoProgramacion::where('contenido_id', '=', $r->contenido_id)
+                                                 ->where('estado','=', 1)
+                                                 ->first();
+
+                    if($contenidoprogra->fecha_ampliacion >= $fecha_actual) {
+                        ContenidoRespuesta::runNew($r);
+                        $msj = true;
+                    }else {
+                        $msj = false;
+                    }
+                 }
+
+                 if($msj == true){
+                   $return['rst'] = 1;
+                   $return['msj'] = 'Registro creado';
+                 }else {
+                   $return['rst'] = 3;
+                   $return['msj'] = 'No se puede grabar debido a su fecha de Tiempo Final!';
+                 }
+                 //--
              }
-             else{
+             else
+             {
                  $return['rst'] = 2;
                  $return['msj'] = $validator->errors()->all()[0];
              }
+             return response()->json($return);
+         }
+     }
+
+     public function EditStatus(Request $r )
+     {
+         if ( $r->ajax() ) {
+             ContenidoRespuesta::runEditStatus($r);
+             $return['rst'] = 1;
+             $return['msj'] = 'Registro actualizado';
              return response()->json($return);
          }
      }

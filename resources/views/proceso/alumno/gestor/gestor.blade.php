@@ -24,12 +24,12 @@
 
 @section('content')
 <section class="content-header">
-    <h1>Evaluaciones
-        <small>Mantenimiento</small>
+    <h1>Gestor
+        <small>Contenidos</small>
     </h1>
     <ol class="breadcrumb">
-        <li><i class="fa fa-sitemap"></i> Mantenimiento</a></li>
-        <li class="active">Evaluaciones</li>
+        <li><i class="fa fa-sitemap"></i> Contenidos</a></li>
+        <li class="active">Gestor</li>
     </ol>
 </section>
 
@@ -216,10 +216,12 @@
                               <th>Alumno</th>
                               <th>Respuesta</th>
                               <th>Ruta</th>
+                              <th>[-]</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
+                              <td>-</td>
                               <td>-</td>
                               <td>-</td>
                               <td>-</td>
