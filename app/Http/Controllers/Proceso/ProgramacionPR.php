@@ -12,22 +12,22 @@ use DB;
 class ProgramacionPR extends Controller
 {
     private $api;
-    
+
     public function __construct()
     {
         $this->api = new Api();
         $this->middleware('auth');  //Esto debe activarse cuando estemos con sessión
-    } 
+    }
 
     public function ListPersonaInProgramacion(Request $r ){
         if ( $r->ajax() ) {
-            
+
             $idcliente = session('idcliente');
             $param_data = array('dni' => Auth::user()->dni);
 
             // URL (CURL)
             $cli_links = DB::table('clientes_accesos_links')->where('cliente_acceso_id','=', $idcliente)
-                                                            ->where('tipo','=', 3)
+                                                            ->where('tipo','=', 4)
                                                             ->first();
             $objArr = $this->api->curl($cli_links->url, $param_data);
             // --
@@ -75,19 +75,19 @@ class ProgramacionPR extends Controller
                 fclose($archivo);
               }
             // --
-          
+
             $renturnModel = Programacion::ListPersonaInProgramacion($r);
             $return['rst'] = 1;
             $return['data'] = $renturnModel;
-            $return['msj'] = "No hay registros aún";    
-            return response()->json($return);   
+            $return['msj'] = "No hay registros aún";
+            return response()->json($return);
         }
     }
-    
+
     public function insertarAlumno($objArr){
         DB::beginTransaction();
         try{
-            
+
           foreach ($objArr->alumno as $k=>$value){
               // Proceso Persona Alumno
               $alumno = Persona::where('dni', '=', trim($value->alumno_dni))

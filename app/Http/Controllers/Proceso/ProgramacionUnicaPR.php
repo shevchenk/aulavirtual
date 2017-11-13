@@ -39,7 +39,7 @@ class ProgramacionUnicaPR extends Controller
 
         // URL (CURL)
         $cli_links = DB::table('clientes_accesos_links')->where('cliente_acceso_id','=', $idcliente)
-                                                        ->where('tipo','=', 3)
+                                                        ->where('tipo','=', 4)
                                                         ->first();
         $objArr = $this->api->curl($cli_links->url, $param_data);
         // --
@@ -101,6 +101,27 @@ class ProgramacionUnicaPR extends Controller
         DB::beginTransaction();
         try
         {
+          foreach ($objArr->docente as $k=>$value)
+          {
+          // Proceso Persona Docente
+          $docente = Persona::where('dni', '=', trim($value->docente_dni))
+                              ->first();
+          if (count($docente) == 0)
+          {
+              $docente = new Persona();
+              $docente->dni = trim($value->docente_dni);
+              $docente->persona_id_created_at=1;
+          }
+          else
+              $docente->persona_id_updated_at=1;
+
+          $docente->paterno = trim($value->docente_paterno);
+          $docente->materno = trim($value->docente_materno);
+          $docente->nombre = trim($value->docente_nombre);
+          $docente->save();
+          // --
+          }
+
           foreach ($objArr->gestor as $k=>$value)
           {
               $curso = Curso::where('curso', '=', trim($value->curso))
@@ -122,24 +143,6 @@ class ProgramacionUnicaPR extends Controller
                 $curso->curso = trim($value->curso);
                 $curso->save();
               }
-
-              // Proceso Persona Docente
-              $docente = Persona::where('dni', '=', trim($value->docente_dni))
-                                  ->first();
-              if (count($docente) == 0)
-              {
-                  $docente = new Persona();
-                  $docente->dni = trim($value->docente_dni);
-                  $docente->persona_id_created_at=1;
-              }
-              else
-                  $docente->persona_id_updated_at=1;
-
-              $docente->paterno = trim($value->docente_paterno);
-              $docente->materno = trim($value->docente_materno);
-              $docente->nombre = trim($value->docente_nombre);
-              $docente->save();
-              // --
 
               // Proceso Programación Unica
               $programacion_unica = ProgramacionUnica::where('programacion_unica_externo_id', '=', trim($value->programacion_unica_externo_id))
