@@ -19,6 +19,11 @@ class ContenidoProgramacion extends Model
     }
 
     public static function runNew($r){
+        ContenidoProgramacion::where('programacion_id','=',$r->programacion_id)
+                                      ->where('contenido_id','=',$r->contenido_id)
+                                        ->update(array(
+                                          'estado' => 0,
+                                          'persona_id_updated_at' => Auth::user()->id));
         
         $contenido = new ContenidoProgramacion;
         $contenido->contenido_id = trim(  $r->contenido_id );

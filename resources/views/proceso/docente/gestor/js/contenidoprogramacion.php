@@ -113,8 +113,8 @@ HTMLCargarContenidoProgramacion=function(result){
             "<td class='fecha_ampliacion'>"+r.fecha_ampliacion+"</td>"+
             "<input type='hidden' class='programacion_id' value='"+r.programacion_id+"'>"+
             "<td>";
-            html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
-            '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar2(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
+            html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>";
+//            '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar2(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
         html+="</tr>";
     });
     $("#TableContenidoProgramacion tbody").html(html); 

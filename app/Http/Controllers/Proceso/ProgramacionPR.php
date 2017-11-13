@@ -23,13 +23,14 @@ class ProgramacionPR extends Controller
         if ( $r->ajax() ) {
 
             $idcliente = session('idcliente');
-            $param_data = array('dni' => Auth::user()->dni);
+            $param_data = array('programacion_unica_id' => $r->programacion_unica_id);
 
             // URL (CURL)
             $cli_links = DB::table('clientes_accesos_links')->where('cliente_acceso_id','=', $idcliente)
-                                                            ->where('tipo','=', 4)
+                                                            ->where('tipo','=', 5)
                                                             ->first();
-            $objArr = $this->api->curl($cli_links->url, $param_data);
+            $objArr = $this->api->curl($cli_links->url,$param_data);
+
             // --
             $return_response = '';
 
@@ -104,6 +105,24 @@ class ProgramacionPR extends Controller
               $alumno->materno = trim($value->alumno_materno);
               $alumno->nombre = trim($value->alumno_nombre);
               $alumno->save();
+              // --
+              // Proceso Programación
+              $programacion = Programacion::where('programacion_externo_id', '=', trim($value->programacion_externo_id))
+                                                      ->first();
+              if (count($programacion) == 0) //Insert
+              {
+                  $programacion = new Programacion();
+                  $programacion->programacion_externo_id = trim($value->programacion_externo_id);
+                  $programacion->programacion_unica_id = $value->programacion_unica_id;
+                  $programacion->persona_id = $alumno->id;
+                  $programacion->persona_id_created_at=1;
+              }
+              else //Update
+              {
+                  $programacion->estado = $value->programacion_estado;
+                  $programacion->persona_id_created_at=1;
+              }
+              $programacion->save();
               // --
           }
 

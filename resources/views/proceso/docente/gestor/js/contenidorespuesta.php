@@ -21,7 +21,7 @@ HTMLCargarContenidoRespuesta=function(result){
         html+="<tr id='trid_"+r.id+"'>"+
             "<td class='alumno'>"+r.alumno+"</td>"+
             "<td class='respuesta'>"+r.respuesta+"</td>"+
-            "<td class='ruta_respuesta'>"+r.ruta_respuesta+"</td>"+
+            "<td class='ruta_respuesta'><a href='file/content/"+r.ruta_respuesta+"' target='blank'>"+r.ruta_respuesta+"</a></td>"+
             "<td class='created_at'>"+r.created_at+"</td>";
         html+="</tr>";
     });

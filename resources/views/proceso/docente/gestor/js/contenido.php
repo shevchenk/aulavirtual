@@ -103,7 +103,7 @@ AgregarEditar3=function(val,id){
 
         ContenidoG.id=id;
         ContenidoG.contenido=$("#TableContenido #trid_"+id+" .contenido").text();
-        ContenidoG.ruta_contenido=$("#TableContenido #trid_"+id+" .ruta_contenido").text();
+        ContenidoG.ruta_contenido=$("#TableContenido #trid_"+id+" .ruta_contenido").val();
         ContenidoG.tipo_respuesta=$("#TableContenido #trid_"+id+" .tipo_respuesta").val();
         ContenidoG.fecha_inicio=$("#TableContenido #trid_"+id+" .fecha_inicio").text();
         ContenidoG.fecha_final=$("#TableContenido #trid_"+id+" .fecha_final").text();
@@ -158,13 +158,14 @@ HTMLCargarContenido=function(result){
 
         html+="<tr id='trid_"+r.id+"'>"+
             "<td class='curso'>"+r.curso+"</td>"+
-            "<td class='contenido'><a href='file/content/"+r.ruta_contenido+"'>"+r.contenido+"</a></td>"+
+            "<td class='contenido'><a href='file/content/"+r.ruta_contenido+"' target='blank'>"+r.contenido+"</a></td>"+
             "<td class='tipo_respuesta_nombre'>"+r.tipo_respuesta_nombre+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
             "<td class='fecha_final'>"+r.fecha_final+"</td>"+
             "<td class='fecha_ampliada'>"+r.fecha_ampliada+"</td>"+
             "<input type='hidden' class='tipo_respuesta' value='"+r.tipo_respuesta+"'>"+
             "<input type='hidden' class='curso_id' value='"+r.curso_id+"'>"+
+            "<input type='hidden' class='ruta_contenido' value='"+r.ruta_contenido+"'>"+
             "<td>";
             html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
             '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar3(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';

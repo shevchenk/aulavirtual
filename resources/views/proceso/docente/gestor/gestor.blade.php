@@ -163,7 +163,6 @@
                                       <th>Alumno</th>
                                       <th>Fecha de Ampliación</th>
                                       <th>[-]</th>
-                                      <th>[-]</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -172,7 +171,6 @@
                                     <tr class="cabecera">
                                       <th>Alumno</th>
                                       <th>Fecha de Ampliación</th>
-                                      <th>[-]</th>
                                       <th>[-]</th>
                                     </tr>
                                 </tfoot>
