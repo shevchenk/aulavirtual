@@ -5,10 +5,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Proceso\Contenido;
 use App\Models\Proceso\ContenidoRespuesta;
 use App\Models\Proceso\ContenidoProgramacion;
+use App\Models\Proceso\Programacion;
 
 class ContenidoRespuestaPR extends Controller
 {
@@ -29,7 +31,7 @@ class ContenidoRespuestaPR extends Controller
     }
 
     public function New(Request $r )
-     {
+    {
          if($r->ajax())
          {
              $mensaje= array(
@@ -48,6 +50,12 @@ class ContenidoRespuestaPR extends Controller
 
              if(!$validator->fails())
              {
+               $programacion = Programacion::where('programacion_unica_id', '=', $r->programacion_unica_id)
+                                             ->where('persona_id','=', Auth::user()->id)
+                                             ->where('estado','=', 1)
+                                             ->first();
+               $r['programacion_id'] = $programacion->id;
+               //dd($r->programacion_id);
                  //Proceso de validación
                  $contenido = Contenido::find($r->contenido_id);
                  if($contenido->fecha_final >= $fecha_actual) {

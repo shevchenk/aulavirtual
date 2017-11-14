@@ -182,7 +182,7 @@
                         <div class="panel-body">
                             <form id="frmRepuestaAlum" name="frmRepuestaAlum" class="form-inline">
                               <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" >
-                              <input type= "hidden" name="txt_programacion_id" id="txt_programacion_id" class="form-control mant" >
+                              <input type= "hidden" name="programacion_unica_id" id="programacion_unica_id" class="form-control mant" >
                               <div class="form-group">
                                 <label class="sr-only" for="Respuesta">Respuesta</label>
                                 <div class="input-group">

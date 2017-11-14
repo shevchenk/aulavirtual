@@ -192,7 +192,7 @@ HTMLCargarContenido=function(result){
             "<input type='hidden' class='tipo_respuesta' value='"+r.tipo_respuesta+"'>"+
             "<input type='hidden' class='curso_id' value='"+r.curso_id+"'>";
           if(r.tipo_respuesta == 1)
-            html+='<td><a class="btn btn-info btn-sm" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_id+')"><i class="fa fa-th-list fa-lg"></i> </a></td>';
+            html+='<td><a class="btn btn-info btn-sm" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')"><i class="fa fa-th-list fa-lg"></i> </a></td>';
           else
             html+='<td>&nbsp;</td>';
 
@@ -252,10 +252,9 @@ SlctCargarCurso=function(result){
     $("#ModalContenidoForm #slct_curso_id").html(html);
     $("#ModalContenidoForm #slct_curso_id").selectpicker('refresh');
 };
-CargarContenidoProgramacion=function(id,programacion_id){
+CargarContenidoProgramacion=function(id, programacion_unica_id){
      $("#frmRepuestaAlum #txt_contenido_id").val(id);
-     $("#frmRepuestaAlum #txt_programacion_id").val(programacion_id);
-
+     $("#frmRepuestaAlum #programacion_unica_id").val(programacion_unica_id);
      $('#div_contenido_respuesta').show();
      AjaxContenido.CargarRespuestaContenido(HTMLCargarContenidoRpta);
 };
