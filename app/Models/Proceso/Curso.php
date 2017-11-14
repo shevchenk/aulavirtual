@@ -80,14 +80,13 @@ class Curso extends Model
                           $query->where('pu.fecha_final','like','%'.$fecha_final.'%');
                       }
                   }
-                  /*
+                  
                   if( $r->has("estado") ){
                       $estado=trim($r->estado);
                       if( $estado !='' ){
-                          $query->where('v_cursos.estado','=',''.$estado.'');
+                          $query->where('p.estado','=',$estado);
                       }
                   }
-                  */
                 }
             );
         $result = $sql->orderBy('p.id','asc')->paginate(10);
