@@ -42,7 +42,7 @@
                         <table id="TableEvaluacion" class="table table-bordered table-hover">
                             <thead>
                                 <tr class="cabecera">
-                                <input type="hidden" name="txt_estado" value="1">
+                                <input type="hidden" name="txt_estado" class="mant" value="1">
                                     <th class="col-xs-2">
                                         <div class="form-group">
                                             <label><h4>DNI</h4></label>
