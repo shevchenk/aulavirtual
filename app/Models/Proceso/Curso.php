@@ -39,6 +39,8 @@ class Curso extends Model
             )
             ->where(
                 function($query) use ($r){
+                  $query->where('p.estado','=',1);
+
                   if( $r->has("dni") ){
                       $dni=trim($r->dni);
                       if( $dni !='' ){
@@ -80,7 +82,7 @@ class Curso extends Model
                           $query->where('pu.fecha_final','like','%'.$fecha_final.'%');
                       }
                   }
-                  
+
                   if( $r->has("estado") ){
                       $estado=trim($r->estado);
                       if( $estado !='' ){
