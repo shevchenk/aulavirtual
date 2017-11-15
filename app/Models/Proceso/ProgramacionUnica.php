@@ -17,8 +17,8 @@ class ProgramacionUnica extends Model
                                 ->join('v_personas as vp','vp.id','=','v_programaciones_unicas.persona_id')
                                 ->where(
                                     function($query) use ($r){
-
-                                       // $query->where('vc.curso','like','%'.$curso.'%');
+                                       $query->where('v_programaciones_unicas.estado','=',1);
+                                       
                                        if( $r->has("dni") ){
                                               $dni=trim($r->dni);
                                               if( $dni !='' ){
