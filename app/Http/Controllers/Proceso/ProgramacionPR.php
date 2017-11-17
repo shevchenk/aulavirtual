@@ -155,9 +155,9 @@ class ProgramacionPR extends Controller
     
     public function insertarAlumno($objArr){
         DB::beginTransaction();
-        $array_curso='0,';
-        $array_programacion_unica='0,';
-        $array_programacion='0,';
+        $array_curso='0';
+        $array_programacion_unica='0';
+        $array_programacion='0';
         try{
 
           foreach ($objArr->alumno as $k=>$value){
@@ -194,7 +194,7 @@ class ProgramacionPR extends Controller
                   $programacion->persona_id_created_at=1;
               }
               $programacion->save();
-              $array_programacion.=$programacion->programacion_externo_id.',';
+              $array_programacion.=','.$programacion->programacion_externo_id;
               // --
           }
 

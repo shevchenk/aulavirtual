@@ -160,9 +160,9 @@ class ProgramacionUnicaPR extends Controller
     public function insertarEvaluacion($objArr)
     {
         DB::beginTransaction();
-        $array_curso='0,';
-        $array_programacion_unica='0,';
-        $array_programacion='0,';
+        $array_curso='0';
+        $array_programacion_unica='0';
+        $array_programacion='0';
         
         try
         {
@@ -207,7 +207,7 @@ class ProgramacionUnicaPR extends Controller
 
                 $curso->curso = trim($value->curso);
                 $curso->save();
-                $array_curso.=$curso->curso_externo_id.',';
+                $array_curso.=','.$curso->curso_externo_id;
               }
 
               // Proceso Programación Unica
@@ -229,7 +229,7 @@ class ProgramacionUnicaPR extends Controller
               $programacion_unica->fecha_inicio = $value->fecha_inicio;
               $programacion_unica->fecha_final = $value->fecha_final;
               $programacion_unica->save();
-              $array_programacion_unica.=$programacion_unica->programacion_unica_externo_id.',';
+              $array_programacion_unica.=','.$programacion_unica->programacion_unica_externo_id;
               // --
 
           }
