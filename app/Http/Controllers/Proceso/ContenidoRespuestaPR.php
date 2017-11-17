@@ -54,38 +54,48 @@ class ContenidoRespuestaPR extends Controller
                                              ->where('persona_id','=', Auth::user()->id)
                                              ->where('estado','=', 1)
                                              ->first();
-               $r['programacion_id'] = $programacion->id;
-               //dd($r->programacion_id);
-                 //Proceso de validación
-                 $contenido = Contenido::find($r->contenido_id);
-                 if($contenido->fecha_final >= $fecha_actual) {
-                    ContenidoRespuesta::runNew($r);
-                    $msj = true;
-                 } else if($contenido->fecha_ampliada >= $fecha_actual) {
-                    ContenidoRespuesta::runNew($r);
-                    $msj = true;
-                 } else {
+              if (count($programacion) == 0)
+              {
+                  $return['rst'] = 4;
+                  $return['msj'] = 'La programación esta inactivo!';
+              }
+              else
+              {
+                  $r['programacion_id'] = $programacion->id;
 
-                   $contenidoprogra = ContenidoProgramacion::where('contenido_id', '=', $r->contenido_id)
-                                                 ->where('estado','=', 1)
-                                                 ->first();
+                  //Proceso de validación
+                  $contenido = Contenido::find($r->contenido_id);
+                  if($contenido->fecha_final >= $fecha_actual) {
+                     ContenidoRespuesta::runNew($r);
+                     $msj = true;
+                  } else if($contenido->fecha_ampliada >= $fecha_actual) {
+                     ContenidoRespuesta::runNew($r);
+                     $msj = true;
+                  } else {
 
-                    if($contenidoprogra->fecha_ampliacion >= $fecha_actual) {
-                        ContenidoRespuesta::runNew($r);
-                        $msj = true;
-                    }else {
-                        $msj = false;
-                    }
-                 }
+                    $contenidoprogra = ContenidoProgramacion::where('contenido_id', '=', $r->contenido_id)
+                                                  ->where('estado','=', 1)
+                                                  ->first();
 
-                 if($msj == true){
-                   $return['rst'] = 1;
-                   $return['msj'] = 'Registro creado';
-                 }else {
-                   $return['rst'] = 3;
-                   $return['msj'] = 'No se puede grabar debido a su fecha de Tiempo Final!';
-                 }
-                 //--
+                     if($contenidoprogra->fecha_ampliacion >= $fecha_actual) {
+                         ContenidoRespuesta::runNew($r);
+                         $msj = true;
+                     }else {
+                         $msj = false;
+                     }
+                  }
+
+                  if($msj == true){
+                    $return['rst'] = 1;
+                    $return['msj'] = 'Registro creado';
+                  }else {
+                    $return['rst'] = 3;
+                    $return['msj'] = 'No se puede grabar debido a su fecha de Tiempo Final!';
+                  }
+                  //--
+              }
+
+
              }
              else
              {
