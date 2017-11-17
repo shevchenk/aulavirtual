@@ -56,7 +56,7 @@ class ProgramacionUnicaPR extends Controller
             if($objArr->key[0]->id == @$tab_cli->id && $objArr->key[0]->token == @$tab_cli->key)
             {
                 $val = $this->insertarEvaluacion($objArr);
-                if($val == true)
+                if($val['return'] == true)
                     $return_response = $this->api->response(200,"success","Proceso ejecutado satisfactoriamente");
                 else
                     $return_response = $this->api->response(422,"error","Revisa tus parametros de envio");
@@ -118,9 +118,11 @@ class ProgramacionUnicaPR extends Controller
             if($objArr->key[0]->id == @$tab_cli->id && $objArr->key[0]->token == @$tab_cli->key)
             {
                 $val = $this->insertarEvaluacion($objArr);
-                if($val == true)
-                    $return_response = $this->api->response(200,"success","Proceso ejecutado satisfactoriamente");
-                else
+                if($val['return'] == true){
+                  $this->api->curl('localhost/Cliente/Retorno.php',$val['externo_id']);
+                  
+                  $return_response = $this->api->response(200,"success","Proceso ejecutado satisfactoriamente");
+                }else
                     $return_response = $this->api->response(422,"error","Revisa tus parametros de envio");
             }
             else
@@ -156,6 +158,9 @@ class ProgramacionUnicaPR extends Controller
     public function insertarEvaluacion($objArr)
     {
         DB::beginTransaction();
+        $array_curso='';
+        $array_programacion_unica='';
+        
         try
         {
           foreach ($objArr->docente as $k=>$value)
@@ -199,6 +204,7 @@ class ProgramacionUnicaPR extends Controller
 
                 $curso->curso = trim($value->curso);
                 $curso->save();
+                $array_curso.=$curso->curso_externo_id;
               }
 
               // Proceso Programación Unica
@@ -220,20 +226,22 @@ class ProgramacionUnicaPR extends Controller
               $programacion_unica->fecha_inicio = $value->fecha_inicio;
               $programacion_unica->fecha_final = $value->fecha_final;
               $programacion_unica->save();
+              $array_programacion_unica.=$programacion_unica->programacion_unica_externo_id;
               // --
 
           }
 
           DB::commit();
-          $return = true;
+          $data['return']= true;
+          $data['externo_id']=array('curso'=>$array_curso,'programacion_unica'=>$array_programacion_unica);
         }
         catch (\Exception $e)
         {
             DB::rollback();
             //dd($e);
-            $return = false;
+           $data['return']= false;
         }
-        return $return;
+        return $data;
     }
 
 }
