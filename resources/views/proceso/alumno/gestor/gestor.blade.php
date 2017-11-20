@@ -132,16 +132,15 @@
                           <center>.::Contenidos del Alumno::.</center>
                       </div>
                     <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant" >
-                    <div id="TableContenido" class="box-body table-responsive no-padding">
+                    <div id="DivContenido" class="box-body table-responsive no-padding">
 
                       <div class="col-md-12">
-
                           <div class="col-lg-4" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">
                             <div class="row">
-                              <div class="col-md-5 text-center">
+                              <div class="col-md-5 text-center" style="border-right: 2px solid #e9e9e9;">
                                 <img class="img-responsive" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="100%" width="100%" height="" style="margin:10px auto;">
                               </div>
-                              <div class="col-md-7" style="border-left: 2px solid #e9e9e9;">
+                              <div class="col-md-7">
                                 <div class="text-justify" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">
                                   <p>Este es un Contenido de Ejemplo, espero quede bien!</p>
                                 </div>
@@ -163,10 +162,10 @@
 
                           <div class="col-lg-4" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">
                             <div class="row">
-                              <div class="col-md-5 text-center">
+                              <div class="col-md-5 text-center" style="border-right: 2px solid #e9e9e9;">
                                 <img class="img-responsive" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="100%" width="100%" height="" style="margin:10px auto;">
                               </div>
-                              <div class="col-md-7" style="border-left: 2px solid #e9e9e9;">
+                              <div class="col-md-7">
                                 <div class="text-justify" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">
                                   <p>Este es un Contenido de Ejemplo, espero quede bien!</p>
                                 </div>
