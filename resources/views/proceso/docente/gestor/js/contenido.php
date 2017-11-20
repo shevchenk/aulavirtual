@@ -102,13 +102,13 @@ AgregarEditar3=function(val,id){
     if( val==0 ){
 
         ContenidoG.id=id;
-        ContenidoG.contenido=$("#TableContenido #trid_"+id+" .contenido").text();
-        ContenidoG.ruta_contenido=$("#TableContenido #trid_"+id+" .ruta_contenido").val();
-        ContenidoG.tipo_respuesta=$("#TableContenido #trid_"+id+" .tipo_respuesta").val();
-        ContenidoG.fecha_inicio=$("#TableContenido #trid_"+id+" .fecha_inicio").text();
-        ContenidoG.fecha_final=$("#TableContenido #trid_"+id+" .fecha_final").text();
-        ContenidoG.fecha_ampliada=$("#TableContenido #trid_"+id+" .fecha_ampliada").text();
-        ContenidoG.estado=$("#TableContenido #trid_"+id+" .estado").val();
+        ContenidoG.contenido=$("#DivContenido #trid_"+id+" .contenido").text();
+        ContenidoG.ruta_contenido=$("#DivContenido #trid_"+id+" .ruta_contenido").val();
+        ContenidoG.tipo_respuesta=$("#DivContenido #trid_"+id+" .tipo_respuesta").val();
+        ContenidoG.fecha_inicio=$("#DivContenido #trid_"+id+" .fecha_inicio").val();
+        ContenidoG.fecha_final=$("#DivContenido #trid_"+id+" .fecha_final").val();
+        ContenidoG.fecha_ampliada=$("#DivContenido #trid_"+id+" .fecha_ampliada").val();
+        ContenidoG.estado=$("#DivContenido #trid_"+id+" .estado").val();
         if(ContenidoG.tipo_respuesta=='1'){
                 $('#respuesta').css("display","");
         }
@@ -149,46 +149,52 @@ HTMLAgregarEditar3=function(result){
 HTMLCargarContenido=function(result){
     var html="";
     $.each(result.data,function(index,r){
-        estadohtml='<a id="'+r.id+'" onClick="CambiarEstado3(1,'+r.id+')" class="btn btn-danger btn-sm"><i class="fa fa-trash fa-lg"></i></a>';
+        estadohtml='onClick="CambiarEstado3(1,'+r.id+')"';
         if(r.estado==1){
-            estadohtml='<a id="'+r.id+'" onClick="CambiarEstado3(0,'+r.id+')" class="btn btn-danger btn-sm"><i class="fa fa-trash fa-lg"></i></a>';
+            estadohtml='onClick="CambiarEstado3(0,'+r.id+')"';
         }
         if(index==0){
             html+='<div class="col-md-12">';
         }
-        html+='<div class="col-lg-4" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">'+
+        html+='<div class="col-lg-4" id="trid_'+r.id+'" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">'+
+               '<input type="hidden" class="ruta_contenido" value="'+r.ruta_contenido+'">'+
+               '<input type="hidden" class="fecha_inicio" value="'+r.fecha_inicio+'">'+
+               '<input type="hidden" class="fecha_final" value="'+r.fecha_final+'">'+
+               '<input type="hidden" class="fecha_ampliada" value="'+r.fecha_ampliada+'">'+
+               '<input type="hidden" class="tipo_respuesta" value="'+r.tipo_respuesta+'">'+
+               '<input type="hidden" class="estado" value="'+r.estado+'">'+
                '<div class="row">'+
-                    '<div class="col-md-5 text-center">'+
-                        '<img class="img-responsive" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="100%" width="100%" height="" style="margin:10px auto;">'+
-                    '</div>'+
+                    '<div class="col-md-5 text-center" style="border-right: 2px solid #e9e9e9;">'+
+                            '<a href="file/content/'+r.ruta_contenido+'" target="blank"><img class="img-responsive" src="img/course/'+r.foto+'" alt="" width="100%" height="" style="margin:10px auto;"></a>'+
+                        '</div>'+
                     '<div class="col-md-7" style="border-left: 2px solid #e9e9e9;">'+
                         '<div class="text-justify" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">'+
-                            '<p>Este es un Contenido de Ejemplo, espero quede bien!</p>'+
+                            '<p class="contenido">'+r.contenido+'</p>'+
                         '</div>'+
                         '<div>'+
                             '<p style="font-weight: normal;">'+
-                                '<label style="font-weight: bold;">Fecha Ini. : </label> 2017-11-25</br>'+
-                                '<label style="font-weight: bold;">Fecha Fin. : </label> 2017-11-25</br>'+
-                                '<label style="font-weight: bold;">Fecha Amp. : </label> 2017-11-25'+
+                                '<label style="font-weight: bold;">Fecha Ini. : </label> '+r.fecha_inicio+'</br>'+
+                                '<label style="font-weight: bold;">Fecha Fin. : </label> '+r.fecha_final+'</br>'+
+                                '<label style="font-weight: bold;">Fecha Amp. : </label> '+r.fecha_ampliada+
                             '</p>'+
                         '</div>'+
                     '</div>'+
                 '</div>'+
                 '<div class="row">'+
                               '<div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">'+
-                                '<button type="button" class="col-xs-12 btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="fa fa-trash fa-lg"></span> Eliminar</button>'+
+                                '<button type="button" '+estadohtml+' class="col-xs-12 btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="fa fa-trash fa-lg"></span> Eliminar</button>'+
                               '</div>'+
                               '<div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">'+
-                                '<button type="button" style="" class="col-xs-12 btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar"><span class="fa fa-edit fa-lg"></span> Editar</button>'+
+                                '<button type="button" onClick="AgregarEditar3(0,'+r.id+')" style="" class="col-xs-12 btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar"><span class="fa fa-edit fa-lg"></span> Editar</button>'+
                               '</div>'+
                               '<div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">';
                       if(r.tipo_respuesta!=0){
-                                html+='<button type="button" style="" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 1"><span class="fa fa-list fa-lg"></span> Contenido 1</button>';
+                                html+='<button type="button" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')" style="" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 1"><span class="fa fa-list fa-lg"></span> Contenido 1</button>';
                       }
                                 html+='</div>'+
                                       '<div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">';
                        if(r.tipo_respuesta!=0){        
-                                html+='<button type="button" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 2"><span class="fa fa-list fa-lg"></span> Contenido 2</button>';
+                                html+='<button type="button" onClick="CargarContenidoRespuesta('+r.id+')" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 2"><span class="fa fa-list fa-lg"></span> Contenido 2</button>';
                             }
                               html+='</div>'+
                 '</div>'+

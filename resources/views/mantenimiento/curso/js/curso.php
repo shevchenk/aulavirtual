@@ -97,7 +97,7 @@ HTMLCargarCurso=function(result){
         html+="<tr id='trid_"+r.id+"'>"+
             "<td>";
             if(r.foto!=null){    
-            html+="<a  target='_blank' href='img/course/"+r.foto+"'><img src='img/course/"+r.foto+"' style='height: 40px;width: 40px;'></a>";}
+            html+="<a  target='_blank' href='img/course/"+r.foto+"'><img src='img/course/"+r.foto+"' style='height: 100px;width: 120px;'></a>";}
             html+="</td>"+
             "<td class='curso'>"+r.curso+"</td>";
         html+='<td>';
