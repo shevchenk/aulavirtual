@@ -183,7 +183,9 @@
                               </div>
                             </div>
                             <div class="row">
+                              <div class="col-md-12" style="padding-right: 5px; padding-left: 5px;">
                                 <button type="button" class="col-xs-12 btn btn-primary" data-toggle="tooltip" data-placement="top" title="Responder Tarea"><span class="fa fa-list fa-lg"></span> Responder Tarea</button>
+                              </div>
                             </div>
                           </div>
 
@@ -215,7 +217,7 @@
                               <div class="col-md-3" style="padding-right: 0px; padding-left: 5px;">
                                 <button type="button" style="" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 1"><span class="fa fa-list fa-lg"></span> Contenido 1</button>
                               </div>
-                              <div class="col-md-3" style="padding-right: 5px; padding-left: 5px;">
+                              <div class="col-md-3" style="padding-right: 0px; padding-left: 5px;">
                                 <button type="button" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 2"><span class="fa fa-list fa-lg"></span> Contenido 2</button>
                               </div>
                             </div>
