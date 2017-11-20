@@ -178,18 +178,6 @@ HTMLCargarContenido=function(result){
     //$('#TableContenido').DataTable().destroy();
 
     $.each(result.data,function(index,r){
-      /*
-        html+="<tr id='trid_"+r.id+"'>"+
-            "<td class='curso'>"+r.curso+"</td>"+
-            "<td class='contenido'><a href='file/content/"+r.ruta_contenido+"' target='blank'>"+r.contenido+"</a></td>"+
-            "<td class='tipo_respuesta_nombre'>"+r.tipo_respuesta_nombre+"</td>"+
-            "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
-            "<td class='fecha_final'>"+r.fecha_final+"</td>"+
-            "<td class='fecha_ampliada'>"+r.fecha_ampliada+"</td>"+
-            "<input type='hidden' class='tipo_respuesta' value='"+r.tipo_respuesta+"'>"+
-            "<input type='hidden' class='curso_id' value='"+r.curso_id+"'>";
-                //html+='<td><a class="btn btn-info btn-sm" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')"><i class="fa fa-th-list fa-lg"></i> </a></td>';
-      */
           if(r.tipo_respuesta == 1)
             tipo_respuesta='<button type="button" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')" class="col-xs-12 btn btn-primary" data-toggle="tooltip" data-placement="top" title="Responder Tarea"><span class="fa fa-list fa-lg"></span> Responder Tarea</button>';
           else
@@ -228,6 +216,8 @@ HTMLCargarContenido=function(result){
                 html+='</div>';
                 html+='<div class="col-md-12">';
             }
+
+            tipo_respuesta = '';
     });
     if(result.data.length>0){
         html+='</div>';
