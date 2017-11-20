@@ -125,7 +125,10 @@
                     <form id="ContenidoForm" style="display: none">
                         <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant" > 
                         <div class="box-body table-responsive no-padding">
-                            <table id="TableContenido" class="table table-bordered table-hover">
+                            <div id="DivContenido">
+                                
+                            </div>
+<!--                            <table id="TableContenido" class="table table-bordered table-hover">
                                 <thead>
                                     <tr class="cabecera">
                                         <th>Curso</th>
@@ -156,7 +159,7 @@
                                         <th>[-]</th>
                                     </tr>
                                 </tfoot>
-                            </table>
+                            </table>-->
                             <div class='btn btn-primary btn-sm' class="btn btn-primary" onClick="AgregarEditar3(1)" >
                                 <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
                             </div>
@@ -172,26 +175,26 @@
                             <div class="panel-body table-responsive no-padding">
                                 <div class="col-md-12">
                                     <table id="TableContenidoProgramacion" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr class="cabecera">
-                                        <th>Alumno</th>
-                                        <th>Fecha de Ampliación</th>
-                                        <th>[-]</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                                <tfoot>
-                                    <tr class="cabecera">
-                                        <th>Alumno</th>
-                                        <th>Fecha de Ampliación</th>
-                                        <th>[-]</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                            <div class='btn btn-primary btn-sm' class="btn btn-primary" onClick="AgregarEditar2(1)" >
-                                <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
-                            </div>
+                                        <thead>
+                                            <tr class="cabecera">
+                                                <th>Alumno</th>
+                                                <th>Fecha de Ampliación</th>
+                                                <th>[-]</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="cabecera">
+                                                <th>Alumno</th>
+                                                <th>Fecha de Ampliación</th>
+                                                <th>[-]</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <div class='btn btn-primary btn-sm' class="btn btn-primary" onClick="AgregarEditar2(1)" >
+                                        <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
+                                    </div>
                                 </div><!-- .box-body -->
                             </div>
                         </div>
