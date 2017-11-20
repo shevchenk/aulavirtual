@@ -175,7 +175,6 @@ HTMLCargarContenRpta=function(result){
 HTMLCargarContenido=function(result){
     var html="";
     var tipo_respuesta='';
-    //$('#TableContenido').DataTable().destroy();
 
     $.each(result.data,function(index,r){
           if(r.tipo_respuesta == 1)
@@ -190,11 +189,12 @@ HTMLCargarContenido=function(result){
             html+='<div class="col-lg-4" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">'+
                    ' <div class="row">'+
                         '<div class="col-md-5 text-center" style="border-right: 2px solid #e9e9e9;">'+
-                            '<a href="file/content/'+r.ruta_contenido+'" target="blank"><img class="img-responsive" src="file/content/'+r.ruta_contenido+'" alt="" width="100%" height="" style="margin:10px auto;"></a>'+
+                            '<a href="file/content/'+r.ruta_contenido+'" target="blank"><img class="img-responsive" src="file/content/'+r.foto+'" alt="" width="100%" height="" style="margin:10px auto;"></a>'+
                         '</div>'+
                         '<div class="col-md-7">'+
                             '<div class="text-justify" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">'+
                                 '<p>'+r.contenido+'</p>'+
+                                //'<small>Curso: '+r.curso+'</small>'+
                             '</div>'+
                             '<div>'+
                                 '<p style="font-weight: normal;">'+

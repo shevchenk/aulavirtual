@@ -111,7 +111,7 @@ class Contenido extends Model
                 'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),
                 DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),
                 DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),
-                'vc.curso','v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
+                'vc.curso', 'vc.foto', 'v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
                 DB::raw('CASE v_contenidos.tipo_respuesta  WHEN 0 THEN "Solo vista" WHEN 1 THEN "Requiere Respuesta" END AS tipo_respuesta_nombre'))
             ->join('v_cursos as vc','vc.id','=','v_contenidos.curso_id')
             ->where('v_contenidos.programacion_unica_id','=',$r->programacion_unica_id)

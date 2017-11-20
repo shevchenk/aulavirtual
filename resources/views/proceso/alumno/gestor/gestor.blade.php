@@ -127,7 +127,7 @@
 
                 <hr>
                 <form id="ContenidoForm" style="display: none">
-                  <div class="panel panel-primary">
+                  <div class="panel panel-primary" style="padding-bottom: 10px;">
                       <div class="panel-heading" style="background-color: #337ab7;color:#fff">
                           <center>.::Contenidos del Alumno::.</center>
                       </div>
@@ -249,6 +249,7 @@
                           </div>
                       </div>
                       <div class="col-md-8">
+                        <div class="box-body table-responsive no-padding">
                             <table id="TableRespuestaAlu" class="table table-bordered table-hover">
                               <thead>
                                 <tr class="cabecera">
@@ -267,6 +268,7 @@
                                 </tr>
                               </tbody>
                             </table>
+                        </div>
                       </div>
                   </div>
                 </div>
