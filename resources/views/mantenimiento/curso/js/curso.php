@@ -43,7 +43,7 @@ $(document).ready(function() {
 ValidaForm=function(){
     var r=true;
 
-    if( $.trim( $("#ModalCursoForm #txt_imagen_archivo").val() )=='' ){
+    if( $.trim( $("#ModalCursoForm #txt_imagen_nombre").val() )=='' ){
         r=false;
         msjG.mensaje('warning','Ingrese Imagen',4000);
     }
@@ -60,9 +60,9 @@ AgregarEditar=function(val,id){
     if( val==0 ){
         CursoG.id=id;
         CursoG.curso=$("#TableCurso #trid_"+id+" .curso").text();
-        CursoG.foto=$("#TableProducto #trid_"+id+" .foto").val();
+        CursoG.foto=$("#TableCurso #trid_"+id+" .foto").val();
         if(CursoG.foto!='undefined'){
-            CursoG.imagen_archivo='img/product/'+CursoG.foto;
+            CursoG.imagen_archivo='img/course/'+CursoG.foto;
             CursoG.imagen_nombre=CursoG.foto;
         }else {
             CursoG.imagen_archivo='';

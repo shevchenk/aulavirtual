@@ -50,7 +50,7 @@ class Curso extends Model
         }
         if(trim($r->imagen_archivo)!=''){
             $este = new Curso;
-            $url = "img/product/".$r->imagen_nombre; 
+            $url = "img/course/".$r->imagen_nombre; 
             $este->fileToFile($r->imagen_archivo, $url);
         }
         $curso->persona_id_updated_at=Auth::user()->id;
