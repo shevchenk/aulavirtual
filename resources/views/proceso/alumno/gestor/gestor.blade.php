@@ -206,10 +206,18 @@
                               </div>
                             </div>
                             <div class="row">
-                                <button type="button" style="" class="col-md-3 btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="fa fa-trash fa-lg"></span> Eliminar</button>
-                                <button type="button" style="" class="col-md-3 btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar"><span class="fa fa-edit fa-lg"></span> Editar</button>
-                                <button type="button" style="" class="col-md-3 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 1"><span class="fa fa-list fa-lg"></span> Contenido 1</button>
-                                <button type="button" class="col-md-3 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 2"><span class="fa fa-list fa-lg"></span> Contenido 2</button>
+                              <div class="col-md-3" style="padding-right: 0px; padding-left: 5px;">
+                                <button type="button" class="col-xs-12 btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="fa fa-trash fa-lg"></span> Eliminar</button>
+                              </div>
+                              <div class="col-md-3" style="padding-right: 0px; padding-left: 5px;">
+                                <button type="button" style="" class="col-xs-12 btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar"><span class="fa fa-edit fa-lg"></span> Editar</button>
+                              </div>
+                              <div class="col-md-3" style="padding-right: 0px; padding-left: 5px;">
+                                <button type="button" style="" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 1"><span class="fa fa-list fa-lg"></span> Contenido 1</button>
+                              </div>
+                              <div class="col-md-3" style="padding-right: 5px; padding-left: 5px;">
+                                <button type="button" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 2"><span class="fa fa-list fa-lg"></span> Contenido 2</button>
+                              </div>
                             </div>
                           </div>
 
