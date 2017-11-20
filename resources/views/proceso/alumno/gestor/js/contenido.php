@@ -174,7 +174,7 @@ HTMLCargarContenRpta=function(result){
 
 HTMLCargarContenido=function(result){
     var html="";
-    $('#TableContenido').DataTable().destroy();
+    /*$('#TableContenido').DataTable().destroy();
 
     $.each(result.data,function(index,r){
         estadohtml='<a id="'+r.id+'" onClick="CambiarEstado3(1,'+r.id+')" class="btn btn-danger btn-sm"><i class="fa fa-trash fa-lg"></i></a>';
@@ -207,7 +207,7 @@ HTMLCargarContenido=function(result){
         "info": true,
         "autoWidth": false
 
-    });
+    });*/
 };
 
 HTMLCargarContenidoRpta=function(result){
