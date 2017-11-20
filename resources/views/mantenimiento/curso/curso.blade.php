@@ -40,26 +40,17 @@
                         <table id="TableCurso" class="table table-bordered table-hover">
                             <thead>
                                 <tr class="cabecera">
-
+                                    <th class="col-xs-1">
+                                        <div class="form-group">
+                                            <label><h4>Imagen:</h4></label>
+                                        </div>
+                                    </th>
                                     <th class="col-xs-2">
                                         <div class="form-group">
                                             <label><h4>Curso:</h4></label>
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fa fa-search"></i></div>
                                                 <input type="text" class="form-control" name="txt_curso" id="txt_curso" placeholder="Curso" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
-                                            </div>
-                                        </div>
-                                    </th>
-
-                                    <th class="col-xs-2">
-                                        <div class="form-group">
-                                            <label><h4>Estado:</h4></label>
-                                            <div class="input-group">
-                                                <select class="form-control" name="slct_estado" id="slct_estado">
-                                                    <option value='' selected>.::Todo::.</option>
-                                                    <option value='0'>Inactivo</option>
-                                                    <option value='1'>Activo</option>
-                                                </select>
                                             </div>
                                         </div>
                                     </th>
@@ -70,8 +61,8 @@
                             </tbody>
                             <tfoot>
                                 <tr class="cabecera">                               
+                                  <th>Imagen</th>
                                   <th>Curso</th>
-                                  <th>Estado</th>
                                   <th>[-]</th>
                                 </tr>
                             </tfoot>

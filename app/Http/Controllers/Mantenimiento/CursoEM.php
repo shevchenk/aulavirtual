@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Mantenimiento;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Api\Api;
 use App\Models\Mantenimiento\Curso;
 use DB;
@@ -126,5 +127,34 @@ class CursoEM extends Controller{
            $data['return']= false;
         }
         return $data;
+    }
+    
+    public function Edit(Request $r )
+    {
+        if ( $r->ajax() ) {
+            $mensaje= array(
+                'required'    => ':attribute es requerido',
+                'unique'        => ':attribute solo debe ser único',
+            );
+
+            $rules = array(
+                'imagen_nombre' => 
+                       ['required',
+                        ],
+            );
+
+            $validator=Validator::make($r->all(), $rules,$mensaje);
+
+            if ( !$validator->fails() ) {
+                Curso::runEdit($r);
+                $return['rst'] = 1;
+                $return['msj'] = 'Registro actualizado';
+            }
+            else{
+                $return['rst'] = 2;
+                $return['msj'] = $validator->errors()->all()[0];
+            }
+            return response()->json($return);
+        }
     }
 }

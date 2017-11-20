@@ -21,14 +21,6 @@ var AjaxCurso={
         
         masterG.postAjax(url,data,evento);
     },
-    CambiarEstado:function(evento,AI,id){
-        $("#ModalCursoForm").append("<input type='hidden' value='"+AI+"' name='estadof'>");
-        $("#ModalCursoForm").append("<input type='hidden' value='"+id+"' name='id'>");
-        var data=$("#ModalCursoForm").serialize().split("txt_").join("").split("slct_").join("");
-        $("#ModalCursoForm input[type='hidden']").not('.mant').remove();
-        url='AjaxDinamic/Mantenimiento.CursoEM@EditStatus';
-        masterG.postAjax(url,data,evento);
-    },
 };
 
 </script>
