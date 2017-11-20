@@ -132,38 +132,10 @@
                           <center>.::Contenidos del Alumno::.</center>
                       </div>
                     <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant" >
-                    <div class="box-body table-responsive no-padding">
-                      <div class="col-md-12">
-                      <!--
-                        <table id="TableContenido" class="table table-bordered table-hover">
-                            <thead>
-                                <tr class="cabecera">
-                                  <th>Curso</th>
-                                  <th>Contenido</th>
-                                  <th>Ruta Contenido</th>
-                                  <th>Fecha Inicio</th>
-                                  <th>Fecha Final</th>
-                                  <th>Fecha Ampliada</th>
-                                  <th>[-]</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                            <tfoot>
-                                <tr class="cabecera">
-                                  <th>Curso</th>
-                                  <th>Contenido</th>
-                                  <th>Ruta Contenido</th>
-                                  <th>Fecha Inicio</th>
-                                  <th>Fecha Final</th>
-                                  <th>Fecha Ampliada</th>
-                                  <th>[-]</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                      -->
+                    <div id="TableContenido" class="box-body table-responsive no-padding">
 
-                      <!-- -----------------------  -->
+                      <div class="col-md-12">
+
                           <div class="col-lg-4" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">
                             <div class="row">
                               <div class="col-md-5 text-center">
@@ -183,7 +155,7 @@
                               </div>
                             </div>
                             <div class="row">
-                              <div class="col-md-12" style="padding-right: 5px; padding-left: 5px;">
+                              <div class="col-md-12" style="padding-right: 5px; padding-left: 5px; margin-top: 5px; overflow:hidden;">
                                 <button type="button" class="col-xs-12 btn btn-primary" data-toggle="tooltip" data-placement="top" title="Responder Tarea"><span class="fa fa-list fa-lg"></span> Responder Tarea</button>
                               </div>
                             </div>
@@ -208,24 +180,25 @@
                               </div>
                             </div>
                             <div class="row">
-                              <div class="col-md-3" style="padding-right: 0px; padding-left: 5px;">
+                              <div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">
                                 <button type="button" class="col-xs-12 btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="fa fa-trash fa-lg"></span> Eliminar</button>
                               </div>
-                              <div class="col-md-3" style="padding-right: 0px; padding-left: 5px;">
+                              <div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">
                                 <button type="button" style="" class="col-xs-12 btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar"><span class="fa fa-edit fa-lg"></span> Editar</button>
                               </div>
-                              <div class="col-md-3" style="padding-right: 0px; padding-left: 5px;">
+                              <div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">
                                 <button type="button" style="" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 1"><span class="fa fa-list fa-lg"></span> Contenido 1</button>
                               </div>
-                              <div class="col-md-3" style="padding-right: 0px; padding-left: 5px;">
+                              <div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">
                                 <button type="button" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 2"><span class="fa fa-list fa-lg"></span> Contenido 2</button>
                               </div>
                             </div>
                           </div>
 
-                        <!-- ------------------- -->
-
                       </div>
+
+
+
                     </div><!-- .box-body -->
                   </div>
                 </form><!-- .form -->
