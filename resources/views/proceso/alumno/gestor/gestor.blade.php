@@ -215,28 +215,35 @@
                                 <form id="frmRepuestaAlum" name="frmRepuestaAlum" class="form-inline">
                                   <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" >
                                   <input type= "hidden" name="programacion_unica_id" id="programacion_unica_id" class="form-control mant" >
-                                  <div class="form-group">
+                                  <div class="col-md-12">
                                     <label class="sr-only" for="Respuesta">Respuesta</label>
-                                    <div class="input-group">
+                                    <div class="input-group col-xs-12">
                                       <div class="input-group-addon" style="background-color: #F5F5F5;">Rpta:</div>
-                                      <textarea class="form-control" id="txt_respuesta" name="txt_respuesta" placeholder="" style="width: 350px;" rows="3"></textarea>
+                                      <textarea class="form-control" id="txt_respuesta" name="txt_respuesta" placeholder="" rows="4"></textarea>
                                     </div>
                                   </div>
 
-                                  <div class="form-group" style="margin-top:10px;">
-                                      <label>Ruta</label>
-                                      <input type="text" style="width: 330px;" readonly="" class="form-control input-sm" id="txt_file_nombre" name="txt_file_nombre" value="">
+                                  <div class="col-md-12" style="margin-top:10px;">
+
+                                      <input type="text" style="" readonly="" class="col-xs-9 input-sm" id="txt_file_nombre" name="txt_file_nombre" value="">
                                       <input type="text" style="display: none;" id="txt_file_archivo" name="txt_file_archivo">
-                                      <label class="btn btn-default btn-flat margin btn-xs">
+                                      <label class="col-xs-3 btn btn-default btn-flat  btn-xs" style="height: 30px; margin-top: 0px;">
                                           <i class="fa fa-file-image-o fa-lg"></i>
                                           <input type="file" style="display: none;" onchange="onImagen(event);">
                                       </label>
                                   </div>
 
-                                  <div class="form-group" style="padding-left: 110px; margin-top:10px;">
-                                    <button type="button" id="btnCancelRpta" name="btnCancelRpta" class="btn btn-default">Cancelar</button>&nbsp;&nbsp;
-                                    <button type="button" id="btnGrabarRpta" name="btnGrabarRpta" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Grabar</button>
+                                  <div class="col-md-12" style="margin-top:10px;">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-4">
+                                      <button type="button" id="btnCancelRpta" name="btnCancelRpta" class="col-xs-12 btn btn-default">Cancelar</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <button type="button" id="btnGrabarRpta" name="btnGrabarRpta" class="col-xs-12 btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Grabar</button>
+                                    </div>
+                                    <div class="col-md-2"></div>
                                   </div>
+
                                 </form>
                             </div>
                           </div>
