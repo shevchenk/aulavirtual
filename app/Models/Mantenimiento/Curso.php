@@ -18,7 +18,7 @@ class Curso extends Model
     }
     
     public static function runLoad($r){
-        $result=Curso::select('v_cursos.id','v_cursos.curso','v_cursos.curso_externo_id','v_cursos.foto')
+        $result=Curso::select('v_cursos.id','v_cursos.curso','v_cursos.curso_externo_id','v_cursos.foto','v_cursos.estado')
                                 ->where(
                                     function($query) use ($r){
                                         $query->where('v_cursos.estado','=', 1);
@@ -31,13 +31,51 @@ class Curso extends Model
                                         if( $r->has("curso") ){
                                               $curso=trim($r->curso);
                                               if( $curso !='' ){
-                                                  $query->where('v_cursos.curso','=', $curso);
+                                                  $query->where('v_cursos.curso','like','%'.$curso.'%');
                                               }
                                         }
                                     }
                                 )->paginate(10);
 
         return $result;
+    }
+    
+    public static function runEdit($r){
+        
+        $curso = Curso::find($r->id);
+        if(trim($r->imagen_nombre)!=''){
+            $curso->foto=$r->imagen_nombre;
+        }else {
+            $curso->foto=null;    
+        }
+        if(trim($r->imagen_archivo)!=''){
+            $este = new Curso;
+            $url = "img/product/".$r->imagen_nombre; 
+            $este->fileToFile($r->imagen_archivo, $url);
+        }
+        $curso->persona_id_updated_at=Auth::user()->id;
+        $curso->save();
+    }
+    
+    public function fileToFile($file, $url){
+        if ( !is_dir('img') ) {
+            mkdir('img',0777);
+        }
+        if ( !is_dir('img/course') ) {
+            mkdir('img/course',0777);
+        }
+        
+        list($type, $file) = explode(';', $file);
+        list(, $type) = explode('/', $type);
+        if ($type=='jpeg') $type='jpg';
+        if (strpos($type,'document')!==False) $type='docx';
+        if (strpos($type, 'sheet') !== False) $type='xlsx';
+        if (strpos($type, 'pdf') !== False) $type='pdf';
+        if ($type=='plain') $type='txt';
+        list(, $file)      = explode(',', $file);
+        $file = base64_decode($file);
+        file_put_contents($url , $file);
+        return $url. $type;
     }
     
 }
