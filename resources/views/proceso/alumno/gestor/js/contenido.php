@@ -174,14 +174,11 @@ HTMLCargarContenRpta=function(result){
 
 HTMLCargarContenido=function(result){
     var html="";
-    /*$('#TableContenido').DataTable().destroy();
+    var tipo_respuesta='';
+    //$('#TableContenido').DataTable().destroy();
 
     $.each(result.data,function(index,r){
-        estadohtml='<a id="'+r.id+'" onClick="CambiarEstado3(1,'+r.id+')" class="btn btn-danger btn-sm"><i class="fa fa-trash fa-lg"></i></a>';
-        if(r.estado==1){
-            estadohtml='<a id="'+r.id+'" onClick="CambiarEstado3(0,'+r.id+')" class="btn btn-danger btn-sm"><i class="fa fa-trash fa-lg"></i></a>';
-        }
-
+      /*
         html+="<tr id='trid_"+r.id+"'>"+
             "<td class='curso'>"+r.curso+"</td>"+
             "<td class='contenido'><a href='file/content/"+r.ruta_contenido+"' target='blank'>"+r.contenido+"</a></td>"+
@@ -191,23 +188,51 @@ HTMLCargarContenido=function(result){
             "<td class='fecha_ampliada'>"+r.fecha_ampliada+"</td>"+
             "<input type='hidden' class='tipo_respuesta' value='"+r.tipo_respuesta+"'>"+
             "<input type='hidden' class='curso_id' value='"+r.curso_id+"'>";
+                //html+='<td><a class="btn btn-info btn-sm" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')"><i class="fa fa-th-list fa-lg"></i> </a></td>';
+      */
           if(r.tipo_respuesta == 1)
-            html+='<td><a class="btn btn-info btn-sm" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')"><i class="fa fa-th-list fa-lg"></i> </a></td>';
+            tipo_respuesta='<button type="button" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')" class="col-xs-12 btn btn-primary" data-toggle="tooltip" data-placement="top" title="Responder Tarea"><span class="fa fa-list fa-lg"></span> Responder Tarea</button>';
           else
-            html+='<td>&nbsp;</td>';
+            tipo_respuesta+='<button type="button" class="col-xs-12 btn btn-default" data-toggle="tooltip" data-placement="top" title="Responder Tarea" disabled><span class="fa fa-list fa-lg"></span> Responder Tarea</button>';
 
-        html+="</tr>";
+            if(index == 0){
+                html+='<div class="col-md-12">';
+            }
+
+            html+='<div class="col-lg-4" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">'+
+                   ' <div class="row">'+
+                        '<div class="col-md-5 text-center" style="border-right: 2px solid #e9e9e9;">'+
+                            '<a href="file/content/'+r.ruta_contenido+'" target="blank"><img class="img-responsive" src="file/content/'+r.ruta_contenido+'" alt="" width="100%" height="" style="margin:10px auto;"></a>'+
+                        '</div>'+
+                        '<div class="col-md-7">'+
+                            '<div class="text-justify" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">'+
+                                '<p>'+r.contenido+'</p>'+
+                            '</div>'+
+                            '<div>'+
+                                '<p style="font-weight: normal;">'+
+                                    '<label style="font-weight: bold;">Fecha Ini. : </label> '+r.fecha_inicio+'</br>'+
+                                    '<label style="font-weight: bold;">Fecha Fin. : </label> '+r.fecha_final+'</br>'+
+                                    '<label style="font-weight: bold;">Fecha Amp. : </label> '+ r.fecha_ampliada +
+                                '</p>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="row">'+
+                        '<div class="col-md-12" style="padding-right: 5px; padding-left: 5px; margin-top: 5px; overflow:hidden;">'+
+                            tipo_respuesta +
+                        '</div>'+
+                    '</div>'+
+                '</div>';
+
+            if((index+1) % 3 == 0){
+                html+='</div>';
+                html+='<div class="col-md-12">';
+            }
     });
-    $("#TableContenido tbody").html(html);
-    $("#TableContenido").DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false
-
-    });*/
+    if(result.data.length>0){
+        html+='</div>';
+    }
+    $("#DivContenido").html(html);
 };
 
 HTMLCargarContenidoRpta=function(result){

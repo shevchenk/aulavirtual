@@ -76,13 +76,17 @@ class ContenidoRespuestaPR extends Controller
                     $contenidoprogra = ContenidoProgramacion::where('contenido_id', '=', $r->contenido_id)
                                                   ->where('estado','=', 1)
                                                   ->first();
-
-                     if($contenidoprogra->fecha_ampliacion >= $fecha_actual) {
-                         ContenidoRespuesta::runNew($r);
-                         $msj = true;
-                     }else {
-                         $msj = false;
-                     }
+                    if (count($contenidoprogra) == 0)
+                        $msj = false;
+                    else
+                    {
+                        if($contenidoprogra->fecha_ampliacion >= $fecha_actual) {
+                            ContenidoRespuesta::runNew($r);
+                            $msj = true;
+                        }else {
+                            $msj = false;
+                        }
+                    }
                   }
 
                   if($msj == true){
