@@ -1,4 +1,4 @@
-@extends('layout.master')  
+@extends('layout.master')
 
 @section('include')
 @parent
@@ -105,7 +105,7 @@
                                         <tbody>
                                         </tbody>
                                         <tfoot>
-                                            <tr class="cabecera"> 
+                                            <tr class="cabecera">
                                                 <th>DNI</th>
                                                 <th>Docente</th>
                                                 <th>Curso</th>
@@ -123,25 +123,27 @@
                     <hr>
 
                     <form id="ContenidoForm" style="display: none">
-                        <div class="panel panel-primary">
+                        <div class="panel panel-primary" style="padding-bottom: 10px;">
                             <div class="panel-heading" style="background-color: #337ab7;color:#fff">
                                 <center>.::Contenido::.</center>
                             </div>
                             <div class="panel-body table-responsive no-padding">
                                 <div class="col-md-12">
-                                    <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant" > 
+                                    <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant" >
                                     <div id="DivContenido">
                                     </div>
-                                    <div class='btn btn-primary btn-sm' class="btn btn-primary" onClick="AgregarEditar3(1)" >
-                                        <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
+                                    <div class="col-md-12 text-center" style="margin-top: 10px;">
+                                      <div class='btn btn-primary btn-sm' class="btn btn-primary" onClick="AgregarEditar3(1)" >
+                                          <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
+                                      </div>
                                     </div>
                                 </div><!-- .box-body -->
                             </div>
                         </div>
-                    </form><!-- .form --> 
+                    </form><!-- .form -->
                     <hr>
                     <form id="ContenidoProgramacionForm" style="display: none">
-                        <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" > 
+                        <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" >
                         <div class="panel panel-primary">
                             <div class="panel-heading" style="background-color: #337ab7;color:#fff">
                                 <center>.::Ampliación de Respuesta::.</center>
@@ -172,10 +174,10 @@
                                 </div><!-- .box-body -->
                             </div>
                         </div>
-                    </form><!-- .form --> 
+                    </form><!-- .form -->
                     <hr>
                     <form id="ContenidoRespuestaForm" style="display: none">
-                        <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" > 
+                        <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" >
                         <div class="panel panel-primary">
                             <div class="panel-heading" style="background-color: #337ab7;color:#fff">
                                 <center>.::Respuesta de Contenido::.</center>
@@ -205,7 +207,7 @@
                                 </div><!-- .box-body -->
                             </div>
                         </div>
-                    </form><!-- .form --> 
+                    </form><!-- .form -->
                 </div><!-- .box -->
             </div>
         </div><!-- .col -->
