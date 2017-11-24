@@ -40,6 +40,7 @@ class Contenido extends Model
             $contenido->fecha_final = null;
             $contenido->fecha_ampliada = null;
         }
+        $contenido->referencia= implode('|', $r->referencia);
         $contenido->estado = trim( $r->estado );
         $contenido->persona_id_created_at=Auth::user()->id;
         $contenido->save();
@@ -65,6 +66,7 @@ class Contenido extends Model
             $contenido->fecha_final = null;
             $contenido->fecha_ampliada = null;
         }
+        $contenido->referencia= implode('|', $r->referencia);
         $contenido->estado = trim( $r->estado );
         $contenido->persona_id_updated_at=Auth::user()->id;
         $contenido->save();
@@ -72,7 +74,7 @@ class Contenido extends Model
 
 
     public static function runLoad($r){
-        $result=Contenido::select('v_contenidos.id','v_contenidos.contenido','v_contenidos.ruta_contenido',
+        $result=Contenido::select('v_contenidos.id','v_contenidos.contenido',DB::raw('IFNULL(v_contenidos.referencia,"") as referencia'),'v_contenidos.ruta_contenido',
                 'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),
                 DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),
                 DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),

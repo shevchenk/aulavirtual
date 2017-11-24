@@ -14,15 +14,12 @@
                             <label id="label_curso">Curso</label>
                             <input  type="hidden" class="form-control mant"  id="txt_curso_id" name="txt_curso_id" readonly="">
                             <input type="text"  class="form-control mant" id="txt_curso" name="txt_curso" disabled="">
-<!--                            <select  class="form-control selectpicker show-menu-arrow" data-live-search="true" id="slct_curso_id" name="slct_curso_id">
-                                <option value="0">.::Seleccione::.</option>
-                            </select>-->
                         </div> 
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Contenido</label>
-                            <input type="text"  class="form-control" id="txt_contenido" name="txt_contenido">
+                            <textarea type="text"  class="form-control" id="txt_contenido" name="txt_contenido"></textarea>
                         </div>
                     </div>    
                     <div class="col-md-12">
@@ -31,10 +28,20 @@
                             <input type="text" readonly="" class="form-control input-sm" id="txt_file_nombre" name="txt_file_nombre" value="">
                             <input type="text" style="display: none;" id="txt_file_archivo" name="txt_file_archivo">
                             <label class="btn btn-default btn-flat margin btn-xs">
-                                <i class="fa fa-file-image-o fa-lg"></i>
+                                 <i class="fa fa-file-pdf-o fa-lg"></i>
+                                 <i class="fa fa-file-word-o fa-lg"></i>
+                                 <i class="fa fa-file-image-o fa-lg"></i>
                                 <input type="file" style="display: none;" onchange="onImagen(event);">
                             </label>
                         </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Referencia<a class='btn btn-success btn-xs' onclick="AgregarReferencia()"><i class="fa fa-plus fa-xs"></i></a></label>
+                            <div id="referencia">
+                                
+                            </div>
+                        </div> 
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">

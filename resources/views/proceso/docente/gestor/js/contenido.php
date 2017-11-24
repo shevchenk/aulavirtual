@@ -1,6 +1,6 @@
 <script type="text/javascript">
 var AddEdit=0; //0: Editar | 1: Agregar
-var ContenidoG={id:0,curso_id:0,contenido:'',ruta_contenido:'',file_archivo:'',tipo_respuesta:0,fecha_inicio:'',
+var ContenidoG={id:0,curso_id:0,contenido:'',referencia:'',ruta_contenido:'',file_archivo:'',tipo_respuesta:0,fecha_inicio:'',
 fecha_final:'',fecha_ampliada:'',estado:1}; // Datos Globales
 $(document).ready(function() {
      $("#TableContenido").DataTable({
@@ -40,11 +40,12 @@ $(document).ready(function() {
         $('#ModalContenidoForm #txt_fecha_final').val( ContenidoG.fecha_final );
         $('#ModalContenidoForm #txt_fecha_ampliada').val( ContenidoG.fecha_ampliada );
         $('#ModalContenidoForm #slct_estado').selectpicker( 'val',ContenidoG.estado );
-        //$('#ModalContenidoForm #txt_razon_social').focus();
+        ReferenciaHTML(ContenidoG.referencia);
     });
 
     $('#ModalContenido').on('hidden.bs.modal', function (event) {
         $("#ModalContenidoForm input[type='hidden']").not('.mant').remove();
+        $('#ModalContenidoForm input[id="txt_referencia"]').not('.mant').remove();
     });
     
     $( "#ModalContenidoForm #slct_tipo_respuesta" ).change(function() {
@@ -53,7 +54,7 @@ $(document).ready(function() {
         }else{
             $( "#ModalContenidoForm #respuesta" ).css("display","none");
         }
-
+         
     });
 });
 
@@ -97,6 +98,7 @@ AgregarEditar3=function(val,id){
     ContenidoG.fecha_inicio='';
     ContenidoG.fecha_final='';
     ContenidoG.fecha_ampliada='';
+    ContenidoG.referencia='';
     ContenidoG.estado='1';
     $('#respuesta').css("display","none");
     if( val==0 ){
@@ -108,6 +110,7 @@ AgregarEditar3=function(val,id){
         ContenidoG.fecha_inicio=$("#DivContenido #trid_"+id+" .fecha_inicio").val();
         ContenidoG.fecha_final=$("#DivContenido #trid_"+id+" .fecha_final").val();
         ContenidoG.fecha_ampliada=$("#DivContenido #trid_"+id+" .fecha_ampliada").val();
+        ContenidoG.referencia=$("#DivContenido #trid_"+id+" .referencia").val();
         ContenidoG.estado=$("#DivContenido #trid_"+id+" .estado").val();
         if(ContenidoG.tipo_respuesta=='1'){
                 $('#respuesta').css("display","");
@@ -162,6 +165,7 @@ HTMLCargarContenido=function(result){
                '<input type="hidden" class="fecha_final" value="'+r.fecha_final+'">'+
                '<input type="hidden" class="fecha_ampliada" value="'+r.fecha_ampliada+'">'+
                '<input type="hidden" class="tipo_respuesta" value="'+r.tipo_respuesta+'">'+
+               '<input type="hidden" class="referencia" value="'+r.referencia+'">'+
                '<input type="hidden" class="estado" value="'+r.estado+'">'+
                '<div class="row">'+
                     '<div class="col-md-5 text-center" style="border-right: 2px solid #e9e9e9;">'+
@@ -253,5 +257,29 @@ onImagen = function (event) {
         reader.readAsDataURL(files[0]);
         $('#ModalContenidoForm #txt_file_nombre').val(files[0].name);
         console.log(files[0].name);
+};
+AgregarReferencia= function(){
+  var html='';
+        html+='<div class="form-group">'+
+            '<input type="text"  class="form-control" id="txt_referencia" name="txt_referencia[]">';
+        html+="</div>";    
+  $("#referencia").append(html);
+  
+};
+ReferenciaHTML=function(referencias){
+    var html="";
+    if(referencias.length>0){
+        var referencia=referencias.split('|');
+    }
+   
+    for (i = 0; i < referencia.length; i++) {
+        html+='<div class="form-group">'+
+            '<input type="text"  class="form-control" id="txt_referencia" name="txt_referencia[]" value="'+referencia[i]+'">';
+        html+="</div>";  
+    };
+    $("#referencia").html(html);
+    
+
+
 };
 </script>

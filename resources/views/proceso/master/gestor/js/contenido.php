@@ -1,6 +1,6 @@
 <script type="text/javascript">
 var AddEdit=0; //0: Editar | 1: Agregar
-var ContenidoG={id:0,curso_id:0,contenido:'',ruta_contenido:'',file_archivo:'',tipo_respuesta:0,fecha_inicio:'',
+var ContenidoG={id:0,curso_id:0,contenido:'',referencia:'',ruta_contenido:'',file_archivo:'',tipo_respuesta:0,fecha_inicio:'',
 fecha_final:'',fecha_ampliada:'',estado:1}; // Datos Globales
 $(document).ready(function() {
      $("#TableContenido").DataTable({
@@ -40,11 +40,12 @@ $(document).ready(function() {
         $('#ModalContenidoForm #txt_fecha_final').val( ContenidoG.fecha_final );
         $('#ModalContenidoForm #txt_fecha_ampliada').val( ContenidoG.fecha_ampliada );
         $('#ModalContenidoForm #slct_estado').selectpicker( 'val',ContenidoG.estado );
-        //$('#ModalContenidoForm #txt_razon_social').focus();
+        ReferenciaHTML(ContenidoG.referencia);
     });
 
     $('#ModalContenido').on('hidden.bs.modal', function (event) {
         $("#ModalContenidoForm input[type='hidden']").not('.mant').remove();
+        $('#ModalContenidoForm input[id="txt_referencia"]').not('.mant').remove();
     });
     
     $( "#ModalContenidoForm #slct_tipo_respuesta" ).change(function() {
@@ -97,6 +98,7 @@ AgregarEditar3=function(val,id){
     ContenidoG.fecha_inicio='';
     ContenidoG.fecha_final='';
     ContenidoG.fecha_ampliada='';
+    ContenidoG.referencia='1';
     ContenidoG.estado='1';
     $('#respuesta').css("display","none");
     if( val==0 ){
@@ -109,6 +111,7 @@ AgregarEditar3=function(val,id){
         ContenidoG.fecha_final=$("#TableContenido #trid_"+id+" .fecha_final").text();
         ContenidoG.fecha_ampliada=$("#TableContenido #trid_"+id+" .fecha_ampliada").text();
         ContenidoG.estado=$("#TableContenido #trid_"+id+" .estado").val();
+        ContenidoG.referencia=$("#TableContenido #trid_"+id+" .referencia").val();
         if(ContenidoG.tipo_respuesta=='1'){
                 $('#respuesta').css("display","");
         }
@@ -166,6 +169,7 @@ HTMLCargarContenido=function(result){
             "<input type='hidden' class='tipo_respuesta' value='"+r.tipo_respuesta+"'>"+
             "<input type='hidden' class='curso_id' value='"+r.curso_id+"'>"+
             "<input type='hidden' class='ruta_contenido' value='"+r.ruta_contenido+"'>"+
+            '<input type="hidden" class="referencia" value="'+r.referencia+'">'+
             "<td>";
             html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
             '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar3(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
@@ -235,5 +239,29 @@ onImagen = function (event) {
         reader.readAsDataURL(files[0]);
         $('#ModalContenidoForm #txt_file_nombre').val(files[0].name);
         console.log(files[0].name);
+};
+AgregarReferencia= function(){
+  var html='';
+        html+='<div class="form-group">'+
+            '<input type="text"  class="form-control" id="txt_referencia" name="txt_referencia[]">';
+        html+="</div>";    
+  $("#referencia").append(html);
+  
+};
+ReferenciaHTML=function(referencias){
+    var html="";
+    if(referencias.length>0){
+        var referencia=referencias.split('|');
+    }
+   
+    for (i = 0; i < referencia.length; i++) {
+        html+='<div class="form-group">'+
+            '<input type="text"  class="form-control" id="txt_referencia" name="txt_referencia[]" value="'+referencia[i]+'">';
+        html+="</div>";  
+    };
+    $("#referencia").html(html);
+    
+
+
 };
 </script>
