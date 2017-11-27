@@ -11,7 +11,7 @@ $(document).ready(function() {
         "info": true,
         "autoWidth": false
     });
-    
+
     $(".fecha").datetimepicker({
         format: "yyyy-mm-dd",
         language: 'es',
@@ -20,14 +20,14 @@ $(document).ready(function() {
         minView:2,
         autoclose: true,
         todayBtn: false
-    }); 
+    });
 
     $('#ModalContenido').on('shown.bs.modal', function (event) {
         if( AddEdit==1 ){
             $(this).find('.modal-footer .btn-primary').text('Guardar').attr('onClick','AgregarEditarAjax3();');
         }
         else{
-            
+
             $(this).find('.modal-footer .btn-primary').text('Actualizar').attr('onClick','AgregarEditarAjax3();');
             $("#ModalContenidoForm").append("<input type='hidden' value='"+ContenidoG.id+"' name='id'>");
         }
@@ -47,14 +47,14 @@ $(document).ready(function() {
         $("#ModalContenidoForm input[type='hidden']").not('.mant').remove();
         $('#ModalContenidoForm input[id="txt_referencia"]').not('.mant').remove();
     });
-    
+
     $( "#ModalContenidoForm #slct_tipo_respuesta" ).change(function() {
         if( $('#ModalContenidoForm #slct_tipo_respuesta').val()=='1' ) {
             $( "#ModalContenidoForm #respuesta" ).css("display","");
         }else{
             $( "#ModalContenidoForm #respuesta" ).css("display","none");
         }
-         
+
     });
 });
 
@@ -174,17 +174,37 @@ HTMLCargarContenido=function(result){
                     '<div class="col-md-7" style="border-left: 2px solid #e9e9e9;">'+
                         '<div class="text-justify" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">'+
                             '<p class="contenido">'+r.contenido+'</p>'+
-                        '</div>'+
-                        '<div>'+
+                        '</div>';
+
+                if(r.tipo_respuesta == 1){
+                 html+='<div>'+
                             '<p style="font-weight: normal;">'+
                                 '<label style="font-weight: bold;">Fecha Ini. : </label> '+r.fecha_inicio+'</br>'+
                                 '<label style="font-weight: bold;">Fecha Fin. : </label> '+r.fecha_final+'</br>'+
-                                '<label style="font-weight: bold;">Fecha Amp. : </label> '+r.fecha_ampliada+
+                                '<label style="font-weight: bold;">Fecha Amp. : </label> '+ r.fecha_ampliada +
                             '</p>'+
-                        '</div>'+
-                    '</div>'+
-                '</div>'+
-                '<div class="row">'+
+                        '</div>';
+                }else{
+                  html+='<div style="height: 85px;"></div>';
+                }
+
+                html+='</div>'+
+                '</div>';
+
+                if(r.referencia)
+                {
+                  var res_uri = r.referencia.split("|");
+                  html+='<div class="row">'+
+                            '<div class="col-md-12 btn-default" style="font-weight: normal; padding-right: 5px; padding-left: 5px; margin-top: 5px; overflow:hidden;">'+
+                                '';
+                                for (i = 0; i < res_uri.length; i++) {
+                                  html+='<span class="fa fa-book fa-lg"></span> <a href="http://'+res_uri[i]+'" target="blank">'+ res_uri[i] +'</a><br/>';
+                                }
+                      html+='</div>'+
+                        '</div>';
+                }
+
+                html+='<div class="row">'+
                               '<div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">'+
                                 '<button type="button" '+estadohtml+' class="col-xs-12 btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="fa fa-trash fa-lg"></span> Eliminar</button>'+
                               '</div>'+
@@ -197,7 +217,7 @@ HTMLCargarContenido=function(result){
                       }
                                 html+='</div>'+
                                       '<div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">';
-                       if(r.tipo_respuesta!=0){        
+                       if(r.tipo_respuesta!=0){
                                 html+='<button type="button" onClick="CargarContenidoRespuesta('+r.id+')" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 2"><span class="fa fa-list fa-lg"></span> Contenido 2</button>';
                             }
                               html+='</div>'+
@@ -211,7 +231,7 @@ HTMLCargarContenido=function(result){
     if(result.data.length>0){
         html+='</div>';
     }
-    $("#DivContenido").html(html); 
+    $("#DivContenido").html(html);
 };
 
 CargarSlct=function(slct){
@@ -235,14 +255,14 @@ CargarContenidoProgramacion=function(id,programacion_unica_id){
      AjaxContenidoProgramacion.Cargar(HTMLCargarContenidoProgramacion);
      $("#ContenidoProgramacionForm").css("display","");
      $("#ContenidoRespuestaForm").css("display","none");
-     
+
 };
 CargarContenidoRespuesta=function(id){
      $("#ContenidoRespuestaForm #txt_contenido_id").val(id);
      AjaxContenidoRespuesta.Cargar(HTMLCargarContenidoRespuesta);
      $("#ContenidoRespuestaForm").css("display","");
      $("#ContenidoProgramacionForm").css("display","none");
-     
+
 };
 onImagen = function (event) {
         var files = event.target.files || event.dataTransfer.files;
@@ -262,23 +282,23 @@ AgregarReferencia= function(){
   var html='';
         html+='<div class="form-group">'+
             '<input type="text"  class="form-control" id="txt_referencia" name="txt_referencia[]">';
-        html+="</div>";    
+        html+="</div>";
   $("#referencia").append(html);
-  
+
 };
 ReferenciaHTML=function(referencias){
     var html="";
     if(referencias.length>0){
         var referencia=referencias.split('|');
     }
-   
+
     for (i = 0; i < referencia.length; i++) {
         html+='<div class="form-group">'+
             '<input type="text"  class="form-control" id="txt_referencia" name="txt_referencia[]" value="'+referencia[i]+'">';
-        html+="</div>";  
+        html+="</div>";
     };
     $("#referencia").html(html);
-    
+
 
 
 };

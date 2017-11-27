@@ -214,12 +214,14 @@ HTMLCargarContenido=function(result){
 
               if(r.referencia)
               {
-                var res = r.referencia.replace("|", '<br><span class="fa fa-book fa-lg"></span> ');
+                var res_uri = r.referencia.split("|");
                 html+='<div class="row">'+
-                          '<div class="col-md-12" style="font-weight: normal; padding-right: 5px; padding-left: 5px; margin-top: 5px; overflow:hidden;">'+
-                              '<span class="fa fa-book fa-lg"></span> '+
-                              res.replace("|", "<br>") +
-                          '</div>'+
+                          '<div class="col-md-12 btn-default" style="font-weight: normal; padding-right: 5px; padding-left: 5px; margin-top: 5px; overflow:hidden;">'+
+                              '';
+                              for (i = 0; i < res_uri.length; i++) {
+                                html+='<span class="fa fa-book fa-lg"></span> <a href="http://'+res_uri[i]+'" target="blank">'+ res_uri[i] +'</a><br/>';
+                              }
+                    html+='</div>'+
                       '</div>';
               }
 
