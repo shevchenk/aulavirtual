@@ -129,7 +129,7 @@
                 <form id="ContenidoForm" style="display: none">
                   <div class="panel panel-primary" style="padding-bottom: 10px;">
                       <div class="panel-heading" style="background-color: #337ab7;color:#fff">
-                          <center>.::Contenidos del Alumno::.</center>
+                          <center>.::Tareas del Alumno::.</center>
                       </div>
                     <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant" >
                     <div id="DivContenido" class="box-body table-responsive no-padding">
@@ -206,7 +206,7 @@
                 <div id="div_contenido_respuesta" class="box-body no-padding">
                   <div class="panel panel-primary">
                       <div class="panel-heading" style="background-color: #337ab7;color:#fff">
-                          <center>.::Respuestas de Contenidos::.</center>
+                          <center>.::Respuesta::.</center>
                       </div>
                       <div class="col-md-4" style="margin-top: 40px;">
                           <div class="panel panel-info">

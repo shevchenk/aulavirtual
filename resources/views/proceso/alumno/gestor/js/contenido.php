@@ -195,17 +195,35 @@ HTMLCargarContenido=function(result){
                             '<div class="text-justify" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">'+
                                 '<p>'+r.contenido+'</p>'+
                                 //'<small>Curso: '+r.curso+'</small>'+
-                            '</div>'+
-                            '<div>'+
+                            '</div>';
+
+                    if(r.tipo_respuesta == 1){
+                     html+='<div>'+
                                 '<p style="font-weight: normal;">'+
                                     '<label style="font-weight: bold;">Fecha Ini. : </label> '+r.fecha_inicio+'</br>'+
                                     '<label style="font-weight: bold;">Fecha Fin. : </label> '+r.fecha_final+'</br>'+
                                     '<label style="font-weight: bold;">Fecha Amp. : </label> '+ r.fecha_ampliada +
                                 '</p>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="row">'+
+                            '</div>';
+                    }else{
+                      html+='<div style="height: 85px;"></div>';
+                    }
+
+                    html+='</div>'+
+                    '</div>';
+
+              if(r.referencia)
+              {
+                var res = r.referencia.replace("|", '<br><span class="fa fa-book fa-lg"></span> ');
+                html+='<div class="row">'+
+                          '<div class="col-md-12" style="font-weight: normal; padding-right: 5px; padding-left: 5px; margin-top: 5px; overflow:hidden;">'+
+                              '<span class="fa fa-book fa-lg"></span> '+
+                              res.replace("|", "<br>") +
+                          '</div>'+
+                      '</div>';
+              }
+
+              html+='<div class="row">'+
                         '<div class="col-md-12" style="padding-right: 5px; padding-left: 5px; margin-top: 5px; overflow:hidden;">'+
                             tipo_respuesta +
                         '</div>'+

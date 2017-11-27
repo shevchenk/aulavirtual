@@ -110,6 +110,7 @@ class Contenido extends Model
     // --
     public static function runLoadContenidoProgra($r){
         $result=Contenido::select('v_contenidos.id','v_contenidos.contenido','v_contenidos.ruta_contenido',
+                'v_contenidos.referencia',
                 'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),
                 DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),
                 DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),
