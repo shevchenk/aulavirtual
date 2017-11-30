@@ -40,7 +40,9 @@ class Contenido extends Model
             $contenido->fecha_final = null;
             $contenido->fecha_ampliada = null;
         }
-        $contenido->referencia= implode('|', $r->referencia);
+        if($r->referencia!=''){
+            $contenido->referencia= implode('|', $r->referencia);
+        }
         $contenido->estado = trim( $r->estado );
         $contenido->persona_id_created_at=Auth::user()->id;
         $contenido->save();
@@ -66,7 +68,9 @@ class Contenido extends Model
             $contenido->fecha_final = null;
             $contenido->fecha_ampliada = null;
         }
-        $contenido->referencia= implode('|', $r->referencia);
+        if($r->referencia!=''){
+            $contenido->referencia= implode('|', $r->referencia);
+        }
         $contenido->estado = trim( $r->estado );
         $contenido->persona_id_updated_at=Auth::user()->id;
         $contenido->save();

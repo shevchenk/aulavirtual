@@ -24,7 +24,7 @@
                     </div>    
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Ruta Contenido</label>
+                            <label>Archivo</label>
                             <input type="text" readonly="" class="form-control input-sm" id="txt_file_nombre" name="txt_file_nombre" value="">
                             <input type="text" style="display: none;" id="txt_file_archivo" name="txt_file_archivo">
                             <label class="btn btn-default btn-flat margin btn-xs">
@@ -39,17 +39,17 @@
                         <div class="form-group">
                             <label>Referencia<a class='btn btn-success btn-xs' onclick="AgregarReferencia()"><i class="fa fa-plus fa-xs"></i></a></label>
                             <div id="referencia">
-                                
-                            </div>
-                        </div> 
+                             
+                        </div>
                     </div>
+                            </div>
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Tipo Respuesta</label>
+                            <label>Tipo de Contenido</label>
                             <select class="form-control selectpicker"  data-actions-box='true' name="slct_tipo_respuesta" id="slct_tipo_respuesta">
                                 <option value>.::Seleccione::.</option>
-                                <option value="0">Solo vista</option>
-                                <option value="1">Requiere Respuesta</option>
+                                <option value="0">Documento de Apoyo</option>
+                                <option value="1">Tarea</option>
                             </select>
                         </div>
                     </div>

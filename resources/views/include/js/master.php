@@ -169,6 +169,13 @@ $.ajaxSetup({
 });
 
 var masterG ={
+    pintar_fila:function(boton){
+        var tr = boton.parentNode.parentNode;
+        var trs = tr.parentNode.children;
+        for(var i =0;i<trs.length;i++)
+            trs[i].style.backgroundColor="#f9f9f9";
+        tr.style.backgroundColor = "#9CD9DE";
+    },
     change_skin:function(cls) {
         $.each(my_skinsG, function (i) {
           $("body").removeClass(my_skinsG[i]);

@@ -51,24 +51,6 @@
                                   <input type="hidden" name="txt_estado" class="mant" value="1">
                                       <th class="col-xs-2">
                                           <div class="form-group">
-                                              <label><h4>DNI</h4></label>
-                                              <div class="input-group">
-                                                  <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                                  <input type="text" class="form-control" name="txt_dni" id="txt_dni" placeholder="DNI" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
-                                              </div>
-                                          </div>
-                                      </th>
-                                      <th class="col-xs-2">
-                                          <div class="form-group">
-                                              <label><h4>Alumno</h4></label>
-                                              <div class="input-group">
-                                                  <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                                  <input type="text" class="form-control" name="txt_alumno" id="txt_alumno" placeholder="Alumno" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
-                                              </div>
-                                          </div>
-                                      </th>
-                                      <th class="col-xs-2">
-                                          <div class="form-group">
                                               <label><h4>Curso</h4></label>
                                               <div class="input-group">
                                                   <div class="input-group-addon"><i class="fa fa-search"></i></div>
@@ -110,8 +92,6 @@
                               </tbody>
                               <tfoot>
                                   <tr class="cabecera">
-                                    <th>DNI</th>
-                                    <th>Alumno</th>
                                     <th>Curso</th>
                                     <th>Docente</th>
                                     <th>Hora Inicio</th>

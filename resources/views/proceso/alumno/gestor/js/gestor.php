@@ -104,15 +104,13 @@ HTMLCargarEvaluacion=function(result){
         }*/
 
         html+="<tr id='trid_"+r.id+"'>"+
-            "<td class='dni'>"+r.dni+"</td>"+
-            "<td class='alumno'>"+r.alumno+"</td>"+
             "<td class='curso'>"+r.curso+"</td>"+
             "<td class='docente'>"+r.docente+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
             "<td class='fecha_final'>"+r.fecha_final+"</td>"+
             "<td>";
         //html+='<a class="btn btn-default btn-sm" onClick="verContenido(0,'+r.id+')"><i class="fa fa-plus fa-lg"></i> </a></td>';
-        html +='<a class="btn btn-primary btn-sm" onClick="CargarContenido('+r.pu_id+','+r.curso_id+',\''+r.curso+'\')"><i class="fa fa-plus fa-lg"></i> </a></td>';
+        html +='<a class="btn btn-primary btn-sm" onClick="CargarContenido('+r.pu_id+','+r.curso_id+',\''+r.curso+'\',this)"><i class="fa fa-plus fa-lg"></i> </a></td>';
         html+="</tr>";
     });
     $("#TableEvaluacion tbody").html(html);
@@ -136,7 +134,8 @@ HTMLCargarEvaluacion=function(result){
 };
 
 
-CargarContenido=function(id,curso_id,curso){
+CargarContenido=function(id,curso_id,curso,boton){
+     masterG.pintar_fila(boton);
      $("#ContenidoForm #txt_programacion_unica_id").val(id);
      $("#ModalContenidoForm #txt_programacion_unica_id").val(id);
      $("#ModalContenidoForm #txt_curso_id").val(curso_id);

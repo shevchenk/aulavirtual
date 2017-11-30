@@ -54,25 +54,7 @@
                                     <table id="TableProgramacionUnica" class="table table-bordered table-hover">
                                         <thead>
                                             <tr class="cabecera">
-                                                <th class="col-xs-2">
-                                                    <div class="form-group">
-                                                        <label><h4>DNI:</h4></label>
-                                                        <div class="input-group">
-                                                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                                            <input type="text" class="form-control" name="txt_dni" id="txt_dni" placeholder="DNI" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                                <th class="col-xs-3">
-                                                    <div class="form-group">
-                                                        <label><h4>Docente:</h4></label>
-                                                        <div class="input-group">
-                                                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                                            <input type="text" class="form-control" name="txt_docente" id="txt_docente" placeholder="Docente" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                                <th class="col-xs-3">
+                                                <th class="col-xs-4">
                                                     <div class="form-group">
                                                         <label><h4>Curso:</h4></label>
                                                         <div class="input-group">
@@ -106,8 +88,6 @@
                                         </tbody>
                                         <tfoot>
                                             <tr class="cabecera">
-                                                <th>DNI</th>
-                                                <th>Docente</th>
                                                 <th>Curso</th>
                                                 <th>Fecha Inicio</th>
                                                 <th>Fecha Final</th>
@@ -123,8 +103,8 @@
                     <hr>
 
                     <form id="ContenidoForm" style="display: none">
-                        <div class="panel panel-primary" style="padding-bottom: 10px;">
-                            <div class="panel-heading" style="background-color: #337ab7;color:#fff">
+                        <div class="panel panel-success" style="padding-bottom: 10px;">
+                            <div class="panel-heading" style="background-color: #A9D08E;color:black">
                                 <center>.::Contenido::.</center>
                             </div>
                             <div class="panel-body table-responsive no-padding">
@@ -144,8 +124,8 @@
                     <hr>
                     <form id="ContenidoProgramacionForm" style="display: none">
                         <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" >
-                        <div class="panel panel-primary">
-                            <div class="panel-heading" style="background-color: #337ab7;color:#fff">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading" style="background-color: #FFE699;color:black">
                                 <center>.::Ampliación de Respuesta::.</center>
                             </div>
                             <div class="panel-body table-responsive no-padding">
@@ -178,8 +158,8 @@
                     <hr>
                     <form id="ContenidoRespuestaForm" style="display: none">
                         <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" >
-                        <div class="panel panel-primary">
-                            <div class="panel-heading" style="background-color: #337ab7;color:#fff">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading" style="background-color: #FFE699;color:black">
                                 <center>.::Respuesta de Contenido::.</center>
                             </div>
                             <div class="panel-body table-responsive no-padding">

@@ -67,11 +67,11 @@ ValidaForm3=function(){
     }
      else if( $.trim( $("#ModalContenidoForm #txt_file_nombre").val() )=='' ){
         r=false;
-        msjG.mensaje('warning','Ingrese Ruta de Contenido',4000);
+        msjG.mensaje('warning','Ingrese Archivo',4000);
     }
     else if( $.trim( $("#ModalContenidoForm #slct_tipo_respuesta").val() )=='' ){
         r=false;
-        msjG.mensaje('warning','Seleccione Tipo de Respuesta',4000);
+        msjG.mensaje('warning','Seleccione Tipo de Contenido',4000);
     }
     else if( $.trim( $("#ModalContenidoForm #txt_fecha_inicio").val() )=='' && $.trim( $("#ModalContenidoForm #slct_tipo_respuesta").val() )=='1'){
         r=false;
@@ -213,12 +213,12 @@ HTMLCargarContenido=function(result){
                               '</div>'+
                               '<div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">';
                       if(r.tipo_respuesta!=0){
-                                html+='<button type="button" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')" style="" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 1"><span class="fa fa-list fa-lg"></span> Contenido 1</button>';
+                                html+='<button type="button" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')" style="" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ampliación de Respuesta"><span class="fa fa-list fa-lg"></span>Ampl.</button>';
                       }
                                 html+='</div>'+
                                       '<div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">';
                        if(r.tipo_respuesta!=0){
-                                html+='<button type="button" onClick="CargarContenidoRespuesta('+r.id+')" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 2"><span class="fa fa-list fa-lg"></span> Contenido 2</button>';
+                                html+='<button type="button" onClick="CargarContenidoRespuesta('+r.id+')" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Respuesta de Contenido"><span class="fa fa-list fa-lg"></span>Resp.</button>';
                             }
                               html+='</div>'+
                 '</div>'+
@@ -280,9 +280,12 @@ onImagen = function (event) {
 };
 AgregarReferencia= function(){
   var html='';
-        html+='<div class="form-group">'+
-            '<input type="text"  class="form-control" id="txt_referencia" name="txt_referencia[]">';
-        html+="</div>";
+        html+='<div class="col-md-12"><div class="col-md-11"><div class="form-group">'+
+             '<input type="text"  class="form-control" id="txt_referencia" name="txt_referencia[]">';
+        html+="</div></div>";
+        html+='<div class="col-md-1"><div class="form-group">'+
+              '<button type="button" onclick="EliminarReferencia(this)" class="btn btn-danger btn-sm"><i class="fa fa-minus fa-sm"></i> </button>';
+        html+="</div></div></div>";
   $("#referencia").append(html);
 
 };
@@ -290,16 +293,21 @@ ReferenciaHTML=function(referencias){
     var html="";
     if(referencias.length>0){
         var referencia=referencias.split('|');
+        for (i = 0; i < referencia.length; i++) {
+            html+='<div class="col-md-12"><div class="col-md-11"><div class="form-group">'+
+                  '<input type="text"  class="form-control" id="txt_referencia" name="txt_referencia[]" value="'+referencia[i]+'">';
+            html+="</div></div>";
+            html+='<div class="col-md-1"><div class="form-group">'+
+                  '<button type="button" onclick="EliminarReferencia(this)" class="btn btn-danger btn-sm"><i class="fa fa-minus fa-sm"></i> </button>';
+            html+="</div></div></div>";
+        };
     }
 
-    for (i = 0; i < referencia.length; i++) {
-        html+='<div class="form-group">'+
-            '<input type="text"  class="form-control" id="txt_referencia" name="txt_referencia[]" value="'+referencia[i]+'">';
-        html+="</div>";
-    };
     $("#referencia").html(html);
+};
 
-
-
+EliminarReferencia=function(boton){
+        var tr = boton.parentNode.parentNode.parentNode;
+        $(tr).remove();
 };
 </script>
