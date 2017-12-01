@@ -107,8 +107,8 @@
 
                 <hr>
                 <form id="ContenidoForm" style="display: none">
-                  <div class="panel panel-primary" style="padding-bottom: 10px;">
-                      <div class="panel-heading" style="background-color: #337ab7;color:#fff">
+                  <div class="panel panel-success" style="padding-bottom: 10px;">
+                      <div class="panel-heading" style="background-color: #A9D08E;color:black">
                           <center>.::Tareas del Alumno::.</center>
                       </div>
                     <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant" >
@@ -184,8 +184,8 @@
 
                 <hr>
                 <div id="div_contenido_respuesta" class="box-body no-padding">
-                  <div class="panel panel-primary">
-                      <div class="panel-heading" style="background-color: #337ab7;color:#fff">
+                  <div class="panel panel-warnimg">
+                      <div class="panel-heading" style="background-color: #FFE699;color:black">
                           <center>.::Respuesta::.</center>
                       </div>
                       <div class="col-md-4" style="margin-top: 40px;">
