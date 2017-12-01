@@ -133,7 +133,7 @@ class ApiCurso extends Controller
         {
             $tab_cli = DB::table('clientes_accesos')->where('id','=', $r->id)
                                                     ->where('url','=', $url)
-                                                    ->where('ip','=', $this->getIPCliente())
+                                               //     ->where('ip','=', $this->getIPCliente())
                                                     ->where('estado','=', 1)
                                                     ->first();
             if(count($tab_cli) == 0)
