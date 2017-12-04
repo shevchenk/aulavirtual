@@ -153,7 +153,7 @@ class Contenido extends Model
     // --
         public static function runNewCopiaContenido($r){
 
-        $id= implode(',', $r->id);
+        $id= implode(',', @$r->id);
 //        var_dump($id);Exit();
         $data=Contenido::whereRaw('id IN ('.$id.')')->get();
         foreach ($data as $result){
