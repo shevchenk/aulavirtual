@@ -182,15 +182,15 @@ class Contenido extends Model
                 $contenido->persona_id_created_at=Auth::user()->id;
                 $contenido->save();
                 
-                if ( !is_dir('file/content/a'.$contenido->id) ) {
-                     mkdir('file/content/a'.$contenido->id,0777);
+                if ( !is_dir('file/content/c'.$contenido->id) ) {
+                     mkdir('file/content/c'.$contenido->id,0777);
                 }
-                $fichero = 'file/content/'.$result->ruta_contenido;
-                $nuevo_fichero = 'file/content/a'.$contenido->id.'/'.$archivo[1];
                 $archivo=explode('/', $result->ruta_contenido);
+                $fichero = 'file/content/'.$result->ruta_contenido;
+                $nuevo_fichero = 'file/content/c'.$contenido->id.'/'.$archivo[1];
                 
                 copy($fichero,$nuevo_fichero);
-                $contenido->ruta_contenido='a'.$contenido->id.'/'.$archivo[1];
+                $contenido->ruta_contenido='c'.$contenido->id.'/'.$archivo[1];
                 $contenido->save();
             }
 
