@@ -16,6 +16,24 @@ class Contenido extends Model
         $contenido->estado = trim( $r->estadof );
         $contenido->persona_id_updated_at=Auth::user()->id;
         $contenido->save();
+
+        // Eliminar archivo
+        $dir = new Contenido();
+        $dir->deleteDirectory("file/content/c$contenido->id");
+        // --
+    }
+
+    private function deleteDirectory($dir)
+    {
+        if(!$dh = @opendir($dir)) return;
+        while (false !== ($current = readdir($dh))) {
+            if($current != '.' && $current != '..') {
+                if (!@unlink($dir.'/'.$current))
+                    deleteDirectory($dir.'/'.$current);
+            }
+        }
+        closedir($dh);
+        @rmdir($dir);
     }
 
     public static function runNew($r){
@@ -25,11 +43,7 @@ class Contenido extends Model
         $contenido->curso_id = trim( $r->curso_id );
         $contenido->contenido = trim( $r->contenido );
         if(trim($r->file_nombre)!='' and trim($r->file_archivo)!=''){
-            $contenido->ruta_contenido = trim( $r->file_nombre );
-            $ftf=new Contenido;
-            //$ftf->fileToFile($r->file_archivo, $url);
-            $url = "file/content/c$contenido->id/".$r->file_nombre;
-            $ftf->fileToFile($r->file_archivo,'c'.$contenido->id, $url);
+            $contenido->ruta_contenido = "c$contenido->id/".$r->file_nombre;
         }
         $contenido->tipo_respuesta = trim( $r->tipo_respuesta );
         if($r->tipo_respuesta==1){
@@ -47,6 +61,14 @@ class Contenido extends Model
         $contenido->estado = trim( $r->estado );
         $contenido->persona_id_created_at=Auth::user()->id;
         $contenido->save();
+
+        if(trim($r->file_nombre)!='' and trim($r->file_archivo)!='')
+        {
+          $ftf = new Contenido;
+          $url = "file/content/c$contenido->id/".$r->file_nombre;
+          $ftf->fileToFile($r->file_archivo,'c'.$contenido->id, $url);
+        }
+
     }
 
     public static function runEdit($r)
@@ -54,7 +76,8 @@ class Contenido extends Model
         $contenido = Contenido::find($r->id);
         $contenido->contenido = trim( $r->contenido );
         if(trim($r->file_nombre)!='' and trim($r->file_archivo)!=''){
-            $contenido->ruta_contenido = trim( $r->file_nombre );
+            //$contenido->ruta_contenido = trim( $r->file_nombre );
+            $contenido->ruta_contenido = "c$contenido->id/".$r->file_nombre;
             $ftf=new Contenido;
             $url = "file/content/c$contenido->id/".$r->file_nombre;
             $ftf->fileToFile($r->file_archivo,'c'.$contenido->id, $url);
@@ -96,14 +119,14 @@ class Contenido extends Model
                               $query->where('v_contenidos.programacion_unica_id','=', $programacion_unica_id);
                           }
                       }
-                      
+
                       if( $r->has("tipo_respuesta") ){
                           $tipo_respuesta=trim($r->tipo_respuesta);
                           if( $tipo_respuesta !='' ){
                               $query->where('v_contenidos.tipo_respuesta','=', $tipo_respuesta);
                           }
                       }
-                      
+
                       if( $r->has("curso_id") ){
                           $curso_id=trim($r->curso_id);
                           if( $curso_id !='' ){
@@ -195,6 +218,10 @@ class Contenido extends Model
             }
 
         }
+<<<<<<< HEAD
+}
+=======
         
         
 }
+>>>>>>> 14ff544633134bae6379a845d9c44b107edc8979
