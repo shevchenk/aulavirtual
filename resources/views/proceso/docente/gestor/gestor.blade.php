@@ -14,6 +14,9 @@
 {{ Html::script('lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}
 {{ Html::script('lib/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js') }}
 
+{{ Html::style('lib/iCheck/all.css') }}
+{{ Html::script('lib/iCheck/icheck.min.js') }}
+
 @include( 'proceso.docente.gestor.js.gestor_ajax' )
 @include( 'proceso.docente.gestor.js.gestor' )
 @include( 'proceso.docente.gestor.js.contenido_ajax' )
@@ -24,6 +27,8 @@
 @include( 'proceso.docente.gestor.js.contenidorespuesta' )
 @include( 'proceso.docente.gestor.js.listapersona_ajax' )
 @include( 'proceso.docente.gestor.js.listapersona' )
+@include( 'proceso.docente.gestor.js.copiacontenido' )
+@include( 'proceso.docente.gestor.js.copiacontenido_ajax' )
 
 
 @stop
@@ -113,9 +118,12 @@
                                     <div id="DivContenido">
                                     </div>
                                     <div class="col-md-12 text-center" style="margin-top: 10px;">
-                                      <div class='btn btn-primary btn-sm' class="btn btn-primary" onClick="AgregarEditar3(1)" >
-                                          <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
-                                      </div>
+                                        <div class='btn btn-primary btn-sm'onClick="AgregarEditar3(1)" >
+                                            <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo
+                                        </div>
+                                        <div class='btn btn-info btn-sm' id="btn_replicar" >
+                                            <i class="fa fa-copy fa-lg"></i>&nbsp;Replicar
+                                        </div>
                                     </div>
                                 </div><!-- .box-body -->
                             </div>
@@ -196,7 +204,7 @@
 @stop
 
 @section('form')
-@include( 'proceso.docente.gestor.form.gestor' )
+@include( 'proceso.docente.gestor.form.copiacontenido' )
 @include( 'proceso.docente.gestor.form.contenido' )
 @include( 'proceso.docente.gestor.form.contenidoprogramacion' )
 @include( 'proceso.docente.gestor.form.listapersona' )

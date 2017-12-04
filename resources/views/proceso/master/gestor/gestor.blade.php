@@ -133,8 +133,11 @@
                                     <div id="DivContenido">
                                     </div>
                                     <div class="col-md-12 text-center" style="margin-top: 10px;">
-                                        <div class='btn btn-primary btn-sm' class="btn btn-primary" onClick="AgregarEditar3(1)" >
-                                            <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
+                                        <div class='btn btn-primary btn-sm'onClick="AgregarEditar3(1)" >
+                                            <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo
+                                        </div>
+                                        <div class='btn btn-info btn-sm' onClick="AgregarEditar3(1)" >
+                                            <i class="fa fa-copy fa-lg"></i>&nbsp;Replicar
                                         </div>
                                     </div>
                                 </div><!-- .box-body -->
@@ -216,7 +219,6 @@
 @stop
 
 @section('form')
-@include( 'proceso.master.gestor.form.gestor' )
 @include( 'proceso.master.gestor.form.contenido' )
 @include( 'proceso.master.gestor.form.contenidoprogramacion' )
 @include( 'proceso.master.gestor.form.listapersona' )

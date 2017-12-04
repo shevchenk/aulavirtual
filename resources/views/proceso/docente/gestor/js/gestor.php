@@ -29,6 +29,7 @@ CargarContenido=function(id,curso_id,curso,boton){
      AjaxContenido.Cargar(HTMLCargarContenido);
      $("#ContenidoForm").css("display","");
      $("#ContenidoProgramacionForm").css("display","none");
+     $("#btn_replicar").attr("onclick",'CargarCopiaContenido('+id+','+curso_id+')');
      
 };
 
