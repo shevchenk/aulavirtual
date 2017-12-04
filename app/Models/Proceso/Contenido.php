@@ -26,9 +26,10 @@ class Contenido extends Model
         $contenido->contenido = trim( $r->contenido );
         if(trim($r->file_nombre)!='' and trim($r->file_archivo)!=''){
             $contenido->ruta_contenido = trim( $r->file_nombre );
-            $url = "file/content/".$r->file_nombre;
             $ftf=new Contenido;
-            $ftf->fileToFile($r->file_archivo, $url);
+            //$ftf->fileToFile($r->file_archivo, $url);
+            $url = "file/content/c$contenido->id/".$r->file_nombre;
+            $ftf->fileToFile($r->file_archivo,'c'.$contenido->id, $url);
         }
         $contenido->tipo_respuesta = trim( $r->tipo_respuesta );
         if($r->tipo_respuesta==1){
@@ -48,15 +49,15 @@ class Contenido extends Model
         $contenido->save();
     }
 
-    public static function runEdit($r){
-
+    public static function runEdit($r)
+    {
         $contenido = Contenido::find($r->id);
         $contenido->contenido = trim( $r->contenido );
         if(trim($r->file_nombre)!='' and trim($r->file_archivo)!=''){
             $contenido->ruta_contenido = trim( $r->file_nombre );
-            $url = "file/content/".$r->file_nombre;
             $ftf=new Contenido;
-            $ftf->fileToFile($r->file_archivo, $url);
+            $url = "file/content/c$contenido->id/".$r->file_nombre;
+            $ftf->fileToFile($r->file_archivo,'c'.$contenido->id, $url);
         }
         $contenido->tipo_respuesta = trim( $r->tipo_respuesta );
         if($r->tipo_respuesta==1){
@@ -91,12 +92,13 @@ class Contenido extends Model
         return $result;
     }
 
-    public function fileToFile($file, $url){
+    public function fileToFile($file, $id ,$url)
+    {
         if ( !is_dir('file') ) {
             mkdir('file',0777);
         }
-        if ( !is_dir('file/content') ) {
-            mkdir('file/content',0777);
+        if ( !is_dir('file/content/'.$id) ) {
+            mkdir('file/content/'.$id,0777);
         }
         list($type, $file) = explode(';', $file);
         list(, $type) = explode('/', $type);
