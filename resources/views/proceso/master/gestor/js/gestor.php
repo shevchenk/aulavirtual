@@ -20,7 +20,7 @@ $(document).ready(function() {
     
 });
 
-CargarContenido=function(id,curso_id,curso,boton){
+CargarContenido=function(id,curso_id,curso,boton){   
      masterG.pintar_fila(boton);
      $("#ContenidoForm #txt_programacion_unica_id").val(id);
      $("#ModalContenidoForm #txt_programacion_unica_id").val(id);
@@ -29,6 +29,7 @@ CargarContenido=function(id,curso_id,curso,boton){
      AjaxContenido.Cargar(HTMLCargarContenido);
      $("#ContenidoForm").css("display","");
      $("#ContenidoProgramacionForm").css("display","none");
+     $("#btn_replicar").attr("onclick",'CargarCopiaContenido('+id+','+curso_id+')');
      
 };
 

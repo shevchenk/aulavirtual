@@ -14,6 +14,9 @@
 {{ Html::script('lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}
 {{ Html::script('lib/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js') }}
 
+{{ Html::style('lib/iCheck/all.css') }}
+{{ Html::script('lib/iCheck/icheck.min.js') }}
+
 @include( 'proceso.master.gestor.js.gestor_ajax' )
 @include( 'proceso.master.gestor.js.gestor' )
 @include( 'proceso.master.gestor.js.contenido_ajax' )
@@ -24,6 +27,8 @@
 @include( 'proceso.master.gestor.js.contenidorespuesta' )
 @include( 'proceso.master.gestor.js.listapersona_ajax' )
 @include( 'proceso.master.gestor.js.listapersona' )
+@include( 'proceso.docente.gestor.js.copiacontenido' )
+@include( 'proceso.docente.gestor.js.copiacontenido_ajax' )
 
 
 @stop
@@ -136,7 +141,7 @@
                                         <div class='btn btn-primary btn-sm'onClick="AgregarEditar3(1)" >
                                             <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo
                                         </div>
-                                        <div class='btn btn-info btn-sm' onClick="AgregarEditar3(1)" >
+                                        <div class='btn btn-info btn-sm' id="btn_replicar" >
                                             <i class="fa fa-copy fa-lg"></i>&nbsp;Replicar
                                         </div>
                                     </div>
@@ -219,6 +224,7 @@
 @stop
 
 @section('form')
+@include( 'proceso.docente.gestor.form.copiacontenido' )
 @include( 'proceso.master.gestor.form.contenido' )
 @include( 'proceso.master.gestor.form.contenidoprogramacion' )
 @include( 'proceso.master.gestor.form.listapersona' )

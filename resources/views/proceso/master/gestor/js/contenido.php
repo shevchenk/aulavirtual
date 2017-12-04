@@ -152,6 +152,7 @@ HTMLAgregarEditar3=function(result){
 HTMLCargarContenido=function(result){
     var html="";
     $.each(result.data,function(index,r){
+        nombre=r.ruta_contenido.split('/');
         estadohtml='onClick="CambiarEstado3(1,'+r.id+')"';
         if(r.estado==1){
             estadohtml='onClick="CambiarEstado3(0,'+r.id+')"';
@@ -160,7 +161,7 @@ HTMLCargarContenido=function(result){
             html+='<div class="col-md-12">';
         }
         html+='<div class="col-lg-4" id="trid_'+r.id+'" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">'+
-               '<input type="hidden" class="ruta_contenido" value="'+r.ruta_contenido+'">'+
+               '<input type="hidden" class="ruta_contenido" value="'+nombre[1]+'">'+
                '<input type="hidden" class="fecha_inicio" value="'+r.fecha_inicio+'">'+
                '<input type="hidden" class="fecha_final" value="'+r.fecha_final+'">'+
                '<input type="hidden" class="fecha_ampliada" value="'+r.fecha_ampliada+'">'+
@@ -212,7 +213,7 @@ HTMLCargarContenido=function(result){
 
                 html+='<div class="row">'+
                               '<div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">'+
-                                '<button type="button" '+estadohtml+' class="col-xs-12 btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="fa fa-trash fa-lg"></span> Eliminar</button>'+
+                                '<button type="button" '+estadohtml+' class="col-xs-12 btn btn-danger"  data-placement="top" title="Eliminar"><span class="fa fa-trash fa-lg"></span> Eliminar</button>'+
                               '</div>'+
                               '<div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">'+
                                 '<button type="button" onClick="AgregarEditar3(0,'+r.id+')" style="" class="col-xs-12 btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar"><span class="fa fa-edit fa-lg"></span> Editar</button>'+
