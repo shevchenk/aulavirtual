@@ -107,5 +107,36 @@ class ContenidoPR extends Controller
         }
     }
     // --
+    
+       public function NewCopiaContenido(Request $r )
+    {
+        if ( $r->ajax() ) {
+
+            $mensaje= array(
+                'required'    => ':attribute es requerido',
+                'unique'      => ':attribute solo debe ser único',
+            );
+
+            $rules = array(
+                'programacion_unica_id' =>
+                       ['required',
+                        ],
+            );
+
+
+            $validator=Validator::make($r->all(), $rules,$mensaje);
+
+            if ( !$validator->fails() ) {
+                Contenido::runNewCopiaContenido($r);
+                $return['rst'] = 1;
+                $return['msj'] = 'Registro creado';
+            }
+            else{
+                $return['rst'] = 2;
+                $return['msj'] = $validator->errors()->all()[0];
+            }
+            return response()->json($return);
+        }
+    }
 
 }
