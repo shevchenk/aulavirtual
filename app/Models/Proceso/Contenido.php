@@ -155,35 +155,46 @@ class Contenido extends Model
     // --
         public static function runNewCopiaContenido($r){
 
-        $id= implode(',', @$r->id);
-//        var_dump($id);Exit();
-        $data=Contenido::whereRaw('id IN ('.$id.')')->get();
-        foreach ($data as $result){
-            $contenido = new Contenido;
-            $contenido->programacion_unica_id = trim( $r->programacion_unica_id );
-            $contenido->curso_id = trim( $result->curso_id );
-            $contenido->contenido = trim( $result->contenido );
-            if(trim($r->file_nombre)!='' and trim($r->file_archivo)!=''){
-                $contenido->ruta_contenido = trim( $r->file_nombre );
-                $url = "file/content/".$r->file_nombre;
-                $ftf=new Contenido;
-                $ftf->fileToFile($r->file_archivo, $url);
-            }
-            $contenido->tipo_respuesta = trim( $result->tipo_respuesta );
-            if($r->tipo_respuesta==1){
-            $contenido->fecha_inicio = trim( $result->fecha_inicio );
-            $contenido->fecha_final = trim( $result->fecha_final );
-            $contenido->fecha_ampliada = trim( $result->fecha_ampliada );
+            if($r->id!=''){
+                $id= implode(',', $r->id);
+                $data=Contenido::whereRaw('id IN ('.$id.')')->get();
             }else{
-            $contenido->fecha_inicio = null;
-            $contenido->fecha_final = null;
-            $contenido->fecha_ampliada = null;
+                $data=array();
             }
-            $contenido->referencia=  $result->referencia;
-            $contenido->estado = trim( $result->estado );
-            $contenido->persona_id_created_at=Auth::user()->id;
-            $contenido->save();
-        }
+
+            foreach ($data as $result){
+                $contenido = new Contenido;
+                $contenido->programacion_unica_id =$r->programacion_unica_id;
+                $contenido->curso_id =$result->curso_id;
+                $contenido->contenido =$result->contenido;
+                $contenido->tipo_respuesta =$result->tipo_respuesta;
+                if($result->fecha_inicio!=''){
+                    $contenido->fecha_inicio =$result->fecha_inicio ;
+                }
+                if($result->fecha_final!=''){
+                    $contenido->fecha_final =$result->fecha_final;
+                }
+                if($result->fecha_ampliada!=''){
+                    $contenido->fecha_ampliada =$result->fecha_ampliada;
+                }
+                $contenido->referencia=  $result->referencia;
+                $contenido->estado =$result->estado;
+                $contenido->persona_id_created_at=Auth::user()->id;
+                $contenido->save();
+                
+                if ( !is_dir('file/content/a'.$contenido->id) ) {
+                     mkdir('file/content/a'.$contenido->id,0777);
+                }
+                $fichero = 'file/content/'.$result->ruta_contenido;
+                $nuevo_fichero = 'file/content/a'.$contenido->id.'/'.$archivo[1];
+                $archivo=explode('/', $result->ruta_contenido);
+                
+                copy($fichero,$nuevo_fichero);
+                $contenido->ruta_contenido='a'.$contenido->id.'/'.$archivo[1];
+                $contenido->save();
+            }
 
         }
+        
+        
 }
