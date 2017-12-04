@@ -42,9 +42,6 @@ class Contenido extends Model
         $contenido->programacion_unica_id = trim( $r->programacion_unica_id );
         $contenido->curso_id = trim( $r->curso_id );
         $contenido->contenido = trim( $r->contenido );
-        if(trim($r->file_nombre)!='' and trim($r->file_archivo)!=''){
-            $contenido->ruta_contenido = "c$contenido->id/".$r->file_nombre;
-        }
         $contenido->tipo_respuesta = trim( $r->tipo_respuesta );
         if($r->tipo_respuesta==1){
             $contenido->fecha_inicio = trim( $r->fecha_inicio );
@@ -61,13 +58,13 @@ class Contenido extends Model
         $contenido->estado = trim( $r->estado );
         $contenido->persona_id_created_at=Auth::user()->id;
         $contenido->save();
-
-        if(trim($r->file_nombre)!='' and trim($r->file_archivo)!='')
-        {
+        if(trim($r->file_nombre)!='' and trim($r->file_archivo)!=''){
+          $contenido->ruta_contenido = "c$contenido->id/".$r->file_nombre;
           $ftf = new Contenido;
           $url = "file/content/c$contenido->id/".$r->file_nombre;
           $ftf->fileToFile($r->file_archivo,'c'.$contenido->id, $url);
         }
+        $contenido->save();
 
     }
 
@@ -218,10 +215,6 @@ class Contenido extends Model
             }
 
         }
-<<<<<<< HEAD
+
 }
-=======
-        
-        
-}
->>>>>>> 14ff544633134bae6379a845d9c44b107edc8979
+

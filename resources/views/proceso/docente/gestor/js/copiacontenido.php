@@ -15,9 +15,9 @@ $(document).ready(function() {
 ValidaForm4=function(){
     var r=true;
 
-    if( $.trim( $("#ModalContenidoForm #txt_contenido").val() )!='' ){
+    if( $.trim( $("#ModalCopiaContenidoForm #txt_programacion_unica_id").val() )=='' ){
         r=false;
-        msjG.mensaje('warning','Ingrese Contenido',4000);
+        msjG.mensaje('warning','Error',4000);
     }
     return r;
 }
