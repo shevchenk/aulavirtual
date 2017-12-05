@@ -130,6 +130,12 @@ class Contenido extends Model
                               $query->where('v_contenidos.curso_id','=', $curso_id);
                           }
                       }
+                      if( $r->has("distinto_programacion_unica_id") ){
+                          $programacion_unica_id=trim($r->distinto_programacion_unica_id);
+                          if( $programacion_unica_id !='' ){
+                              $query->where('v_contenidos.programacion_unica_id','!=', $programacion_unica_id);
+                          }
+                      }
                     }
                 )
             ->orderBy('v_contenidos.id','asc')->get();
