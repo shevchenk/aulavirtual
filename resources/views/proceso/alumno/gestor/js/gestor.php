@@ -104,7 +104,10 @@ HTMLCargarEvaluacion=function(result){
         }*/
 
         html+="<tr id='trid_"+r.id+"'>"+
-            "<td class='curso'>"+r.curso+"</td>"+
+            "<td class='curso'>"+
+            "<a target='_blank' href='img/course/"+r.foto+"'>"+
+            "<img src='img/course/"+r.foto+"' style='height: 40px;width: 40px;'>"+
+            "&nbsp</a>"+r.curso+"</td>"+
             "<td class='docente'>"+r.docente+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
             "<td class='fecha_final'>"+r.fecha_final+"</td>"+

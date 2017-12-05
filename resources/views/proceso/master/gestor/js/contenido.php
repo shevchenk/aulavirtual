@@ -176,7 +176,7 @@ HTMLCargarContenido=function(result){
                             '</div>'+
                         '</div>'+
                     '<div class="col-md-5 text-center" style="border-right: 2px solid #e9e9e9;">'+
-                            '<a href="file/content/'+r.ruta_contenido+'" target="blank"><img class="img-responsive" src="img/course/'+r.foto+'" alt="" width="100%" height="" style="margin:10px auto;"></a>'+
+                            '<a href="file/content/'+r.ruta_contenido+'" target="blank"><img class="img-responsive" src="img/course/'+r.foto+'" alt="" width="100%" height="" style="margin:10px auto;height: 150px;min-width: 150px;"></a>'+
                         '</div>'+
                     '<div class="col-md-7" style="border-left: 2px solid #e9e9e9;">'+
                         '<div class="text-justify" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">'+

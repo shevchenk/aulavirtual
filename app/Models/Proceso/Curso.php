@@ -32,7 +32,7 @@ class Curso extends Model
             DB::raw('pu.curso_id as curso_id'),
             'palu.dni',
             DB::raw("CONCAT(palu.nombre,' ', palu.paterno,' ', palu.materno) as alumno"),
-            'c.curso',
+            'c.curso','c.foto',
             'pu.fecha_inicio',
             'pu.fecha_final',
             DB::raw("CONCAT(pdoc.nombre,' ', pdoc.paterno,' ', pdoc.materno) as docente")
