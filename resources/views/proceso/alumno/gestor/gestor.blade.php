@@ -235,7 +235,7 @@
                                 <tr class="cabecera">
                                   <th>Alumno</th>
                                   <th>Respuesta</th>
-                                  <th>Ruta</th>
+                                  <th>Archivo</th>
                                   <th>[-]</th>
                                 </tr>
                               </thead>

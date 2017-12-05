@@ -177,7 +177,7 @@
                                             <tr class="cabecera">
                                                 <th>Alumno</th>
                                                 <th>Respuesta</th>
-                                                <th>Ruta Respuesta</th>
+                                                <th>Archivo</th>
                                                 <th>Fecha</th>
                                             </tr>
                                         </thead>
@@ -187,7 +187,7 @@
                                             <tr class="cabecera">
                                                 <th>Alumno</th>
                                                 <th>Respuesta</th>
-                                                <th>Ruta Respuesta</th>
+                                                <th>Archivo</th>
                                                 <th>Fecha</th>
                                             </tr>
                                         </tfoot>
