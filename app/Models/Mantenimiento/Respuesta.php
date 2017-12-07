@@ -51,6 +51,12 @@ class Respuesta extends Model
             ->where( 
                     
                 function($query) use ($r){
+                    if( $r->has("pregunta_id") ){
+                        $pregunta_id=trim($r->pregunta_id);
+                        if( $pregunta_id !='' ){
+                           $query->where('v_respuestas.pregunta_id','=',$pregunta_id);
+                        }
+                    }
                     if( $r->has("pregunta") ){
                         $pregunta=trim($r->pregunta);
                         if( $pregunta !='' ){
