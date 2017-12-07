@@ -26,7 +26,7 @@ var AjaxEvaluacion={
         $("#ModalTipoEvaluacionForm input[type='hidden']").not('.mant').remove();
         url='AjaxDinamic/Proceso.EvaluacionPR@EditStatus';
         masterG.postAjax(url,data,evento);
-    },
+    }
 };
 
 </script>
