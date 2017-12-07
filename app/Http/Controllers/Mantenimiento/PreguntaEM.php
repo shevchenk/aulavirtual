@@ -30,7 +30,7 @@ class PreguntaEM extends Controller
         }
     }
 
-   public function Newa(Request $r )
+   public function New(Request $r )
     {
         if ( $r->ajax() ) {
 

@@ -18,6 +18,8 @@
 @include( 'proceso.master.preguntacurso.js.preguntacurso' )
 @include( 'proceso.master.preguntacurso.js.pregunta_ajax' )
 @include( 'proceso.master.preguntacurso.js.pregunta' )
+@include( 'proceso.master.preguntacurso.js.respuesta_ajax' )
+@include( 'proceso.master.preguntacurso.js.respuesta' )
 
 @stop
 
@@ -77,8 +79,8 @@
                     <hr>
                     <form id="PreguntaForm" style="display: none">
                         <input type= "hidden" name="txt_curso_id" id="txt_curso_id" class="form-control mant" >
-                        <div class="panel panel-warning">
-                            <div class="panel-heading" style="background-color: #FFE699;color:black">
+                        <div class="panel panel-success">
+                            <div class="panel-heading" style="background-color: #A9D08E;color:black">
                                 <center>.::Preguntas::.</center>
                             </div>
                             <div class="panel-body table-responsive no-padding">
@@ -135,6 +137,7 @@
                                                     </div>
                                                 </th>
                                                 <th class="col-xs-1">[-]</th>
+                                                 <th class="col-xs-1">[-]</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -147,10 +150,94 @@
                                                 <th>Puntaje</th>
                                                 <th>Estado</th>
                                                 <th>[-]</th>
+                                                <th>[-]</th>
                                             </tr>
                                         </tfoot>
                                     </table>
                                     <div class='btn btn-primary btn-sm' class="btn btn-primary" onClick="AgregarEditar2(1)" >
+                                        <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
+                                    </div>
+                                </div><!-- .box-body -->
+                            </div>
+                        </div>
+                    </form><!-- .form -->
+                    <hr>
+                    <form id="RespuestaForm" style="display: none">
+                        <input type= "hidden" name="txt_pregunta_id" id="txt_pregunta_id" class="form-control mant" >
+                        <div class="panel panel-warning">
+                            <div class="panel-heading" style="background-color: #FFE699;color:black">
+                                <center>.::Respuesta::.</center>
+                            </div>
+                            <div class="panel-body table-responsive no-padding">
+                                <div class="col-md-12">
+                                    <table id="TableRespuesta" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr class="cabecera">
+                                                <th class="col-xs-2">
+                                                    <div class="form-group">
+                                                        <label><h4>Pregunta:</h4></label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                            <input type="text" class="form-control" name="txt_pregunta" id="txt_pregunta" placeholder="Pregunta" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th class="col-xs-2">
+                                                    <div class="form-group">
+                                                        <label><h4>Tipo Respuesta:</h4></label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                            <input type="text" class="form-control" name="txt_tipo_respuesta" id="txt_tipo_respuesta" placeholder="Tipo de Respuesta" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th class="col-xs-2">
+                                                    <div class="form-group">
+                                                        <label><h4>Respuesta:</h4></label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                            <input type="text" class="form-control" name="txt_respuesta" id="txt_respuesta" placeholder="Respuesta" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th class="col-xs-1">
+                                                    <div class="form-group">
+                                                        <label><h4>Puntaje:</h4></label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                            <input type="text" class="form-control" name="txt_puntaje" id="txt_puntaje" placeholder="Puntaje" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th class="col-xs-2">
+                                                    <div class="form-group">
+                                                        <label><h4>Estado:</h4></label>
+                                                        <div class="input-group">
+                                                            <select class="form-control" name="slct_estado" id="slct_estado">
+                                                                <option value='' selected>.::Todo::.</option>
+                                                                <option value='0'>Inactivo</option>
+                                                                <option value='1'>Activo</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th class="col-xs-1">[-]</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="cabecera">
+                                                <th>Pregunta</th>
+                                                <th>Tipo Respuesta</th>
+                                                <th>Respuesta</th>
+                                                <th>Puntaje</th>
+                                                <th>Estado</th>
+                                                <th>[-]</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <div class='btn btn-primary btn-sm' class="btn btn-primary" onClick="AgregarEditar3(1)" >
                                         <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo</a>
                                     </div>
                                 </div><!-- .box-body -->
@@ -167,4 +254,5 @@
 @section('form')
 @include( 'proceso.master.preguntacurso.form.preguntacurso' )
 @include( 'proceso.master.preguntacurso.form.pregunta' )
+@include( 'proceso.master.preguntacurso.form.respuesta' )
 @stop

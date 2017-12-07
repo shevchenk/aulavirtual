@@ -79,9 +79,7 @@ AgregarEditar2=function(val,id){
 }
 
 CambiarEstado2=function(estado,id){
-    sweetalertG.confirm("¿Estás seguro?", "Confirme la eliminación", function(){
        AjaxPregunta.CambiarEstado(HTMLCambiarEstado2,estado,id);
-    });
 }
 
 HTMLCambiarEstado2=function(result){
@@ -113,9 +111,9 @@ HTMLCargarPregunta=function(result){
     $('#TablePregunta').DataTable().destroy();
 
     $.each(result.data.data,function(index,r){
-        estadohtml='<a id="'+r.id+'" onClick="CambiarEstado2(1,'+r.id+')" class="btn btn-danger btn-sm"><i class="fa fa-trash fa-lg"></i></a>';
+        estadohtml='<span id="'+r.id+'" onClick="CambiarEstado2(1,'+r.id+')" class="btn btn-danger">Inactivo</span>';
         if(r.estado==1){
-            estadohtml='<a id="'+r.id+'" onClick="CambiarEstado2(0,'+r.id+')" class="btn btn-danger btn-sm"><i class="fa fa-trash fa-lg"></i></a>';
+            estadohtml='<span id="'+r.id+'" onClick="CambiarEstado2(0,'+r.id+')" class="btn btn-success">Activo</span>';
         }
 
         html+="<tr id='trid_"+r.id+"'>"+
@@ -128,6 +126,7 @@ HTMLCargarPregunta=function(result){
             "<input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'>";
         html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
             '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar2(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
+        html+='<td><a class="btn btn-info btn-sm" onClick="CargarRespuesta('+r.id+',\''+r.pregunta+'\','+r.puntaje+',this)"><i class="fa fa-th-list fa-lg"></i> </a></td>';
         html+="</tr>";
     });
     $("#TablePregunta tbody").html(html); 
@@ -135,7 +134,7 @@ HTMLCargarPregunta=function(result){
         "paging": true,
         "lengthChange": false,
         "searching": true,
-        "ordering": true,
+        "ordering": false,
         "info": true,
         "autoWidth": false,
         "lengthMenu": [10],
@@ -163,5 +162,15 @@ CargarSlct=function(slct){
     if(slct==3){
     AjaxPregunta.CargarTipoEvaluacion(SlctCargarTipoEvaluacion);
     }
-}
+};
+CargarRespuesta=function(id,pregunta,puntaje,boton){   
+     masterG.pintar_fila(boton);
+     $("#RespuestaForm #txt_pregunta_id").val(id);
+     $("#ModalRespuestaForm #txt_pregunta_id").val(id);
+     $("#ModalRespuestaForm #txt_pregunta").val(pregunta);
+     $("#ModalRespuestaForm #txt_puntaje_max").val(puntaje);
+     AjaxRespuesta.Cargar(HTMLCargarRespuesta);
+     $("#RespuestaForm").css("display","");
+     
+};
 </script>

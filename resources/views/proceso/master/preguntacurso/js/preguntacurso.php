@@ -147,6 +147,7 @@ CargarPregunta=function(id,curso,boton){
      $("#ModalPreguntaForm #txt_curso").val(curso);
      AjaxPregunta.Cargar(HTMLCargarPregunta);
      $("#PreguntaForm").css("display","");
+     $("#RespuestaForm").css("display","none");
      
 };
 </script>

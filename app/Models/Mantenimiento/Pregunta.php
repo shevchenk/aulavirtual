@@ -50,6 +50,12 @@ class Pregunta extends Model
                           ->join('v_tipos_evaluaciones as vte','vte.id','=','v_preguntas.tipo_evaluacion_id')
                           ->where(
                               function($query) use ($r){
+                                  if( $r->has("curso_id") ){
+                                      $curso_id=trim($r->curso_id);
+                                      if( $curso_id !='' ){
+                                          $query->where('v_preguntas.curso_id','=',$curso_id);
+                                      }
+                                  }
                                   if( $r->has("curso") ){
                                       $curso=trim($r->curso);
                                       if( $curso !='' ){
