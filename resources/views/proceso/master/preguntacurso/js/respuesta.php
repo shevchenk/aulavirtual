@@ -58,7 +58,7 @@ ValidaForm3=function(){
     }
     else if( Number($("#ModalRespuestaForm #txt_puntaje").val())>Number($("#ModalRespuestaForm #txt_puntaje_max").val()) ){
         r=false;
-        msjG.mensaje('warning','Puntaje de respuesta debe ser menor al puntaje de la pregunta',4000);
+        msjG.mensaje('warning','Puntaje de respuesta debe ser menor o igual al puntaje de la pregunta',4000);
     }
     return r;
 }

@@ -38,7 +38,9 @@ class RespuestaEM extends Controller
             $rules = array(
                 'respuesta' => 
                        ['required',
-                        Rule::unique('v_respuestas','respuesta'),
+                        Rule::unique('v_respuestas','respuesta')->where(function ($query) use($r) {
+                                $query->where('pregunta_id',$r->pregunta_id );
+                        }),
                         ],
             );
 
@@ -69,7 +71,9 @@ class RespuestaEM extends Controller
             $rules = array(
                 'respuesta' => 
                        ['required',
-                        Rule::unique('v_respuestas','respuesta')->ignore($r->id),
+                        Rule::unique('v_respuestas','respuesta')->ignore($r->id)->where(function ($query) use($r) {
+                                $query->where('pregunta_id',$r->pregunta_id );
+                        }),
                         ],
             );
 
