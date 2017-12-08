@@ -10,7 +10,7 @@ class UnidadContenido extends Model
 {
     protected   $table = 'v_unidades_contenido';
 
-    public static function ListUnidadContenidos($r){
+    public static function ListUnidadContenido($r){
         $sql=UnidadContenido::select('id','unidad_contenido','estado')
             ->where('estado','=','1');
         $result = $sql->orderBy('unidad_contenido','asc')->get();

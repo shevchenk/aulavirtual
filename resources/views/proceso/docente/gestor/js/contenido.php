@@ -1,8 +1,9 @@
 <script type="text/javascript">
 var AddEdit=0; //0: Editar | 1: Agregar
-var ContenidoG={id:0,curso_id:0,contenido:'',referencia:'',ruta_contenido:'',file_archivo:'',tipo_respuesta:0,fecha_inicio:'',
+var ContenidoG={id:0,curso_id:0,unidad_contenido_id:0,titulo_contenido:"",contenido:'',referencia:'',ruta_contenido:'',file_archivo:'',tipo_respuesta:0,fecha_inicio:'',
 fecha_final:'',fecha_ampliada:'',estado:1}; // Datos Globales
 $(document).ready(function() {
+    CargarSlct(2);
      $("#TableContenido").DataTable({
         "paging": true,
         "lengthChange": false,
@@ -33,6 +34,8 @@ $(document).ready(function() {
         }
 
         $('#ModalContenidoForm #txt_contenido').val( ContenidoG.contenido );
+        $('#ModalContenidoForm #slct_unidad_contenido_id').val( ContenidoG.unidad_contenido_id );
+        $('#ModalContenidoForm #txt_titulo_contenido').val( ContenidoG.titulo_contenido );
         $('#ModalContenidoForm #txt_file_nombre').val( ContenidoG.ruta_contenido );
         $('#ModalContenidoForm #txt_file_archivo').val( ContenidoG.file_archivo );
         $('#ModalContenidoForm #slct_tipo_respuesta').selectpicker('val', ContenidoG.tipo_respuesta );
@@ -91,6 +94,8 @@ ValidaForm3=function(){
 AgregarEditar3=function(val,id){
     AddEdit=val;
     ContenidoG.id='';
+    ContenidoG.unidad_contenido_id='';
+    ContenidoG.titulo_contenido='';
     ContenidoG.contenido='';
     ContenidoG.ruta_contenido='';
     ContenidoG.file_archivo='';
@@ -105,6 +110,8 @@ AgregarEditar3=function(val,id){
 
         ContenidoG.id=id;
         ContenidoG.contenido=$("#DivContenido #trid_"+id+" .contenido").text();
+        ContenidoG.unidad_contenido_id=$("#DivContenido #trid_"+id+" .unidad_contenido_id").val();
+        ContenidoG.titulo_contenido=$("#DivContenido #trid_"+id+" .titulo_contenido").text();
         ContenidoG.ruta_contenido=$("#DivContenido #trid_"+id+" .ruta_contenido").val();
         ContenidoG.tipo_respuesta=$("#DivContenido #trid_"+id+" .tipo_respuesta").val();
         ContenidoG.fecha_inicio=$("#DivContenido #trid_"+id+" .fecha_inicio").val();
@@ -162,6 +169,8 @@ HTMLCargarContenido=function(result){
         }
         html+='<div class="col-lg-4" id="trid_'+r.id+'" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">'+
                '<input type="hidden" class="ruta_contenido" value="'+nombre[1]+'">'+
+               '<input type="hidden" class="unidad_contenido_id" value="'+r.unidad_contenido_id+'">'+
+               '<input type="hidden" class="titulo_contenido" value="'+r.titulo_contenido+'">'+
                '<input type="hidden" class="fecha_inicio" value="'+r.fecha_inicio+'">'+
                '<input type="hidden" class="fecha_final" value="'+r.fecha_final+'">'+
                '<input type="hidden" class="fecha_ampliada" value="'+r.fecha_ampliada+'">'+
@@ -245,6 +254,9 @@ CargarSlct=function(slct){
     if(slct==1){
     AjaxContenido.CargarCurso(SlctCargarCurso);
     }
+    if(slct==2){
+    AjaxContenido.CargarUnidadContenido(SlctCargarUnidadContenido);
+    }
 };
 SlctCargarCurso=function(result){
     var html="<option value='0'>.::Seleccione::.</option>";
@@ -253,6 +265,15 @@ SlctCargarCurso=function(result){
     });
     $("#ModalContenidoForm #slct_curso_id").html(html);
     $("#ModalContenidoForm #slct_curso_id").selectpicker('refresh');
+
+};
+SlctCargarUnidadContenido=function(result){
+    var html="<option value='0'>.::Seleccione::.</option>";
+    $.each(result.data,function(index,r){
+        html+="<option value="+r.id+">"+r.unidad_contenido+"</option>";
+    });
+    $("#ModalContenidoForm #slct_unidad_contenido_id").html(html);
+    $("#ModalContenidoForm #slct_unidad_contenido_id").selectpicker('refresh');
 
 };
 CargarContenidoProgramacion=function(id,programacion_unica_id){

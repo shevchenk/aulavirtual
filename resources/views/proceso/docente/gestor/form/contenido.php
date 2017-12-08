@@ -16,6 +16,19 @@
                             <input type="text"  class="form-control mant" id="txt_curso" name="txt_curso" disabled="">
                         </div> 
                     </div>
+                    <div class="col-sm-12">  
+                        <div class="form-group">
+                            <label>Unidad de Contenido</label>
+                            <select class="form-control selectpicker show-menu-arrow" data-live-search="true" name="slct_unidad_contenido_id" id="slct_unidad_contenido_id">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Titulo de Contenido</label>
+                            <textarea type="text"  class="form-control" id="txt_titulo_contenido" name="txt_titulo_contenido"></textarea>
+                        </div>
+                    </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Contenido</label>

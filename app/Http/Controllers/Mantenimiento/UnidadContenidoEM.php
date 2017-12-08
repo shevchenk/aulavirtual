@@ -96,6 +96,17 @@ class UnidadContenidoEM extends Controller
             return response()->json($return);   
         }
     }
+    
+        public function ListUnidadContenido (Request $r )
+    {
+        if ( $r->ajax() ) {
+            $renturnModel =UnidadContenido::ListUnidadContenido($r);
+            $return['rst'] = 1;
+            $return['data'] = $renturnModel;
+            $return['msj'] = "No hay registros aún";
+            return response()->json($return);
+        }
+    }
 
 
 
