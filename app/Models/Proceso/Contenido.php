@@ -41,6 +41,8 @@ class Contenido extends Model
         $contenido = new Contenido;
         $contenido->programacion_unica_id = trim( $r->programacion_unica_id );
         $contenido->curso_id = trim( $r->curso_id );
+        $contenido->unidad_contenido_id = trim( $r->unidad_contenido_id );
+        $contenido->titulo_contenido = trim( $r->titulo_contenido );
         $contenido->contenido = trim( $r->contenido );
         $contenido->tipo_respuesta = trim( $r->tipo_respuesta );
         if($r->tipo_respuesta==1){
@@ -72,6 +74,8 @@ class Contenido extends Model
     {
         $contenido = Contenido::find($r->id);
         $contenido->contenido = trim( $r->contenido );
+        $contenido->unidad_contenido_id = trim( $r->unidad_contenido_id );
+        $contenido->titulo_contenido = trim( $r->titulo_contenido );
         if(trim($r->file_nombre)!='' and trim($r->file_archivo)!=''){
             //$contenido->ruta_contenido = trim( $r->file_nombre );
             $contenido->ruta_contenido = "c$contenido->id/".$r->file_nombre;
@@ -100,12 +104,13 @@ class Contenido extends Model
 
     public static function runLoad($r){
         $result=Contenido::select('v_contenidos.id','v_contenidos.contenido',DB::raw('IFNULL(v_contenidos.referencia,"") as referencia'),'v_contenidos.ruta_contenido',
-                'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),
-                DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),
+                'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),'v_contenidos.unidad_contenido_id','v_contenidos.titulo_contenido',
+                DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),'vuc.unidad_contenido',
                 DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),
                 'vc.curso', 'vc.foto','v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
                 DB::raw('CASE v_contenidos.tipo_respuesta  WHEN 0 THEN "Solo vista" WHEN 1 THEN "Requiere Respuesta" END AS tipo_respuesta_nombre'))
                 ->join('v_cursos as vc','vc.id','=','v_contenidos.curso_id')
+                ->join('v_unidades_contenido as vuc','vuc.id','=','v_contenidos.unidad_contenido_id')
                 ->where(
                     function($query) use ($r){
                       $query->where('v_contenidos.estado','=',1);

@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Respuesta</label>
+                            <label>Alternativa</label>
                             <input type="text" onkeypress="return masterG.validaAlfanumerico(event, this);" class="form-control" id="txt_respuesta" name="txt_respuesta">
                         </div>
                     </div>                 

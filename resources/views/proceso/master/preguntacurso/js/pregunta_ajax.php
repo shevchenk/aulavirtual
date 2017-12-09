@@ -8,7 +8,7 @@ var AjaxPregunta={
         }
         masterG.postAjax(url,data,evento);
     },
-    Cargar:function(evento){
+    Cargar:function(evento,pag){
         if( typeof(pag)!='undefined' ){
             $("#PreguntaForm").append("<input type='hidden' value='"+pag+"' name='page'>");
         }

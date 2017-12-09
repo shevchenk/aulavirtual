@@ -14,22 +14,26 @@
 {{ Html::script('lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}
 {{ Html::script('lib/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js') }}
 
+{{ Html::script('lib/bootstrap-filestyle/src/bootstrap-filestyle.min.js') }}
+
 @include( 'proceso.master.preguntacurso.js.preguntacurso_ajax' )
 @include( 'proceso.master.preguntacurso.js.preguntacurso' )
 @include( 'proceso.master.preguntacurso.js.pregunta_ajax' )
 @include( 'proceso.master.preguntacurso.js.pregunta' )
 @include( 'proceso.master.preguntacurso.js.respuesta_ajax' )
 @include( 'proceso.master.preguntacurso.js.respuesta' )
+@include( 'proceso.master.preguntacurso.js.masivo_ajax' )
+@include( 'proceso.master.preguntacurso.js.masivo' )
 
 @stop
 
 @section('content')
 <section class="content-header">
     <h1>Curso
-        <small>Mantenimiento</small>
+        <small>Proceso</small>
     </h1>
     <ol class="breadcrumb">
-        <li><i class="fa fa-sitemap"></i> Mantenimiento</a></li>
+        <li><i class="fa fa-sitemap"></i>Proceso</li>
         <li class="active">Curso</li>
     </ol>
 </section>
@@ -72,6 +76,11 @@
                                             </tr>
                                         </tfoot>
                                     </table>
+                                    <div class="col-md-12 text-center" style="margin-bottom: 10px;">
+                                        <div class='btn btn-success btn-sm' class="btn btn-success" data-toggle="modal" data-target="#ModalMasivo">
+                                            <i class="fa fa-plus fa-lg"></i>&nbsp;Masivo (Preguntas y Respuestas)
+                                        </div>
+                                    </div>
                                 </div><!-- .box-body -->
                             </div>
                         </div>
@@ -166,7 +175,7 @@
                         <input type= "hidden" name="txt_pregunta_id" id="txt_pregunta_id" class="form-control mant" >
                         <div class="panel panel-warning">
                             <div class="panel-heading" style="background-color: #FFE699;color:black">
-                                <center>.::Respuesta::.</center>
+                                <center>.::Alternativa::.</center>
                             </div>
                             <div class="panel-body table-responsive no-padding">
                                 <div class="col-md-12">
@@ -193,7 +202,7 @@
                                                 </th>
                                                 <th class="col-xs-2">
                                                     <div class="form-group">
-                                                        <label><h4>Respuesta:</h4></label>
+                                                        <label><h4>Alternativa:</h4></label>
                                                         <div class="input-group">
                                                             <div class="input-group-addon"><i class="fa fa-search"></i></div>
                                                             <input type="text" class="form-control" name="txt_respuesta" id="txt_respuesta" placeholder="Respuesta" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
@@ -230,7 +239,7 @@
                                             <tr class="cabecera">
                                                 <th>Pregunta</th>
                                                 <th>Tipo Respuesta</th>
-                                                <th>Respuesta</th>
+                                                <th>Alternativa</th>
                                                 <th>Puntaje</th>
                                                 <th>Estado</th>
                                                 <th>[-]</th>
@@ -255,4 +264,5 @@
 @include( 'proceso.master.preguntacurso.form.preguntacurso' )
 @include( 'proceso.master.preguntacurso.form.pregunta' )
 @include( 'proceso.master.preguntacurso.form.respuesta' )
+@include( 'proceso.master.preguntacurso.form.masivo' )
 @stop

@@ -29,10 +29,5 @@ var AjaxContenido={
         data={};
         masterG.postAjax(url,data,evento);
     },
-    CargarUnidadContenido:function(evento){
-        url='AjaxDinamic/Mantenimiento.UnidadContenidoEM@ListUnidadContenido';
-        data={};
-        masterG.postAjax(url,data,evento);
-    },        
 };
 </script>

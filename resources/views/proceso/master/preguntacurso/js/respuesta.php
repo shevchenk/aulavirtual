@@ -50,7 +50,7 @@ ValidaForm3=function(){
     }
     else if( $.trim( $("#ModalRespuestaForm #txt_respuesta").val() )=='' ){
         r=false;
-        msjG.mensaje('warning','Ingrese Respuesta',4000);
+        msjG.mensaje('warning','Ingrese alternativa',4000);
     }
     else if( $.trim( $("#ModalRespuestaForm #txt_puntaje").val() )=='' ){
         r=false;
