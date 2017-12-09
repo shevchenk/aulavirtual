@@ -13,7 +13,8 @@ class ContenidoRespuesta extends Model
     public static function runLoad($r){
         $result=ContenidoRespuesta::select('v_contenidos_respuestas.id',
                 DB::raw("CONCAT_WS(' ',vpe.paterno,vpe.materno,vpe.nombre) as alumno"),
-                'v_contenidos_respuestas.created_at','v_contenidos_respuestas.respuesta','v_contenidos_respuestas.ruta_respuesta', 'v_contenidos_respuestas.estado')
+                'v_contenidos_respuestas.created_at','v_contenidos_respuestas.respuesta',
+                'v_contenidos_respuestas.ruta_respuesta', 'v_contenidos_respuestas.estado', 'v_contenidos_respuestas.created_at')
             ->join('v_programaciones as vpr','vpr.id','=','v_contenidos_respuestas.programacion_id')
             ->join('v_personas as vpe','vpe.id','=','vpr.persona_id')
             ->where('v_contenidos_respuestas.contenido_id','=',$r->contenido_id)
@@ -30,7 +31,13 @@ class ContenidoRespuesta extends Model
     }
 
     // --
-    public static function runNew($r){
+    public static function runNew($r)
+    {
+        ContenidoRespuesta::where('programacion_id','=',$r->programacion_id)
+                            ->where('contenido_id','=',$r->contenido_id)
+                              ->update(array(
+                                'estado' => 0,
+                                'persona_id_updated_at' => Auth::user()->id));
 
         $contenido = new ContenidoRespuesta;
         $contenido->contenido_id = trim( $r->contenido_id );

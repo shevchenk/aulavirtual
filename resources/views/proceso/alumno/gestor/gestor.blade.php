@@ -233,7 +233,7 @@
                             <table id="TableRespuestaAlu" class="table table-bordered table-hover">
                               <thead>
                                 <tr class="cabecera">
-                                  <th>Alumno</th>
+                                  <th>Fecha Envio</th>
                                   <th>Respuesta</th>
                                   <th>Archivo</th>
                                   <th>[-]</th>

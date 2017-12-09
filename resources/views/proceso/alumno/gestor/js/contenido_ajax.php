@@ -32,6 +32,9 @@ var AjaxContenido={
     AgregarRespuestaContenido:function(evento){
         var data=$("#frmRepuestaAlum").serialize().split("txt_").join("").split("slct_").join("");
         url='AjaxDinamic/Proceso.ContenidoRespuestaPR@New';
+        //if(AddEdit==0){
+        //    url='AjaxDinamic/Proceso.ContenidoRespuestaPR@Edit';
+        //}
         masterG.postAjax(url,data,evento);
     },
     CargarRespuestaContenido:function(evento){
