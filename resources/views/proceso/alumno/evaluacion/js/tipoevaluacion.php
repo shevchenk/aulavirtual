@@ -51,7 +51,7 @@ iniciarEvaluacion=function(){
               '</div>'+
               '<div class="box-body table-responsive no-padding">'+
                 '<div class="col-md-12">'+
-                'SASAMSNAJNSMASJASJHSJS'+
+                'EN CONSTRUCCIÓN...'+
                 '</div>'+
               '</div>'+
             '</div>';
