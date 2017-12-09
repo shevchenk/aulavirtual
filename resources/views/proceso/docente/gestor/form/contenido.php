@@ -79,26 +79,26 @@
                         </div>
                     </div>
                     <div id="respuesta" style="display:none">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label>Fecha de Inicio</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_inicio" name="txt_fecha_inicio" readonly="" >
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label>Fecha Final</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_final" name="txt_fecha_final" readonly="" >
                         </div>
                     </div>
-                    <div class="col-md-4">
+<!--                    <div class="col-md-4">
                         <div class="form-group">
                             <label>Fecha Ampliada</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_ampliada" name="txt_fecha_ampliada" readonly="" >
                         </div>
+                    </div>-->
                     </div>
-                    </div>
-                    <div id="fecha_docente">
+<!--                    <div id="fecha_docente">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Fecha de Inicio</label>
@@ -117,7 +117,7 @@
                             <input type="text" class="form-control fecha" id="txt_fecha_ampliada_d" name="txt_fecha_ampliada_d" readonly="" >
                         </div>
                     </div>
-                    </div>
+                    </div>-->
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Estado</label>

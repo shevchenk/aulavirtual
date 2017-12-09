@@ -46,13 +46,18 @@ class Contenido extends Model
         $contenido->contenido = trim( $r->contenido );
         $contenido->tipo_respuesta = trim( $r->tipo_respuesta );
         if($r->tipo_respuesta==1){
-            $contenido->fecha_inicio = trim( $r->fecha_inicio );
-            $contenido->fecha_final = trim( $r->fecha_final );
-            $contenido->fecha_ampliada = trim( $r->fecha_ampliada );
+            if($r->fecha_inicio!=''){
+                $contenido->fecha_inicio =$r->fecha_inicio ;
+            }
+            if($r->fecha_final!=''){
+                $contenido->fecha_final =$r->fecha_final;
+            }
+            if($r->fecha_ampliada!=''){
+                $contenido->fecha_ampliada =$r->fecha_ampliada;
+            }
         }else{
             $contenido->fecha_inicio = null;
             $contenido->fecha_final = null;
-            $contenido->fecha_ampliada = null;
         }
         if($r->referencia!=''){
             $contenido->referencia= implode('|', $r->referencia);
@@ -109,13 +114,18 @@ class Contenido extends Model
         }
         $contenido->tipo_respuesta = trim( $r->tipo_respuesta );
         if($r->tipo_respuesta==1){
-            $contenido->fecha_inicio = trim( $r->fecha_inicio );
-            $contenido->fecha_final = trim( $r->fecha_final );
-            $contenido->fecha_ampliada = trim( $r->fecha_ampliada );
+            if($r->fecha_inicio!=''){
+                $contenido->fecha_inicio =$r->fecha_inicio ;
+            }
+            if($r->fecha_final!=''){
+                $contenido->fecha_final =$r->fecha_final;
+            }
+            if($r->fecha_ampliada!=''){
+                $contenido->fecha_ampliada =$r->fecha_ampliada;
+            }
         }else{
             $contenido->fecha_inicio = null;
             $contenido->fecha_final = null;
-            $contenido->fecha_ampliada = null;
         }
         if($r->referencia!=''){
             $contenido->referencia= implode('|', $r->referencia);

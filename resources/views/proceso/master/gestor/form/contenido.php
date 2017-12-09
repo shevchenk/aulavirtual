@@ -98,23 +98,22 @@
                         </div>
                     </div>
                     </div>
-                    <hr>
                     <div id="fecha_docente">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Fecha de Inicio</label>
+                            <label>Fecha de Inicio Docente</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_inicio_d" name="txt_fecha_inicio_d" readonly="" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Fecha Final</label>
+                            <label>Fecha Final Docente</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_final_d" name="txt_fecha_final_d" readonly="" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Fecha Ampliada</label>
+                            <label>Fecha Ampliada Docente</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_ampliada_d" name="txt_fecha_ampliada_d" readonly="" >
                         </div>
                     </div>

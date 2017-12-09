@@ -99,10 +99,6 @@ ValidaForm3=function(){
         r=false;
         msjG.mensaje('warning','Ingrese Fecha Final',4000);
     }
-    else if( $.trim( $("#ModalContenidoForm #txt_fecha_ampliada").val() )=='' && $.trim( $("#ModalContenidoForm #slct_tipo_respuesta").val() )=='1'){
-        r=false;
-        msjG.mensaje('warning','Ingrese Fecha Ampliada',4000);
-    }
     return r;
 }
 
