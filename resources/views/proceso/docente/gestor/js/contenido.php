@@ -2,7 +2,8 @@
 var AddEdit=0; //0: Editar | 1: Agregar
 var ContenidoG={id:0,curso_id:0,unidad_contenido_id:0,titulo_contenido:"",contenido:'',referencia:''
 ,ruta_contenido:'',file_archivo:'',imagen_nombre:'',imagen_archivo:'',tipo_respuesta:0,fecha_inicio:'',
-fecha_final:'',fecha_ampliada:'',estado:1}; // Datos Globales
+fecha_final:'',fecha_ampliada:'',fecha_inicio_d:'',
+fecha_final_d:'',fecha_ampliada_d:'',estado:1}; // Datos Globales
 $(document).ready(function() {
     
      $("#TableContenido").DataTable({
@@ -45,6 +46,9 @@ $(document).ready(function() {
         $('#ModalContenidoForm #txt_fecha_inicio').val( ContenidoG.fecha_inicio );
         $('#ModalContenidoForm #txt_fecha_final').val( ContenidoG.fecha_final );
         $('#ModalContenidoForm #txt_fecha_ampliada').val( ContenidoG.fecha_ampliada );
+        $('#ModalContenidoForm #txt_fecha_inicio_d').val( ContenidoG.fecha_inicio_d );
+        $('#ModalContenidoForm #txt_fecha_final_d').val( ContenidoG.fecha_final_d );
+        $('#ModalContenidoForm #txt_fecha_ampliada_d').val( ContenidoG.fecha_ampliada_d );
         $('#ModalContenidoForm #slct_estado').selectpicker( 'val',ContenidoG.estado );
         ReferenciaHTML(ContenidoG.referencia);
     });
@@ -116,6 +120,9 @@ AgregarEditar3=function(val,id){
     ContenidoG.fecha_inicio='';
     ContenidoG.fecha_final='';
     ContenidoG.fecha_ampliada='';
+    ContenidoG.fecha_inicio_d='';
+    ContenidoG.fecha_final_d='';
+    ContenidoG.fecha_ampliada_d='';
     ContenidoG.referencia='';
     ContenidoG.estado='1';
     $('#respuesta').css("display","none");
@@ -131,6 +138,9 @@ AgregarEditar3=function(val,id){
         ContenidoG.fecha_inicio=$("#DivContenido #trid_"+id+" .fecha_inicio").val();
         ContenidoG.fecha_final=$("#DivContenido #trid_"+id+" .fecha_final").val();
         ContenidoG.fecha_ampliada=$("#DivContenido #trid_"+id+" .fecha_ampliada").val();
+        ContenidoG.fecha_inicio_d=$("#DivContenido #trid_"+id+" .fecha_inicio_d").val();
+        ContenidoG.fecha_final_d=$("#DivContenido #trid_"+id+" .fecha_final_d").val();
+        ContenidoG.fecha_ampliada_d=$("#DivContenido #trid_"+id+" .fecha_ampliada_d").val();
         ContenidoG.referencia=$("#DivContenido #trid_"+id+" .referencia").val();
         ContenidoG.estado=$("#DivContenido #trid_"+id+" .estado").val();
         if(ContenidoG.tipo_respuesta=='1'){
@@ -190,6 +200,9 @@ HTMLCargarContenido=function(result){
                '<input type="hidden" class="fecha_inicio" value="'+r.fecha_inicio+'">'+
                '<input type="hidden" class="fecha_final" value="'+r.fecha_final+'">'+
                '<input type="hidden" class="fecha_ampliada" value="'+r.fecha_ampliada+'">'+
+               '<input type="hidden" class="fecha_inicio_d" value="'+r.fecha_inicio_d+'">'+
+               '<input type="hidden" class="fecha_final_d" value="'+r.fecha_final_d+'">'+
+               '<input type="hidden" class="fecha_ampliada_d" value="'+r.fecha_ampliada_d+'">'+
                '<input type="hidden" class="tipo_respuesta" value="'+r.tipo_respuesta+'">'+
                '<input type="hidden" class="referencia" value="'+r.referencia+'">'+
                '<input type="hidden" class="estado" value="'+r.estado+'">'+
@@ -245,7 +258,7 @@ HTMLCargarContenido=function(result){
                               '</div>'+
                               '<div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">';
                       if(r.tipo_respuesta!=0){
-                                html+='<button type="button" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')" style="" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ampliación de Respuesta"><span class="fa fa-list fa-lg"></span>Ampl.</button>';
+                             //   html+='<button type="button" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')" style="" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ampliación de Respuesta"><span class="fa fa-list fa-lg"></span>Ampl.</button>';
                       }
                                 html+='</div>'+
                                       '<div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">';

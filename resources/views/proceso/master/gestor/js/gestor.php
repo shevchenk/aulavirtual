@@ -22,6 +22,7 @@ $(document).ready(function() {
 
 CargarContenido=function(id,curso_id,curso,boton){   
      masterG.pintar_fila(boton);
+     CargarSlct(2);
      $("#ContenidoForm #txt_programacion_unica_id").val(id);
      $("#ModalContenidoForm #txt_programacion_unica_id").val(id);
      $("#ModalContenidoForm #txt_curso_id").val(curso_id);

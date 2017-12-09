@@ -57,6 +57,15 @@ class Contenido extends Model
         if($r->referencia!=''){
             $contenido->referencia= implode('|', $r->referencia);
         }
+        if($r->fecha_inicio_d!=''){
+            $contenido->fecha_inicio_d =$r->fecha_inicio_d ;
+        }
+        if($r->fecha_final_d!=''){
+            $contenido->fecha_final_d =$r->fecha_final_d;
+        }
+        if($r->fecha_ampliada_d!=''){
+            $contenido->fecha_ampliada_d =$r->fecha_ampliada_d;
+        }
         $contenido->estado = trim( $r->estado );
         $contenido->persona_id_created_at=Auth::user()->id;
         $contenido->save();
@@ -111,6 +120,15 @@ class Contenido extends Model
         if($r->referencia!=''){
             $contenido->referencia= implode('|', $r->referencia);
         }
+        if($r->fecha_inicio_d!=''){
+            $contenido->fecha_inicio_d =$r->fecha_inicio_d ;
+        }
+        if($r->fecha_final_d!=''){
+            $contenido->fecha_final_d =$r->fecha_final_d;
+        }
+        if($r->fecha_ampliada_d!=''){
+            $contenido->fecha_ampliada_d =$r->fecha_ampliada_d;
+        }
         $contenido->estado = trim( $r->estado );
         $contenido->persona_id_updated_at=Auth::user()->id;
         $contenido->save();
@@ -123,7 +141,8 @@ class Contenido extends Model
                 DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),'vuc.unidad_contenido',
                 DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),'v_contenidos.foto as foto_contenido',
                 'vc.curso', 'vc.foto','v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
-                DB::raw('CASE v_contenidos.tipo_respuesta  WHEN 0 THEN "Solo vista" WHEN 1 THEN "Requiere Respuesta" END AS tipo_respuesta_nombre'))
+                DB::raw('CASE v_contenidos.tipo_respuesta  WHEN 0 THEN "Solo vista" WHEN 1 THEN "Requiere Respuesta" END AS tipo_respuesta_nombre'),
+                DB::raw('IFNULL(v_contenidos.fecha_inicio_d,"") as fecha_inicio_d'),DB::raw('IFNULL(v_contenidos.fecha_final_d,"") as fecha_final_d'),DB::raw('IFNULL(v_contenidos.fecha_ampliada_d,"") as fecha_ampliada_d'))
                 ->join('v_cursos as vc','vc.id','=','v_contenidos.curso_id')
                 ->join('v_unidades_contenido as vuc','vuc.id','=','v_contenidos.unidad_contenido_id')
                 ->where(

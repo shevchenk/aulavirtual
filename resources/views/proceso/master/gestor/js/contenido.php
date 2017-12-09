@@ -1,8 +1,11 @@
 <script type="text/javascript">
 var AddEdit=0; //0: Editar | 1: Agregar
-var ContenidoG={id:0,curso_id:0,contenido:'',referencia:'',ruta_contenido:'',file_archivo:'',tipo_respuesta:0,fecha_inicio:'',
-fecha_final:'',fecha_ampliada:'',estado:1}; // Datos Globales
+var ContenidoG={id:0,curso_id:0,unidad_contenido_id:0,titulo_contenido:"",contenido:'',referencia:''
+,ruta_contenido:'',file_archivo:'',imagen_nombre:'',imagen_archivo:'',tipo_respuesta:0,fecha_inicio:'',
+fecha_final:'',fecha_ampliada:'',fecha_inicio_d:'',
+fecha_final_d:'',fecha_ampliada_d:'',estado:1}; // Datos Globales
 $(document).ready(function() {
+    
      $("#TableContenido").DataTable({
         "paging": true,
         "lengthChange": false,
@@ -33,12 +36,19 @@ $(document).ready(function() {
         }
 
         $('#ModalContenidoForm #txt_contenido').val( ContenidoG.contenido );
+        $('#ModalContenidoForm #slct_unidad_contenido_id').selectpicker( 'val',ContenidoG.unidad_contenido_id );
+        $('#ModalContenidoForm #txt_titulo_contenido').val( ContenidoG.titulo_contenido );
         $('#ModalContenidoForm #txt_file_nombre').val( ContenidoG.ruta_contenido );
         $('#ModalContenidoForm #txt_file_archivo').val( ContenidoG.file_archivo );
+        $('#ModalContenidoForm #txt_imagen_nombre').val( ContenidoG.imagen_nombre );
+        $('#ModalContenidoForm #txt_imagen_archivo').val( ContenidoG.imagen_archivo );
         $('#ModalContenidoForm #slct_tipo_respuesta').selectpicker('val', ContenidoG.tipo_respuesta );
         $('#ModalContenidoForm #txt_fecha_inicio').val( ContenidoG.fecha_inicio );
         $('#ModalContenidoForm #txt_fecha_final').val( ContenidoG.fecha_final );
         $('#ModalContenidoForm #txt_fecha_ampliada').val( ContenidoG.fecha_ampliada );
+        $('#ModalContenidoForm #txt_fecha_inicio_d').val( ContenidoG.fecha_inicio_d );
+        $('#ModalContenidoForm #txt_fecha_final_d').val( ContenidoG.fecha_final_d );
+        $('#ModalContenidoForm #txt_fecha_ampliada_d').val( ContenidoG.fecha_ampliada_d );
         $('#ModalContenidoForm #slct_estado').selectpicker( 'val',ContenidoG.estado );
         ReferenciaHTML(ContenidoG.referencia);
     });
@@ -61,7 +71,15 @@ $(document).ready(function() {
 ValidaForm3=function(){
     var r=true;
 
-    if( $.trim( $("#ModalContenidoForm #txt_contenido").val() )=='' ){
+    if( $.trim( $("#ModalContenidoForm #slct_unidad_contenido_id").val() )=='' ){
+        r=false;
+        msjG.mensaje('warning','Seleccione Unidad de Contenido',4000);
+    }
+    else if( $.trim( $("#ModalContenidoForm #txt_titulo_contenido").val() )=='' ){
+        r=false;
+        msjG.mensaje('warning','Ingrese Titulo de Contenido',4000);
+    }
+    else if( $.trim( $("#ModalContenidoForm #txt_contenido").val() )=='' ){
         r=false;
         msjG.mensaje('warning','Ingrese Contenido',4000);
     }
@@ -91,13 +109,20 @@ ValidaForm3=function(){
 AgregarEditar3=function(val,id){
     AddEdit=val;
     ContenidoG.id='';
+    ContenidoG.unidad_contenido_id='';
+    ContenidoG.titulo_contenido='';
     ContenidoG.contenido='';
     ContenidoG.ruta_contenido='';
     ContenidoG.file_archivo='';
+    ContenidoG.imagen_nombre='';
+    ContenidoG.imagen_archivo='';
     ContenidoG.tipo_respuesta='';
     ContenidoG.fecha_inicio='';
     ContenidoG.fecha_final='';
     ContenidoG.fecha_ampliada='';
+    ContenidoG.fecha_inicio_d='';
+    ContenidoG.fecha_final_d='';
+    ContenidoG.fecha_ampliada_d='';
     ContenidoG.referencia='';
     ContenidoG.estado='1';
     $('#respuesta').css("display","none");
@@ -105,11 +130,17 @@ AgregarEditar3=function(val,id){
 
         ContenidoG.id=id;
         ContenidoG.contenido=$("#DivContenido #trid_"+id+" .contenido").text();
+        ContenidoG.unidad_contenido_id=$("#DivContenido #trid_"+id+" .unidad_contenido_id").val();
+        ContenidoG.titulo_contenido=$("#DivContenido #trid_"+id+" .titulo_contenido").val();
         ContenidoG.ruta_contenido=$("#DivContenido #trid_"+id+" .ruta_contenido").val();
+        ContenidoG.imagen_nombre=$("#DivContenido #trid_"+id+" .imagen_nombre").val();
         ContenidoG.tipo_respuesta=$("#DivContenido #trid_"+id+" .tipo_respuesta").val();
         ContenidoG.fecha_inicio=$("#DivContenido #trid_"+id+" .fecha_inicio").val();
         ContenidoG.fecha_final=$("#DivContenido #trid_"+id+" .fecha_final").val();
         ContenidoG.fecha_ampliada=$("#DivContenido #trid_"+id+" .fecha_ampliada").val();
+        ContenidoG.fecha_inicio_d=$("#DivContenido #trid_"+id+" .fecha_inicio_d").val();
+        ContenidoG.fecha_final_d=$("#DivContenido #trid_"+id+" .fecha_final_d").val();
+        ContenidoG.fecha_ampliada_d=$("#DivContenido #trid_"+id+" .fecha_ampliada_d").val();
         ContenidoG.referencia=$("#DivContenido #trid_"+id+" .referencia").val();
         ContenidoG.estado=$("#DivContenido #trid_"+id+" .estado").val();
         if(ContenidoG.tipo_respuesta=='1'){
@@ -153,6 +184,7 @@ HTMLCargarContenido=function(result){
     var html="";
     $.each(result.data,function(index,r){
         nombre=r.ruta_contenido.split('/');
+        foto=r.foto_contenido.split('/');
         estadohtml='onClick="CambiarEstado3(1,'+r.id+')"';
         if(r.estado==1){
             estadohtml='onClick="CambiarEstado3(0,'+r.id+')"';
@@ -162,9 +194,15 @@ HTMLCargarContenido=function(result){
         }
         html+='<div class="col-lg-4" id="trid_'+r.id+'" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">'+
                '<input type="hidden" class="ruta_contenido" value="'+nombre[1]+'">'+
+               '<input type="hidden" class="imagen_nombre" value="'+foto[1]+'">'+
+               '<input type="hidden" class="unidad_contenido_id" value="'+r.unidad_contenido_id+'">'+
+               '<input type="hidden" class="titulo_contenido" value="'+r.titulo_contenido+'">'+
                '<input type="hidden" class="fecha_inicio" value="'+r.fecha_inicio+'">'+
                '<input type="hidden" class="fecha_final" value="'+r.fecha_final+'">'+
                '<input type="hidden" class="fecha_ampliada" value="'+r.fecha_ampliada+'">'+
+               '<input type="hidden" class="fecha_inicio_d" value="'+r.fecha_inicio_d+'">'+
+               '<input type="hidden" class="fecha_final_d" value="'+r.fecha_final_d+'">'+
+               '<input type="hidden" class="fecha_ampliada_d" value="'+r.fecha_ampliada_d+'">'+
                '<input type="hidden" class="tipo_respuesta" value="'+r.tipo_respuesta+'">'+
                '<input type="hidden" class="referencia" value="'+r.referencia+'">'+
                '<input type="hidden" class="estado" value="'+r.estado+'">'+
@@ -176,7 +214,7 @@ HTMLCargarContenido=function(result){
                             '</div>'+
                         '</div>'+
                     '<div class="col-md-5 text-center" style="border-right: 2px solid #e9e9e9;">'+
-                            '<a href="file/content/'+r.ruta_contenido+'" target="blank"><img class="img-responsive" src="img/course/'+r.foto+'" alt="" width="100%" height="" style="margin:10px auto;height: 150px;min-width: 150px;"></a>'+
+                            '<a href="file/content/'+r.ruta_contenido+'" target="blank"><img class="img-responsive" src="file/content/'+r.foto_contenido+'" alt="" width="100%" height="" style="margin:10px auto;height: 150px;min-width: 150px;"></a>'+
                         '</div>'+
                     '<div class="col-md-7" style="border-left: 2px solid #e9e9e9;">'+
                         '<div class="text-justify" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">'+
@@ -242,17 +280,17 @@ HTMLCargarContenido=function(result){
 };
 
 CargarSlct=function(slct){
-    if(slct==1){
-    AjaxContenido.CargarCurso(SlctCargarCurso);
+    if(slct==2){
+    AjaxContenido.CargarUnidadContenido(SlctCargarUnidadContenido);
     }
 };
-SlctCargarCurso=function(result){
-    var html="<option value='0'>.::Seleccione::.</option>";
+SlctCargarUnidadContenido=function(result){
+    var html="<option value>.::Seleccione::.</option>";
     $.each(result.data,function(index,r){
-        html+="<option value="+r.id+">"+r.curso+"</option>";
+        html+="<option value="+r.id+">"+r.unidad_contenido+"</option>";
     });
-    $("#ModalContenidoForm #slct_curso_id").html(html);
-    $("#ModalContenidoForm #slct_curso_id").selectpicker('refresh');
+    $("#ModalContenidoForm #slct_unidad_contenido_id").html(html);
+    $("#ModalContenidoForm #slct_unidad_contenido_id").selectpicker('refresh');
 
 };
 CargarContenidoProgramacion=function(id,programacion_unica_id){
@@ -271,19 +309,19 @@ CargarContenidoRespuesta=function(id){
      $("#ContenidoProgramacionForm").css("display","none");
 
 };
-onImagen = function (event) {
+onImagen = function (event,tipo) {
         var files = event.target.files || event.dataTransfer.files;
         if (!files.length)
             return;
         var image = new Image();
         var reader = new FileReader();
         reader.onload = (e) => {
-            $('#ModalContenidoForm #txt_file_archivo').val(e.target.result);
+            $('#ModalContenidoForm #txt_'+tipo+'_archivo').val(e.target.result);
             $('#ModalContenidoForm .img-circle').attr('src',e.target.result);
         };
         reader.readAsDataURL(files[0]);
-        $('#ModalContenidoForm #txt_file_nombre').val(files[0].name);
-        console.log(files[0].name);
+        $('#ModalContenidoForm #txt_'+tipo+'_nombre').val(files[0].name);
+//        console.log(files[0].name);
 };
 AgregarReferencia= function(){
   var html='';
