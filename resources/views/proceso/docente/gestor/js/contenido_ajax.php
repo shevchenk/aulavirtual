@@ -24,11 +24,6 @@ var AjaxContenido={
         url='AjaxDinamic/Proceso.ContenidoPR@EditStatus';
         masterG.postAjax(url,data,evento);
     },
-    CargarCurso:function(evento){
-        url='AjaxDinamic/Mantenimiento.PreguntaEM@ListCursos';
-        data={};
-        masterG.postAjax(url,data,evento);
-    },
     CargarUnidadContenido:function(evento){
         url='AjaxDinamic/Mantenimiento.UnidadContenidoEM@ListUnidadContenido';
         data={};

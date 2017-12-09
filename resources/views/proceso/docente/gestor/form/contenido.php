@@ -20,7 +20,19 @@
                         <div class="form-group">
                             <label>Unidad de Contenido</label>
                             <select class="form-control selectpicker show-menu-arrow" data-live-search="true" name="slct_unidad_contenido_id" id="slct_unidad_contenido_id">
+                                <option value>.::Seleccione::.</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Imagen de Contenido</label>
+                            <input type="text" readonly="" class="form-control input-sm" id="txt_imagen_nombre" name="txt_imagen_nombre" value="">
+                            <input type="text" style="display: none;" id="txt_imagen_archivo" name="txt_imagen_archivo">
+                            <label class="btn btn-default btn-flat margin btn-xs">
+                                 <i class="fa fa-file-image-o fa-lg"></i>
+                                <input type="file" style="display: none;" onchange="onImagen(event,'imagen');">
+                            </label>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -44,7 +56,7 @@
                                  <i class="fa fa-file-pdf-o fa-lg"></i>
                                  <i class="fa fa-file-word-o fa-lg"></i>
                                  <i class="fa fa-file-image-o fa-lg"></i>
-                                <input type="file" style="display: none;" onchange="onImagen(event);">
+                                <input type="file" style="display: none;" onchange="onImagen(event,'file');">
                             </label>
                         </div>
                     </div>

@@ -66,6 +66,14 @@ class Contenido extends Model
           $url = "file/content/c$contenido->id/".$r->file_nombre;
           $ftf->fileToFile($r->file_archivo,'c'.$contenido->id, $url);
         }
+        if(trim($r->imagen_nombre)!='' and trim($r->imagen_archivo)!=''){
+          $contenido->foto = "c$contenido->id/".$r->imagen_nombre;
+          $ftf = new Contenido;
+          $url = "file/content/c$contenido->id/".$r->imagen_nombre;
+          $ftf->fileToFile($r->imagen_archivo,'c'.$contenido->id, $url);
+        }else{
+          $contenido->foto = "default/nodisponible.png";  
+        }
         $contenido->save();
 
     }
@@ -77,11 +85,18 @@ class Contenido extends Model
         $contenido->unidad_contenido_id = trim( $r->unidad_contenido_id );
         $contenido->titulo_contenido = trim( $r->titulo_contenido );
         if(trim($r->file_nombre)!='' and trim($r->file_archivo)!=''){
-            //$contenido->ruta_contenido = trim( $r->file_nombre );
             $contenido->ruta_contenido = "c$contenido->id/".$r->file_nombre;
             $ftf=new Contenido;
             $url = "file/content/c$contenido->id/".$r->file_nombre;
             $ftf->fileToFile($r->file_archivo,'c'.$contenido->id, $url);
+        }
+        if(trim($r->imagen_nombre)!='' and trim($r->imagen_archivo)!=''){
+          $contenido->foto = "c$contenido->id/".$r->imagen_nombre;
+          $ftf = new Contenido;
+          $url = "file/content/c$contenido->id/".$r->imagen_nombre;
+          $ftf->fileToFile($r->imagen_archivo,'c'.$contenido->id, $url);
+        }else if(trim($r->imagen_nombre)=='' and trim($r->imagen_archivo)==''){
+            $contenido->foto = "default/nodisponible.png";  
         }
         $contenido->tipo_respuesta = trim( $r->tipo_respuesta );
         if($r->tipo_respuesta==1){
@@ -106,7 +121,7 @@ class Contenido extends Model
         $result=Contenido::select('v_contenidos.id','v_contenidos.contenido',DB::raw('IFNULL(v_contenidos.referencia,"") as referencia'),'v_contenidos.ruta_contenido',
                 'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),'v_contenidos.unidad_contenido_id','v_contenidos.titulo_contenido',
                 DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),'vuc.unidad_contenido',
-                DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),
+                DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),'v_contenidos.foto as foto_contenido',
                 'vc.curso', 'vc.foto','v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
                 DB::raw('CASE v_contenidos.tipo_respuesta  WHEN 0 THEN "Solo vista" WHEN 1 THEN "Requiere Respuesta" END AS tipo_respuesta_nombre'))
                 ->join('v_cursos as vc','vc.id','=','v_contenidos.curso_id')
@@ -199,6 +214,8 @@ class Contenido extends Model
                 $contenido->curso_id =$result->curso_id;
                 $contenido->contenido =$result->contenido;
                 $contenido->tipo_respuesta =$result->tipo_respuesta;
+                $contenido->titulo_contenido =$result->titulo_contenido;
+                $contenido->unidad_contenido_id =$result->unidad_contenido_id;
                 if($result->fecha_inicio!=''){
                     $contenido->fecha_inicio =$result->fecha_inicio ;
                 }
@@ -216,12 +233,24 @@ class Contenido extends Model
                 if ( !is_dir('file/content/c'.$contenido->id) ) {
                      mkdir('file/content/c'.$contenido->id,0777);
                 }
-                $archivo=explode('/', $result->ruta_contenido);
-                $fichero = 'file/content/'.$result->ruta_contenido;
-                $nuevo_fichero = 'file/content/c'.$contenido->id.'/'.$archivo[1];
+                $file_archivo=explode('/', $result->ruta_contenido);
+                $file_fichero = 'file/content/'.$result->ruta_contenido;
+                $file_nuevo_fichero = 'file/content/c'.$contenido->id.'/'.$file_archivo[1];
                 
-                copy($fichero,$nuevo_fichero);
-                $contenido->ruta_contenido='c'.$contenido->id.'/'.$archivo[1];
+                copy($file_fichero,$file_nuevo_fichero);
+                $contenido->ruta_contenido='c'.$contenido->id.'/'.$file_archivo[1];
+                
+                if($result->foto!='default/nodisponible.png'){
+                    $archivo=explode('/', $result->foto);
+                    $fichero = 'file/content/'.$result->foto;
+                    $nuevo_fichero = 'file/content/c'.$contenido->id.'/'.$archivo[1];
+
+                    copy($fichero,$nuevo_fichero);
+                    $contenido->foto='c'.$contenido->id.'/'.$archivo[1]; 
+                }else{
+                    $contenido->foto=$result->foto; 
+                }
+
                 $contenido->save();
             }
 
