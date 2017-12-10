@@ -182,7 +182,10 @@ HTMLAgregarEditar3=function(result){
 
 HTMLCargarContenido=function(result){
     var html="";
+    var pos=0;
+    var aux_uc='';
     $.each(result.data,function(index,r){
+        pos++;
         nombre=r.ruta_contenido.split('/');
         foto=r.foto_contenido.split('/');
         estadohtml='onClick="CambiarEstado3(1,'+r.id+')"';
@@ -190,8 +193,35 @@ HTMLCargarContenido=function(result){
             estadohtml='onClick="CambiarEstado3(0,'+r.id+')"';
         }
         if(index==0){
-            html+='<div class="col-md-12">';
+            html+='<div class="panel box box-primary">'+
+                      '<img class="box-header with-border collapsed" data-toggle="collapse" data-parent="#DivContenido" href="#collapse'+index+'" src="img/content_unit/'+r.foto_unidad+'" width="100%" min-height="90px;" height="90px;">'+
+                      '</img>'+
+                      '<div id="collapse'+index+'" class="panel-collapse collapse">'+
+                        '<div class="box-body">';
+            //html+='<div class="col-md-12">';
+            aux_uc=r.unidad_contenido_id;
         }
+
+        if( r.unidad_contenido_id!=aux_uc || pos%4==0 ){
+            html+=      '</div>'+
+                      '</div>'+
+                    '</div>';
+            html+='<div class="panel box box-primary">'+
+                      '<img class="box-header with-border collapsed" data-toggle="collapse" data-parent="#DivContenido" href="#collapse'+index+'" src="img/content_unit/'+r.foto_unidad+'" width="100%" style="min-height:90px;" height="90px;">'+
+                      '</img>'+
+                      '<div id="collapse'+index+'" class="panel-collapse collapse">'+
+                        '<div class="box-body">';
+            if( r.unidad_contenido_id!=aux_uc ){
+                aux_uc=r.unidad_contenido_id;
+                pos=1;
+            }
+        }
+
+        color="bg-blue";
+        if(r.tipo_respuesta == 1){
+            color="bg-red";
+        }
+
         html+='<div class="col-lg-4" id="trid_'+r.id+'" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">'+
                '<input type="hidden" class="ruta_contenido" value="'+nombre[1]+'">'+
                '<input type="hidden" class="imagen_nombre" value="'+foto[1]+'">'+
@@ -208,8 +238,8 @@ HTMLCargarContenido=function(result){
                '<input type="hidden" class="estado" value="'+r.estado+'">'+
                '<div class="row">'+
                     '<div class="col-md-12">'+
-                            '<div class="text-justify" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">'+
-                                '<p>'+r.curso+'</p>'+
+                            '<div class="text-justify '+color+'" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">'+
+                                '<p style="text-align:center">'+r.titulo_contenido+'</p>'+
                                 //'<small>Curso: '+r.curso+'</small>'+
                             '</div>'+
                         '</div>'+
@@ -268,13 +298,11 @@ HTMLCargarContenido=function(result){
                               html+='</div>'+
                 '</div>'+
             '</div>';
-        if((index+1)%3==0){
-            html+='</div>';
-            html+='<div class="col-md-12">';
-        }
     });
     if(result.data.length>0){
-        html+='</div>';
+        html+=          '</div>'+
+                      '</div>'+
+                    '</div>';
     }
     $("#DivContenido").html(html);
 };

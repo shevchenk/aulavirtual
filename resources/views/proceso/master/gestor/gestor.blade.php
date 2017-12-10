@@ -128,14 +128,19 @@
                     <hr>
 
                     <form id="ContenidoForm" style="display: none">
-                        <div class="panel panel-success" style="padding-bottom: 10px;">
-                            <div class="panel-heading" style="background-color: #A9D08E;color:black">
-                                <center>.::Contenido::.</center>
-                            </div>
+                        <div class="panel panel-success" style="padding-bottom: 10px;padding-left: 60px;">
+                            <img id="imageCurso" class="panel-heading" src='img/course/calculo2f.jpg' width="94%" style="min-height:90px; margin: 40px auto;" height="150px">
+                                
+                            </img>
                             <div class="panel-body table-responsive no-padding">
                                 <div class="col-md-12">
                                     <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant" >
-                                    <div id="DivContenido">
+                                    <div class="box box-solid">
+                                        <div class="box-body">
+                                          <div class="box-group" id="DivContenido">
+                                          </div>
+                                        </div>
+                                      </div>
                                     </div>
                                     <div class="col-md-12 text-center" style="margin-top: 10px;">
                                         <div class='btn btn-primary btn-sm'onClick="AgregarEditar3(1)" >

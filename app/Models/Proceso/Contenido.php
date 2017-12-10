@@ -148,7 +148,7 @@ class Contenido extends Model
     public static function runLoad($r){
         $result=Contenido::select('v_contenidos.id','v_contenidos.contenido',DB::raw('IFNULL(v_contenidos.referencia,"") as referencia'),'v_contenidos.ruta_contenido',
                 'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),'v_contenidos.unidad_contenido_id','v_contenidos.titulo_contenido',
-                DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),'vuc.unidad_contenido',
+                DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),'vuc.unidad_contenido','vuc.foto as foto_unidad',
                 DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),'v_contenidos.foto as foto_contenido',
                 'vc.curso', 'vc.foto','v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
                 DB::raw('CASE v_contenidos.tipo_respuesta  WHEN 0 THEN "Solo vista" WHEN 1 THEN "Requiere Respuesta" END AS tipo_respuesta_nombre'),
@@ -187,7 +187,8 @@ class Contenido extends Model
                       }
                     }
                 )
-            ->orderBy('v_contenidos.id','asc')->get();
+            ->orderBy('vuc.id','asc')
+            ->orderBy('v_contenidos.tipo_respuesta','asc')->get();
         return $result;
     }
 
