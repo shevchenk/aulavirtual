@@ -107,79 +107,23 @@
 
                 <hr>
                 <form id="ContenidoForm" style="display: none">
-                  <div class="panel panel-success" style="padding-bottom: 10px;">
-                      <div class="panel-heading" style="background-color: #A9D08E;color:black">
-                          <center>.::Tareas del Alumno::.</center>
-                      </div>
-                    <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant" >
-                    <div id="DivContenido" class="box-body table-responsive no-padding">
-
-                      <div class="col-md-12">
-                          <div class="col-lg-4" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">
-                            <div class="row">
-                              <div class="col-md-5 text-center" style="border-right: 2px solid #e9e9e9;">
-                                <img class="img-responsive" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="100%" width="100%" height="" style="margin:10px auto;">
-                              </div>
-                              <div class="col-md-7">
-                                <div class="text-justify" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">
-                                  <p>Este es un Contenido de Ejemplo, espero quede bien!</p>
+                    <div class="panel panel-success" style="padding-bottom: 10px;padding-left: 60px;">
+                        <img id="imageCurso" class="panel-heading" src='img/course/calculo2f.jpg' width="94%" style="min-height:90px; margin: 40px auto;" height="150px">
+                            
+                        </img>
+                        <div class="panel-body table-responsive no-padding">
+                            <div class="col-md-12">
+                                <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant" >
+                                <div class="box box-solid">
+                                    <div class="box-body">
+                                      <div class="box-group" id="DivContenido">
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
-                                <div>
-                                  <p style="font-weight: normal;">
-                                    <label style="font-weight: bold;">Fecha Ini. : </label> 2017-11-25</br>
-                                    <label style="font-weight: bold;">Fecha Fin. : </label> 2017-11-25</br>
-                                    <label style="font-weight: bold;">Fecha Amp. : </label> 2017-11-25
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-12" style="padding-right: 5px; padding-left: 5px; margin-top: 5px; overflow:hidden;">
-                                <button type="button" class="col-xs-12 btn btn-primary" data-toggle="tooltip" data-placement="top" title="Responder Tarea"><span class="fa fa-list fa-lg"></span> Responder Tarea</button>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="col-lg-4" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">
-                            <div class="row">
-                              <div class="col-md-5 text-center" style="border-right: 2px solid #e9e9e9;">
-                                <img class="img-responsive" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="100%" width="100%" height="" style="margin:10px auto;">
-                              </div>
-                              <div class="col-md-7">
-                                <div class="text-justify" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">
-                                  <p>Este es un Contenido de Ejemplo, espero quede bien!</p>
-                                </div>
-                                <div>
-                                  <p style="font-weight: normal;">
-                                    <label style="font-weight: bold;">Fecha Ini. : </label> 2017-11-25</br>
-                                    <label style="font-weight: bold;">Fecha Fin. : </label> 2017-11-25</br>
-                                    <label style="font-weight: bold;">Fecha Amp. : </label> 2017-11-25
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">
-                                <button type="button" class="col-xs-12 btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="fa fa-trash fa-lg"></span> Eliminar</button>
-                              </div>
-                              <div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">
-                                <button type="button" style="" class="col-xs-12 btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar"><span class="fa fa-edit fa-lg"></span> Editar</button>
-                              </div>
-                              <div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">
-                                <button type="button" style="" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 1"><span class="fa fa-list fa-lg"></span> Contenido 1</button>
-                              </div>
-                              <div class="col-md-3" style="padding-right: 0px; padding-left: 5px; margin-top: 5px; overflow:hidden;">
-                                <button type="button" class="col-xs-12 btn btn-info" data-toggle="tooltip" data-placement="top" title="Ver Contenido 2"><span class="fa fa-list fa-lg"></span> Contenido 2</button>
-                              </div>
-                            </div>
-                          </div>
-
-                      </div>
-
-
-
-                    </div><!-- .box-body -->
-                  </div>
+                            </div><!-- .box-body -->
+                        </div>
+                    </div>
                 </form><!-- .form -->
 
                 <hr>
@@ -233,7 +177,7 @@
                             <table id="TableRespuestaAlu" class="table table-bordered table-hover">
                               <thead>
                                 <tr class="cabecera">
-                                  <th>Fecha Envio</th>
+                                  <th>Fecha de Envio</th>
                                   <th>Respuesta</th>
                                   <th>Archivo</th>
                                   <th>[-]</th>

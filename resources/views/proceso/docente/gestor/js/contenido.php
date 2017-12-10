@@ -235,7 +235,6 @@ HTMLCargarContenido=function(result){
                     '<div class="col-md-12">'+
                             '<div class="text-justify '+color+'" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">'+
                                 '<p style="text-align:center">'+r.titulo_contenido+'</p>'+
-                                //'<small>Curso: '+r.curso+'</small>'+
                             '</div>'+
                         '</div>'+
                     '<div class="col-md-5 text-center" style="border-right: 2px solid #e9e9e9;">'+
@@ -268,7 +267,7 @@ HTMLCargarContenido=function(result){
                             '<div class="col-md-12 btn-default" style="font-weight: normal; padding-right: 5px; padding-left: 5px; margin-top: 5px; overflow:hidden;">'+
                                 '';
                                 for (i = 0; i < res_uri.length; i++) {
-                                  html+='<span class="fa fa-book fa-lg"></span> <a href="http://'+res_uri[i]+'" target="blank">'+ res_uri[i] +'</a><br/>';
+                                  html+='<span class="fa fa-book fa-lg"></span> <a href="'+res_uri[i]+'" target="_blank">'+ res_uri[i] +'</a><br/>';
                                 }
                       html+='</div>'+
                         '</div>';

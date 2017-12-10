@@ -113,7 +113,7 @@ HTMLCargarEvaluacion=function(result){
             "<td class='fecha_final'>"+r.fecha_final+"</td>"+
             "<td>";
         //html+='<a class="btn btn-default btn-sm" onClick="verContenido(0,'+r.id+')"><i class="fa fa-plus fa-lg"></i> </a></td>';
-        html +='<a class="btn btn-primary btn-sm" onClick="CargarContenido('+r.pu_id+','+r.curso_id+',\''+r.curso+'\',this)"><i class="fa fa-plus fa-lg"></i> </a></td>';
+        html +='<a class="btn btn-primary btn-sm" onClick="CargarContenido('+r.pu_id+','+r.curso_id+',\''+r.curso+'\',\''+r.foto+'\',this)"><i class="fa fa-plus fa-lg"></i> </a></td>';
         html+="</tr>";
     });
     $("#TableEvaluacion tbody").html(html);
@@ -137,13 +137,13 @@ HTMLCargarEvaluacion=function(result){
 };
 
 
-CargarContenido=function(id,curso_id,curso,boton){
+CargarContenido=function(id,curso_id,curso,imagen,boton){
      masterG.pintar_fila(boton);
      $("#ContenidoForm #txt_programacion_unica_id").val(id);
      $("#ModalContenidoForm #txt_programacion_unica_id").val(id);
      $("#ModalContenidoForm #txt_curso_id").val(curso_id);
      $("#ModalContenidoForm #txt_curso").val(curso);
-
+     $("#imageCurso").attr("src","img/course/"+imagen);
      AjaxContenido.Cargar(HTMLCargarContenido);
      $("#ContenidoForm").css("display","");
      $("#ContenidoProgramacionForm").css("display","none");

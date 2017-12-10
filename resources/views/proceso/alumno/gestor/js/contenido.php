@@ -175,23 +175,50 @@ HTMLCargarContenRpta=function(result){
 HTMLCargarContenido=function(result){
     var html="";
     var tipo_respuesta='';
+    var aux_uc='';
+    var pos=0;
 
     $.each(result.data,function(index,r){
+        pos++;
           if(r.tipo_respuesta == 1)
             tipo_respuesta='<button type="button" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')" class="col-xs-12 btn btn-primary" data-toggle="tooltip" data-placement="top" title="Responder Tarea"><span class="fa fa-list fa-lg"></span> Responder Tarea</button>';
           else
             tipo_respuesta+='<button type="button" class="col-xs-12 btn btn-default" data-toggle="tooltip" data-placement="top" title="Responder Tarea" disabled><span class="fa fa-list fa-lg"></span> Responder Tarea</button>';
 
-            if(index == 0){
-                html+='<div class="col-md-12">';
+            if(index==0){
+                html+='<div class="panel box box-primary">'+
+                          '<img class="box-header with-border collapsed" data-toggle="collapse" data-parent="#DivContenido" href="#collapse'+index+'" src="img/content_unit/'+r.foto_unidad+'" width="100%" min-height="90px;" height="90px;">'+
+                          '</img>'+
+                          '<div id="collapse'+index+'" class="panel-collapse collapse">'+
+                            '<div class="box-body">';
+                aux_uc=r.unidad_contenido_id;
+            }
+
+            if( r.unidad_contenido_id!=aux_uc || pos%4==0 ){
+                html+=      '</div>'+
+                          '</div>'+
+                        '</div>';
+                html+='<div class="panel box box-primary">'+
+                          '<img class="box-header with-border collapsed" data-toggle="collapse" data-parent="#DivContenido" href="#collapse'+index+'" src="img/content_unit/'+r.foto_unidad+'" width="100%" style="min-height:90px;" height="90px;">'+
+                          '</img>'+
+                          '<div id="collapse'+index+'" class="panel-collapse collapse">'+
+                            '<div class="box-body">';
+                if( r.unidad_contenido_id!=aux_uc ){
+                    aux_uc=r.unidad_contenido_id;
+                    pos=1;
+                }
+            }
+
+            color="bg-blue";
+            if(r.tipo_respuesta == 1){
+                color="bg-red";
             }
 
             html+='<div class="col-lg-4" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">'+
                    ' <div class="row">'+
                         '<div class="col-md-12">'+
-                            '<div class="text-justify" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">'+
-                                '<p>'+r.curso+'</p>'+
-                                //'<small>Curso: '+r.curso+'</small>'+
+                            '<div class="text-justify '+color+'" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">'+
+                                '<p>'+r.titulo_contenido+'</p>'+
                             '</div>'+
                         '</div>'+
                         '<div class="col-md-5 text-center" style="border-right: 2px solid #e9e9e9;">'+
@@ -200,7 +227,6 @@ HTMLCargarContenido=function(result){
                         '<div class="col-md-7">'+
                             '<div class="text-justify" style="margin-bottom: 15px; margin-top:10px; font-size: 15px; padding: 5px 5px; background-color: #F5F5F5; border-radius: 10px; border: 3px solid #F8F8F8;">'+
                                 '<p>'+r.contenido+'</p>'+
-                                //'<small>Curso: '+r.curso+'</small>'+
                             '</div>';
 
                     if(r.tipo_respuesta == 1){
@@ -225,7 +251,7 @@ HTMLCargarContenido=function(result){
                           '<div class="col-md-12 btn-default" style="font-weight: normal; padding-right: 5px; padding-left: 5px; margin-top: 5px; overflow:hidden;">'+
                               '';
                               for (i = 0; i < res_uri.length; i++) {
-                                html+='<span class="fa fa-book fa-lg"></span> <a href="http://'+res_uri[i]+'" target="blank">'+ res_uri[i] +'</a><br/>';
+                                html+='<span class="fa fa-book fa-lg"></span> <a href="'+res_uri[i]+'" target="_blank">'+ res_uri[i] +'</a><br/>';
                               }
                     html+='</div>'+
                       '</div>';
@@ -238,15 +264,12 @@ HTMLCargarContenido=function(result){
                     '</div>'+
                 '</div>';
 
-            if((index+1) % 3 == 0){
-                html+='</div>';
-                html+='<div class="col-md-12">';
-            }
-
             tipo_respuesta = '';
     });
     if(result.data.length>0){
-        html+='</div>';
+        html+=          '</div>'+
+                      '</div>'+
+                    '</div>';
     }
     $("#DivContenido").html(html);
 };

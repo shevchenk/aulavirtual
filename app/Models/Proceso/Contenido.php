@@ -216,16 +216,18 @@ class Contenido extends Model
     // --
     public static function runLoadContenidoProgra($r){
         $result=Contenido::select('v_contenidos.id','v_contenidos.contenido','v_contenidos.ruta_contenido',
-                'v_contenidos.referencia',
+                'v_contenidos.referencia','v_contenidos.titulo_contenido',
                 'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),
-                DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),
+                DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),'vuc.unidad_contenido','vuc.foto as foto_unidad',
                 DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),
                 'vc.curso', 'vc.foto', 'v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
                 DB::raw('CASE v_contenidos.tipo_respuesta  WHEN 0 THEN "Solo vista" WHEN 1 THEN "Requiere Respuesta" END AS tipo_respuesta_nombre'))
             ->join('v_cursos as vc','vc.id','=','v_contenidos.curso_id')
+            ->join('v_unidades_contenido as vuc','vuc.id','=','v_contenidos.unidad_contenido_id')
             ->where('v_contenidos.programacion_unica_id','=',$r->programacion_unica_id)
             ->where('v_contenidos.estado','=',1)
-            ->orderBy('v_contenidos.id','asc')->get();
+            ->orderBy('vuc.id','asc')
+            ->orderBy('v_contenidos.tipo_respuesta','asc')->get();
         return $result;
     }
     // --
