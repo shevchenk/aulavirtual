@@ -198,7 +198,6 @@ HTMLCargarContenido=function(result){
                       '</img>'+
                       '<div id="collapse'+index+'" class="panel-collapse collapse">'+
                         '<div class="box-body">';
-            //html+='<div class="col-md-12">';
             aux_uc=r.unidad_contenido_id;
         }
 
