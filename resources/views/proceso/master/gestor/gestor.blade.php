@@ -143,11 +143,8 @@
                                       </div>
                                     </div>
                                     <div class="col-md-12 text-center" style="margin-top: 10px;">
-                                        <div class='btn btn-primary btn-sm'onClick="AgregarEditar3(1)" >
+                                        <div class='btn btn-primary btn-lg'onClick="AgregarEditar3(1)" >
                                             <i class="fa fa-plus fa-lg"></i>&nbsp;Nuevo
-                                        </div>
-                                        <div class='btn btn-info btn-sm' id="btn_replicar" >
-                                            <i class="fa fa-copy fa-lg"></i>&nbsp;Replicar
                                         </div>
                                     </div>
                                 </div><!-- .box-body -->
@@ -159,7 +156,7 @@
                         <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" >
                         <div class="panel panel-warning">
                             <div class="panel-heading" style="background-color: #FFE699;color:black">
-                                <center>.::Ampliación de Respuesta::.</center>
+                                <center>.::Ampliación de Respuesta::.<b id="titulo_tarea_pro"></b></center>
                             </div>
                             <div class="panel-body table-responsive no-padding">
                                 <div class="col-md-12">
@@ -193,7 +190,7 @@
                         <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" >
                         <div class="panel panel-warning">
                             <div class="panel-heading" style="background-color: #FFE699;color:black">
-                                <center>.::Respuesta de Contenido::.</center>
+                                <center>.::Respuesta de Contenido::.<b id="titulo_tarea"></b></center>
                             </div>
                             <div class="panel-body table-responsive no-padding">
                                 <div class="col-md-12">

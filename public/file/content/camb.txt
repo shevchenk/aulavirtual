@@ -1,0 +1,65 @@
+Agregar título del contenido.
+----------------------------------
+
+Unidad por bloques
+Relacionar con sus imagenes.
+
+Principal
+Unidad I
+Unidad II
+
+
+ del 1 al 20...
+
+En el container ingresar la imagen del curso poner debajo largo.
+
+en el nombre del curso poner el tipo de contenido y si es tarea rojo.
+-------
+
+revisar redireccionamiento no esta jalando los ":"
+
+.------
+
+imagen del contenido.
+agregar.
+
+----
+
+
+
+
+Comunicación I
+Metodología de Trabajo Universitario
+Matemática Basica
+Introducción a la Ingenieria de Sistema
+Offimatica Empresarial
+
+
+replicar los contenidos de las programaciones de  los cursos del mismo.
+
+-----
+
+
+----------
+Docente no replica ni amplia....
+-------------
+
+Alumno no debe salir en su rpta....
+fecha de presento rpta
+----
+
+En el encabezado de rpta poner titulo de contenido del contenido seleccionado, fecha de inicio , fecha fin , fec ampl.
+---------------
+
+Solo puede enviar 1 sola Vez!!!
+
+Fecha de envio . "Alumno"
+
+----------
+Poner fecha de inicio, fin, ampliada. Para docente.
+-------------
+
+
+manejar intentos de evaluaciones.
+
+------------------------
