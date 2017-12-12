@@ -24,10 +24,11 @@ var AjaxContenido={
         url='AjaxDinamic/Proceso.ContenidoPR@EditStatus';
         masterG.postAjax(url,data,evento);
     },
-    CargarCurso:function(evento){
-        url='AjaxDinamic/Mantenimiento.PreguntaEM@ListCursos';
+    CargarUnidadContenido:function(evento){
+        url='AjaxDinamic/Mantenimiento.UnidadContenidoEM@ListUnidadContenido';
         data={};
         masterG.postAjax(url,data,evento);
-    },
+    },        
 };
 </script>
+

@@ -20,12 +20,14 @@ $(document).ready(function() {
     
 });
 
-CargarContenido=function(id,curso_id,curso,boton){   
+CargarContenido=function(id,curso_id,curso,imagen,boton){   
      masterG.pintar_fila(boton);
+     CargarSlct(2);
      $("#ContenidoForm #txt_programacion_unica_id").val(id);
      $("#ModalContenidoForm #txt_programacion_unica_id").val(id);
      $("#ModalContenidoForm #txt_curso_id").val(curso_id);
      $("#ModalContenidoForm #txt_curso").val(curso);
+     $("#imageCurso").attr("src","img/course/"+imagen);
      AjaxContenido.Cargar(HTMLCargarContenido);
      $("#ContenidoForm").css("display","");
      $("#ContenidoProgramacionForm").css("display","none");
@@ -48,7 +50,7 @@ HTMLCargarProgramacionUnica=function(result){
             "&nbsp</a>"+r.curso+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
             "<td class='fecha_final'>"+r.fecha_final+"</td>"+
-            '<td><a class="btn btn-info btn-sm" onClick="CargarContenido('+r.id+','+r.curso_id+',\''+r.curso+'\',this)"><i class="fa fa-th-list fa-lg"></i> </a></td>';
+            '<td><a class="btn btn-info btn-sm" onClick="CargarContenido('+r.id+','+r.curso_id+',\''+r.curso+'\',\''+r.foto+'\',this)"><i class="fa fa-th-list fa-lg"></i> </a></td>';
         html+="</tr>";
     });
     $("#TableProgramacionUnica tbody").html(html); 

@@ -46,16 +46,30 @@ class Contenido extends Model
         $contenido->contenido = trim( $r->contenido );
         $contenido->tipo_respuesta = trim( $r->tipo_respuesta );
         if($r->tipo_respuesta==1){
-            $contenido->fecha_inicio = trim( $r->fecha_inicio );
-            $contenido->fecha_final = trim( $r->fecha_final );
-            $contenido->fecha_ampliada = trim( $r->fecha_ampliada );
+            if($r->fecha_inicio!=''){
+                $contenido->fecha_inicio =$r->fecha_inicio ;
+            }
+            if($r->fecha_final!=''){
+                $contenido->fecha_final =$r->fecha_final;
+            }
+            if($r->fecha_ampliada!=''){
+                $contenido->fecha_ampliada =$r->fecha_ampliada;
+            }
         }else{
             $contenido->fecha_inicio = null;
             $contenido->fecha_final = null;
-            $contenido->fecha_ampliada = null;
         }
         if($r->referencia!=''){
             $contenido->referencia= implode('|', $r->referencia);
+        }
+        if($r->fecha_inicio_d!=''){
+            $contenido->fecha_inicio_d =$r->fecha_inicio_d ;
+        }
+        if($r->fecha_final_d!=''){
+            $contenido->fecha_final_d =$r->fecha_final_d;
+        }
+        if($r->fecha_ampliada_d!=''){
+            $contenido->fecha_ampliada_d =$r->fecha_ampliada_d;
         }
         $contenido->estado = trim( $r->estado );
         $contenido->persona_id_created_at=Auth::user()->id;
@@ -100,16 +114,30 @@ class Contenido extends Model
         }
         $contenido->tipo_respuesta = trim( $r->tipo_respuesta );
         if($r->tipo_respuesta==1){
-            $contenido->fecha_inicio = trim( $r->fecha_inicio );
-            $contenido->fecha_final = trim( $r->fecha_final );
-            $contenido->fecha_ampliada = trim( $r->fecha_ampliada );
+            if($r->fecha_inicio!=''){
+                $contenido->fecha_inicio =$r->fecha_inicio ;
+            }
+            if($r->fecha_final!=''){
+                $contenido->fecha_final =$r->fecha_final;
+            }
+            if($r->fecha_ampliada!=''){
+                $contenido->fecha_ampliada =$r->fecha_ampliada;
+            }
         }else{
             $contenido->fecha_inicio = null;
             $contenido->fecha_final = null;
-            $contenido->fecha_ampliada = null;
         }
         if($r->referencia!=''){
             $contenido->referencia= implode('|', $r->referencia);
+        }
+        if($r->fecha_inicio_d!=''){
+            $contenido->fecha_inicio_d =$r->fecha_inicio_d ;
+        }
+        if($r->fecha_final_d!=''){
+            $contenido->fecha_final_d =$r->fecha_final_d;
+        }
+        if($r->fecha_ampliada_d!=''){
+            $contenido->fecha_ampliada_d =$r->fecha_ampliada_d;
         }
         $contenido->estado = trim( $r->estado );
         $contenido->persona_id_updated_at=Auth::user()->id;
@@ -120,10 +148,11 @@ class Contenido extends Model
     public static function runLoad($r){
         $result=Contenido::select('v_contenidos.id','v_contenidos.contenido',DB::raw('IFNULL(v_contenidos.referencia,"") as referencia'),'v_contenidos.ruta_contenido',
                 'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),'v_contenidos.unidad_contenido_id','v_contenidos.titulo_contenido',
-                DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),'vuc.unidad_contenido',
+                DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),'vuc.unidad_contenido','vuc.foto as foto_unidad',
                 DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),'v_contenidos.foto as foto_contenido',
                 'vc.curso', 'vc.foto','v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
-                DB::raw('CASE v_contenidos.tipo_respuesta  WHEN 0 THEN "Solo vista" WHEN 1 THEN "Requiere Respuesta" END AS tipo_respuesta_nombre'))
+                DB::raw('CASE v_contenidos.tipo_respuesta  WHEN 0 THEN "Solo vista" WHEN 1 THEN "Requiere Respuesta" END AS tipo_respuesta_nombre'),
+                DB::raw('IFNULL(v_contenidos.fecha_inicio_d,"") as fecha_inicio_d'),DB::raw('IFNULL(v_contenidos.fecha_final_d,"") as fecha_final_d'),DB::raw('IFNULL(v_contenidos.fecha_ampliada_d,"") as fecha_ampliada_d'))
                 ->join('v_cursos as vc','vc.id','=','v_contenidos.curso_id')
                 ->join('v_unidades_contenido as vuc','vuc.id','=','v_contenidos.unidad_contenido_id')
                 ->where(
@@ -158,7 +187,8 @@ class Contenido extends Model
                       }
                     }
                 )
-            ->orderBy('v_contenidos.id','asc')->get();
+            ->orderBy('vuc.id','asc')
+            ->orderBy('v_contenidos.tipo_respuesta','asc')->get();
         return $result;
     }
 
@@ -186,16 +216,18 @@ class Contenido extends Model
     // --
     public static function runLoadContenidoProgra($r){
         $result=Contenido::select('v_contenidos.id','v_contenidos.contenido','v_contenidos.ruta_contenido',
-                'v_contenidos.referencia',
+                'v_contenidos.referencia','v_contenidos.titulo_contenido',
                 'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),
-                DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),
+                DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),'vuc.unidad_contenido','vuc.foto as foto_unidad',
                 DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),
                 'vc.curso', 'vc.foto', 'v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
                 DB::raw('CASE v_contenidos.tipo_respuesta  WHEN 0 THEN "Solo vista" WHEN 1 THEN "Requiere Respuesta" END AS tipo_respuesta_nombre'))
             ->join('v_cursos as vc','vc.id','=','v_contenidos.curso_id')
+            ->join('v_unidades_contenido as vuc','vuc.id','=','v_contenidos.unidad_contenido_id')
             ->where('v_contenidos.programacion_unica_id','=',$r->programacion_unica_id)
             ->where('v_contenidos.estado','=',1)
-            ->orderBy('v_contenidos.id','asc')->get();
+            ->orderBy('vuc.id','asc')
+            ->orderBy('v_contenidos.tipo_respuesta','asc')->get();
         return $result;
     }
     // --

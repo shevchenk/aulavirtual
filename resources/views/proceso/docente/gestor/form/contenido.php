@@ -9,14 +9,14 @@
             <div class="modal-body">
                 <form id="ModalContenidoForm">
                     <input type="hidden" class="form-control mant" id="txt_programacion_unica_id" name="txt_programacion_unica_id" readonly="">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label id="label_curso">Curso</label>
                             <input  type="hidden" class="form-control mant"  id="txt_curso_id" name="txt_curso_id" readonly="">
                             <input type="text"  class="form-control mant" id="txt_curso" name="txt_curso" disabled="">
                         </div> 
                     </div>
-                    <div class="col-sm-12">  
+                    <div class="col-sm-6">  
                         <div class="form-group">
                             <label>Unidad de Contenido</label>
                             <select class="form-control selectpicker show-menu-arrow" data-live-search="true" name="slct_unidad_contenido_id" id="slct_unidad_contenido_id">
@@ -79,25 +79,45 @@
                         </div>
                     </div>
                     <div id="respuesta" style="display:none">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label>Fecha de Inicio</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_inicio" name="txt_fecha_inicio" readonly="" >
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label>Fecha Final</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_final" name="txt_fecha_final" readonly="" >
                         </div>
                     </div>
-                    <div class="col-md-4">
+<!--                    <div class="col-md-4">
                         <div class="form-group">
                             <label>Fecha Ampliada</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_ampliada" name="txt_fecha_ampliada" readonly="" >
                         </div>
+                    </div>-->
                     </div>
+<!--                    <div id="fecha_docente">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Fecha de Inicio</label>
+                            <input type="text" class="form-control fecha" id="txt_fecha_inicio_d" name="txt_fecha_inicio_d" readonly="" >
+                        </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Fecha Final</label>
+                            <input type="text" class="form-control fecha" id="txt_fecha_final_d" name="txt_fecha_final_d" readonly="" >
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Fecha Ampliada</label>
+                            <input type="text" class="form-control fecha" id="txt_fecha_ampliada_d" name="txt_fecha_ampliada_d" readonly="" >
+                        </div>
+                    </div>
+                    </div>-->
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Estado</label>
