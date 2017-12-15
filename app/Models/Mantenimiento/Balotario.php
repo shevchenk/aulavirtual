@@ -47,7 +47,7 @@ class Balotario extends Model
     public static function runLoad($r)
     {
         $sql=Balotario::select('v_balotarios.id','vte.tipo_evaluacion','v_balotarios.cantidad_maxima','v_balotarios.cantidad_pregunta',
-                'v_balotarios.estado','v_balotarios.tipo_evaluacion_id')
+                'v_balotarios.estado','v_balotarios.tipo_evaluacion_id','v_balotarios.modo')
             ->join('v_tipos_evaluaciones as vte','vte.id','=','v_balotarios.tipo_evaluacion_id')
             ->where( 
                     
@@ -97,13 +97,20 @@ class Balotario extends Model
             ->inRandomOrder()
             ->limit($balotario->cantidad_maxima)->get();
             
-        foreach ($result as $data){
-            $balotario_pregunta = new BalotarioPregunta;
-            $balotario_pregunta->balotario_id =$balotario->id;
-            $balotario_pregunta->pregunta_id =$data->id;
-            $balotario_pregunta->estado =1;
-            $balotario_pregunta->persona_id_created_at=Auth::user()->id;
-            $balotario_pregunta->save();
+        if(count($result)>=$balotario->cantidad_maxima){
+            foreach ($result as $data){
+                $balotario_pregunta = new BalotarioPregunta;
+                $balotario_pregunta->balotario_id =$balotario->id;
+                $balotario_pregunta->pregunta_id =$data->id;
+                $balotario_pregunta->estado =1;
+                $balotario_pregunta->persona_id_created_at=Auth::user()->id;
+                $balotario_pregunta->save();
+            }
+            $balotario->modo=1;
+            $balotario->save();
+            return 1;
+        }else{
+            return 2;
         }
 
     }

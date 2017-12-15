@@ -36,9 +36,9 @@ class BalotarioEM extends Controller
             $rules = array(
                 'programacion_unica_id' => 
                        ['required',
-//                        Rule::unique('v_balotarios','programacion_unica_id')->where(function ($query) use($r) {
-//                                $query->where('pregunta_id',$r->pregunta_id );
-//                        }),
+                        Rule::unique('v_balotarios','programacion_unica_id')->where(function ($query) use($r) {
+                                $query->where('tipo_evaluacion_id',$r->tipo_evaluacion_id );
+                        }),
                         ],
             );
 
@@ -69,9 +69,9 @@ class BalotarioEM extends Controller
             $rules = array(
                 'programacion_unica_id' => 
                        ['required',
-//                        Rule::unique('v_balotarios','programacion_unica_id')->ignore($r->id)->where(function ($query) use($r) {
-//                                $query->where('pregunta_id',$r->pregunta_id );
-//                        }),
+                        Rule::unique('v_balotarios','programacion_unica_id')->ignore($r->id)->where(function ($query) use($r) {
+                                $query->where('tipo_evaluacion_id',$r->tipo_evaluacion_id );
+                        }),
                         ],
             );
 
@@ -102,9 +102,16 @@ class BalotarioEM extends Controller
     
     public function GenerateBallot(Request $r ){
         if ( $r->ajax() ) {
-            Balotario::runGenerateBallot($r);
-            $return['rst'] = 1;
-            $return['msj'] = 'Balotario Generado';
+            
+            $rst=Balotario::runGenerateBallot($r);
+            
+            if($rst==1){
+                $return['msj'] = 'Balotario Generado';
+            }else{
+                $return['msj'] = 'Balotario no Generado por falta de preguntas';
+            }
+            
+            $return['rst'] = $rst;
             return response()->json($return);
         }
     }
