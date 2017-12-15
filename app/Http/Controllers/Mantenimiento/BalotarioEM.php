@@ -90,14 +90,22 @@ class BalotarioEM extends Controller
         }
     }
 
-    public function Load(Request $r )
-    {
+    public function Load(Request $r ){
         if ( $r->ajax() ) {
             $renturnModel = Balotario::runLoad($r);
             $return['rst'] = 1;
             $return['data'] = $renturnModel;
             $return['msj'] = "No hay registros aún";    
             return response()->json($return);   
+        }
+    }
+    
+    public function GenerateBallot(Request $r ){
+        if ( $r->ajax() ) {
+            Balotario::runGenerateBallot($r);
+            $return['rst'] = 1;
+            $return['msj'] = 'Balotario Generado';
+            return response()->json($return);
         }
     }
     

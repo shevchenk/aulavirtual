@@ -4,6 +4,8 @@ namespace App\Models\Mantenimiento;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Mantenimiento\Pregunta;
+use App\Models\Mantenimiento\BalotarioPregunta;
 
 class Balotario extends Model
 {
@@ -80,5 +82,30 @@ class Balotario extends Model
         return $result;
     }
     
+        public static function runGenerateBallot($r){
+            
+        $balotario = Balotario::find($r->id);
+        
+        $result=Pregunta::select("v_preguntas.id")
+            ->leftJoin('v_balotarios_preguntas as bp',function($join){
+                $join->on('bp.pregunta_id','=','v_preguntas.id')
+                ->where('bp.estado','=',1);
+            })
+            ->where('v_preguntas.estado','=',1)
+            ->where('v_preguntas.tipo_evaluacion_id','=',$balotario->tipo_evaluacion_id)
+            ->whereNull('bp.pregunta_id')
+            ->inRandomOrder()
+            ->limit($balotario->cantidad_maxima)->get();
+            
+        foreach ($result as $data){
+            $balotario_pregunta = new BalotarioPregunta;
+            $balotario_pregunta->balotario_id =$balotario->id;
+            $balotario_pregunta->pregunta_id =$data->id;
+            $balotario_pregunta->estado =1;
+            $balotario_pregunta->persona_id_created_at=Auth::user()->id;
+            $balotario_pregunta->save();
+        }
 
+    }
+    
 }

@@ -5,7 +5,7 @@ namespace App\Models\Mantenimiento;
 use Illuminate\Database\Eloquent\Model;
 
 
-class PrivilegioOpcion extends Model
+class BalotarioPregunta extends Model
 {
-    protected   $table = 'privilegios_opciones';
+    protected   $table = 'v_balotarios_preguntas';
 }
