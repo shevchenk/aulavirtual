@@ -133,7 +133,7 @@ HTMLCargarPregunta=function(result){
     $("#TablePregunta").DataTable({
         "paging": true,
         "lengthChange": false,
-        "searching": true,
+        "searching": false,
         "ordering": false,
         "info": true,
         "autoWidth": false,

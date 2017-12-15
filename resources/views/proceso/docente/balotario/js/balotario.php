@@ -5,8 +5,8 @@ $(document).ready(function() {
      $("#TableBalotario").DataTable({
         "paging": true,
         "lengthChange": false,
-        "searching": true,
-        "ordering": true,
+        "searching": false,
+        "ordering": false,
         "info": true,
         "autoWidth": false
     });
@@ -103,6 +103,20 @@ HTMLAgregarEditar2=function(result){
     }
 }
 
+GenerarBalotario2=function(id){
+        AjaxBalotario.GenerarBalotario(HTMLGenerarBalotario2,id);
+}
+
+HTMLGenerarBalotario2=function(result){
+    if( result.rst==1 ){
+        msjG.mensaje('success',result.msj,4000);
+        AjaxBalotario.Cargar(HTMLCargarBalotario);
+    }
+    else{
+        msjG.mensaje('warning',result.msj,2000);
+    }
+}
+
 HTMLCargarBalotario=function(result){
     var html="";
     $('#TableBalotario').DataTable().destroy();
@@ -121,7 +135,7 @@ HTMLCargarBalotario=function(result){
             "<input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'>";
         html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
             '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar2(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>'+
-            '<td><a class="btn btn-info" onClick="Generar(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i>Generar </a></td>';
+            '<td><a class="btn btn-info" onClick="GenerarBalotario2('+r.id+')"><i class="fa fa-edit fa-lg"></i>Generar </a></td>';
         html+="</tr>";
     });
     $("#TableBalotario tbody").html(html); 
