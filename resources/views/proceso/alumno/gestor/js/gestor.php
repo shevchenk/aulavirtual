@@ -103,17 +103,18 @@ HTMLCargarEvaluacion=function(result){
             estadohtml='<span id="'+r.id+'" onClick="CambiarEstado(0,'+r.id+')" class="btn btn-success">Activo</span>';
         }*/
 
-        html+="<tr id='trid_"+r.id+"'>"+
+        html+='<tr id="trid_'+r.id+'" onClick="CargarContenido('+r.pu_id+','+r.curso_id+',\''+r.curso+'\',\''+r.foto_cab+'\',this)">'+
+            "<td class='carrera'>"+r.carrera+"</td>"+
+            "<td class='ciclo'>"+r.ciclo+"</td>"+
             "<td class='curso'>"+
             "<a target='_blank' href='img/course/"+r.foto+"'>"+
             "<img src='img/course/"+r.foto+"' style='height: 40px;width: 40px;'>"+
             "&nbsp</a>"+r.curso+"</td>"+
             "<td class='docente'>"+r.docente+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
-            "<td class='fecha_final'>"+r.fecha_final+"</td>"+
-            "<td>";
+            "<td class='fecha_final'>"+r.fecha_final+"</td>";
         //html+='<a class="btn btn-default btn-sm" onClick="verContenido(0,'+r.id+')"><i class="fa fa-plus fa-lg"></i> </a></td>';
-        html +='<a class="btn btn-primary btn-sm" onClick="CargarContenido('+r.pu_id+','+r.curso_id+',\''+r.curso+'\',\''+r.foto+'\',this)"><i class="fa fa-plus fa-lg"></i> </a></td>';
+     //   html +='<a class="btn btn-primary btn-sm" onClick="CargarContenido('+r.pu_id+','+r.curso_id+',\''+r.curso+'\',\''+r.foto+'\',this)"><i class="fa fa-plus fa-lg"></i> </a></td>';
         html+="</tr>";
     });
     $("#TableEvaluacion tbody").html(html);
