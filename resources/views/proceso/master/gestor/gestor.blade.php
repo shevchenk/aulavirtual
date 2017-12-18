@@ -128,8 +128,8 @@
                     <hr>
 
                     <form id="ContenidoForm" style="display: none">
-                        <div class="panel panel-success" style="padding-bottom: 10px;padding-left: 60px;">
-                            <img id="imageCurso" class="panel-heading" src='img/course/calculo2f.jpg' width="94%" style="min-height:90px; margin: 40px auto;" height="150px">
+                        <div class="panel panel-success" style="padding-bottom: 10px;">
+                            <img id="imageCurso" class="panel-heading img-responsive" src='img/course/calculo2f.jpg' style="width:100px;">
                                 
                             </img>
                             <div class="panel-body table-responsive no-padding">
