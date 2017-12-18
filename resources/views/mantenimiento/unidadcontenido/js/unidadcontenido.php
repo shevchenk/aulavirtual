@@ -116,7 +116,7 @@ HTMLCargarUnidadContenido=function(result){
         html+="<tr id='trid_"+r.id+"'>"+
             "<td>";
             if(r.foto!=null){    
-            html+="<a  target='_blank' href='img/content_unit/"+r.foto+"'><img src='img/content_unit/"+r.foto+"' style='height: 40px;width: 40px;'></a>";}
+            html+="<a  target='_blank' href='img/content_unit/"+r.foto+"'><img src='img/content_unit/"+r.foto+"' style='height: 40px;width: 600px;'></a>";}
             html+="</td>"+
                   "<td class='unidad_contenido'>"+r.unidad_contenido+"</td>"+
                   "<td>";

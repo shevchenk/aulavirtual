@@ -40,12 +40,12 @@
                         <table id="TableUnidadContenido" class="table table-bordered table-hover">
                             <thead>
                                 <tr class="cabecera">
-                                    <th class="col-xs-1">
+                                    <th class="col-xs-5">
                                         <div class="form-group">
                                             <label><h4>Imagen:</h4></label>
                                         </div>
                                     </th>
-                                    <th class="col-xs-9">
+                                    <th class="col-xs-5">
                                         <div class="form-group">
                                             <label><h4>Unidad de Contenido:</h4></label>
                                             <div class="input-group">
@@ -54,8 +54,8 @@
                                             </div>
                                         </div>
                                     </th>
-                                    <th class="col-xs-1">[-]</th>
-                                    <th class="col-xs-1">[-]</th>
+                                    <th class="col-xs-1">[Estado]</th>
+                                    <th class="col-xs-1">[Editar]</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,8 +64,8 @@
                                 <tr class="cabecera">                               
                                   <th>Imagen</th>
                                   <th>Unidad de Contenido</th>
-                                  <th>[-]</th>
-                                  <th>[-]</th>
+                                  <th>[Estado]</th>
+                                  <th>[Editar]</th>
                                 </tr>
                             </tfoot>
                         </table>
