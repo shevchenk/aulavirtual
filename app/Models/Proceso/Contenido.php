@@ -45,12 +45,18 @@ class Contenido extends Model
         $contenido->titulo_contenido = trim( $r->titulo_contenido );
         $contenido->contenido = trim( $r->contenido );
         $contenido->tipo_respuesta = trim( $r->tipo_respuesta );
-        if($r->tipo_respuesta==1){
+        if($r->tipo_respuesta==1 or $r->tipo_respuesta==2){
             if($r->fecha_inicio!=''){
                 $contenido->fecha_inicio =$r->fecha_inicio ;
             }
             if($r->fecha_final!=''){
                 $contenido->fecha_final =$r->fecha_final;
+            }
+            if($r->hora_inicio!=''){
+                $contenido->hora_inicio =$r->hora_inicio ;
+            }
+            if($r->hora_final!=''){
+                $contenido->hora_final =$r->hora_final;
             }
             if($r->fecha_ampliada!=''){
                 $contenido->fecha_ampliada =$r->fecha_ampliada;
@@ -113,12 +119,18 @@ class Contenido extends Model
             $contenido->foto = "default/nodisponible.png";  
         }
         $contenido->tipo_respuesta = trim( $r->tipo_respuesta );
-        if($r->tipo_respuesta==1){
+        if($r->tipo_respuesta==1 or $r->tipo_respuesta==2){
             if($r->fecha_inicio!=''){
                 $contenido->fecha_inicio =$r->fecha_inicio ;
             }
             if($r->fecha_final!=''){
                 $contenido->fecha_final =$r->fecha_final;
+            }
+            if($r->hora_inicio!=''){
+                $contenido->hora_inicio =$r->hora_inicio ;
+            }
+            if($r->hora_final!=''){
+                $contenido->hora_final =$r->hora_final;
             }
             if($r->fecha_ampliada!=''){
                 $contenido->fecha_ampliada =$r->fecha_ampliada;
@@ -147,7 +159,9 @@ class Contenido extends Model
 
     public static function runLoad($r){
         $result=Contenido::select('v_contenidos.id','v_contenidos.contenido',DB::raw('IFNULL(v_contenidos.referencia,"") as referencia'),'v_contenidos.ruta_contenido',
-                'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),'v_contenidos.unidad_contenido_id','v_contenidos.titulo_contenido',
+                'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),
+                DB::raw('IFNULL(v_contenidos.hora_inicio,"") as hora_inicio'),
+                DB::raw('IFNULL(v_contenidos.hora_final,"") as hora_final'),'v_contenidos.unidad_contenido_id','v_contenidos.titulo_contenido',
                 DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),'vuc.unidad_contenido','vuc.foto as foto_unidad',
                 DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),'v_contenidos.foto as foto_contenido',
                 'vc.curso', 'vc.foto', 'vc.foto_cab','v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
@@ -220,6 +234,8 @@ class Contenido extends Model
                 'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),
                 DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),'vuc.unidad_contenido','vuc.foto as foto_unidad',
                 DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),
+                DB::raw('IFNULL(v_contenidos.hora_inicio,"") as hora_inicio'),
+                DB::raw('IFNULL(v_contenidos.hora_final,"") as hora_final'),
                 'vc.curso', 'vc.foto', 'vc.foto_cab', 'v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
                 DB::raw('CASE v_contenidos.tipo_respuesta  WHEN 0 THEN "Solo vista" WHEN 1 THEN "Requiere Respuesta" END AS tipo_respuesta_nombre'))
             ->join('v_cursos as vc','vc.id','=','v_contenidos.curso_id')

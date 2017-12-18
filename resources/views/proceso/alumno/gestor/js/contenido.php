@@ -212,6 +212,8 @@ HTMLCargarContenido=function(result){
             color="bg-blue";
             if(r.tipo_respuesta == 1){
                 color="bg-red";
+            }else if(r.tipo_respuesta == 2){
+            color="bg-green";
             }
 
             html+='<div class="col-lg-4" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">'+
@@ -235,6 +237,17 @@ HTMLCargarContenido=function(result){
                                     '<label style="font-weight: bold;">Fecha Ini. : </label> '+r.fecha_inicio+'</br>'+
                                     '<label style="font-weight: bold;">Fecha Fin. : </label> '+r.fecha_final+'</br>'+
                                     '<label style="font-weight: bold;">Fecha Amp. : </label> '+ r.fecha_ampliada +
+                                '</p>'+
+                            '</div>';
+                    }else if(r.tipo_respuesta == 2){
+                        var dia = new Date(r.fecha_inicio);
+                        var dia_semana = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"];
+                     html+='<div>'+
+                                '<p style="font-weight: normal;">'+
+                                    '<label style="font-weight: bold;">Fecha: </label> '+r.fecha_inicio+'</br>'+
+                                    '<label style="font-weight: bold;">Día: </label> '+dia_semana[dia.getDay()] +'</br>'+
+                                    '<label style="font-weight: bold;">Hora Inicio. : </label> '+r.hora_inicio+'</br>'+
+                                    '<label style="font-weight: bold;">Hora Final. : </label> '+r.hora_final+
                                 '</p>'+
                             '</div>';
                     }else{
