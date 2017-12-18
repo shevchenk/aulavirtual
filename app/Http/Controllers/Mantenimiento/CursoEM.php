@@ -104,6 +104,8 @@ class CursoEM extends Controller{
                 if(count($curso) == 0) //Insert
                 {
                   $curso = new Curso();
+                  $curso->carrera = trim($value->carrera);
+                  $curso->ciclo = trim($value->ciclo);
                   $curso->curso_externo_id = trim($value->curso_externo_id);
                   $curso->persona_id_created_at=1;
                 }
@@ -111,6 +113,8 @@ class CursoEM extends Controller{
                   $curso->persona_id_updated_at=1;
 
                 $curso->curso = trim($value->curso);
+                $curso->carrera = trim($value->carrera);
+                $curso->ciclo = trim($value->ciclo);
                 $curso->save();
                 $array_curso.=','.$curso->curso_externo_id;
               }
