@@ -30,8 +30,8 @@
                             <input type="text" readonly="" class="form-control input-sm" id="txt_imagen_nombre" name="txt_imagen_nombre" value="">
                             <input type="text" style="display: none;" id="txt_imagen_archivo" name="txt_imagen_archivo">
                             <label class="btn btn-default btn-flat margin btn-xs">
-                                 <i class="fa fa-file-image-o fa-lg"></i>
-                                <input type="file" style="display: none;" onchange="onImagen(event,'imagen');">
+                                <i class="fa fa-file-image-o fa-lg"></i>
+                                <input type="file" style="display: none;" onchange="onImagen(event, 'imagen');">
                             </label>
                         </div>
                     </div>
@@ -53,10 +53,10 @@
                             <input type="text" readonly="" class="form-control input-sm" id="txt_file_nombre" name="txt_file_nombre" value="">
                             <input type="text" style="display: none;" id="txt_file_archivo" name="txt_file_archivo">
                             <label class="btn btn-default btn-flat margin btn-xs">
-                                 <i class="fa fa-file-pdf-o fa-lg"></i>
-                                 <i class="fa fa-file-word-o fa-lg"></i>
-                                 <i class="fa fa-file-image-o fa-lg"></i>
-                                <input type="file" style="display: none;" onchange="onImagen(event,'file');">
+                                <i class="fa fa-file-pdf-o fa-lg"></i>
+                                <i class="fa fa-file-word-o fa-lg"></i>
+                                <i class="fa fa-file-image-o fa-lg"></i>
+                                <input type="file" style="display: none;" onchange="onImagen(event, 'file');">
                             </label>
                         </div>
                     </div>
@@ -64,10 +64,10 @@
                         <div class="form-group">
                             <label>Referencia<a class='btn btn-success btn-xs' onclick="AgregarReferencia()"><i class="fa fa-plus fa-xs"></i></a></label>
                             <div id="referencia">
-                             
+
+                            </div>
                         </div>
                     </div>
-                            </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Tipo de Contenido</label>
@@ -75,48 +75,63 @@
                                 <option value>.::Seleccione::.</option>
                                 <option value="0">Documento de Apoyo</option>
                                 <option value="1">Tarea</option>
+                                <option value="2">Videoconferencia</option>
                             </select>
                         </div>
                     </div>
-                    <div id="respuesta" style="display:none">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Fecha de Inicio (Entrega de Tarea)</label>
-                            <input type="text" class="form-control fecha" id="txt_fecha_inicio" name="txt_fecha_inicio" readonly="" >
+                    <div id="respuesta">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Fecha de Inicio <small class="anotacion"></small></label>
+                                <input type="text" class="form-control fecha" id="txt_fecha_inicio" name="txt_fecha_inicio" readonly="" >
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Fecha Final (Entrega de Tarea)</label>
-                            <input type="text" class="form-control fecha" id="txt_fecha_final" name="txt_fecha_final" readonly="" >
+                        <div id="video" style="display:none">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Hora Inicio <small class="anotacion"></small></label>
+                                    <input type="text" class="form-control hora" id="txt_hora_inicio" name="txt_hora_inicio" readonly="" >
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Hora Final  <small class="anotacion"></small></label>
+                                    <input type="text" class="form-control hora" id="txt_hora_final" name="txt_hora_final" readonly="" >
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Fecha Ampliada (Entrega de Tarea)</label>
-                            <input type="text" class="form-control fecha" id="txt_fecha_ampliada" name="txt_fecha_ampliada" readonly="" >
+                        <div id="tarea" style="display:none">
+                            <div class="col-md-4">
+                                <div class="form-group respuesta">
+                                    <label>Fecha Final  <small class="anotacion"></small></label>
+                                    <input type="text" class="form-control fecha" id="txt_fecha_final" name="txt_fecha_final" readonly="" >
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Fecha Ampliada<small class="anotacion"></small></label>
+                                    <input type="text" class="form-control fecha" id="txt_fecha_ampliada" name="txt_fecha_ampliada" readonly="" >
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Fecha de Inicio<small class="profesor"></small></label>
+                                    <input type="text" class="form-control fecha" id="txt_fecha_inicio_d" name="txt_fecha_inicio_d" readonly="" >
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Fecha Final<small class="profesor"></small></label>
+                                    <input type="text" class="form-control fecha" id="txt_fecha_final_d" name="txt_fecha_final_d" readonly="" >
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Fecha Ampliada<small class="profesor"></small></label>
+                                    <input type="text" class="form-control fecha" id="txt_fecha_ampliada_d" name="txt_fecha_ampliada_d" readonly="" >
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    </div>
-                    <div id="fecha_docente" style="display:none">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Fecha de Inicio (Revisión de Tarea)</label>
-                            <input type="text" class="form-control fecha" id="txt_fecha_inicio_d" name="txt_fecha_inicio_d" readonly="" >
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Fecha Final (Revisión de Tarea)</label>
-                            <input type="text" class="form-control fecha" id="txt_fecha_final_d" name="txt_fecha_final_d" readonly="" >
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Fecha Ampliada (Revisión de Tarea)</label>
-                            <input type="text" class="form-control fecha" id="txt_fecha_ampliada_d" name="txt_fecha_ampliada_d" readonly="" >
-                        </div>
-                    </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
@@ -128,7 +143,7 @@
                         </div>
                     </div>
                     <div class="form-group"> 
-                         <label></label>
+                        <label></label>
                     </div>
                 </form>
             </div> <!-- FIN DE MODAL BODY -->

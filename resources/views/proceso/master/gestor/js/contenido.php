@@ -2,7 +2,7 @@
 var AddEdit=0; //0: Editar | 1: Agregar
 var ContenidoG={id:0,curso_id:0,unidad_contenido_id:0,titulo_contenido:"",contenido:'',referencia:''
 ,ruta_contenido:'',file_archivo:'',imagen_nombre:'',imagen_archivo:'',tipo_respuesta:0,fecha_inicio:'',
-fecha_final:'',fecha_ampliada:'',fecha_inicio_d:'',
+fecha_final:'',hora_inicio:'',hora_final:'',fecha_ampliada:'',fecha_inicio_d:'',
 fecha_final_d:'',fecha_ampliada_d:'',estado:1}; // Datos Globales
 $(document).ready(function() {
     
@@ -21,6 +21,19 @@ $(document).ready(function() {
         showMeridian: true,
         time:true,
         minView:2,
+        autoclose: true,
+        todayBtn: false
+    });
+    
+    $(".hora").datetimepicker({
+        format: "hh:ii:00",
+        language: 'es',
+        showMeridian: true,
+        time:true,
+        startView:1,
+        minView:0,
+        maxView:1,
+        pickDate: true,
         autoclose: true,
         todayBtn: false
     });
@@ -45,6 +58,8 @@ $(document).ready(function() {
         $('#ModalContenidoForm #slct_tipo_respuesta').selectpicker('val', ContenidoG.tipo_respuesta );
         $('#ModalContenidoForm #txt_fecha_inicio').val( ContenidoG.fecha_inicio );
         $('#ModalContenidoForm #txt_fecha_final').val( ContenidoG.fecha_final );
+        $('#ModalContenidoForm #txt_hora_inicio').val( ContenidoG.hora_inicio );
+        $('#ModalContenidoForm #txt_hora_final').val( ContenidoG.hora_final );
         $('#ModalContenidoForm #txt_fecha_ampliada').val( ContenidoG.fecha_ampliada );
         $('#ModalContenidoForm #txt_fecha_inicio_d').val( ContenidoG.fecha_inicio_d );
         $('#ModalContenidoForm #txt_fecha_final_d').val( ContenidoG.fecha_final_d );
@@ -60,9 +75,16 @@ $(document).ready(function() {
 
     $( "#ModalContenidoForm #slct_tipo_respuesta" ).change(function() {
         if( $('#ModalContenidoForm #slct_tipo_respuesta').val()=='1' ) {
-            $( "#ModalContenidoForm #respuesta,#ModalContenidoForm #fecha_docente" ).css("display","");
+            $( "#ModalContenidoForm #respuesta,#ModalContenidoForm #tarea" ).css("display","");
+            $( "#ModalContenidoForm #video" ).css("display","none");
+            $( "#ModalContenidoForm #respuesta .anotacion" ).html("(Entrega de Tarea)");
+            $( "#ModalContenidoForm #respuesta .profesor" ).html("(Revisión de Tarea)");
+        }else if( $('#ModalContenidoForm #slct_tipo_respuesta').val()=='2' ) {
+            $( "#ModalContenidoForm #video,#ModalContenidoForm #respuesta" ).css("display","");
+            $( "#ModalContenidoForm #tarea" ).css("display","none");
+            $( "#ModalContenidoForm #respuesta .anotacion" ).html("(Video)");
         }else{
-            $( "#ModalContenidoForm #respuesta,#ModalContenidoForm #fecha_docente" ).css("display","none");
+            $( "#ModalContenidoForm #video,#ModalContenidoForm #respuesta,#ModalContenidoForm #tarea" ).css("display","none");
         }
 
     });
@@ -91,13 +113,21 @@ ValidaForm3=function(){
         r=false;
         msjG.mensaje('warning','Seleccione Tipo de Contenido',4000);
     }
-    else if( $.trim( $("#ModalContenidoForm #txt_fecha_inicio").val() )=='' && $.trim( $("#ModalContenidoForm #slct_tipo_respuesta").val() )=='1'){
+    else if( $.trim( $("#ModalContenidoForm #txt_fecha_inicio").val() )=='' && ($.trim( $("#ModalContenidoForm #slct_tipo_respuesta").val() )=='1' || $.trim( $("#ModalContenidoForm #slct_tipo_respuesta").val() )=='2')){
         r=false;
         msjG.mensaje('warning','Ingrese Fecha Inicio',4000);
     }
-    else if( $.trim( $("#ModalContenidoForm #txt_fecha_final").val() )=='' && $.trim( $("#ModalContenidoForm #slct_tipo_respuesta").val() )=='1' ){
+    else if( $.trim( $("#ModalContenidoForm #txt_hora_inicio").val() )=='' && $.trim( $("#ModalContenidoForm #slct_tipo_respuesta").val() )=='2'){
+        r=false;
+        msjG.mensaje('warning','Ingrese Hora Inicio',4000);
+    }
+    else if( $.trim( $("#ModalContenidoForm #txt_fecha_final").val() )=='' && $.trim( $("#ModalContenidoForm #slct_tipo_respuesta").val() )=='1'){
         r=false;
         msjG.mensaje('warning','Ingrese Fecha Final',4000);
+    }
+    else if( $.trim( $("#ModalContenidoForm #txt_hora_final").val() )=='' && $.trim( $("#ModalContenidoForm #slct_tipo_respuesta").val() )=='2'){
+        r=false;
+        msjG.mensaje('warning','Ingrese Hora Final',4000);
     }
     else if( $.trim( $("#ModalContenidoForm #txt_fecha_ampliada").val() )=='' && $.trim( $("#ModalContenidoForm #slct_tipo_respuesta").val() )=='1'){
         r=false;
@@ -119,13 +149,15 @@ AgregarEditar3=function(val,id){
     ContenidoG.tipo_respuesta='';
     ContenidoG.fecha_inicio='';
     ContenidoG.fecha_final='';
+    ContenidoG.hora_inicio='';
+    ContenidoG.hora_final='';
     ContenidoG.fecha_ampliada='';
     ContenidoG.fecha_inicio_d='';
     ContenidoG.fecha_final_d='';
     ContenidoG.fecha_ampliada_d='';
     ContenidoG.referencia='';
     ContenidoG.estado='1';
-    $('#respuesta,#fecha_docente').css("display","none");
+    $('#respuesta,#video,#tarea').css("display","none");
     if( val==0 ){
 
         ContenidoG.id=id;
@@ -137,6 +169,8 @@ AgregarEditar3=function(val,id){
         ContenidoG.tipo_respuesta=$("#DivContenido #trid_"+id+" .tipo_respuesta").val();
         ContenidoG.fecha_inicio=$("#DivContenido #trid_"+id+" .fecha_inicio").val();
         ContenidoG.fecha_final=$("#DivContenido #trid_"+id+" .fecha_final").val();
+        ContenidoG.hora_inicio=$("#DivContenido #trid_"+id+" .hora_inicio").val();
+        ContenidoG.hora_final=$("#DivContenido #trid_"+id+" .hora_final").val();
         ContenidoG.fecha_ampliada=$("#DivContenido #trid_"+id+" .fecha_ampliada").val();
         ContenidoG.fecha_inicio_d=$("#DivContenido #trid_"+id+" .fecha_inicio_d").val();
         ContenidoG.fecha_final_d=$("#DivContenido #trid_"+id+" .fecha_final_d").val();
@@ -144,7 +178,13 @@ AgregarEditar3=function(val,id){
         ContenidoG.referencia=$("#DivContenido #trid_"+id+" .referencia").val();
         ContenidoG.estado=$("#DivContenido #trid_"+id+" .estado").val();
         if(ContenidoG.tipo_respuesta=='1'){
-                $('#respuesta,#fecha_docente').css("display","");
+                $('#respuesta,#tarea').css("display","");
+                $('#video').css("display","none");
+                $( "#respuesta .anotacion" ).html("(Entrega de Tarea)");
+        }else if(ContenidoG.tipo_respuesta=='2'){
+                $('#tarea').css("display","none");
+                $('#video,#respuesta').css("display","");
+                $( "#respuesta .anotacion" ).html("(Video)");
         }
     }
     $('#ModalContenido').modal('show');
@@ -225,6 +265,8 @@ HTMLCargarContenido=function(result){
         color="bg-blue";
         if(r.tipo_respuesta == 1){
             color="bg-red";
+        }else if(r.tipo_respuesta == 2){
+            color="bg-maroon disabled color-palette";
         }
 
         html+='<div class="col-lg-4" id="trid_'+r.id+'" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">'+
@@ -234,6 +276,8 @@ HTMLCargarContenido=function(result){
                '<input type="hidden" class="titulo_contenido" value="'+r.titulo_contenido+'">'+
                '<input type="hidden" class="fecha_inicio" value="'+r.fecha_inicio+'">'+
                '<input type="hidden" class="fecha_final" value="'+r.fecha_final+'">'+
+               '<input type="hidden" class="hora_inicio" value="'+r.hora_inicio+'">'+
+               '<input type="hidden" class="hora_final" value="'+r.hora_final+'">'+
                '<input type="hidden" class="fecha_ampliada" value="'+r.fecha_ampliada+'">'+
                '<input type="hidden" class="fecha_inicio_d" value="'+r.fecha_inicio_d+'">'+
                '<input type="hidden" class="fecha_final_d" value="'+r.fecha_final_d+'">'+
@@ -264,6 +308,17 @@ HTMLCargarContenido=function(result){
                                 '<label style="font-weight: bold;">Fecha Amp. : </label> '+ r.fecha_ampliada +
                             '</p>'+
                         '</div>';
+                }else if(r.tipo_respuesta == 2){
+                        var dia = new Date(r.fecha_inicio);
+                        var dia_semana = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"];
+                     html+='<div>'+
+                                '<p style="font-weight: normal;">'+
+                                    '<label style="font-weight: bold;">Fecha: </label> '+r.fecha_inicio+'</br>'+
+                                    '<label style="font-weight: bold;">Día: </label> '+dia_semana[dia.getDay()] +'</br>'+
+                                    '<label style="font-weight: bold;">Hora Inicio. : </label> '+r.hora_inicio+'</br>'+
+                                    '<label style="font-weight: bold;">Hora Final. : </label> '+r.hora_final+
+                                '</p>'+
+                            '</div>';
                 }else{
                   html+='<div style="height: 85px;"></div>';
                 }

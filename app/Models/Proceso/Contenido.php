@@ -67,6 +67,8 @@ class Contenido extends Model
         }
         if($r->referencia!=''){
             $contenido->referencia= implode('|', $r->referencia);
+        }else{
+            $contenido->referencia=null;
         }
         if($r->fecha_inicio_d!=''){
             $contenido->fecha_inicio_d =$r->fecha_inicio_d ;
@@ -141,6 +143,8 @@ class Contenido extends Model
         }
         if($r->referencia!=''){
             $contenido->referencia= implode('|', $r->referencia);
+        }else{
+            $contenido->referencia=null;
         }
         if($r->fecha_inicio_d!=''){
             $contenido->fecha_inicio_d =$r->fecha_inicio_d ;
