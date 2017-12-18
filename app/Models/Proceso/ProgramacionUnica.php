@@ -10,8 +10,10 @@ class ProgramacionUnica extends Model
 
     public static function runLoad($r)
     {
-        $result=ProgramacionUnica::select('v_programaciones_unicas.id','v_programaciones_unicas.fecha_inicio',
-                                'v_programaciones_unicas.fecha_final','vc.curso','vc.foto','vc.foto_cab','v_programaciones_unicas.curso_id',
+        $result=ProgramacionUnica::select('v_programaciones_unicas.id',
+                                DB::raw('DATE(v_programaciones_unicas.fecha_inicio) as fecha_inicio'),
+                                DB::raw('DATE(v_programaciones_unicas.fecha_final) as fecha_final'),
+                                'vc.curso','vc.foto','vc.foto_cab','v_programaciones_unicas.curso_id',
                                 DB::raw('CONCAT_WS(" ",vp.paterno,vp.materno,vp.nombre) as docente'),'vp.dni')
                                 ->join('v_cursos as vc','vc.id','=','v_programaciones_unicas.curso_id')
                                 ->join('v_personas as vp','vp.id','=','v_programaciones_unicas.persona_id')

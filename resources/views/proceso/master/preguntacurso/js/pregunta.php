@@ -116,7 +116,7 @@ HTMLCargarPregunta=function(result){
             estadohtml='<span id="'+r.id+'" onClick="CambiarEstado2(0,'+r.id+')" class="btn btn-success">Activo</span>';
         }
 
-        html+="<tr id='trid_"+r.id+"'>"+
+        html+='<tr id="trid_'+r.id+'" onClick="CargarRespuesta('+r.id+',\''+r.pregunta+'\','+r.puntaje+',this)">'+
             "<td class='curso'>"+r.curso+"</td>"+
             "<td class='tipo_evaluacion'>"+r.tipo_evaluacion+"</td>"+
             "<td class='pregunta'>"+r.pregunta+"</td>"+
@@ -126,7 +126,7 @@ HTMLCargarPregunta=function(result){
             "<input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'>";
         html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
             '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar2(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
-        html+='<td><a class="btn btn-info btn-sm" onClick="CargarRespuesta('+r.id+',\''+r.pregunta+'\','+r.puntaje+',this)"><i class="fa fa-th-list fa-lg"></i> </a></td>';
+  //      html+='<td><a class="btn btn-info btn-sm" onClick="CargarRespuesta('+r.id+',\''+r.pregunta+'\','+r.puntaje+',this)"><i class="fa fa-th-list fa-lg"></i> </a></td>';
         html+="</tr>";
     });
     $("#TablePregunta tbody").html(html); 

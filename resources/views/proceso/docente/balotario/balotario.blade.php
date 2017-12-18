@@ -77,7 +77,6 @@
                                                         </div>
                                                     </div>
                                                 </th>
-                                                <th class="col-xs-1">[-]</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -87,7 +86,6 @@
                                                 <th>Curso</th>
                                                 <th>Fecha Inicio</th>
                                                 <th>Fecha Final</th>
-                                                <th>[-]</th>
                                             </tr>
                                         </tfoot>
                                     </table>

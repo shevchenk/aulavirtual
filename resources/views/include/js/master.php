@@ -170,7 +170,7 @@ $.ajaxSetup({
 
 var masterG ={
     pintar_fila:function(boton){
-        var tr = boton.parentNode.parentNode;
+        var tr = boton;
         var trs = tr.parentNode.children;
         for(var i =0;i<trs.length;i++)
             trs[i].style.backgroundColor="#f9f9f9";

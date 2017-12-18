@@ -33,8 +33,8 @@ class Curso extends Model
             'palu.dni',
             DB::raw("CONCAT(palu.nombre,' ', palu.paterno,' ', palu.materno) as alumno"),
             'c.curso','c.foto',
-            'pu.fecha_inicio',
-            'pu.fecha_final',
+            DB::raw('DATE(pu.fecha_inicio) as fecha_inicio'),
+            DB::raw('DATE(pu.fecha_final) as fecha_final'),
             DB::raw("CONCAT(pdoc.nombre,' ', pdoc.paterno,' ', pdoc.materno) as docente")
             )
             ->where(

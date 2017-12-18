@@ -37,14 +37,14 @@ HTMLCargarProgramacionUnica=function(result){
     
     $.each(result.data.data,function(index,r){
 
-        html+="<tr id='trid_"+r.id+"'>"+
+        html+='<tr id="trid_'+r.id+'" onClick="CargarBalotario('+r.id+','+r.curso_id+',\''+r.curso+'\',this)">'+
             "<td class='curso'>"+
             "<a target='_blank' href='img/course/"+r.foto+"'>"+
             "<img src='img/course/"+r.foto+"' style='height: 40px;width: 40px;'>"+
             "&nbsp</a>"+r.curso+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
-            "<td class='fecha_final'>"+r.fecha_final+"</td>"+
-            '<td><a class="btn btn-info btn-sm" onClick="CargarBalotario('+r.id+','+r.curso_id+',\''+r.curso+'\',this)"><i class="fa fa-th-list fa-lg"></i> </a></td>';
+            "<td class='fecha_final'>"+r.fecha_final+"</td>";
+//            '<td><a class="btn btn-info btn-sm" onClick="CargarBalotario('+r.id+','+r.curso_id+',\''+r.curso+'\',this)"><i class="fa fa-th-list fa-lg"></i> </a></td>';
         html+="</tr>";
     });
     $("#TableProgramacionUnica tbody").html(html); 

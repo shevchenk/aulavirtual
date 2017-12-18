@@ -63,7 +63,6 @@
                                                     </div>
                                                 </th>
                                                 <th class="col-xs-1">[-]</th>
-                                                <th class="col-xs-1">[-]</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -71,7 +70,6 @@
                                         <tfoot>
                                             <tr class="cabecera">                               
                                                 <th>Curso</th>
-                                                <th>[-]</th>
                                                 <th>[-]</th>
                                             </tr>
                                         </tfoot>
@@ -146,7 +144,6 @@
                                                     </div>
                                                 </th>
                                                 <th class="col-xs-1">[-]</th>
-                                                 <th class="col-xs-1">[-]</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -158,7 +155,6 @@
                                                 <th>Pregunta</th>
                                                 <th>Puntaje</th>
                                                 <th>Estado</th>
-                                                <th>[-]</th>
                                                 <th>[-]</th>
                                             </tr>
                                         </tfoot>

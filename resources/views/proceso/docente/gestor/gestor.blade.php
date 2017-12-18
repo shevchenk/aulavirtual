@@ -52,7 +52,7 @@
                     <form id="ProgramacionUnicaForm">
                         <div class="panel panel-primary">
                             <div class="panel-heading" style="background-color: #337ab7;color:#fff">
-                                <center>.::Programaciones de Docente::.</center>
+                                <center>.::Programación de Cursos::.</center>
                             </div>
                             <div class="panel-body table-responsive no-padding">
                                 <div class="col-md-12">
@@ -86,7 +86,6 @@
                                                         </div>
                                                     </div>
                                                 </th>
-                                                <th class="col-xs-1">[-]</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -96,7 +95,6 @@
                                                 <th>Curso</th>
                                                 <th>Fecha Inicio</th>
                                                 <th>Fecha Final</th>
-                                                <th>[-]</th>
                                             </tr>
                                         </tfoot>
                                     </table>
