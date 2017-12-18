@@ -1,22 +1,22 @@
 @extends('layout.master')  
 
 @section('include')
-    @parent
-    {{ Html::style('lib/datatables/dataTables.bootstrap.css') }}
-    {{ Html::script('lib/datatables/jquery.dataTables.min.js') }}
-    {{ Html::script('lib/datatables/dataTables.bootstrap.min.js') }}
+@parent
+{{ Html::style('lib/datatables/dataTables.bootstrap.css') }}
+{{ Html::script('lib/datatables/jquery.dataTables.min.js') }}
+{{ Html::script('lib/datatables/dataTables.bootstrap.min.js') }}
 
-    {{ Html::style('lib/bootstrap-select/dist/css/bootstrap-select.min.css') }}
-    {{ Html::script('lib/bootstrap-select/dist/js/bootstrap-select.min.js') }}
-    {{ Html::script('lib/bootstrap-select/dist/js/i18n/defaults-es_ES.min.js') }}
+{{ Html::style('lib/bootstrap-select/dist/css/bootstrap-select.min.css') }}
+{{ Html::script('lib/bootstrap-select/dist/js/bootstrap-select.min.js') }}
+{{ Html::script('lib/bootstrap-select/dist/js/i18n/defaults-es_ES.min.js') }}
 
-    {{ Html::style('lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}
-    {{ Html::script('lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}
-    {{ Html::script('lib/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js') }}
+{{ Html::style('lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}
+{{ Html::script('lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}
+{{ Html::script('lib/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js') }}
 
-    @include( 'mantenimiento.curso.js.curso_ajax' )
-    @include( 'mantenimiento.curso.js.curso' )
-    
+@include( 'mantenimiento.curso.js.curso_ajax' )
+@include( 'mantenimiento.curso.js.curso' )
+
 
 @stop
 
@@ -40,6 +40,33 @@
                         <table id="TableCurso" class="table table-bordered table-hover">
                             <thead>
                                 <tr class="cabecera">
+                                    <th class="col-xs-2">
+                                        <div class="form-group">
+                                            <label><h4>Carrera:</h4></label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                <input type="text" class="form-control" name="txt_carrera" id="txt_carrera" placeholder="Carrera" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th class="col-xs-1">
+                                        <div class="form-group">
+                                            <label><h4>Ciclo:</h4></label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                <input type="text" class="form-control" name="txt_ciclo" id="txt_ciclo" placeholder="Ciclo" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th class="col-xs-2">
+                                        <div class="form-group">
+                                            <label><h4>Curso:</h4></label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                <input type="text" class="form-control" name="txt_curso" id="txt_curso" placeholder="Curso" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
+                                            </div>
+                                        </div>
+                                    </th>
                                     <th class="col-xs-1">
                                         <div class="form-group">
                                             <label><h4>Imagen de Lista:</h4></label>
@@ -50,25 +77,19 @@
                                             <label><h4>Imagen de Cabecera:</h4></label>
                                         </div>
                                     </th>
-                                    <th class="col-xs-2">
-                                        <div class="form-group">
-                                            <label><h4>Curso:</h4></label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                                <input type="text" class="form-control" name="txt_curso" id="txt_curso" placeholder="Curso" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th class="col-xs-1">[-]</th>
+                                    <th class="col-xs-1">[Editar]</th>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
                             <tfoot>
-                                <tr class="cabecera">                               
-                                  <th>Imagen</th>
-                                  <th>Curso</th>
-                                  <th>[-]</th>
+                                <tr class="cabecera">
+                                    <th>Carrera</th>
+                                    <th>Ciclo</th>
+                                    <th>Curso</th>
+                                    <th>Imagen de Lista</th>
+                                    <th>Imagen de Cabecera</th>
+                                    <th>[Editar]</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -81,5 +102,5 @@
 @stop
 
 @section('form')
-     @include( 'mantenimiento.curso.form.curso' )
+@include( 'mantenimiento.curso.form.curso' )
 @stop

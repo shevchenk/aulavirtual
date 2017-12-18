@@ -18,7 +18,7 @@ class Curso extends Model
     }
     
     public static function runLoad($r){
-        $result=Curso::select('v_cursos.id','v_cursos.curso','v_cursos.curso_externo_id','v_cursos.foto','v_cursos.foto_cab','v_cursos.estado')
+        $result=Curso::select('v_cursos.id','v_cursos.curso','v_cursos.carrera','v_cursos.ciclo','v_cursos.curso_externo_id','v_cursos.foto','v_cursos.foto_cab','v_cursos.estado')
                                 ->where(
                                     function($query) use ($r){
                                         $query->where('v_cursos.estado','=', 1);
@@ -33,6 +33,18 @@ class Curso extends Model
                                               if( $curso !='' ){
                                                   $query->where('v_cursos.curso','like','%'.$curso.'%');
                                               }
+                                        }
+                                        if( $r->has("carrera") ){
+                                            $carrera=trim($r->carrera);
+                                            if( $carrera !='' ){
+                                                $query->where('v_cursos.carrera','like','%'.$carrera.'%');
+                                            }
+                                        }
+                                        if( $r->has("ciclo") ){
+                                            $ciclo=trim($r->ciclo);
+                                            if( $ciclo !='' ){
+                                                $query->where('v_cursos.ciclo','like','%'.$ciclo.'%');
+                                            }
                                         }
                                     }
                                 )->paginate(10);

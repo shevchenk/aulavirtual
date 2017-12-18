@@ -14,6 +14,7 @@ class ProgramacionUnica extends Model
                                 DB::raw('DATE(v_programaciones_unicas.fecha_inicio) as fecha_inicio'),
                                 DB::raw('DATE(v_programaciones_unicas.fecha_final) as fecha_final'),
                                 'vc.curso','vc.foto','vc.foto_cab','v_programaciones_unicas.curso_id',
+                                'vc.ciclo','vc.carrera',
                                 DB::raw('CONCAT_WS(" ",vp.paterno,vp.materno,vp.nombre) as docente'),'vp.dni')
                                 ->join('v_cursos as vc','vc.id','=','v_programaciones_unicas.curso_id')
                                 ->join('v_personas as vp','vp.id','=','v_programaciones_unicas.persona_id')
@@ -31,6 +32,18 @@ class ProgramacionUnica extends Model
                                             $curso=trim($r->curso);
                                             if( $curso !='' ){
                                                 $query->where('vc.curso','like','%'.$curso.'%');
+                                            }
+                                        }
+                                        if( $r->has("carrera") ){
+                                            $carrera=trim($r->carrera);
+                                            if( $carrera !='' ){
+                                                $query->where('vc.carrera','like','%'.$carrera.'%');
+                                            }
+                                        }
+                                        if( $r->has("ciclo") ){
+                                            $ciclo=trim($r->ciclo);
+                                            if( $ciclo !='' ){
+                                                $query->where('vc.ciclo','like','%'.$ciclo.'%');
                                             }
                                         }
 

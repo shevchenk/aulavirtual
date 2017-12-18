@@ -109,7 +109,10 @@ HTMLCargarCurso=function(result){
     $.each(result.data.data,function(index,r){
         
         html+="<tr id='trid_"+r.id+"'>"+
-            "<td>";
+            "<td class='carrera'>"+r.carrera+"</td>"+
+            "<td class='ciclo'>"+r.ciclo+"</td>"+
+            "<td class='curso'>"+r.curso+"</td>";
+        html+="<td>";
             if(r.foto!=null){    
                 html+="<a  target='_blank' href='img/course/"+r.foto+"'>"+
                         "<img src='img/course/"+r.foto+"?nocache="+(new Date()).getTime()+"' style='height: 100px;width: 120px;'>"+
@@ -122,8 +125,7 @@ HTMLCargarCurso=function(result){
                         "<img src='img/course/"+r.foto_cab+"?nocache="+(new Date()).getTime()+"' style='height: 100px;width: 100%;'>"+
                       "</a>";
             }
-            html+="</td>"+
-            "<td class='curso'>"+r.curso+"</td>";
+            html+="</td>";
         html+='<td>';
             if(r.foto!=null){
         html+="<input type='hidden' class='foto' value='"+r.foto+"'>";}
