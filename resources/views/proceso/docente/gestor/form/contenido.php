@@ -81,13 +81,13 @@
                     <div id="respuesta" style="display:none">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Fecha de Inicio</label>
+                            <label>Fecha de Inicio (Entrega de Tarea)</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_inicio" name="txt_fecha_inicio" readonly="" >
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Fecha Final</label>
+                            <label>Fecha Final (Entrega de Tarea)</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_final" name="txt_fecha_final" readonly="" >
                         </div>
                     </div>

@@ -81,19 +81,19 @@
                     <div id="respuesta" style="display:none">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Fecha de Inicio</label>
+                            <label>Fecha de Inicio (Entrega de Tarea)</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_inicio" name="txt_fecha_inicio" readonly="" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Fecha Final</label>
+                            <label>Fecha Final (Entrega de Tarea)</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_final" name="txt_fecha_final" readonly="" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Fecha Ampliada</label>
+                            <label>Fecha Ampliada (Entrega de Tarea)</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_ampliada" name="txt_fecha_ampliada" readonly="" >
                         </div>
                     </div>
@@ -101,19 +101,19 @@
                     <div id="fecha_docente" style="display:none">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Fecha de Inicio Docente</label>
+                            <label>Fecha de Inicio (Revisión de Tarea)</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_inicio_d" name="txt_fecha_inicio_d" readonly="" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Fecha Final Docente</label>
+                            <label>Fecha Final (Revisión de Tarea)</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_final_d" name="txt_fecha_final_d" readonly="" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Fecha Ampliada Docente</label>
+                            <label>Fecha Ampliada (Revisión de Tarea)</label>
                             <input type="text" class="form-control fecha" id="txt_fecha_ampliada_d" name="txt_fecha_ampliada_d" readonly="" >
                         </div>
                     </div>

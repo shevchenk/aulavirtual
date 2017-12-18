@@ -59,7 +59,7 @@
                                     <table id="TableProgramacionUnica" class="table table-bordered table-hover">
                                         <thead>
                                             <tr class="cabecera">
-                                                <th class="col-xs-4">
+                                                <th class="col-xs-2">
                                                     <div class="form-group">
                                                         <label><h4>DNI:</h4></label>
                                                         <div class="input-group">
