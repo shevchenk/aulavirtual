@@ -16,12 +16,12 @@
                     </div>                 
                     <div class="col-md-8">
                         <div class="form-group">
-                            <label>Imagen</label>
+                            <label>Imagen de Lista</label>
                             <input type="text"  readOnly class="form-control input-sm" id="txt_imagen_nombre"  name="txt_imagen_nombre" value="">
                             <input type="text" style="display: none;" id="txt_imagen_archivo" name="txt_imagen_archivo">
                             <label class="btn btn-default btn-flat margin btn-xs">
                                 <i class="fa fa-file-image-o fa-lg"></i>
-                                <input type="file" style="display: none;" onchange="onImagen(event);" >
+                                <input type="file" style="display: none;" onchange="onImagen1(event);" >
                             </label>
 
                         </div>  
@@ -31,6 +31,23 @@
                             <img class="img-circle" style="height: 142px;width: 100%;border-radius: 8px;border: 1px solid grey;margin-top: 5px;padding: 8px"> 
                         </div>  
                     </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Imagen Cabecera de Curso</label>
+                            <input type="text"  readOnly class="form-control input-sm" id="txt_imagen_cabecera_nombre"  name="txt_imagen_cabecera_nombre" value="">
+                            <input type="text" style="display: none;" id="txt_imagen_cabecera_archivo" name="txt_imagen_cabecera_archivo">
+                            <label class="btn btn-default btn-flat margin btn-xs">
+                                <i class="fa fa-file-image-o fa-lg"></i>
+                                <input type="file" style="display: none;" onchange="onImagen2(event);" >
+                            </label>
+
+                        </div>  
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <img class="img-circle_cabecera" style="height: 142px;width: 100%;border-radius: 8px;border: 1px solid grey;margin-top: 5px;padding: 8px"> 
+                        </div>  
+                    </div> 
                      <div class="form-group"> 
                          <label></label>
                      </div>

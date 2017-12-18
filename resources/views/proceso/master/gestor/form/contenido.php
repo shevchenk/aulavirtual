@@ -98,7 +98,7 @@
                         </div>
                     </div>
                     </div>
-                    <div id="fecha_docente">
+                    <div id="fecha_docente" style="display:none">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Fecha de Inicio Docente</label>

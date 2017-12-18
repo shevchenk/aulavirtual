@@ -150,7 +150,7 @@ class Contenido extends Model
                 'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),'v_contenidos.unidad_contenido_id','v_contenidos.titulo_contenido',
                 DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),'vuc.unidad_contenido','vuc.foto as foto_unidad',
                 DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),'v_contenidos.foto as foto_contenido',
-                'vc.curso', 'vc.foto','v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
+                'vc.curso', 'vc.foto', 'vc.foto_cab','v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
                 DB::raw('CASE v_contenidos.tipo_respuesta  WHEN 0 THEN "Solo vista" WHEN 1 THEN "Requiere Respuesta" END AS tipo_respuesta_nombre'),
                 DB::raw('IFNULL(v_contenidos.fecha_inicio_d,"") as fecha_inicio_d'),DB::raw('IFNULL(v_contenidos.fecha_final_d,"") as fecha_final_d'),DB::raw('IFNULL(v_contenidos.fecha_ampliada_d,"") as fecha_ampliada_d'))
                 ->join('v_cursos as vc','vc.id','=','v_contenidos.curso_id')
@@ -220,7 +220,7 @@ class Contenido extends Model
                 'v_contenidos.tipo_respuesta',DB::raw('IFNULL(v_contenidos.fecha_inicio,"") as fecha_inicio'),
                 DB::raw('IFNULL(v_contenidos.fecha_final,"") as fecha_final'),'vuc.unidad_contenido','vuc.foto as foto_unidad',
                 DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),
-                'vc.curso', 'vc.foto', 'v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
+                'vc.curso', 'vc.foto', 'vc.foto_cab', 'v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
                 DB::raw('CASE v_contenidos.tipo_respuesta  WHEN 0 THEN "Solo vista" WHEN 1 THEN "Requiere Respuesta" END AS tipo_respuesta_nombre'))
             ->join('v_cursos as vc','vc.id','=','v_contenidos.curso_id')
             ->join('v_unidades_contenido as vuc','vuc.id','=','v_contenidos.unidad_contenido_id')

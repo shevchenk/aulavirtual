@@ -42,7 +42,12 @@
                                 <tr class="cabecera">
                                     <th class="col-xs-1">
                                         <div class="form-group">
-                                            <label><h4>Imagen:</h4></label>
+                                            <label><h4>Imagen de Lista:</h4></label>
+                                        </div>
+                                    </th>
+                                    <th class="col-xs-3">
+                                        <div class="form-group">
+                                            <label><h4>Imagen de Cabecera:</h4></label>
                                         </div>
                                     </th>
                                     <th class="col-xs-2">

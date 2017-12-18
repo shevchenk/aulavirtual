@@ -60,9 +60,9 @@ $(document).ready(function() {
 
     $( "#ModalContenidoForm #slct_tipo_respuesta" ).change(function() {
         if( $('#ModalContenidoForm #slct_tipo_respuesta').val()=='1' ) {
-            $( "#ModalContenidoForm #respuesta" ).css("display","");
+            $( "#ModalContenidoForm #respuesta,#ModalContenidoForm #fecha_docente" ).css("display","");
         }else{
-            $( "#ModalContenidoForm #respuesta" ).css("display","none");
+            $( "#ModalContenidoForm #respuesta,#ModalContenidoForm #fecha_docente" ).css("display","none");
         }
 
     });
@@ -125,7 +125,7 @@ AgregarEditar3=function(val,id){
     ContenidoG.fecha_ampliada_d='';
     ContenidoG.referencia='';
     ContenidoG.estado='1';
-    $('#respuesta').css("display","none");
+    $('#respuesta,#fecha_docente').css("display","none");
     if( val==0 ){
 
         ContenidoG.id=id;
@@ -144,7 +144,7 @@ AgregarEditar3=function(val,id){
         ContenidoG.referencia=$("#DivContenido #trid_"+id+" .referencia").val();
         ContenidoG.estado=$("#DivContenido #trid_"+id+" .estado").val();
         if(ContenidoG.tipo_respuesta=='1'){
-                $('#respuesta').css("display","");
+                $('#respuesta,#fecha_docente').css("display","");
         }
     }
     $('#ModalContenido').modal('show');
