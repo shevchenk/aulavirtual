@@ -266,7 +266,7 @@ HTMLCargarContenido=function(result){
         if(r.tipo_respuesta == 1){
             color="bg-red";
         }else if(r.tipo_respuesta == 2){
-            color="bg-maroon disabled color-palette";
+            color="bg-green";
         }
 
         html+='<div class="col-lg-4" id="trid_'+r.id+'" style="margin-top: 15px; -moz-box-shadow: 0 0 5px #888; -webkit-box-shadow: 0 0 5px#888; box-shadow: 0 0 5px #888;">'+
