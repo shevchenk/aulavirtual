@@ -12,7 +12,7 @@ use App\Models\Proceso\Curso;
 use App\Models\Proceso\Persona;
 
 class ProgramacionUnicaPR extends Controller{
-    
+
     private $api;
 
     public function __construct()
@@ -57,7 +57,7 @@ class ProgramacionUnicaPR extends Controller{
             {
                 $val = $this->insertarProgramacionMaster($objArr);
                 if($val['return'] == true){
-                    
+
                     $this->api->curl('localhost/Cliente/Retorno.php',$val['externo_id']);
                     $return_response = $this->api->response(200,"success","Proceso ejecutado satisfactoriamente");
                 }else
@@ -90,7 +90,7 @@ class ProgramacionUnicaPR extends Controller{
         $return['msj'] = "No hay registros aún";
         return response()->json($return);
     }
-    
+
     public function validarProgramacion(Request $r)
     {
         $idcliente = session('idcliente');
@@ -122,7 +122,7 @@ class ProgramacionUnicaPR extends Controller{
                 $val = $this->insertarProgramacion($objArr);
                 if($val['return'] == true){
                   $this->api->curl('localhost/Cliente/Retorno.php',$val['externo_id']);
-                  
+
                   $return_response = $this->api->response(200,"success","Proceso ejecutado satisfactoriamente");
                 }else
                     $return_response = $this->api->response(422,"error","Revisa tus parametros de envio");
@@ -162,15 +162,15 @@ class ProgramacionUnicaPR extends Controller{
         $array_curso='0';
         $array_programacion_unica='0';
         $array_programacion='0';
-        
+
         try{
-            
+
           foreach ($objArr->docente as $k=>$value){
-              
+
               // Proceso Persona Docente
               $docente = Persona::where('dni', '=', trim($value->docente_dni))
                                   ->first();
-              
+
               if (count($docente) == 0){
                   $docente = new Persona();
                   $docente->dni = trim($value->docente_dni);
@@ -189,31 +189,33 @@ class ProgramacionUnicaPR extends Controller{
           DB::commit();
           $data['return']= true;
           $data['externo_id']=array('curso'=>$array_curso,'programacion_unica'=>$array_programacion_unica,'programacion'=>$array_programacion);
-        
-        }catch (\Exception $e){ 
+
+        }catch (\Exception $e){
             DB::rollback();
             //dd($e);
            $data['return']= false;
         }
         return $data;
     }
-    
+
     public function insertarProgramacionMaster($objArr){
         DB::beginTransaction();
         $array_curso='0';
         $array_programacion_unica='0';
         $array_programacion='0';
-        
+
         try{
-            
+
           foreach ($objArr->gestor as $k=>$value){
-              
+
               $curso = Curso::where('curso', '=', trim($value->curso))
+                                    ->where('carrera','=', trim($value->carrera))
+                                    ->where('ciclo','=', trim($value->ciclo))
                                     ->where('curso_externo_id','=', trim($value->curso_externo_id))
                                     ->first();
-              
+
               if (count($curso) == 0){
-                  
+
                 $curso = Curso::where('curso_externo_id', '=', trim($value->curso_externo_id))
                                         ->first();
                 if(count($curso) == 0){ //Insert
@@ -223,20 +225,21 @@ class ProgramacionUnicaPR extends Controller{
                 }
                 else //Update
                   $curso->persona_id_updated_at=1;
-                
+
                 $curso->carrera = trim($value->carrera);
                 $curso->ciclo = trim($value->ciclo);
                 $curso->curso = trim($value->curso);
                 $curso->save();
                 $array_curso.=','.$curso->curso_externo_id;
+                //dd($value->carrera);
               }
-              
+
               // Proceso Persona Docente
               $docente = Persona::where('dni', '=', trim($value->docente_dni))
                                   ->first();
-              
+
               if (count($docente) == 0){
-                  
+
                   $docente = new Persona();
                   $docente->dni = trim($value->docente_dni);
                   $docente->persona_id_created_at=1;
@@ -276,8 +279,8 @@ class ProgramacionUnicaPR extends Controller{
           DB::commit();
           $data['return']= true;
           $data['externo_id']=array('curso'=>$array_curso,'programacion_unica'=>$array_programacion_unica,'programacion'=>$array_programacion);
-        
-        }catch (\Exception $e){ 
+
+        }catch (\Exception $e){
             DB::rollback();
             //dd($e);
            $data['return']= false;

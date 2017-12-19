@@ -134,6 +134,8 @@ class EvaluacionPR extends Controller
           foreach ($objArr->programacion as $k=>$value)
           {
               $curso = Curso::where('curso', '=', trim($value->curso))
+                                    ->where('carrera','=', trim($value->carrera))
+                                    ->where('ciclo','=', trim($value->ciclo))
                                     ->where('curso_externo_id','=', trim($value->curso_externo_id))
                                     ->first();
               if (count($curso) == 0)

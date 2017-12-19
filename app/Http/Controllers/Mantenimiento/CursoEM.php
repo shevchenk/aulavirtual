@@ -12,8 +12,8 @@ class CursoEM extends Controller{
     private $api;
     public function __construct(){
          $this->api = new Api();
-    } 
-    
+    }
+
     public function Load(Request $r ){
         if ( $r->ajax() ) {
             $renturnModel = Curso::runLoad($r);
@@ -23,7 +23,7 @@ class CursoEM extends Controller{
             return response()->json($return);
         }
     }
-    
+
     public function validarCursoMaster(Request $r){
 
         $cli_links = DB::table('clientes_accesos_links')->where('cliente_acceso_id','=', 1)
@@ -50,7 +50,7 @@ class CursoEM extends Controller{
             {
                 $val = $this->insertarCurso($objArr);
                 if($val['return'] == true){
-                    
+
                     $this->api->curl('localhost/Cliente/Retorno.php',$val['externo_id']);
                     $return_response = $this->api->response(200,"success","Proceso ejecutado satisfactoriamente");
                 }else
@@ -83,20 +83,22 @@ class CursoEM extends Controller{
         $return['msj'] = "No hay registros aún";
         return response()->json($return);
     }
-    
+
     public function insertarCurso($objArr){
         DB::beginTransaction();
         $array_curso='0';
         $array_programacion_unica='0';
         $array_programacion='0';
-        
+
         try{
 
           foreach ($objArr->curso as $k=>$value)
           {
-              $curso = Curso::where('curso', '=', trim($value->curso))
-                                    ->where('curso_externo_id','=', trim($value->curso_externo_id))
-                                    ->first();
+            $curso = Curso::where('curso', '=', trim($value->curso))
+                                  ->where('carrera','=', trim($value->carrera))
+                                  ->where('ciclo','=', trim($value->ciclo))
+                                  ->where('curso_externo_id','=', trim($value->curso_externo_id))
+                                  ->first();
               if (count($curso) == 0)
               {
                 $curso = Curso::where('curso_externo_id', '=', trim($value->curso_externo_id))
@@ -132,7 +134,7 @@ class CursoEM extends Controller{
         }
         return $data;
     }
-    
+
     public function Edit(Request $r )
     {
         if ( $r->ajax() ) {
@@ -142,7 +144,7 @@ class CursoEM extends Controller{
             );
 
             $rules = array(
-                'imagen_nombre' => 
+                'imagen_nombre' =>
                        ['required',
                         ],
             );
