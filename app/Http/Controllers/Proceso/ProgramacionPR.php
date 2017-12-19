@@ -179,6 +179,7 @@ class ProgramacionPR extends Controller
               // --
               // Proceso Programación
               $programacion = Programacion::where('programacion_externo_id', '=', trim($value->programacion_externo_id))
+                                            ->where('persona_id', '=', trim($alumno->id))
                                                       ->first();
               if (count($programacion) == 0) //Insert
               {
