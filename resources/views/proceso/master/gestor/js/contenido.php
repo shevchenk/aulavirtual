@@ -237,9 +237,9 @@ HTMLCargarContenido=function(result){
         }
         if(index==0){
             html+='<div class="panel box box-primary">'+
-                      '<img class="box-header with-border collapsed" data-toggle="collapse" data-parent="#DivContenido" href="#collapse'+index+'" src="img/content_unit/'+r.foto_unidad+'" width="100%" style="min-height=90px;" >'+
+                      '<img class="box-header with-border" src="img/content_unit/'+r.foto_unidad+'" width="100%" style="min-height=90px;" >'+
                       '</img>'+
-                      '<div id="collapse'+index+'" class="panel-collapse collapse">'+
+                      '<div class="panel-collapse">'+
                         '<div class="box-body"> <div class="col-md-12">';
             aux_uc=r.unidad_contenido_id;
         }
@@ -252,9 +252,9 @@ HTMLCargarContenido=function(result){
                       '</div>'+
                     '</div>';
             html+='<div class="panel box box-primary">'+
-                      '<img class="box-header with-border collapsed" data-toggle="collapse" data-parent="#DivContenido" href="#collapse'+index+'" src="img/content_unit/'+r.foto_unidad+'" width="100%" style="min-height:90px;">'+
+                      '<img class="box-header with-border" src="img/content_unit/'+r.foto_unidad+'" width="100%" style="min-height:90px;">'+
                       '</img>'+
-                      '<div id="collapse'+index+'" class="panel-collapse collapse">'+
+                      '<div class="panel-collapse">'+
                         '<div class="box-body"> <div class="col-md-12">';
             
                 aux_uc=r.unidad_contenido_id;
