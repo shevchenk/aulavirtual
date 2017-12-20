@@ -90,7 +90,7 @@
                                             <label><h4>Fecha Inicio</h4></label>
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                                <input type="text" class="form-control" name="txt_fecha_inicio" id="txt_fecha_inicio" placeholder="Hora Inicial" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
+                                                <input type="text" class="form-control" name="txt_fecha_inicio" id="txt_fecha_inicio" placeholder="Fecha Inicio" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
                                             </div>
                                         </div>
                                     </th>
@@ -99,7 +99,7 @@
                                             <label><h4>Fecha Final</h4></label>
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                                <input type="text" class="form-control" name="txt_fecha_final" id="txt_fecha_final" placeholder="Hora Final" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
+                                                <input type="text" class="form-control" name="txt_fecha_final" id="txt_fecha_final" placeholder="Fecha Final" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
                                             </div>
                                         </div>
                                     </th>
