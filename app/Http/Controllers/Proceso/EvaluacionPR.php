@@ -151,6 +151,8 @@ class EvaluacionPR extends Controller
                 else //Update
                   $curso->persona_id_updated_at=1;
 
+                $curso->carrera = trim($value->carrera);
+                $curso->ciclo = trim($value->ciclo);
                 $curso->curso = trim($value->curso);
                 $curso->save();
                 $array_curso.=','.$curso->curso_externo_id;
