@@ -40,7 +40,7 @@
                 <form id="TipoEvaluacionForm">
                     <div class="panel panel-primary">
                         <div class="panel-heading" style="background-color: #337ab7;color:#fff">
-                            <center>.::Programaciones de Alumnos::.</center>
+                            <center>.::Programación del Presente Semestre::.</center>
                         </div>
 
                         <div class="box-body table-responsive no-padding">
@@ -148,11 +148,11 @@
             <div id="div_contenido_respuesta" class="box-body no-padding">
                 <div class="panel panel-warnimg">
                     <div class="panel-heading" style="background-color: #FFE699;color:black">
-                        <center>.::Respuesta::.</center>
+                        <center>.::Desarrollo de la Tarea::.</center>
                     </div>
                     <div class="col-md-4" style="margin-top: 40px;">
                         <div class="panel panel-info">
-                            <div class="panel-heading text-center">POR FAVOR INSERTAR SU RESPUESTA</div>
+                            <div class="panel-heading text-center">AGREGAR RESPUESTA AQUÍ</div>
                             <div class="panel-body">
                                 <form id="frmRepuestaAlum" name="frmRepuestaAlum" class="form-inline">
                                     <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" >
@@ -160,7 +160,6 @@
                                     <div class="col-md-12">
                                         <label class="sr-only" for="Respuesta">Respuesta</label>
                                         <div class="input-group col-xs-12">
-                                            <div class="input-group-addon" style="background-color: #F5F5F5;">Rpta:</div>
                                             <textarea class="form-control" id="txt_respuesta" name="txt_respuesta" placeholder="" rows="4"></textarea>
                                         </div>
                                     </div>
@@ -170,7 +169,7 @@
                                         <input type="text" style="" readonly="" class="col-xs-9 input-sm" id="txt_file_nombre" name="txt_file_nombre" value="">
                                         <input type="text" style="display: none;" id="txt_file_archivo" name="txt_file_archivo">
                                         <label class="col-xs-3 btn btn-default btn-flat  btn-xs" style="height: 30px; margin-top: 0px;">
-                                            <i class="fa fa-file-image-o fa-lg"></i>
+                                            <i class="fa fa-file-image-o fa-lg"></i>Cargar Documento
                                             <input type="file" style="display: none;" onchange="onImagen(event);">
                                         </label>
                                     </div>
@@ -181,7 +180,7 @@
                                             <button type="button" id="btnCancelRpta" name="btnCancelRpta" class="col-xs-12 btn btn-default">Cancelar</button>
                                         </div>
                                         <div class="col-md-4">
-                                            <button type="button" id="btnGrabarRpta" name="btnGrabarRpta" class="col-xs-12 btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Grabar</button>
+                                            <button type="button" id="btnGrabarRpta" name="btnGrabarRpta" class="col-xs-12 btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Enviar</button>
                                         </div>
                                         <div class="col-md-2"></div>
                                     </div>
@@ -196,7 +195,7 @@
                                 <thead>
                                     <tr class="cabecera">
                                         <th>Fecha de Envio</th>
-                                        <th>Respuesta</th>
+                                        <th>Respuesta Enviada</th>
                                         <th>Archivo</th>
                                         <th>[-]</th>
                                     </tr>

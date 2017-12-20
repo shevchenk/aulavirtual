@@ -18,7 +18,8 @@ class ContenidoRespuesta extends Model
             ->join('v_programaciones as vpr','vpr.id','=','v_contenidos_respuestas.programacion_id')
             ->join('v_personas as vpe','vpe.id','=','vpr.persona_id')
             ->where('v_contenidos_respuestas.contenido_id','=',$r->contenido_id)
-            ->where('v_contenidos_respuestas.estado','=',1)->get();
+            ->where('v_contenidos_respuestas.estado','=',1)
+            ->orderBy('v_contenidos_respuestas.created_at','desc')->get();
         return $result;
     }
 
