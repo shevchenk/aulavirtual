@@ -28,7 +28,7 @@
                     <!--img src="img/user2-160x160.jpg" class="user-image" alt="User Image"-->
                     <span class="hidden-xs">
                         @if(Auth::check())
-                          {{Auth::user()->paterno.' '.Auth::user()->materno.', '.Auth::user()->nombre}}
+                          {{ session()->get('cargo').' : '.Auth::user()->paterno.' '.Auth::user()->materno.', '.Auth::user()->nombre}}
                         @endif </span>
                 </a>
                 <ul class="dropdown-menu">

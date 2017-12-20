@@ -52,7 +52,7 @@ class Persona extends Authenticatable
                         $join->on('pps.privilegio_id','p.id')
                         ->where('pps.estado',1);
                 })
-                ->select('m.menu',
+                ->select('m.menu','p.privilegio',
                     DB::raw(
                     'GROUP_CONCAT(
                         DISTINCT( CONCAT_WS("|",o.opcion,o.ruta,o.class_icono) )
@@ -62,7 +62,7 @@ class Persona extends Authenticatable
                 )
                 ->where('pps.persona_id',$persona)
                 ->where('o.estado',1)
-                ->groupBy('m.menu')
+                ->groupBy('m.menu','p.privilegio')
                 ->orderBy('m.menu')
                 ->get();
 

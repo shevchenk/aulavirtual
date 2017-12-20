@@ -17,14 +17,17 @@ class PersonaSA extends Controller
         $result['rst']=1;
         $menu = Persona::Menu();
         $opciones=array();
+        $cargo='';
         foreach ($menu as $key => $value) {
             array_push($opciones, $value->opciones);
+            $cargo=$value->privilegio;
         }
         $opciones=implode("||", $opciones);
         $session= array(
             'menu'=>$menu,
             'opciones'=>$opciones,
-            'dni'=>$r->dni
+            'dni'=>$r->dni,
+            'cargo'=>$cargo
         );
         session($session);
         return response()->json($result);
