@@ -189,7 +189,7 @@ HTMLCargarContenido=function(result){
                 html+='<div class="panel box box-primary">'+
                           '<img class="box-header with-border" src="img/content_unit/'+r.foto_unidad+'" width="100%" style="min-height=90px;" >'+
                           '</img>'+
-                          '<div class="panel-collapse collapse">'+
+                          '<div class="panel-collapse">'+
                             '<div class="box-body"> <div class="col-md-12">';
                 aux_uc=r.unidad_contenido_id;
             }
@@ -204,7 +204,7 @@ HTMLCargarContenido=function(result){
                 html+='<div class="panel box box-primary">'+
                           '<img class="box-header with-border" src="img/content_unit/'+r.foto_unidad+'" width="100%" style="min-height:90px;">'+
                           '</img>'+
-                          '<div class="panel-collapse collapse">'+
+                          '<div class="panel-collapse">'+
                             '<div class="box-body"> <div class="col-md-12">';
 
                     aux_uc=r.unidad_contenido_id;
