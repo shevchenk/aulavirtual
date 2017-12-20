@@ -83,12 +83,14 @@ class Curso extends Model
                       }
                   }
 
+                  /*
                   if( $r->has("estado") ){
                       $estado=trim($r->estado);
                       if( $estado !='' ){
                           $query->where('p.estado','=',$estado);
                       }
                   }
+                  */
                 }
             );
         $result = $sql->orderBy('p.id','asc')->paginate(10);
