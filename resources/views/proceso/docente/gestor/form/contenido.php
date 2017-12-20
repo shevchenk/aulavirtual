@@ -80,31 +80,42 @@
                         </div>
                     </div>
                     <div id="respuesta">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Fecha de Inicio <small class="anotacion"></small></label>
-                                <input type="text" class="form-control fecha" id="txt_fecha_inicio" name="txt_fecha_inicio" readonly="" >
-                            </div>
-                        </div>
-                        <div id="video" style="display:none">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Hora Inicio <small class="anotacion"></small></label>
-                                    <input type="text" class="form-control hora" id="txt_hora_inicio" name="txt_hora_inicio" readonly="" >
+                        <div class="col-md-12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title anotacion">Different Width</h3>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Hora Final  <small class="anotacion"></small></label>
-                                    <input type="text" class="form-control hora" id="txt_hora_final" name="txt_hora_final" readonly="" >
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tarea" style="display:none">
-                            <div class="col-md-6">
-                                <div class="form-group respuesta">
-                                    <label>Fecha Final  <small class="anotacion"></small></label>
-                                    <input type="text" class="form-control fecha" id="txt_fecha_final" name="txt_fecha_final" readonly="" >
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Fecha de Inicio</label>
+                                                <input type="text" class="form-control fecha" id="txt_fecha_inicio" name="txt_fecha_inicio" readonly="" >
+                                            </div>
+                                        </div>
+                                        <div id="video" style="display:none">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Hora Inicio</label>
+                                                    <input type="text" class="form-control hora" id="txt_hora_inicio" name="txt_hora_inicio" readonly="" >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Hora Final</label>
+                                                    <input type="text" class="form-control hora" id="txt_hora_final" name="txt_hora_final" readonly="" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="tarea" style="display:none">
+                                            <div class="col-md-6">
+                                                <div class="form-group respuesta">
+                                                    <label>Fecha Final</label>
+                                                    <input type="text" class="form-control fecha" id="txt_fecha_final" name="txt_fecha_final" readonly="" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -75,16 +75,17 @@ $(document).ready(function() {
 
     $( "#ModalContenidoForm #slct_tipo_respuesta" ).change(function() {
         if( $('#ModalContenidoForm #slct_tipo_respuesta').val()=='1' ) {
-            $( "#ModalContenidoForm #respuesta,#ModalContenidoForm #tarea" ).css("display","");
+            $( "#ModalContenidoForm #respuesta,#ModalContenidoForm #tarea,#ModalContenidoForm #profesor_tarea" ).css("display","");
             $( "#ModalContenidoForm #video" ).css("display","none");
-            $( "#ModalContenidoForm #respuesta .anotacion" ).html("(Entrega de Tarea)");
-            $( "#ModalContenidoForm #respuesta .profesor" ).html("(Revisión de Tarea)");
+            $( "#ModalContenidoForm #respuesta .anotacion" ).html("Fecha de entrega de tareas");
+            $( "#ModalContenidoForm #respuesta .profesor" ).html("Fecha de revisión de tareas");
         }else if( $('#ModalContenidoForm #slct_tipo_respuesta').val()=='2' ) {
             $( "#ModalContenidoForm #video,#ModalContenidoForm #respuesta" ).css("display","");
             $( "#ModalContenidoForm #tarea" ).css("display","none");
-            $( "#ModalContenidoForm #respuesta .anotacion" ).html("(Video)");
+             $( "#ModalContenidoForm #profesor_tarea" ).css("display","none");
+            $( "#ModalContenidoForm #respuesta .anotacion" ).html("Videoconferencia");
         }else{
-            $( "#ModalContenidoForm #video,#ModalContenidoForm #respuesta,#ModalContenidoForm #tarea" ).css("display","none");
+            $( "#ModalContenidoForm #video,#ModalContenidoForm #respuesta,#ModalContenidoForm #tarea,#ModalContenidoForm #profesor_tarea" ).css("display","none");
         }
 
     });
@@ -178,13 +179,15 @@ AgregarEditar3=function(val,id){
         ContenidoG.referencia=$("#DivContenido #trid_"+id+" .referencia").val();
         ContenidoG.estado=$("#DivContenido #trid_"+id+" .estado").val();
         if(ContenidoG.tipo_respuesta=='1'){
-                $('#respuesta,#tarea').css("display","");
+                $('#respuesta,#tarea,#profesor_tarea').css("display","");
                 $('#video').css("display","none");
-                $( "#respuesta .anotacion" ).html("(Entrega de Tarea)");
+                $( "#respuesta .anotacion" ).html("Fecha de entrega de tareas");
+                $( "#respuesta .profesor" ).html("Fecha de revisión de tareas");
         }else if(ContenidoG.tipo_respuesta=='2'){
                 $('#tarea').css("display","none");
+                $('#profesor_tarea').css("display","none");
                 $('#video,#respuesta').css("display","");
-                $( "#respuesta .anotacion" ).html("(Video)");
+                $( "#respuesta .anotacion" ).html("Videoconferencia");
         }
     }
     $('#ModalContenido').modal('show');
@@ -234,9 +237,9 @@ HTMLCargarContenido=function(result){
         }
         if(index==0){
             html+='<div class="panel box box-primary">'+
-                      '<img class="box-header with-border collapsed" data-toggle="collapse" data-parent="#DivContenido" href="#collapse'+index+'" src="img/content_unit/'+r.foto_unidad+'" width="100%" style="min-height=90px;" >'+
+                      '<img class="box-header with-border" src="img/content_unit/'+r.foto_unidad+'" width="100%" style="min-height=90px;" >'+
                       '</img>'+
-                      '<div id="collapse'+index+'" class="panel-collapse collapse">'+
+                      '<div class="panel-collapse">'+
                         '<div class="box-body"> <div class="col-md-12">';
             aux_uc=r.unidad_contenido_id;
         }
@@ -249,9 +252,9 @@ HTMLCargarContenido=function(result){
                       '</div>'+
                     '</div>';
             html+='<div class="panel box box-primary">'+
-                      '<img class="box-header with-border collapsed" data-toggle="collapse" data-parent="#DivContenido" href="#collapse'+index+'" src="img/content_unit/'+r.foto_unidad+'" width="100%" style="min-height:90px;">'+
+                      '<img class="box-header with-border" src="img/content_unit/'+r.foto_unidad+'" width="100%" style="min-height:90px;">'+
                       '</img>'+
-                      '<div id="collapse'+index+'" class="panel-collapse collapse">'+
+                      '<div class="panel-collapse">'+
                         '<div class="box-body"> <div class="col-md-12">';
             
                 aux_uc=r.unidad_contenido_id;

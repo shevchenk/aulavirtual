@@ -187,25 +187,31 @@ HTMLCargarContenido=function(result){
 
             if(index==0){
                 html+='<div class="panel box box-primary">'+
-                          '<img class="box-header with-border collapsed" data-toggle="collapse" data-parent="#DivContenido" href="#collapse'+index+'" src="img/content_unit/'+r.foto_unidad+'" width="100%" min-height="90px;" height="90px;">'+
+                          '<img class="box-header with-border" src="img/content_unit/'+r.foto_unidad+'" width="100%" style="min-height=90px;" >'+
                           '</img>'+
-                          '<div id="collapse'+index+'" class="panel-collapse collapse">'+
-                            '<div class="box-body">';
+                          '<div class="panel-collapse">'+
+                            '<div class="box-body"> <div class="col-md-12">';
                 aux_uc=r.unidad_contenido_id;
             }
 
             if( r.unidad_contenido_id!=aux_uc || pos%4==0 ){
-                html+=      '</div>'+
+
+                if( r.unidad_contenido_id!=aux_uc ){
+                html+=          '</div>'+
+                            '</div>'+
                           '</div>'+
                         '</div>';
                 html+='<div class="panel box box-primary">'+
-                          '<img class="box-header with-border collapsed" data-toggle="collapse" data-parent="#DivContenido" href="#collapse'+index+'" src="img/content_unit/'+r.foto_unidad+'" width="100%" style="min-height:90px;" height="90px;">'+
+                          '<img class="box-header with-border" src="img/content_unit/'+r.foto_unidad+'" width="100%" style="min-height:90px;">'+
                           '</img>'+
-                          '<div id="collapse'+index+'" class="panel-collapse collapse">'+
-                            '<div class="box-body">';
-                if( r.unidad_contenido_id!=aux_uc ){
+                          '<div class="panel-collapse">'+
+                            '<div class="box-body"> <div class="col-md-12">';
+
                     aux_uc=r.unidad_contenido_id;
                     pos=1;
+                }
+                else{
+                    html+="</div><div class='col-md-12'>";
                 }
             }
 
@@ -281,6 +287,7 @@ HTMLCargarContenido=function(result){
     });
     if(result.data.length>0){
         html+=          '</div>'+
+                      '</div>'+
                       '</div>'+
                     '</div>';
     }

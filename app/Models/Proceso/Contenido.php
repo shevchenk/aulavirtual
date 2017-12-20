@@ -240,7 +240,7 @@ class Contenido extends Model
                 DB::raw('IFNULL(v_contenidos.fecha_ampliada,"") as fecha_ampliada'),
                 DB::raw('IFNULL(v_contenidos.hora_inicio,"") as hora_inicio'),
                 DB::raw('IFNULL(v_contenidos.hora_final,"") as hora_final'),
-                'v_contenidos.foto as foto_contenido',
+                'v_contenidos.foto as foto_contenido','v_contenidos.unidad_contenido_id',
                 'vc.curso', 'vc.foto', 'vc.foto_cab', 'v_contenidos.estado','v_contenidos.curso_id','v_contenidos.programacion_unica_id',
                 DB::raw('CASE v_contenidos.tipo_respuesta  WHEN 0 THEN "Solo vista" WHEN 1 THEN "Requiere Respuesta" END AS tipo_respuesta_nombre'))
             ->join('v_cursos as vc','vc.id','=','v_contenidos.curso_id')
