@@ -166,9 +166,9 @@
 
                                     <div class="col-md-12" style="margin-top:10px;">
 
-                                        <input type="text" style="" readonly="" class="col-xs-9 input-sm" id="txt_file_nombre" name="txt_file_nombre" value="">
+                                        <input type="text" style="" readonly="" class="col-xs-7 input-sm" id="txt_file_nombre" name="txt_file_nombre" value="">
                                         <input type="text" style="display: none;" id="txt_file_archivo" name="txt_file_archivo">
-                                        <label class="col-xs-3 btn btn-default btn-flat  btn-xs" style="height: 30px; margin-top: 0px;">
+                                        <label class="col-xs-5 btn btn-default btn-flat  btn-xs" style="height: 30px; margin-top: 0px;">
                                             <i class="fa fa-file-image-o fa-lg"></i>Cargar Documento
                                             <input type="file" style="display: none;" onchange="onImagen(event);">
                                         </label>
