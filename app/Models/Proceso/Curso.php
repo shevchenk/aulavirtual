@@ -15,7 +15,9 @@ class Curso extends Model
     {
         $sql=DB::table('v_programaciones as p')
             ->Join('v_programaciones_unicas AS pu', function($join){
-                $join->on('p.programacion_unica_id','=','pu.id');
+                $join->on('p.programacion_unica_id','=','pu.id')
+                     ->where('p.estado','=',1);
+                
             })
             ->Join('v_cursos AS c', function($join){
                 $join->on('pu.curso_id','=','c.id');
