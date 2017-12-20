@@ -87,7 +87,7 @@
                                     </th>
                                     <th class="col-xs-2">
                                         <div class="form-group">
-                                            <label><h4>Hora Inicio</h4></label>
+                                            <label><h4>Fecha Inicio</h4></label>
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fa fa-search"></i></div>
                                                 <input type="text" class="form-control" name="txt_fecha_inicio" id="txt_fecha_inicio" placeholder="Hora Inicial" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
@@ -96,7 +96,7 @@
                                     </th>
                                     <th class="col-xs-2">
                                         <div class="form-group">
-                                            <label><h4>Hora Final</h4></label>
+                                            <label><h4>Fecha Final</h4></label>
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fa fa-search"></i></div>
                                                 <input type="text" class="form-control" name="txt_fecha_final" id="txt_fecha_final" placeholder="Hora Final" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
@@ -113,8 +113,8 @@
                                             <th>Ciclo</th>
                                             <th>Curso</th>
                                             <th>Docente</th>
-                                            <th>Hora Inicio</th>
-                                            <th>Hora Final</th>
+                                            <th>Fecha Inicio</th>
+                                            <th>Fecha Final</th>
                                         </tr>
                                     </tfoot>
                                 </table>
