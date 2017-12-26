@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Mantenimiento\Balotario;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use PDF;
+use App\Models\Mantenimiento\BalotarioPregunta;
 
 class BalotarioEM extends Controller
 {
@@ -114,6 +116,38 @@ class BalotarioEM extends Controller
             $return['rst'] = $rst;
             return response()->json($return);
         }
+    }
+    
+    public function GenerarPDF(Request $r) {
+
+        $renturnModel = BalotarioPregunta::runLoad($r);
+        
+        $preguntas = array();
+        foreach ($renturnModel as $data) {
+        $pregunta = $data->pregunta;
+            if (isset($preguntas[$pregunta])) {
+                $preguntas[$pregunta][] = $data;
+            } else {
+                $preguntas[$pregunta] = array($data);
+            }
+        }
+        
+        $data = ['preguntas' => $preguntas];
+
+	$pdf = PDF::Make();
+        $pdf->SetHeader('TELESUP|Balotario de Preguntas|{PAGENO}');
+        $pdf->SetFooter('TELESUP');
+
+	$pdf->loadView('mantenimiento.plantilla.plantillapdf', $data);
+	return $pdf->Stream('document.pdf');
+
+        
+        
+//        $pdf = PDF::make();
+//        $content = "<ul><li>Hello this is first pdf file.</li></ul>";
+//	$pdf->WriteHTML($content);
+//	return $pdf->Stream('document.pdf');
+
     }
     
 }

@@ -11,16 +11,16 @@ class Balotario extends Model
 {
     protected   $table = 'v_balotarios';
 
-    public static function runEditStatus($r)
-    {
+    public static function runEditStatus($r){
+        
         $balotario = Balotario::find($r->id);
         $balotario->estado = trim( $r->estadof );
         $balotario->persona_id_updated_at=Auth::user()->id;
         $balotario->save();
     }
 
-    public static function runNew($r)
-    {
+    public static function runNew($r){
+        
         $balotario = new Balotario;
         $balotario->programacion_unica_id = trim( $r->programacion_unica_id );
         $balotario->tipo_evaluacion_id = trim( $r->tipo_evaluacion_id );
@@ -31,8 +31,8 @@ class Balotario extends Model
         $balotario->save();
     }
 
-    public static function runEdit($r)
-    {
+    public static function runEdit($r){
+        
         $balotario = Balotario::find($r->id);
         $balotario->programacion_unica_id = trim( $r->programacion_unica_id );
         $balotario->tipo_evaluacion_id = trim( $r->tipo_evaluacion_id );
@@ -44,8 +44,8 @@ class Balotario extends Model
     }
 
 
-    public static function runLoad($r)
-    {
+    public static function runLoad($r){
+        
         $sql=Balotario::select('v_balotarios.id','vte.tipo_evaluacion','v_balotarios.cantidad_maxima','v_balotarios.cantidad_pregunta',
                 'v_balotarios.estado','v_balotarios.tipo_evaluacion_id','v_balotarios.modo')
             ->join('v_tipos_evaluaciones as vte','vte.id','=','v_balotarios.tipo_evaluacion_id')
@@ -82,7 +82,7 @@ class Balotario extends Model
         return $result;
     }
     
-        public static function runGenerateBallot($r){
+    public static function runGenerateBallot($r){
             
         $balotario = Balotario::find($r->id);
         
@@ -114,5 +114,5 @@ class Balotario extends Model
         }
 
     }
-    
+ 
 }

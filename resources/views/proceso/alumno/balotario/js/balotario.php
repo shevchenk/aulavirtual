@@ -133,10 +133,9 @@ HTMLCargarBalotario=function(result){
             "<td class='tipo_evaluacion'>"+r.tipo_evaluacion+"</td>"+
             "<td>"+
             "<input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'>";
-        html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
-            '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar2(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
+        html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>";
         if(r.modo==0){
-            html+='<td><a class="btn btn-info" onClick="GenerarBalotario2('+r.id+')"><i class="fa fa-edit fa-lg"></i>Generar </a></td>';
+            html+='<td></td>';
         }else{
             html+='<td><a class="btn btn-white" onClick="VerBalotario2('+r.id+')"><i class="fa fa-search fa-lg"></i>Ver </a></td>';
         }
