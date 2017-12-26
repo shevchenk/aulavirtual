@@ -130,9 +130,9 @@ HTMLCargarBalotario=function(result){
         html+="<tr id='trid_"+r.id+"'>"+
             "<td class='cantidad_maxima'>"+r.cantidad_maxima+"</td>"+
             "<td class='cantidad_pregunta'>"+r.cantidad_pregunta+"</td>"+
-            "<td class='tipo_evaluacion'>"+r.tipo_evaluacion+"</td>"+
-            "<td>"+
-            "<input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'>";
+            "<td class='tipo_evaluacion'>"+r.tipo_evaluacion+"</td>";
+//            "<td>"+
+//            "<input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'>";
 //        html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>";
         if(r.modo==0){
             html+='<td></td>';
