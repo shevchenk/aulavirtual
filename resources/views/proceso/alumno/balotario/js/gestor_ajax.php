@@ -7,7 +7,7 @@ var AjaxProgramacionUnica={
         data=$("#ProgramacionUnicaForm").serialize().split("txt_").join("").split("slct_").join("");
         $("#ProgramacionUnicaForm input[type='hidden']").not('.mant').remove();
         
-        url='AjaxDinamic/Proceso.ProgramacionUnicaPR@validarProgramacionMaster';
+        url='AjaxDinamic/Proceso.EvaluacionPR@validarCurso';
         masterG.postAjax(url,data,evento);
     }
 };

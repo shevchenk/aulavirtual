@@ -8,7 +8,6 @@ var AjaxEvaluacion={
         $("#TipoEvaluacionForm input[type='hidden']").not('.mant').remove();
 
         url='AjaxDinamic/Proceso.EvaluacionPR@validarCurso';
-
         masterG.postAjax(url,data,evento);
     },
     CambiarEstado:function(evento,AI,id){
