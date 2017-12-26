@@ -162,7 +162,7 @@
                                                         </div>
                                                     </div>
                                                 </th>
-                                                <th class="col-xs-2">
+<!--                                                <th class="col-xs-2">
                                                     <div class="form-group">
                                                         <label><h4>Estado:</h4></label>
                                                         <div class="input-group">
@@ -173,8 +173,8 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </th>
-                                                <th class="col-xs-1">[-]</th>
+                                                </th>-->
+                                                <th class="col-xs-1">[Vista]</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -184,8 +184,8 @@
                                                 <th>Cantidad Máxima</th>
                                                 <th>Cantidad de Preguntas</th>
                                                 <th>Tipo de Evaluación</th>
-                                                <th>Estado</th>
-                                                <th>[-]</th>
+<!--                                                <th>Estado</th>-->
+                                                <th>[Vista]</th>
                                             </tr>
                                         </tfoot>
                                     </table>

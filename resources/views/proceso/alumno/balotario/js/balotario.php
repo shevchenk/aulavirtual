@@ -11,7 +11,7 @@ $(document).ready(function() {
         "autoWidth": false
     });
     
-    $("#BalotarioForm #TableBalotario select").change(function(){ AjaxBalotario.Cargar(HTMLCargarBalotario); });
+//    $("#BalotarioForm #TableBalotario select").change(function(){ AjaxBalotario.Cargar(HTMLCargarBalotario); });
     $("#BalotarioForm #TableBalotario input").blur(function(){ AjaxBalotario.Cargar(HTMLCargarBalotario); });
     
     $('#ModalBalotario').on('shown.bs.modal', function (event) {
@@ -133,7 +133,7 @@ HTMLCargarBalotario=function(result){
             "<td class='tipo_evaluacion'>"+r.tipo_evaluacion+"</td>"+
             "<td>"+
             "<input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'>";
-        html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>";
+//        html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>";
         if(r.modo==0){
             html+='<td></td>';
         }else{
