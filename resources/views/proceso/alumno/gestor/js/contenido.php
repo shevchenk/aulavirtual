@@ -183,7 +183,7 @@ HTMLCargarContenido=function(result){
           if(r.tipo_respuesta == 1)
             tipo_respuesta='<button type="button" onClick="CargarContenidoProgramacion('+r.id+','+r.programacion_unica_id+')" class="col-xs-12 btn btn-primary" data-toggle="tooltip" data-placement="top" title="Responder Tarea"><span class="fa fa-list fa-lg"></span> Responder Tarea</button>';
           else
-            tipo_respuesta+='<button type="button" class="col-xs-12 btn btn-default" data-toggle="tooltip" data-placement="top" title="Responder Tarea" disabled><span class="fa fa-list fa-lg"></span> Responder Tarea</button>';
+            tipo_respuesta+='';
 
             if(index==0){
                 html+='<div class="panel box box-primary">'+

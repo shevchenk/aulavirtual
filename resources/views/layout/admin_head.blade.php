@@ -1,8 +1,8 @@
 <a href="secureaccess.inicio" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><b>PAE</span>
+    <span class="logo-mini"><b>AULA</span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><b>PAE</b>JS</span>
+    <span class="logo-lg"><b>AULA</b>JS</span>
 </a>
 
 <nav class="navbar navbar-static-top">
