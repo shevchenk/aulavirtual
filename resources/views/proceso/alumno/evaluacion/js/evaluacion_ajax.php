@@ -6,15 +6,15 @@ var AjaxEvaluacion={
         }
         data=$("#TipoEvaluacionForm").serialize().split("txt_").join("").split("slct_").join("");
         $("#TipoEvaluacionForm input[type='hidden']").not('.mant').remove();
-
-        if($('#txt_dni').val() != ''
-              || $('#txt_alumno').val() != ''
+        /*
+        if( $('#txt_alumno').val() != ''
               || $('#txt_curso').val() != ''
               || $('#txt_docente').val() != ''
               || $('#txt_fecha_inicio').val() != ''
               || $('#txt_fecha_final').val() != '')
           url='AjaxDinamic/Proceso.EvaluacionPR@Load';
         else
+        */
           url='AjaxDinamic/Proceso.EvaluacionPR@validarCurso';
 
         masterG.postAjax(url,data,evento);
