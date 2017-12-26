@@ -122,13 +122,11 @@ HTMLCargarBalotario=function(result){
     $('#TableBalotario').DataTable().destroy();
     
     $.each(result.data.data,function(index,r){
-        estadohtml='';
-        if(r.modo==0){
         estadohtml='<span id="'+r.id+'" onClick="CambiarEstado2(1,'+r.id+')" class="btn btn-danger">Inactivo</span>';
         if(r.estado==1){
             estadohtml='<span id="'+r.id+'" onClick="CambiarEstado2(0,'+r.id+')" class="btn btn-success">Activo</span>';
         }
-        }
+        
         html+="<tr id='trid_"+r.id+"'>"+
             "<td class='cantidad_maxima'>"+r.cantidad_maxima+"</td>"+
             "<td class='cantidad_pregunta'>"+r.cantidad_pregunta+"</td>"+
@@ -136,11 +134,7 @@ HTMLCargarBalotario=function(result){
             "<td>"+
             "<input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'>";
         html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
-            '<td>';
-        if(r.modo==0){
-            html+='<a class="btn btn-primary btn-sm" onClick="AgregarEditar2(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a>';
-        }
-        html+='</td>';
+            '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar2(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
         if(r.modo==0){
             html+='<td><a class="btn btn-info" onClick="GenerarBalotario2('+r.id+')"><i class="fa fa-edit fa-lg"></i>Generar </a></td>';
         }else{
