@@ -107,6 +107,9 @@
 
                 <hr>
                 <form id="EvaluacionForm" style="display: none">
+                    <input type= "hidden" name="txt_programacion_id" id="txt_programacion_id" class="form-control mant">
+                    <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant">
+                    <input type="hidden" id="txt_curso" name="txt_curso" class="form-controlmant">
                     <style media="screen">
                     .rotar:hover{
                                 cursor: pointer;
@@ -125,6 +128,10 @@
 
 
                 <form id="ResultEvaluacion" style="display: none">
+                  <input type= "hidden" name="txt_programacion_id" id="txt_programacion_id" class="form-control mant">
+                  <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant">
+                  <input type="hidden" id="txt_tipo_evaluacion_id" name="txt_tipo_evaluacion_id" class="form-controlmant">
+
                   <div class="col-md-12">
                     <div class="col-md-2"></div>
 

@@ -11,6 +11,7 @@ use App\Models\Proceso\Curso;
 use App\Models\Proceso\ProgramacionUnica;
 use App\Models\Proceso\Persona;
 use App\Models\Proceso\Programacion;
+use App\Models\Proceso\Evaluacion;
 
 class EvaluacionPR extends Controller
 {
@@ -252,5 +253,17 @@ class EvaluacionPR extends Controller
             $data['return']= false;
         }
         return $data;
+    }
+
+    public function cargarPreguntas(Request $r )
+    {
+        if ( $r->ajax() ) {
+            //$r['dni'] = Auth::user()->dni;
+            $renturnModel = Evaluacion::listarPreguntas($r);
+            $return['rst'] = 1;
+            $return['data'] = $renturnModel;
+            $return['msj'] = "No hay registros aún";
+            return response()->json($return);
+        }
     }
 }

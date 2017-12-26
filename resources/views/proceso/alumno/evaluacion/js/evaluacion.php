@@ -112,7 +112,7 @@ HTMLCargarEvaluacion=function(result){
             "<td class='fecha_final'>"+r.fecha_final+"</td>"+
             "<td>";
         //html +='<a class="btn btn-primary btn-sm" onClick="CargarContenido('+r.pu_id+','+r.curso_id+',\''+r.curso+'\')"><i class="fa fa-plus fa-lg"></i> </a></td>';
-        html +='<a class="btn btn-primary btn-sm" onClick="CargarEvaluaciones('+r.pu_id+','+r.curso_id+',\''+r.curso+'\',this)"><i class="fa fa-plus fa-lg"></i> </a></td>';
+        html +='<a class="btn btn-primary btn-sm" onClick="CargarEvaluaciones('+r.id+','+r.pu_id+','+r.curso_id+',\''+r.curso+'\',this)"><i class="fa fa-plus fa-lg"></i> </a></td>';
         html+="</tr>"
     });
     $("#TableEvaluacion tbody").html(html);
@@ -136,13 +136,13 @@ HTMLCargarEvaluacion=function(result){
 };
 
 
-CargarEvaluaciones=function(id,curso_id,curso, boton){
+CargarEvaluaciones=function(id, programacion_unica_id, curso_id,curso, boton){
     masterG.pintar_fila(boton); //Pinta la fila
+    //alert(id+'- '+ programacion_unica_id+'- '+ curso_id+'- '+ curso+'- '+ boton);
 
-     $("#EvaluacionForm #txt_programacion_unica_id").val(id);
-     //$("#ModalContenidoForm #txt_programacion_unica_id").val(id);
-     //$("#ModalContenidoForm #txt_curso_id").val(curso_id);
-     //$("#ModalContenidoForm #txt_curso").val(curso);
+     $("#EvaluacionForm #txt_programacion_id").val(id);
+     $("#EvaluacionForm #txt_programacion_unica_id").val(programacion_unica_id);
+     $("#EvaluacionForm #txt_curso").val(curso);
 
      AjaxTipoEvaluacion.Cargar(HTMLCargarTipoEvaluacion);
      //AjaxContenido.Cargar(HTMLCargarContenido);
@@ -151,5 +151,78 @@ CargarEvaluaciones=function(id,curso_id,curso, boton){
      //$("#ContenidoProgramacionForm").css("display","none");
 };
 
+
+HTMLCargarTipoEvaluacion=function(result){
+    var programacion_id = $("#EvaluacionForm #txt_programacion_id").val();
+    var programacion_unica_id = $("#EvaluacionForm #txt_programacion_unica_id").val();
+    var curso = $("#EvaluacionForm #txt_curso").val();
+    var html="";
+    //console.log(result.data.data);
+    $.each(result.data.data,function(index, r){
+
+            if(index == 0){
+                html+='<div class="col-md-12">';
+            }
+
+            html+='<div class="col-lg-4">'+
+                    '<div class="panel panel-primary rotar" style="-moz-box-shadow: 0 0 7px #337ab7; -webkit-box-shadow: 0 0 7px #337ab7; box-shadow: 0 0 7px #337ab7;">'+
+                      '<div class="panel-heading text-center" style="text-transform: uppercase; text-shadow: 2px 2px 4px #FFFFFF;">'+
+                        '<h2 class="panel-title" style="font-size: 18px;">'+r.tipo_evaluacion+'</h2>'+
+                      '</div>'+
+                      '<div class="panel-body text-center">';
+
+                html+='<button type="button" id="btniniciareval" name="btniniciareval" class="btn btn-default" onClick="iniciarEvaluacion('+r.id+','+programacion_id+','+programacion_unica_id+',\''+r.tipo_evaluacion+'\',\''+curso+'\')" style="font-weight: bold;">Iniciar Evaluación</button>';
+
+                html+='</div>'+
+                    '</div>'+
+                  '</div>';
+
+          if((index+1) % 3 == 0){
+              html+='</div>';
+              html+='<div class="col-md-12">';
+          }
+    });
+    if(result.data.length>0){
+        html+='</div>';
+    }
+    $("#DivContenido").html(html);
+};
+
+
+iniciarEvaluacion=function(id, programacion_id, programacion_unica_id, tipo_evaluacion, curso){
+  $("#TipoEvaluacionForm").slideUp('slow');
+  $("#EvaluacionForm").slideUp('slow');
+
+  $("#ResultEvaluacion #txt_tipo_evaluacion_id").val(id);
+  $("#ResultEvaluacion #txt_programacion_id").val(programacion_id);
+  $("#ResultEvaluacion #txt_programacion_unica_id").val(programacion_unica_id);
+
+  // Aqui va AJAX
+  AjaxTipoEvaluacion.CargarPreguntas(HTMLiniciarEvaluacion); // HTMLiniciarEvaluacion = HTMLiniciarEvaluacion=function(result){}
+  // --
+};
+
+HTMLiniciarEvaluacion=function(result){
+
+  var html = '';
+      html += '<div class="panel panel-primary">'+
+              '<div class="panel-heading text-center">'+
+                  '<h4>'+tipo_evaluacion+' - '+curso+'<small style="color: #FFF;"> - 11:30:00</small><h4>'+
+              '</div>'+
+              '<div class="panel-body">'+
+                  '<p>Aqui irá la pregunta...... </p>'+
+              '</div>'+
+              '<ul class="list-group">'+
+                '<button type="button" class="list-group-item"><span class="badge" style="background-color: #FFF; padding: 0px 0px;"><div class="radio"><label><input type="radio" name="rbpreguntas" id="rbp1" value="V" aria-label="..."></label></div></span> Respuesta 1</button>'+
+                '<button type="button" class="list-group-item"><span class="badge" style="background-color: #FFF; padding: 0px 0px;"><div class="radio"><label><input type="radio" name="rbpreguntas" id="rbp2" value="V" aria-label="..."></label></div></span> Respuesta 2</button>'+
+                '<button type="button" class="list-group-item">Respuesta 3</button>'+
+              '</ul>'+
+              '<div class="panel-footer text-right"><button type="button" class="btn btn-primary">Siguiente</button></div>'+
+            '</div>';
+
+  $("#resultado").html(html)
+  $("#ResultEvaluacion").slideDown('slow');
+
+};
 
 </script>
