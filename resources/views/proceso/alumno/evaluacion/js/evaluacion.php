@@ -207,17 +207,25 @@ HTMLiniciarEvaluacion=function(result){
   var html = '';
       html += '<div class="panel panel-primary">'+
               '<div class="panel-heading text-center">'+
-                  '<h4>'+tipo_evaluacion+' - '+curso+'<small style="color: #FFF;"> - 11:30:00</small><h4>'+
+                  '<h4>'+' - '+'<small style="color: #FFF;"> - 11:30:00</small><h4>'+
               '</div>'+
-              '<div class="panel-body">'+
-                  '<p>Aqui irá la pregunta...... </p>'+
-              '</div>'+
-              '<ul class="list-group">'+
-                '<button type="button" class="list-group-item"><span class="badge" style="background-color: #FFF; padding: 0px 0px;"><div class="radio"><label><input type="radio" name="rbpreguntas" id="rbp1" value="V" aria-label="..."></label></div></span> Respuesta 1</button>'+
-                '<button type="button" class="list-group-item"><span class="badge" style="background-color: #FFF; padding: 0px 0px;"><div class="radio"><label><input type="radio" name="rbpreguntas" id="rbp2" value="V" aria-label="..."></label></div></span> Respuesta 2</button>'+
-                '<button type="button" class="list-group-item">Respuesta 3</button>'+
-              '</ul>'+
-              '<div class="panel-footer text-right"><button type="button" class="btn btn-primary">Siguiente</button></div>'+
+              '<div class="panel-body" style="font-weight: normal;">'+
+                  'Por favor complete las siguientes preguntas: '+
+              '</div>';
+      
+      $.each(result.data,function(index, r){
+        html += '<ul class="list-group">'+
+                  '<p style="padding: 10px 15px;">'+r.pregunta+' </p>';
+
+          var alternativas = r.alternativas.split("|");
+          $.each(alternativas, function(index, a){
+              var data = a.split(":");
+              html += '<button type="button" class="list-group-item"><span class="badge" style="background-color: #FFF; padding: 0px 0px;"><div class="radio"><label><input type="radio" name="rbpreguntas" id="rbp1" value="V" aria-label="..."></label></div></span>'+data[1]+'</button>';
+          });
+        html += '</ul>';          
+      });
+
+      html += '<div class="panel-footer text-right"><button type="button" class="btn btn-primary">Siguiente</button></div>'+
             '</div>';
 
   $("#resultado").html(html)

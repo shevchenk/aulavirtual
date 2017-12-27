@@ -257,7 +257,6 @@ class EvaluacionPR extends Controller
     public function cargarPreguntas(Request $r )
     {
         if ( $r->ajax() ) {
-            //$r['dni'] = Auth::user()->dni;
             $renturnModel = Evaluacion::listarPreguntas($r);
             $return['rst'] = 1;
             $return['data'] = $renturnModel;

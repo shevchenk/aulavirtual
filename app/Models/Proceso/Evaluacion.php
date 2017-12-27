@@ -15,23 +15,11 @@ class Evaluacion extends Model
 
     public static function listarPreguntas($r)
     {
-    //$balotario = Balotario::find($r->id);
-    $balotario = Evaluacion::where('programacion_unica_id', $r->programacion_unica_id)
-                            ->where('tipo_evaluacion_id', $r->tipo_evaluacion_id);
-    dd($balotario);
-    /*
-    $result = Pregunta::select("v_balotarios.programacion_unica_id")
-              ->leftJoin('v_balotarios_preguntas as bp',function($jo$r->tipo_evaluacion_idin){
-                  $join->on('bp.pregunta_id','=','v_preguntas.id')
-                  ->where('bp.estado','=',1);
-              })
-              ->where('v_preguntas.estado','=',1)
-              ->where('v_preguntas.tipo_evaluacion_id','=',$balotario->tipo_evaluacion_id)
-              ->where('v_preguntas.programacion_unica_id','=',$balotario->programacion_unica_id)
-              ->whereNull('bp.pregunta_id')
-              ->inRandomOrder()
-              ->limit($balotario->cantidad_pregunta)->get();
-    */
+      $balotario = DB::table('v_balotarios')
+                        ->where('programacion_unica_id', $r->programacion_unica_id)
+                        ->where('tipo_evaluacion_id', $r->tipo_evaluacion_id)
+                        ->get();
+
       $sql = DB::table('v_balotarios AS b')
               ->join('v_balotarios_preguntas AS bp',function($join){
                   $join->on('b.id','=','bp.balotario_id');
@@ -69,12 +57,13 @@ class Evaluacion extends Model
                           }
                       }
                   }
-              )
+              )              
+              ->groupBy('b.id', 'p.id')
               ->inRandomOrder()
-              ->limit($balotario->cantidad_pregunta)->get()
-              ->groupBy('p.id');
-          $result = $sql->orderBy('r.id','asc');
-          return $result;
+              ->limit($balotario[0]->cantidad_pregunta)
+              ->get();
+        $result = $sql;
+        return $result;
     }
 
 }
