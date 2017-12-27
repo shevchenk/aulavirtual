@@ -12,8 +12,7 @@ var AjaxTipoEvaluacion={
 
         var data={programacion_unica_id:programacion_unica_id,
                   tipo_evaluacion_id : tipo_evaluacion_id};
-        url='AjaxDinamic/Proceso.EvaluacionPR@cargarPreguntas';
-        console.log(data);
+        url='AjaxDinamic/Proceso.EvaluacionPR@cargarPreguntas';        
         masterG.postAjax(url,data,evento);
     },
 
