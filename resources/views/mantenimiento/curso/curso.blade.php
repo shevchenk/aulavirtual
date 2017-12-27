@@ -40,25 +40,7 @@
                         <table id="TableCurso" class="table table-bordered table-hover">
                             <thead>
                                 <tr class="cabecera">
-                                    <th class="col-xs-2">
-                                        <div class="form-group">
-                                            <label><h4>Carrera:</h4></label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                                <input type="text" class="form-control" name="txt_carrera" id="txt_carrera" placeholder="Carrera" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th class="col-xs-1">
-                                        <div class="form-group">
-                                            <label><h4>Ciclo:</h4></label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                                <input type="text" class="form-control" name="txt_ciclo" id="txt_ciclo" placeholder="Ciclo" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th class="col-xs-2">
+                                    <th class="col-xs-3">
                                         <div class="form-group">
                                             <label><h4>Curso:</h4></label>
                                             <div class="input-group">
@@ -72,7 +54,7 @@
                                             <label><h4>Imagen de Lista:</h4></label>
                                         </div>
                                     </th>
-                                    <th class="col-xs-3">
+                                    <th class="col-xs-4">
                                         <div class="form-group">
                                             <label><h4>Imagen de Cabecera:</h4></label>
                                         </div>
@@ -84,8 +66,6 @@
                             </tbody>
                             <tfoot>
                                 <tr class="cabecera">
-                                    <th>Carrera</th>
-                                    <th>Ciclo</th>
                                     <th>Curso</th>
                                     <th>Imagen de Lista</th>
                                     <th>Imagen de Cabecera</th>

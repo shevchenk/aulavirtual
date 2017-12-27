@@ -209,8 +209,6 @@ class ProgramacionUnicaPR extends Controller{
           foreach ($objArr->gestor as $k=>$value){
 
               $curso = Curso::where('curso', '=', trim($value->curso))
-                                    ->where('carrera','=', trim($value->carrera))
-                                    ->where('ciclo','=', trim($value->ciclo))
                                     ->where('curso_externo_id','=', trim($value->curso_externo_id))
                                     ->first();
 
@@ -226,8 +224,6 @@ class ProgramacionUnicaPR extends Controller{
                 else //Update
                   $curso->persona_id_updated_at=1;
 
-                $curso->carrera = trim($value->carrera);
-                $curso->ciclo = trim($value->ciclo);
                 $curso->curso = trim($value->curso);
                 $curso->save();
                 $array_curso.=','.$curso->curso_externo_id;
@@ -265,7 +261,9 @@ class ProgramacionUnicaPR extends Controller{
                   $programacion_unica->estado=$value->programacion_unica_estado;
                   $programacion_unica->persona_id_updated_at=1;
               }
-
+              $programacion_unica->carrera = trim($value->carrera);
+              $programacion_unica->ciclo = trim($value->ciclo);
+              $programacion_unica->semestre = trim($value->semestre);
               $programacion_unica->curso_id = $curso->id;
               $programacion_unica->persona_id = $docente->id;
               $programacion_unica->fecha_inicio = $value->fecha_inicio;

@@ -60,6 +60,15 @@
                                     </th>
                                     <th class="col-xs-1">
                                         <div class="form-group">
+                                            <label><h4>Semestre:</h4></label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                <input type="text" class="form-control" name="txt_semestre" id="txt_semestre" placeholder="Semestre" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th class="col-xs-1">
+                                        <div class="form-group">
                                             <label><h4>Ciclo:</h4></label>
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fa fa-search"></i></div>
@@ -110,6 +119,7 @@
                                     <tfoot>
                                         <tr class="cabecera">
                                             <th>Carrera</th>
+                                            <th>Semestre</th>
                                             <th>Ciclo</th>
                                             <th>Curso</th>
                                             <th>Docente</th>
