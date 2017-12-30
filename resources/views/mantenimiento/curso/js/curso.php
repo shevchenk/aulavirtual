@@ -109,8 +109,6 @@ HTMLCargarCurso=function(result){
     $.each(result.data.data,function(index,r){
         
         html+="<tr id='trid_"+r.id+"'>"+
-            "<td class='carrera'>"+r.carrera+"</td>"+
-            "<td class='ciclo'>"+r.ciclo+"</td>"+
             "<td class='curso'>"+r.curso+"</td>";
         html+="<td>";
             if(r.foto!=null){    

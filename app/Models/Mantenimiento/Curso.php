@@ -18,7 +18,7 @@ class Curso extends Model
     }
     
     public static function runLoad($r){
-        $result=Curso::select('v_cursos.id','v_cursos.curso','v_cursos.carrera','v_cursos.ciclo','v_cursos.curso_externo_id','v_cursos.foto','v_cursos.foto_cab','v_cursos.estado')
+        $result=Curso::select('v_cursos.id','v_cursos.curso','v_cursos.curso_externo_id','v_cursos.foto','v_cursos.foto_cab','v_cursos.estado')
                                 ->where(
                                     function($query) use ($r){
                                         $query->where('v_cursos.estado','=', 1);

@@ -34,7 +34,7 @@ class Curso extends Model
             DB::raw('pu.curso_id as curso_id'),
             'palu.dni',
             DB::raw("CONCAT(palu.nombre,' ', palu.paterno,' ', palu.materno) as alumno"),
-            'c.curso','c.foto','c.ciclo','c.carrera','c.foto_cab',
+            'c.curso','c.foto','pu.ciclo','pu.carrera','pu.semestre','c.foto_cab',
             DB::raw('DATE(pu.fecha_inicio) as fecha_inicio'),
             DB::raw('DATE(pu.fecha_final) as fecha_final'),
             DB::raw("CONCAT(pdoc.nombre,' ', pdoc.paterno,' ', pdoc.materno) as docente")
@@ -84,15 +84,24 @@ class Curso extends Model
                           $query->where('pu.fecha_final','like','%'.$fecha_final.'%');
                       }
                   }
-
-                  /*
-                  if( $r->has("estado") ){
-                      $estado=trim($r->estado);
-                      if( $estado !='' ){
-                          $query->where('p.estado','=',$estado);
+                  if( $r->has("semestre") ){
+                      $semestre=trim($r->semestre);
+                      if( $semestre !='' ){
+                          $query->where('pu.semestre','like','%'.$semestre.'%');
                       }
                   }
-                  */
+                  if( $r->has("ciclo") ){
+                      $ciclo=trim($r->ciclo);
+                      if( $ciclo !='' ){
+                          $query->where('pu.ciclo','like','%'.$ciclo.'%');
+                      }
+                  }
+                  if( $r->has("carrera") ){
+                      $carrera=trim($r->carrera);
+                      if( $carrera !='' ){
+                          $query->where('pu.carrera','like','%'.$carrera.'%');
+                      }
+                  }
                 }
             );
         $result = $sql->orderBy('p.id','asc')->paginate(10);
