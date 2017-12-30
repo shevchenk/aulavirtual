@@ -10,7 +10,8 @@ use App\Http\Controllers\Api\Api;
 use App\Models\Proceso\TipoEvaluacion;
 //use App\Models\Proceso\ProgramacionUnica;
 //use App\Models\Proceso\Persona;
-//use App\Models\Proceso\Programacion;
+use App\Models\Proceso\Programacion;
+use App\Models\Proceso\Evaluacion;
 
 class TipoEvaluacionPR extends Controller
 {
@@ -40,11 +41,13 @@ class TipoEvaluacionPR extends Controller
     public function validarTipoEvaluacion(Request $r)
     {
         $idcliente = session('idcliente');
-        $param_data = array('dni' => Auth::user()->dni);
+        $programacion = Programacion::find($r->programacion_id);
 
+        $param_data = array('dni' => Auth::user()->dni,
+                              'programacion_externo_id' => $programacion->programacion_externo_id);
         // URL (CURL)
         $cli_links = DB::table('clientes_accesos_links')->where('cliente_acceso_id','=', $idcliente)
-                                                        ->where('tipo','=', 9)
+                                                        ->where('tipo','=', 10)
                                                         ->first();
         $objArr = $this->api->curl($cli_links->url, $param_data);
         // --
@@ -65,7 +68,7 @@ class TipoEvaluacionPR extends Controller
 
             if($objArr->key[0]->id == @$tab_cli->id && $objArr->key[0]->token == @$tab_cli->key)
             {
-                $val = $this->insertarTipoEvaluacion($objArr);
+                $val = $this->insertarTipoEvaluacion($objArr, $r);
                 if($val['return'] == true)
                   $return_response = $this->api->response(200,"success","Proceso ejecutado satisfactoriamente");
                 else
@@ -102,7 +105,7 @@ class TipoEvaluacionPR extends Controller
     }
 
 
-    public function insertarTipoEvaluacion($objArr)
+    public function insertarTipoEvaluacion($objArr, $r)
     {
         DB::beginTransaction();
         try
@@ -110,34 +113,60 @@ class TipoEvaluacionPR extends Controller
           foreach ($objArr->tipo as $k=>$value)
           {
               $tipoeval = TipoEvaluacion::where('tipo_evaluacion', '=', trim($value->tipo_evaluacion))
-                                    ->where('tipo_evaluacion_externo_id','=', trim($value->tipo_evaluacion_externo_id))
-                                    ->first();
+                                        ->where('tipo_evaluacion_externo_id','=', trim($value->tipo_evaluacion_externo_id))
+                                        ->first();
               if (count($tipoeval) == 0)
               {
                 $tipoeval = TipoEvaluacion::where('tipo_evaluacion_externo_id', '=', trim($value->tipo_evaluacion_externo_id))
-                                        ->first();
+                                          ->first();
                 if(count($tipoeval) == 0) //Insert
                 {
                   $tipoeval = new TipoEvaluacion();
                   $tipoeval->tipo_evaluacion_externo_id = trim($value->tipo_evaluacion_externo_id);
                   $tipoeval->persona_id_created_at=1;
                 }
-                else //Update
+                else
                   $tipoeval->persona_id_updated_at=1;
 
                 $tipoeval->tipo_evaluacion = trim($value->tipo_evaluacion);
                 $tipoeval->save();
               }
+
+              $evaluacion = Evaluacion::where('programacion_id', '=', trim($r->programacion_id))
+                                      ->where('tipo_evaluacion_id', '=', trim($tipoeval->id))
+                                      ->first();
+
+              $r['fecha_evaluacion'] = $value->fecha_evaluacion;
+
+              if($value->evaluaciones_estado == 1){
+                $estado_cambio = 0;
+              } else {
+                $estado_cambio = 2;
+              }
+
+              if(count($evaluacion) == 0) // Insert
+              {
+                $r['tipo_evaluacion_id'] = $tipoeval->id;
+                $r['estado_cambio'] = $estado_cambio;
+                $evaluacion = Evaluacion::runNew($r);
+              }
+              else
+              {
+                $evaluacion->fecha_evaluacion = $value->fecha_evaluacion;
+                $evaluacion->estado = $value->evaluaciones_estado;
+                $evaluacion->estado_cambio = $estado_cambio;
+                $evaluacion->persona_id_updated_at=Auth::user()->id;
+                $evaluacion->save();
+              }
+              //break;
           }
 
           DB::commit();
-          //$return = true;
           $data['return']= true;
         }
         catch (\Exception $e)
         {
             DB::rollback();
-            //$return = false;
             $data['return']= false;
         }
         return $data;

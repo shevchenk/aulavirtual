@@ -6,12 +6,17 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Validator;
+
 use App\Http\Controllers\Api\Api;
 use App\Models\Proceso\Curso;
 use App\Models\Proceso\ProgramacionUnica;
 use App\Models\Proceso\Persona;
 use App\Models\Proceso\Programacion;
 use App\Models\Proceso\Evaluacion;
+use App\Models\Proceso\EvaluacionDetalle;
+
+use App\Models\Mantenimiento\Respuesta;
 
 class EvaluacionPR extends Controller
 {
@@ -199,26 +204,6 @@ class EvaluacionPR extends Controller
               $array_programacion_unica.=','.$programacion_unica->programacion_unica_externo_id;
               // --
 
-              // Proceso Persona Alumno
-              /*
-              $alumno = Persona::where('dni', '=', trim($value->alumno_dni))
-                                  ->first();
-              if (count($alumno) == 0)
-              {
-                  $alumno = new Persona();
-                  $alumno->dni = trim($value->alumno_dni);
-                  $alumno->persona_id_created_at=1;
-              }
-              else
-                  $alumno->persona_id_updated_at=1;
-
-              $alumno->paterno = trim($value->alumno_paterno);
-              $alumno->materno = trim($value->alumno_materno);
-              $alumno->nombre = trim($value->alumno_nombre);
-              $alumno->save();
-              */
-              // --
-
               // Proceso Programación
               $programacion = Programacion::where('programacion_externo_id', '=', trim($value->programacion_externo_id))
                                                       ->first();
@@ -258,11 +243,67 @@ class EvaluacionPR extends Controller
     public function cargarPreguntas(Request $r )
     {
         if ( $r->ajax() ) {
-            $renturnModel = Evaluacion::listarPreguntas($r);
+
+          $evaluacion = Evaluacion::where('programacion_id', '=', $r->programacion_id)
+                                  ->where('tipo_evaluacion_id', '=', $r->tipo_evaluacion_id)
+                                  ->first();
+          $val_evaluacion = '';
+          $evaluacion_fecha = '';
+          if($evaluacion->estado_cambio == 0)
+          {
+            if($evaluacion->fecha_evaluacion == date('Y-m-d'))
+            {
+              $renturnModel = Evaluacion::listarPreguntas($r);
+              $evaluacion_id = $evaluacion->id;
+              //$val_evaluacion = 1;
+            }
+            else
+            {
+              $renturnModel = NULL;
+              $evaluacion_id = 0;
+              $val_evaluacion = 'error_fecha';
+              $evaluacion_fecha = $evaluacion->fecha_evaluacion;
+            }
+          }
+          else
+          {
+            # proceso ver sus notas
+            $evaluacion_id = 0;
+            //$val_evaluacion = 3;
+          }
+
             $return['rst'] = 1;
+            $return['evaluacion_id'] = $evaluacion_id;
+            $return['evaluacion_estado_cambio'] = $evaluacion->estado_cambio;
+            $return['val_fecha_evaluacion'] = $val_evaluacion;
+            $return['evaluacion_fecha'] = $evaluacion_fecha;
             $return['data'] = $renturnModel;
             $return['msj'] = "No hay registros aún";
             return response()->json($return);
         }
     }
+
+    public function guardarEvaluacion(Request $r )
+    {
+        if ( $r->ajax() ) {
+            $datos = json_decode($r->datos);
+            //dd($datos);
+            foreach ($datos as $key => $value)
+            {
+              $r['evaluacion_id'] = $value->evaluacion_id;
+              $r['pregunta_id'] = $value->pregunta_id;
+              $r['respuesta_id'] = $value->respuesta_id;
+              $respuesta = Respuesta::find($value->respuesta_id);
+              $r['puntaje'] = $respuesta->puntaje;
+              //print $value->evaluacion_id.' - '.$value->pregunta_id.' - '.$value->respuesta_id;
+              EvaluacionDetalle::runNew($r);
+            }
+
+            $return['rst'] = 1;
+            $return['msj'] = 'Registro creado';
+
+            return response()->json($return);
+        }
+    }
+
 }

@@ -132,6 +132,9 @@
                   <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant">
                   <input type="hidden" id="txt_tipo_evaluacion_id" name="txt_tipo_evaluacion_id" class="form-controlmant">
 
+                  <input type="hidden" id="txt_tipo_evaluacion" name="txt_tipo_evaluacion" class="form-controlmant">
+                  <input type="hidden" id="txt_curso" name="txt_curso" class="form-controlmant">
+
                   <div class="col-md-12">
                     <div class="col-md-2"></div>
 

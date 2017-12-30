@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 
-//use App\Models\Mantenimiento\Balotario;
 use DB;
 
 class Evaluacion extends Model
 {
-    protected   $table = 'v_balotarios';
+    //protected   $table = 'v_balotarios';
+    protected   $table = 'v_evaluaciones';
 
     public static function listarPreguntas($r)
     {
@@ -57,13 +57,26 @@ class Evaluacion extends Model
                           }
                       }
                   }
-              )              
+              )
               ->groupBy('b.id', 'p.id')
               ->inRandomOrder()
               ->limit($balotario[0]->cantidad_pregunta)
               ->get();
         $result = $sql;
         return $result;
+    }
+
+    public static function runNew($r){
+
+        $evaluacion = new Evaluacion;
+        $evaluacion->programacion_id = trim( $r->programacion_id );
+        $evaluacion->tipo_evaluacion_id = trim( $r->tipo_evaluacion_id );
+        $evaluacion->fecha_evaluacion = trim( $r->fecha_evaluacion );
+
+        $evaluacion->estado_cambio = trim( $r->estado_cambio );
+        $evaluacion->estado = 1;
+        $evaluacion->persona_id_created_at=Auth::user()->id;
+        $evaluacion->save();
     }
 
 }

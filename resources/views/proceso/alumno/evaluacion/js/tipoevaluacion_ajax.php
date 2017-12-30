@@ -1,21 +1,30 @@
 <script type="text/javascript">
 var AjaxTipoEvaluacion={
     Cargar:function(evento,pag){
-        data={};
+        var programacion_id = $("#EvaluacionForm #txt_programacion_id").val();
+        data={programacion_id:programacion_id};
         url='AjaxDinamic/Proceso.TipoEvaluacionPR@validarTipoEvaluacion';
         masterG.postAjax(url,data,evento);
     },
     CargarPreguntas:function(evento){
         var programacion_unica_id = $("#ResultEvaluacion #txt_programacion_unica_id").val();
+        var programacion_id = $("#ResultEvaluacion #txt_programacion_id").val();
         var tipo_evaluacion_id = $("#ResultEvaluacion #txt_tipo_evaluacion_id").val();
         $("#ContenidoForm input[type='hidden']").not('.mant').remove();
 
         var data={programacion_unica_id:programacion_unica_id,
+                  programacion_id:programacion_id,
                   tipo_evaluacion_id : tipo_evaluacion_id};
-        url='AjaxDinamic/Proceso.EvaluacionPR@cargarPreguntas';        
+        url='AjaxDinamic/Proceso.EvaluacionPR@cargarPreguntas';
         masterG.postAjax(url,data,evento);
     },
-
+    GuardarEvaluacion:function(evento){
+        var evaluaciones_id = 1;
+        var data = {datos:JSON.stringify(data_alter_preg)};
+        //alert(JSON.stringify(data_alter_preg));
+        url='AjaxDinamic/Proceso.EvaluacionPR@guardarEvaluacion';
+        masterG.postAjax(url,data,evento);
+    },
 };
 
 </script>
