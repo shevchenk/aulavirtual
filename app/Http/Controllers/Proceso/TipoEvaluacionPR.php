@@ -47,7 +47,7 @@ class TipoEvaluacionPR extends Controller
                               'programacion_externo_id' => $programacion->programacion_externo_id);
         // URL (CURL)
         $cli_links = DB::table('clientes_accesos_links')->where('cliente_acceso_id','=', $idcliente)
-                                                        ->where('tipo','=', 10)
+                                                        ->where('tipo','=', 11)
                                                         ->first();
         $objArr = $this->api->curl($cli_links->url, $param_data);
         // --
