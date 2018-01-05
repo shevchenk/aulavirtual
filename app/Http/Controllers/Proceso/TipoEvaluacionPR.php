@@ -138,16 +138,16 @@ class TipoEvaluacionPR extends Controller
 
               $r['fecha_evaluacion'] = $value->fecha_evaluacion;
 
-              if($value->evaluaciones_estado == 1){
+              /*if($value->evaluaciones_estado == 1){
                 $estado_cambio = 0;
               } else {
                 $estado_cambio = 2;
-              }
+              }*/
 
               if(count($evaluacion) == 0) // Insert
               {
                 $r['tipo_evaluacion_id'] = $tipoeval->id;
-                $r['estado_cambio'] = $estado_cambio;
+                //$r['estado_cambio'] = $estado_cambio;
                 $evaluacion = Evaluacion::runNew($r);
               }
               else

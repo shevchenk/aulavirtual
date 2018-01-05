@@ -73,9 +73,18 @@ class Evaluacion extends Model
         $evaluacion->tipo_evaluacion_id = trim( $r->tipo_evaluacion_id );
         $evaluacion->fecha_evaluacion = trim( $r->fecha_evaluacion );
 
-        $evaluacion->estado_cambio = trim( $r->estado_cambio );
+        //$evaluacion->estado_cambio = trim( $r->estado_cambio );
         $evaluacion->estado = 1;
         $evaluacion->persona_id_created_at=Auth::user()->id;
+        $evaluacion->save();
+    }
+
+    public static function runEdit($r){
+
+        $evaluacion = Evaluacion::find($r->id);
+        $evaluacion->nota = trim( $r->nota );
+        $evaluacion->estado_cambio = trim( $r->estado_cambio );
+        $evaluacion->persona_id_updated_at=Auth::user()->id;
         $evaluacion->save();
     }
 

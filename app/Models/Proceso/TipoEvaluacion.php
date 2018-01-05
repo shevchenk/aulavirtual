@@ -14,11 +14,15 @@ class TipoEvaluacion extends Model
     public static function runLoad($r)
     {
         $sql=DB::table('v_tipos_evaluaciones as te')
+                  ->leftJoin('v_evaluaciones AS e',function($join){
+                      $join->on('te.id','=','e.tipo_evaluacion_id');
+                  })
                   ->select(
                       'te.id',
                       'te.tipo_evaluacion',
                       'te.tipo_evaluacion_externo_id',
-                      'te.estado'
+                      'te.estado',
+                      'e.estado_cambio'
                     )
                   ->where(
                       function($query) use ($r){

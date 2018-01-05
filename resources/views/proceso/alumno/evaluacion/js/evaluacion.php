@@ -103,8 +103,10 @@ HTMLAgregarEditar=function(result){
 }
 
 HTMLCargarEvaluacion=function(result){
+
     var html="";
     $('#TableEvaluacion').DataTable().destroy();
+    //alert('llegoo');
     $.each(result.data.data,function(index,r){
         //estadohtml='<span id="'+r.id+'" onClick="CambiarEstado(1,'+r.id+')" class="btn btn-danger">Inactivo</span>';
         /*if(r.estado==1){
@@ -167,28 +169,30 @@ HTMLCargarTipoEvaluacion=function(result){
     //console.log(result.data.data);
 
     $.each(result.data.data,function(index, r){
+        if(index == 0){
+          html+='<div class="col-md-12">';
+        }
 
-            if(index == 0){
-                html+='<div class="col-md-12">';
-            }
+        html+='<div class="col-lg-4">'+
+            '<div class="panel panel-primary rotar" style="-moz-box-shadow: 0 0 7px #337ab7; -webkit-box-shadow: 0 0 7px #337ab7; box-shadow: 0 0 7px #337ab7;">'+
+              '<div class="panel-heading text-center" style="text-transform: uppercase; text-shadow: 2px 2px 4px #FFFFFF;">'+
+                '<h2 class="panel-title" style="font-size: 18px;">'+r.tipo_evaluacion+'</h2>'+
+              '</div>'+
+              '<div class="panel-body text-center">';
 
-            html+='<div class="col-lg-4">'+
-                    '<div class="panel panel-primary rotar" style="-moz-box-shadow: 0 0 7px #337ab7; -webkit-box-shadow: 0 0 7px #337ab7; box-shadow: 0 0 7px #337ab7;">'+
-                      '<div class="panel-heading text-center" style="text-transform: uppercase; text-shadow: 2px 2px 4px #FFFFFF;">'+
-                        '<h2 class="panel-title" style="font-size: 18px;">'+r.tipo_evaluacion+'</h2>'+
-                      '</div>'+
-                      '<div class="panel-body text-center">';
-
-                html+='<button type="button" id="btniniciareval" name="btniniciareval" class="btn btn-default" onClick="iniciarEvaluacion('+r.id+','+programacion_id+','+programacion_unica_id+',\''+r.tipo_evaluacion+'\',\''+curso+'\')" style="font-weight: bold;">Iniciar Evaluación</button>';
-
-                html+='</div>'+
-                    '</div>'+
-                  '</div>';
-
-          if((index+1) % 3 == 0){
-              html+='</div>';
-              html+='<div class="col-md-12">';
+          if(r.estado_cambio == 0){
+            html+='<button type="button" id="btniniciareval" name="btniniciareval" class="btn btn-default" onClick="iniciarEvaluacion('+r.id+','+programacion_id+','+programacion_unica_id+',\''+r.tipo_evaluacion+'\',\''+curso+'\')" style="font-weight: bold;">Iniciar Evaluación</button>';
+          } else {
+            html+='<button type="button" id="btniniciareval" name="btniniciareval" class="btn btn-primary" onClick="verEvaluacion('+r.id+','+programacion_id+','+programacion_unica_id+',\''+r.tipo_evaluacion+'\',\''+curso+'\')" style="font-weight: bold;">Ver Resultados</button>';
           }
+        html+='</div>'+
+            '</div>'+
+          '</div>';
+
+        if((index+1) % 3 == 0){
+            html+='</div>';
+            html+='<div class="col-md-12">';
+        }
     });
     if(result.data.length>0){
         html+='</div>';
@@ -208,6 +212,19 @@ iniciarEvaluacion=function(id, programacion_id, programacion_unica_id, tipo_eval
     $("#ResultEvaluacion #txt_tipo_evaluacion").val(tipo_evaluacion);
     $("#ResultEvaluacion #txt_curso").val(curso);
     AjaxTipoEvaluacion.CargarPreguntas(HTMLiniciarEvaluacion);
+};
+
+verEvaluacion=function(id, programacion_id, programacion_unica_id, tipo_evaluacion, curso){
+    $("#TipoEvaluacionForm").slideUp('slow');
+    $("#EvaluacionForm").slideUp('slow');
+
+    $("#ResultEvaluacion #txt_tipo_evaluacion_id").val(id);
+    $("#ResultEvaluacion #txt_programacion_id").val(programacion_id);
+    $("#ResultEvaluacion #txt_programacion_unica_id").val(programacion_unica_id);
+
+    $("#ResultEvaluacion #txt_tipo_evaluacion").val(tipo_evaluacion);
+    $("#ResultEvaluacion #txt_curso").val(curso);
+    AjaxTipoEvaluacion.VerResultPreguntas(HTMLverEvaluacion);
 };
 
 HTMLiniciarEvaluacion=function(result){
@@ -240,21 +257,6 @@ HTMLiniciarEvaluacion=function(result){
       }
 
       var html = '';
-
-      if(evaluacionG_estado_cambio > 0)
-      {
-          html += '<div class="panel panel-primary">'+
-                '<div class="panel-heading text-center">'+
-                    '<h4>Resultado de su Examen<h4>'+
-                '</div>'+
-                '<div id="" class="panel-body" style="font-weight: normal;">'+
-                    'Aqui su resultado'+
-                '</div>';
-          html += '<div id="" class="panel-footer text-right"><button type="button" id="btncerrar_examen" onClick="();" class="btn btn-default btn-sigue-pregu">Cerrar</button></div>'+
-                '</div>';
-      }
-      else
-      {
           html += '<div class="panel panel-primary">'+
                   '<div class="panel-heading text-center">'+
                       '<h4>'+tipo_evaluacion+' - '+curso+'<small style="color: #FFF;"> - <label id="hora"></label></small><h4>'+
@@ -278,11 +280,30 @@ HTMLiniciarEvaluacion=function(result){
 
           html += '<div id="footer-preguntas" class="panel-footer text-right"><button type="button" id="'+evaluacionG[ceval].pregunta_id+'" onClick="verSiguientePregunta(this.id);" class="btn btn-primary btn-sigue-pregu">Siguiente</button></div>'+
                 '</div>';
-      }
+
 
       $("#resultado").html(html)
       $("#ResultEvaluacion").slideDown('slow');
   }
+};
+
+
+HTMLverEvaluacion=function(result){
+  var tipo_evaluacion = $("#ResultEvaluacion #txt_tipo_evaluacion").val();
+  var curso = $("#ResultEvaluacion #txt_curso").val();
+
+   var html = '';
+      html += '<div class="panel panel-primary">'+
+            '<div class="panel-heading text-center">'+
+                '<h4>Resultado de su Examen<h4>'+
+            '</div>'+
+            '<div id="" class="panel-body" style="font-weight: normal;">'+
+                'En construcción...'+
+            '</div>';
+      html += '<div id="" class="panel-footer text-right"><button type="button" id="btncerrar_examen" onClick="();" class="btn btn-default btn-sigue-pregu">Cerrar</button></div>'+
+            '</div>';
+    $("#resultado").html(html)
+    $("#ResultEvaluacion").slideDown('slow');
 };
 
 
@@ -304,6 +325,7 @@ verSiguientePregunta=function(id){
       data_alter_preg = data_alter_preg;
 
       $('#body-preguntas').html('<p class="bg-info text-center" style="font-size: 20px;">Gracias por completar su evaluación. <br/> '+
+                                  '<input type= "hidden" name="txt_programacion_id" id="txt_programacion_id" class="form-control mant" value="">'+
                                   '<button type="button" id="btnprocesar_eval" onClick="guardarEvaluacion();" class="btn btn-primary btn-sigue-pregu">Procesar Examen</button>'+
                                   '</p>')
       $('.list-group').hide('slow').html('');
@@ -340,7 +362,14 @@ guardarEvaluacion=function(){
 HTMLAgregarEvaluacion=function(result){
     if( result.rst==1 ){
         msjG.mensaje('success',result.msj,4000);
-        AjaxTipoEvaluacion.Cargar(HTMLCargarEvaluacion);
+
+        $("#TipoEvaluacionForm").slideDown('fast');
+        $("#EvaluacionForm").slideDown('fast');
+
+        $("#resultado").html('')
+        $("#ResultEvaluacion").hide();
+        $("#DivContenido").html('');
+        AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
     }
     else{
         msjG.mensaje('warning',result.msj,3000);

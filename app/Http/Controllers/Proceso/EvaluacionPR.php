@@ -191,7 +191,7 @@ class EvaluacionPR extends Controller
                   $programacion_unica->estado=$value->programacion_unica_estado;
                   $programacion_unica->persona_id_updated_at=1;
               }
-              
+
               $programacion_unica->carrera = trim($value->carrera);
               $programacion_unica->ciclo = trim($value->ciclo);
               $programacion_unica->semestre = trim($value->semestre);
@@ -264,12 +264,13 @@ class EvaluacionPR extends Controller
               $evaluacion_fecha = $evaluacion->fecha_evaluacion;
             }
           }
-          else
+          /*else
           {
             # proceso ver sus notas
+            $renturnModel = NULL;
             $evaluacion_id = 0;
-            //$val_evaluacion = 3;
           }
+          */
 
             $return['rst'] = 1;
             $return['evaluacion_id'] = $evaluacion_id;
@@ -282,24 +283,65 @@ class EvaluacionPR extends Controller
         }
     }
 
+
+    public function verResultPreguntas(Request $r )
+    {
+        if ( $r->ajax() ) {
+
+          $evaluacion = Evaluacion::where('programacion_id', '=', $r->programacion_id)
+                                  ->where('tipo_evaluacion_id', '=', $r->tipo_evaluacion_id)
+                                  ->first();
+            $renturnModel = Evaluacion::listarPreguntas($r);
+            $return['rst'] = 1;
+            $return['data'] = $renturnModel;
+            $return['msj'] = "No hay registros aún";
+            return response()->json($return);
+        }
+    }
+
     public function guardarEvaluacion(Request $r )
     {
         if ( $r->ajax() ) {
             $datos = json_decode($r->datos);
             //dd($datos);
-            foreach ($datos as $key => $value)
+            if($datos)
             {
-              $r['evaluacion_id'] = $value->evaluacion_id;
-              $r['pregunta_id'] = $value->pregunta_id;
-              $r['respuesta_id'] = $value->respuesta_id;
-              $respuesta = Respuesta::find($value->respuesta_id);
-              $r['puntaje'] = $respuesta->puntaje;
-              //print $value->evaluacion_id.' - '.$value->pregunta_id.' - '.$value->respuesta_id;
-              EvaluacionDetalle::runNew($r);
+              $val = false;
+              $nota_puntaje = 0;
+              foreach ($datos as $key => $value)
+              {
+                $r['evaluacion_id'] = $value->evaluacion_id;
+                $r['pregunta_id'] = $value->pregunta_id;
+                $r['respuesta_id'] = $value->respuesta_id;
+                $respuesta = Respuesta::find($value->respuesta_id);
+                $r['puntaje'] = $respuesta->puntaje;
+
+                $evaluacion = EvaluacionDetalle::where('evaluacion_id', '=', trim($value->evaluacion_id))
+                                                ->where('pregunta_id', '=', $value->pregunta_id)
+                                                ->where('respuesta_id', '=', $value->respuesta_id)
+                                                ->where('estado', '=', 1)
+                                                ->first();
+                if (count($evaluacion) == 0) {
+                  EvaluacionDetalle::runNew($r);
+                  $id_evaluacion = $value->evaluacion_id;
+                  $nota_puntaje += $respuesta->puntaje;
+                  $val = true;
+                }
+              }
+
+              // ACTUALIZA LA NOTA y ESTADO
+              if($val == true)
+              {
+                $r['id'] = $id_evaluacion;
+                $r['nota'] = $nota_puntaje;
+                $r['estado_cambio'] = 1;
+                Evaluacion::runEdit($r);
+              }
+              // --
             }
 
             $return['rst'] = 1;
-            $return['msj'] = 'Registro creado';
+            $return['msj'] = 'Evaluación registrado satisfactoriamente!';
 
             return response()->json($return);
         }
