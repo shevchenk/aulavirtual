@@ -146,15 +146,12 @@ class TipoEvaluacionPR extends Controller
               }
               else
               {
-                if($value->evaluaciones_estado == 1){
-                  $estado_cambio = 0;
-                } else {
-                  $estado_cambio = 2;
+                if($value->evaluaciones_estado == 0){
+                  $evaluacion->estado_cambio = 2;
                 }
-
                 $evaluacion->fecha_evaluacion = $value->fecha_evaluacion;
                 $evaluacion->estado = $value->evaluaciones_estado;
-                $evaluacion->estado_cambio = $estado_cambio;
+
                 $evaluacion->persona_id_updated_at=Auth::user()->id;
                 $evaluacion->save();
               }
