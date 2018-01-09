@@ -138,12 +138,6 @@ class TipoEvaluacionPR extends Controller
 
               $r['fecha_evaluacion'] = $value->fecha_evaluacion;
 
-              /*if($value->evaluaciones_estado == 1){
-                $estado_cambio = 0;
-              } else {
-                $estado_cambio = 2;
-              }*/
-
               if(count($evaluacion) == 0) // Insert
               {
                 $r['tipo_evaluacion_id'] = $tipoeval->id;
@@ -152,6 +146,12 @@ class TipoEvaluacionPR extends Controller
               }
               else
               {
+                if($value->evaluaciones_estado == 1){
+                  $estado_cambio = 0;
+                } else {
+                  $estado_cambio = 2;
+                }
+
                 $evaluacion->fecha_evaluacion = $value->fecha_evaluacion;
                 $evaluacion->estado = $value->evaluaciones_estado;
                 $evaluacion->estado_cambio = $estado_cambio;
