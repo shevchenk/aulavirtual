@@ -27,6 +27,7 @@ class TipoEvaluacion extends Model
                   ->where(
                       function($query) use ($r){
                         $query->where('te.estado','=',1);
+                        $query->where('e.programacion_id','=', $r->programacion_id);
                       }
                   );
         $result = $sql->orderBy('te.id','asc')->paginate(20);
