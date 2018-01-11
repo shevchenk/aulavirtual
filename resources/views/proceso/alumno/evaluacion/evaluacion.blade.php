@@ -85,7 +85,7 @@
                                               </div>
                                           </div>
                                       </th>
-                                      <th class="col-xs-1">[-]</th>
+                                      <!--<th class="col-xs-1">[-]</th>-->
                                   </tr>
                               </thead>
                               <tbody>
@@ -96,7 +96,7 @@
                                     <th>Docente</th>
                                     <th>Hora Inicio</th>
                                     <th>Hora Final</th>
-                                    <th>[-]</th>
+                                    <!--<th>[-]</th>-->
                                   </tr>
                               </tfoot>
                           </table>
@@ -139,16 +139,25 @@
                     <div class="col-md-2"></div>
 
                     <div class="col-md-8" id="resultado">
-                      <!-- <div class="panel panel-primary">
-                                <div class="panel-heading" >
-                                    <label></label>
-                                </div>
-                                <div class="box-body table-responsive no-padding">
-                                  <div class="col-md-12">
-                                  </div>
-                                </div>
-                            </div> -->
                     </div>
+
+                    <div class="col-md-2"></div>
+                  </div>
+                </form><!-- .form -->
+
+                <form id="ResultFinalEvaluacion" style="display: none">
+                  <input type= "hidden" name="txt_programacion_id" id="txt_programacion_id" class="form-control mant">
+                  <input type="hidden" id="txt_evaluacion_id" name="txt_evaluacion_id" class="form-controlmant">
+
+                  <input type="hidden" id="txt_tipo_evaluacion" name="txt_tipo_evaluacion" class="form-controlmant">
+                  <input type="hidden" id="txt_curso" name="txt_curso" class="form-controlmant">
+
+                  <div class="col-md-12">
+                    <div class="col-md-2"></div>
+
+                    <div class="col-md-8" id="resultado_final">
+                    </div>
+
                     <div class="col-md-2"></div>
                   </div>
                 </form><!-- .form -->

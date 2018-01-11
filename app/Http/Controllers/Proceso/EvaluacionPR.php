@@ -287,11 +287,12 @@ class EvaluacionPR extends Controller
     public function verResultPreguntas(Request $r )
     {
         if ( $r->ajax() ) {
-
+          /*
           $evaluacion = Evaluacion::where('programacion_id', '=', $r->programacion_id)
                                   ->where('tipo_evaluacion_id', '=', $r->tipo_evaluacion_id)
                                   ->first();
-            $renturnModel = Evaluacion::listarPreguntas($r);
+                                  */
+            $renturnModel = Evaluacion::verResultados($r);
             $return['rst'] = 1;
             $return['data'] = $renturnModel;
             $return['msj'] = "No hay registros aún";

@@ -66,6 +66,38 @@ class Evaluacion extends Model
         return $result;
     }
 
+
+    public static function verResultados($r)
+    {
+      $sql = DB::table('v_evaluaciones AS e')
+              ->join('v_evaluaciones_detalle AS ed',function($join){
+                  $join->on('e.id','=','ed.evaluacion_id');
+              })
+              ->join('v_preguntas AS p',function($join){
+                  $join->on('ed.pregunta_id','=','p.id');
+              })
+              ->join('v_respuestas AS r',function($join){
+                  $join->on('ed.respuesta_id','=','r.id');
+              })
+              ->select(
+              'e.id',
+              DB::raw('p.id AS pregunta_id'),
+              'p.pregunta',
+              DB::raw('r.id AS respuesta_id'),
+              'r.respuesta',
+              'r.puntaje'
+              )
+              ->where(
+                  function($query) use ($r){
+                      $query->where('e.id', '=', $r->evaluacion_id);
+                  }
+              )
+              ->get();
+        $result = $sql;
+        return $result;
+    }
+
+
     public static function runNew($r){
 
         $evaluacion = new Evaluacion;

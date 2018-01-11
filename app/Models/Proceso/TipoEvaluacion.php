@@ -22,7 +22,8 @@ class TipoEvaluacion extends Model
                       'te.tipo_evaluacion',
                       'te.tipo_evaluacion_externo_id',
                       'te.estado',
-                      'e.estado_cambio'
+                      'e.estado_cambio',
+                      DB::raw('e.id AS evaluacion_id')
                     )
                   ->where(
                       function($query) use ($r){

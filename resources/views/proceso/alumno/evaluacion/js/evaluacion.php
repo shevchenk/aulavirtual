@@ -112,18 +112,16 @@ HTMLCargarEvaluacion=function(result){
         /*if(r.estado==1){
             estadohtml='<span id="'+r.id+'" onClick="CambiarEstado(0,'+r.id+')" class="btn btn-success">Activo</span>';
         }*/
-
-        html+="<tr id='trid_"+r.id+"'>"+
+        //html+="<tr id='trid_"+r.id+"' >"+
+        html+='<tr id="trid_'+r.id+'" onClick="CargarEvaluaciones('+r.id+','+r.pu_id+','+r.curso_id+',\''+r.curso+'\',this)">'+
             "<td class='curso'>"+
             "<a target='_blank' href='img/course/"+r.foto+"'>"+
             "<img src='img/course/"+r.foto+"' style='height: 40px;width: 40px;'>"+
             "&nbsp</a>"+r.curso+"</td>"+
             "<td class='docente'>"+r.docente+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
-            "<td class='fecha_final'>"+r.fecha_final+"</td>"+
-            "<td>";
+            "<td class='fecha_final'>"+r.fecha_final+"</td>";
         //html +='<a class="btn btn-primary btn-sm" onClick="CargarContenido('+r.pu_id+','+r.curso_id+',\''+r.curso+'\')"><i class="fa fa-plus fa-lg"></i> </a></td>';
-        html +='<a class="btn btn-primary btn-sm" onClick="CargarEvaluaciones('+r.id+','+r.pu_id+','+r.curso_id+',\''+r.curso+'\',this)"><i class="fa fa-plus fa-lg"></i> </a></td>';
         html+="</tr>"
     });
     $("#TableEvaluacion tbody").html(html);
@@ -183,7 +181,7 @@ HTMLCargarTipoEvaluacion=function(result){
           if(r.estado_cambio == 0){
             html+='<button type="button" id="btniniciareval" name="btniniciareval" class="btn btn-default" onClick="iniciarEvaluacion('+r.id+','+programacion_id+','+programacion_unica_id+',\''+r.tipo_evaluacion+'\',\''+curso+'\')" style="font-weight: bold;">Iniciar Evaluación</button>';
           } else {
-            html+='<button type="button" id="btniniciareval" name="btniniciareval" class="btn btn-primary" onClick="verEvaluacion('+r.id+','+programacion_id+','+programacion_unica_id+',\''+r.tipo_evaluacion+'\',\''+curso+'\')" style="font-weight: bold;">Ver Resultados</button>';
+            html+='<button type="button" id="btniniciareval" name="btniniciareval" class="btn btn-primary" onClick="verEvaluacion('+r.evaluacion_id+','+programacion_id+',\''+r.tipo_evaluacion+'\',\''+curso+'\')" style="font-weight: bold;">Ver Resultados</button>';
           }
         html+='</div>'+
             '</div>'+
@@ -204,6 +202,7 @@ HTMLCargarTipoEvaluacion=function(result){
 iniciarEvaluacion=function(id, programacion_id, programacion_unica_id, tipo_evaluacion, curso){
     $("#TipoEvaluacionForm").slideUp('slow');
     $("#EvaluacionForm").slideUp('slow');
+    $("#ResultFinalEvaluacion").hide();
 
     $("#ResultEvaluacion #txt_tipo_evaluacion_id").val(id);
     $("#ResultEvaluacion #txt_programacion_id").val(programacion_id);
@@ -214,21 +213,19 @@ iniciarEvaluacion=function(id, programacion_id, programacion_unica_id, tipo_eval
     AjaxTipoEvaluacion.CargarPreguntas(HTMLiniciarEvaluacion);
 };
 
-verEvaluacion=function(id, programacion_id, programacion_unica_id, tipo_evaluacion, curso){
+verEvaluacion=function(evaluacion_id, programacion_id, tipo_evaluacion, curso){
     $("#TipoEvaluacionForm").slideUp('slow');
     $("#EvaluacionForm").slideUp('slow');
 
-    $("#ResultEvaluacion #txt_tipo_evaluacion_id").val(id);
-    $("#ResultEvaluacion #txt_programacion_id").val(programacion_id);
-    $("#ResultEvaluacion #txt_programacion_unica_id").val(programacion_unica_id);
+    $("#ResultFinalEvaluacion #txt_evaluacion_id").val(evaluacion_id);
+    $("#ResultFinalEvaluacion #txt_programacion_id").val(programacion_id);
 
-    $("#ResultEvaluacion #txt_tipo_evaluacion").val(tipo_evaluacion);
-    $("#ResultEvaluacion #txt_curso").val(curso);
+    $("#ResultFinalEvaluacion #txt_tipo_evaluacion").val(tipo_evaluacion);
+    $("#ResultFinalEvaluacion #txt_curso").val(curso);
     AjaxTipoEvaluacion.VerResultPreguntas(HTMLverEvaluacion);
 };
 
 HTMLiniciarEvaluacion=function(result){
-
   var tipo_evaluacion = $("#ResultEvaluacion #txt_tipo_evaluacion").val();
   var curso = $("#ResultEvaluacion #txt_curso").val();
 
@@ -289,21 +286,38 @@ HTMLiniciarEvaluacion=function(result){
 
 
 HTMLverEvaluacion=function(result){
-  var tipo_evaluacion = $("#ResultEvaluacion #txt_tipo_evaluacion").val();
-  var curso = $("#ResultEvaluacion #txt_curso").val();
+  var tipo_evaluacion = $("#ResultFinalEvaluacion #txt_tipo_evaluacion").val();
+  var curso = $("#ResultFinalEvaluacion #txt_curso").val();
 
    var html = '';
       html += '<div class="panel panel-primary">'+
             '<div class="panel-heading text-center">'+
-                '<h4>Resultado de su Examen<h4>'+
+                '<h4>'+tipo_evaluacion+' - '+curso+'<small style="color: #FFF;"> - <label id="hora"></label></small><h4>'+
             '</div>'+
             '<div id="" class="panel-body" style="font-weight: normal;">'+
-                'En construcción...'+
+                'A continuación su resultado de exámen: <br/><br/>';
+
+          html += '<ul class="list-group">';
+          var total_p = 0;
+            $.each(result.data,function(index, r){
+                html += '<li class="list-group-item list-group-item-info" style="font-weight: bold;">'+r.pregunta+'</li>';
+
+                html += '<li class="list-group-item"><span class="badge">'+r.puntaje+'</span>'+r.respuesta+'</li>';
+                total_p = total_p + parseInt(r.puntaje);
+            });
+
+            if(total_p.toFixed(2) > 10.5)
+              html += '<li class="list-group-item list-group-item-success" style="font-weight: bold;"><span class="badge">'+total_p.toFixed(2)+'</span>APROBADO</li>';
+            else
+              html += '<li class="list-group-item list-group-item-danger" style="font-weight: bold;"><span class="badge">'+total_p.toFixed(2)+'</span>DESAPROBADO</li>';
+
+          html += '</ul>';
+
+      html += '</div>';
+      html += '<div id="" class="panel-footer text-right"><button type="button" id="btncerrar_examen" onClick="cerrarResultExamen();" class="btn btn-default btn-sigue-pregu">Cerrar</button></div>'+
             '</div>';
-      html += '<div id="" class="panel-footer text-right"><button type="button" id="btncerrar_examen" onClick="();" class="btn btn-default btn-sigue-pregu">Cerrar</button></div>'+
-            '</div>';
-    $("#resultado").html(html)
-    $("#ResultEvaluacion").slideDown('slow');
+    $("#resultado_final").html(html)
+    $("#ResultFinalEvaluacion").slideDown('slow');
 };
 
 
@@ -353,11 +367,17 @@ verSiguientePregunta=function(id){
 }
 
 
+cerrarResultExamen=function(){
+  $("#TipoEvaluacionForm").slideDown('fast');
+  $("#ResultFinalEvaluacion").hide();
+  $("#resultado_final").html('')
+  AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
+}
+
 guardarEvaluacion=function(){
   //alert(JSON.stringify(data_alter_preg));
   AjaxTipoEvaluacion.GuardarEvaluacion(HTMLAgregarEvaluacion);
 }
-
 
 HTMLAgregarEvaluacion=function(result){
     if( result.rst==1 ){
