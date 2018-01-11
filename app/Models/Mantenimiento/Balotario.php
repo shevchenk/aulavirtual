@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Mantenimiento\Pregunta;
 use App\Models\Mantenimiento\BalotarioPregunta;
-
+use DB;
 class Balotario extends Model
 {
     protected   $table = 'v_balotarios';
@@ -113,6 +113,18 @@ class Balotario extends Model
             return 2;
         }
 
+    }
+    
+    public static function runHeadBallotPdf($r){
+        
+        $result=Balotario::select('vpu.carrera','vpu.semestre','vpu.ciclo','vc.curso',DB::raw("CONCAT_WS(' ',vp.paterno,vp.materno,vp.materno) as profesor"),
+                        'vpu.fecha_inicio','vpu.fecha_final','vte.tipo_evaluacion')
+            ->join('v_programaciones_unicas as vpu','vpu.id','=','v_balotarios.programacion_unica_id')
+            ->join('v_cursos as vc','vc.id','=','vpu.curso_id')
+            ->join('v_personas as vp','vp.id','=','vpu.persona_id')
+            ->join('v_tipos_evaluaciones as vte','vte.id','=','v_balotarios.tipo_evaluacion_id')
+            ->where('v_balotarios.id','=',$r->balotario_id)->get()[0];
+        return $result;
     }
  
 }

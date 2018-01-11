@@ -1,6 +1,6 @@
 <script type="text/javascript">
 var AddEdit=0; //0: Editar | 1: Agregar
-var BalotarioG={id:0,tipo_evaluacion_id:0,cantidad_maxima:'',cantidad_pregunta:'',estado:1}; // Datos Globales
+var BalotarioG={id:0,tipo_evaluacion_id:0,tipo_evaluacion:'',cantidad_maxima:'',cantidad_pregunta:'',estado:1}; // Datos Globales
 $(document).ready(function() {
      $("#TableBalotario").DataTable({
         "paging": true,
@@ -24,7 +24,8 @@ $(document).ready(function() {
             $("#ModalBalotarioForm").append("<input type='hidden' value='"+BalotarioG.id+"' name='id'>");
         }
 
-        $('#ModalBalotarioForm #slct_tipo_evaluacion_id').selectpicker('val', BalotarioG.tipo_evaluacion_id );
+        $('#ModalBalotarioForm #txt_tipo_evaluacion_id').val(BalotarioG.tipo_evaluacion_id );
+        $('#ModalBalotarioForm #txt_tipo_evaluacion').val( BalotarioG.tipo_evaluacion );
         $('#ModalBalotarioForm #txt_cantidad_maxima').val( BalotarioG.cantidad_maxima );
         $('#ModalBalotarioForm #txt_cantidad_pregunta').val( BalotarioG.cantidad_pregunta );
         $('#ModalBalotarioForm #slct_estado').selectpicker( 'val',BalotarioG.estado );
@@ -40,11 +41,7 @@ $(document).ready(function() {
 ValidaForm2=function(){
     var r=true;
 
-    if( $.trim( $("#ModalBalotarioForm #slct_tipo_evaluacion_id").val() )=='0' ){
-        r=false;
-        msjG.mensaje('warning','Seleccione Tipo de Evaluacición',4000);
-    }
-    else if( $.trim( $("#ModalBalotarioForm #txt_cantidad_maxima").val() )=='' ){
+    if( $.trim( $("#ModalBalotarioForm #txt_cantidad_maxima").val() )=='' ){
         r=false;
         msjG.mensaje('warning','Ingrese Cantidad Máxima de Preguntas',4000);
     }
@@ -59,6 +56,7 @@ AgregarEditar2=function(val,id){
     AddEdit=val;
     BalotarioG.id='';
     BalotarioG.tipo_evaluacion_id='0';
+    BalotarioG.tipo_evaluacion='';
     BalotarioG.cantidad_maxima='';
     BalotarioG.cantidad_pregunta='';
     BalotarioG.estado='1';
@@ -68,6 +66,7 @@ AgregarEditar2=function(val,id){
         BalotarioG.id=id;
         BalotarioG.tipo_evaluacion_id=$("#TableBalotario #trid_"+id+" .tipo_evaluacion_id").val();
         BalotarioG.cantidad_maxima=$("#TableBalotario #trid_"+id+" .cantidad_maxima").text();
+        BalotarioG.tipo_evaluacion=$("#TableBalotario #trid_"+id+" .tipo_evaluacion").text();
         BalotarioG.cantidad_pregunta=$("#TableBalotario #trid_"+id+" .cantidad_pregunta").text();
         BalotarioG.estado=$("#TableBalotario #trid_"+id+" .estado").val();
 
@@ -136,9 +135,9 @@ HTMLCargarBalotario=function(result){
         html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
             '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar2(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
         if(r.modo==0){
-            html+='<td><a class="btn btn-info" onClick="GenerarBalotario2('+r.id+')"><i class="fa fa-edit fa-lg"></i>Generar </a></td>';
+            html+='<td><a class="btn btn-info" onClick="GenerarBalotario2('+r.id+')"><i class="fa fa-edit fa-lg"></i>Generar Balotario</a></td>';
         }else{
-            html+='<td><a class="btn btn-white" onClick="VerBalotario2('+r.id+')"><i class="fa fa-search fa-lg"></i>Ver </a></td>';
+            html+='<td><a class="btn btn-white" onClick="VerBalotario2('+r.id+')"><i class="fa fa-search fa-lg"></i>Ver Balotario</a></td>';
         }
         html+="</tr>";
     });
@@ -170,11 +169,6 @@ SlctCargarTipoEvaluacion=function(result){
     $("#ModalBalotario #slct_tipo_evaluacion_id").html(html);
     $("#ModalBalotario #slct_tipo_evaluacion_id").selectpicker('refresh');
 
-};
-CargarSlct=function(slct){
-    if(slct==3){
-    AjaxBalotario.CargarTipoEvaluacion(SlctCargarTipoEvaluacion);
-    }
 };
 VerBalotario2=function(id){
          window.open("ReportDinamic/Mantenimiento.BalotarioEM@GenerarPDF?balotario_id="+id,

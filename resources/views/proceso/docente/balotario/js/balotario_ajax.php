@@ -8,7 +8,7 @@ var AjaxBalotario={
         }
         masterG.postAjax(url,data,evento);
     },
-    Cargar:function(evento){
+    Cargar:function(evento,pag){
         if( typeof(pag)!='undefined' ){
             $("#BalotarioForm").append("<input type='hidden' value='"+pag+"' name='page'>");
         }

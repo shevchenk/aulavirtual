@@ -20,13 +20,13 @@ $(document).ready(function() {
     
 });
 
-CargarBalotario=function(id,curso_id,curso,boton){   
+CargarBalotario=function(id,curso_id,curso,imagen,boton){   
      masterG.pintar_fila(boton);
-     CargarSlct(3);
      $("#BalotarioForm #txt_programacion_unica_id").val(id);
      $("#ModalBalotarioForm #txt_programacion_unica_id").val(id);
      $("#ModalBalotarioForm #txt_curso_id").val(curso_id);
      $("#ModalBalotarioForm #txt_curso").val(curso);
+     $("#imageCurso").attr("src","img/course/"+imagen);
      AjaxBalotario.Cargar(HTMLCargarBalotario);
      $("#BalotarioForm").css("display","");
 };
@@ -37,7 +37,7 @@ HTMLCargarProgramacionUnica=function(result){
     
     $.each(result.data.data,function(index,r){
 
-        html+='<tr id="trid_'+r.id+'" onClick="CargarBalotario('+r.id+','+r.curso_id+',\''+r.curso+'\',this)">'+
+        html+='<tr id="trid_'+r.id+'" onClick="CargarBalotario('+r.id+','+r.curso_id+',\''+r.curso+'\',\''+r.foto_cab+'\',this)">'+
             "<td class='carrera'>"+r.carrera+"</td>"+
             "<td class='semestre'>"+r.semestre+"</td>"+
             "<td class='ciclo'>"+r.ciclo+"</td>"+

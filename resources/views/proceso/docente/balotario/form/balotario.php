@@ -18,11 +18,10 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label id="label_curso">Tipo Evaluacion</label>
-                            <select  class="form-control selectpicker show-menu-arrow" data-live-search="true" id="slct_tipo_evaluacion_id" name="slct_tipo_evaluacion_id">
-                                <option value="0">.::Seleccione::.</option>
-                            </select>
-                        </div>
+                            <label id="label_curso">Tipo Evaluación</label>
+                            <input  type="hidden" class="form-control mant"  id="txt_tipo_evaluacion_id" name="txt_tipo_evaluacion_id" readonly="">
+                            <input type="text"  class="form-control mant" id="txt_tipo_evaluacion" name="txt_tipo_evaluacion" disabled="">
+                        </div> 
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
