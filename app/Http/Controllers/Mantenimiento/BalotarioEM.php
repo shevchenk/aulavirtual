@@ -99,8 +99,18 @@ class BalotarioEM extends Controller
             return response()->json($return);
         }
     }
-
+    
     public function Load(Request $r ){
+        if ( $r->ajax() ) {
+            $renturnModel = Balotario::runLoad($r);
+            $return['rst'] = 1;
+            $return['data'] = $renturnModel;
+            $return['msj'] = "No hay registros aún";    
+            return response()->json($return);   
+        }
+    }
+
+    public function ValidarTipoEvaluacionBalotario(Request $r ){
         if ( $r->ajax() ) {
             //$idcliente = session('idcliente');
             $programacionUnica = ProgramacionUnica::find($r->programacion_unica_id);

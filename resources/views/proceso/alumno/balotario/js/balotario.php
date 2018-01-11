@@ -137,7 +137,7 @@ HTMLCargarBalotario=function(result){
         if(r.modo==0){
             html+='<td></td>';
         }else{
-            html+='<td><a class="btn btn-white" onClick="VerBalotario2('+r.id+')"><i class="fa fa-search fa-lg"></i>Ver </a></td>';
+            html+='<td><a class="btn btn-white" onClick="VerBalotario2('+r.id+')"><i class="fa fa-search fa-lg"></i>Ver Balotario</a></td>';
         }
         html+="</tr>";
     });

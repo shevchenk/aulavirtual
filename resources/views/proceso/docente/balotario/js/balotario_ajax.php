@@ -13,7 +13,7 @@ var AjaxBalotario={
             $("#BalotarioForm").append("<input type='hidden' value='"+pag+"' name='page'>");
         }
         data=$("#BalotarioForm").serialize().split("txt_").join("").split("slct_").join("");
-        url='AjaxDinamic/Mantenimiento.BalotarioEM@Load';
+        url='AjaxDinamic/Mantenimiento.BalotarioEM@ValidarTipoEvaluacionBalotario';
         $("#BalotarioForm input[type='hidden']").not('.mant').remove();
         masterG.postAjax(url,data,evento);
     },

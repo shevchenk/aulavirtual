@@ -137,9 +137,7 @@
                     <form id="BalotarioForm" style="display: none">
                         <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant" >
                         <div class="panel panel-success">
-                            <div class="panel-heading" style="background-color: #A9D08E;color:black">
-                                <center>.::Balotario::.</center>
-                            </div>
+                            <img id="imageCurso" class="panel-heading img-responsive" src='img/course/calculo2f.jpg' style="width:100%;min-height: 90px;">
                             <div class="panel-body table-responsive no-padding">
                                 <div class="col-md-12">
                                     <table id="TableBalotario" class="table table-bordered table-hover">
@@ -147,7 +145,7 @@
                                             <tr class="cabecera">
                                                 <th class="col-xs-2">
                                                     <div class="form-group">
-                                                        <label><h4>Cantidad Máxima:</h4></label>
+                                                        <label><h4>Cantidad de Preguntas de Balotario:</h4></label>
                                                         <div class="input-group">
                                                             <div class="input-group-addon"><i class="fa fa-search"></i></div>
                                                             <input type="text" class="form-control" name="txt_cantidad_maxima" id="txt_cantidad_maxima" placeholder="Cantidad Máxima" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
@@ -156,7 +154,7 @@
                                                 </th>
                                                 <th class="col-xs-2">
                                                     <div class="form-group">
-                                                        <label><h4>Cantidad de Pregunta:</h4></label>
+                                                        <label><h4>Cantidad de Preguntas de Evaluación:</h4></label>
                                                         <div class="input-group">
                                                             <div class="input-group-addon"><i class="fa fa-search"></i></div>
                                                             <input type="text" class="form-control" name="txt_cantidad_pregunta" id="txt_cantidad_pregunta" placeholder="Cantidad de Pregunta" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
@@ -191,8 +189,8 @@
                                         </tbody>
                                         <tfoot>
                                             <tr class="cabecera">
-                                                <th>Cantidad Máxima</th>
-                                                <th>Cantidad de Preguntas</th>
+                                                <th>Cantidad de Preguntas de Balotario</th>
+                                                <th>Cantidad de Preguntas de Evaluación</th>
                                                 <th>Tipo de Evaluación</th>
 <!--                                                <th>Estado</th>-->
                                                 <th>[Vista]</th>
