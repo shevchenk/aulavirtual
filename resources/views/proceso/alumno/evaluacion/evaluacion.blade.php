@@ -51,6 +51,33 @@
                                   <input type="hidden" name="txt_estado" class="mant" value="1">
                                       <th class="col-xs-2">
                                           <div class="form-group">
+                                              <label><h4>Carrera:</h4></label>
+                                              <div class="input-group">
+                                                  <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                  <input type="text" class="form-control" name="txt_carrera" id="txt_carrera" placeholder="Carrera" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
+                                              </div>
+                                          </div>
+                                      </th>
+                                      <th class="col-xs-1">
+                                          <div class="form-group">
+                                              <label><h4>Semestre:</h4></label>
+                                              <div class="input-group">
+                                                  <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                  <input type="text" class="form-control" name="txt_semestre" id="txt_semestre" placeholder="Semestre" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
+                                              </div>
+                                          </div>
+                                      </th>
+                                      <th class="col-xs-1">
+                                          <div class="form-group">
+                                              <label><h4>Ciclo:</h4></label>
+                                              <div class="input-group">
+                                                  <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                  <input type="text" class="form-control" name="txt_ciclo" id="txt_ciclo" placeholder="Ciclo" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
+                                              </div>
+                                          </div>
+                                      </th>
+                                      <th class="col-xs-2">
+                                          <div class="form-group">
                                               <label><h4>Curso</h4></label>
                                               <div class="input-group">
                                                   <div class="input-group-addon"><i class="fa fa-search"></i></div>
@@ -69,7 +96,7 @@
                                       </th>
                                       <th class="col-xs-2">
                                           <div class="form-group">
-                                              <label><h4>Hora Inicio</h4></label>
+                                              <label><h4>Fecha Inicio</h4></label>
                                               <div class="input-group">
                                                   <div class="input-group-addon"><i class="fa fa-search"></i></div>
                                                   <input type="text" class="form-control" name="txt_fecha_inicio" id="txt_fecha_inicio" placeholder="Hora Inicial" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
@@ -78,7 +105,7 @@
                                       </th>
                                       <th class="col-xs-2">
                                           <div class="form-group">
-                                              <label><h4>Hora Final</h4></label>
+                                              <label><h4>Fecha Final</h4></label>
                                               <div class="input-group">
                                                   <div class="input-group-addon"><i class="fa fa-search"></i></div>
                                                   <input type="text" class="form-control" name="txt_fecha_final" id="txt_fecha_final" placeholder="Hora Final" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
@@ -92,10 +119,13 @@
                               </tbody>
                               <tfoot>
                                   <tr class="cabecera">
+                                    <th>Carrera</th>
+                                    <th>Semestre</th>
+                                    <th>Ciclo</th>
                                     <th>Curso</th>
                                     <th>Docente</th>
-                                    <th>Hora Inicio</th>
-                                    <th>Hora Final</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Final</th>
                                     <!--<th>[-]</th>-->
                                   </tr>
                               </tfoot>
@@ -107,23 +137,32 @@
 
                 <hr>
                 <form id="EvaluacionForm" style="display: none">
-                    <input type= "hidden" name="txt_programacion_id" id="txt_programacion_id" class="form-control mant">
-                    <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant">
-                    <input type="hidden" id="txt_curso" name="txt_curso" class="form-controlmant">
-                    <style media="screen">
-                    .rotar:hover{
-                                cursor: pointer;
-                                transform: rotate(-5deg);
-                                -webkit-transform: rotate(-5deg);
-                                -moz-transform: rotate(-5deg);
-                                -o-transform: rotate(-5deg);
-                               }
-                    </style>
 
-                    <div id="DivContenido" class="box-body table-responsive no-padding">
-                      <div class="col-md-12">
-                      </div>
-                    </div>
+                  <div class="panel panel-primary active" style="padding-bottom: 10px;">
+                      <img id="imageCurso" class="panel-heading img-responsive" src='img/course/calculo2f.jpg' style="width:100%;min-height: 90px;">
+                      <div class="panel-body table-responsive">
+
+                        <input type= "hidden" name="txt_programacion_id" id="txt_programacion_id" class="form-control mant">
+                        <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant">
+                        <input type="hidden" id="txt_curso" name="txt_curso" class="form-controlmant">
+                        <style media="screen">
+                        .rotar:hover{
+                              cursor: pointer;
+                              transform: rotate(-5deg);
+                              -webkit-transform: rotate(-5deg);
+                              -moz-transform: rotate(-5deg);
+                              -o-transform: rotate(-5deg);
+                        }
+                        </style>
+
+                        <div id="DivContenido" class="box-body table-responsive no-padding">
+                          <div class="col-md-12">
+                          </div>
+                        </div>
+
+                      </div><!-- .box-body -->
+                  </div>
+
                 </form><!-- .form -->
 
 

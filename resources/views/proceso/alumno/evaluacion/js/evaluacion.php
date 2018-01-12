@@ -113,7 +113,10 @@ HTMLCargarEvaluacion=function(result){
             estadohtml='<span id="'+r.id+'" onClick="CambiarEstado(0,'+r.id+')" class="btn btn-success">Activo</span>';
         }*/
         //html+="<tr id='trid_"+r.id+"' >"+
-        html+='<tr id="trid_'+r.id+'" onClick="CargarEvaluaciones('+r.id+','+r.pu_id+','+r.curso_id+',\''+r.curso+'\',this)">'+
+        html+='<tr id="trid_'+r.id+'" onClick="CargarEvaluaciones('+r.id+','+r.pu_id+','+r.curso_id+',\''+r.curso+'\',\''+r.foto_cab+'\',this)">'+
+            "<td class='carrera'>"+r.carrera+"</td>"+
+            "<td class='semestre'>"+r.semestre+"</td>"+
+            "<td class='ciclo'>"+r.ciclo+"</td>"+
             "<td class='curso'>"+
             "<a target='_blank' href='img/course/"+r.foto+"'>"+
             "<img src='img/course/"+r.foto+"' style='height: 40px;width: 40px;'>"+
@@ -122,7 +125,7 @@ HTMLCargarEvaluacion=function(result){
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
             "<td class='fecha_final'>"+r.fecha_final+"</td>";
         //html +='<a class="btn btn-primary btn-sm" onClick="CargarContenido('+r.pu_id+','+r.curso_id+',\''+r.curso+'\')"><i class="fa fa-plus fa-lg"></i> </a></td>';
-        html+="</tr>"
+        html+="</tr>";
     });
     $("#TableEvaluacion tbody").html(html);
     $("#TableEvaluacion").DataTable({
@@ -145,9 +148,11 @@ HTMLCargarEvaluacion=function(result){
 };
 
 
-CargarEvaluaciones=function(id, programacion_unica_id, curso_id,curso, boton){
+CargarEvaluaciones=function(id, programacion_unica_id, curso_id,curso, imagen, boton){
     masterG.pintar_fila(boton); //Pinta la fila
     //alert(id+'- '+ programacion_unica_id+'- '+ curso_id+'- '+ curso+'- '+ boton);
+
+    $("#imageCurso").attr("src","img/course/"+imagen);
 
      $("#EvaluacionForm #txt_programacion_id").val(id);
      $("#EvaluacionForm #txt_programacion_unica_id").val(programacion_unica_id);
