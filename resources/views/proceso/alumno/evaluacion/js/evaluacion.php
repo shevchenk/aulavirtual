@@ -388,10 +388,17 @@ verSiguientePregunta=function(id){
 
 
 cerrarResultExamen=function(){
-  $("#TipoEvaluacionForm").slideDown('fast');
-  $("#ResultFinalEvaluacion").hide();
   $("#resultado_final").html('')
+  $("#ResultFinalEvaluacion").hide();
+
   AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
+  AjaxTipoEvaluacion.Cargar(HTMLCargarTipoEvaluacion);
+
+  $("#TipoEvaluacionForm").slideDown('fast');
+  $("#EvaluacionForm").slideDown('fast');
+
+  $("#resultado").html('')
+  $("#ResultEvaluacion").hide();
 }
 
 guardarEvaluacion=function(){
@@ -402,14 +409,15 @@ guardarEvaluacion=function(){
 HTMLAgregarEvaluacion=function(result){
     if( result.rst==1 ){
         msjG.mensaje('success',result.msj,4000);
+        
+        AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
+        AjaxTipoEvaluacion.Cargar(HTMLCargarTipoEvaluacion);
 
         $("#TipoEvaluacionForm").slideDown('fast');
         $("#EvaluacionForm").slideDown('fast');
 
         $("#resultado").html('')
         $("#ResultEvaluacion").hide();
-        $("#DivContenido").html('');
-        AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
     }
     else{
         msjG.mensaje('warning',result.msj,3000);

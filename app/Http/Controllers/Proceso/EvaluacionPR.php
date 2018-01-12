@@ -256,6 +256,7 @@ class EvaluacionPR extends Controller
             {
               $balotario = Balotario::where('programacion_unica_id', '=', $r->programacion_unica_id)
                                         ->where('tipo_evaluacion_id', '=', $r->tipo_evaluacion_id)
+                                        ->where('modo', '=', 1)
                                         ->first();
               if (count($balotario) == 0) {
                 $renturnModel = NULL;
@@ -274,13 +275,6 @@ class EvaluacionPR extends Controller
               $evaluacion_fecha = $evaluacion->fecha_evaluacion;
             }
           }
-          /*else
-          {
-            # proceso ver sus notas
-            $renturnModel = NULL;
-            $evaluacion_id = 0;
-          }
-          */
 
             $return['rst'] = 1;
 
@@ -299,11 +293,7 @@ class EvaluacionPR extends Controller
     public function verResultPreguntas(Request $r )
     {
         if ( $r->ajax() ) {
-          /*
-          $evaluacion = Evaluacion::where('programacion_id', '=', $r->programacion_id)
-                                  ->where('tipo_evaluacion_id', '=', $r->tipo_evaluacion_id)
-                                  ->first();
-                                  */
+            
             $renturnModel = Evaluacion::verResultados($r);
             $return['rst'] = 1;
             $return['data'] = $renturnModel;
