@@ -239,7 +239,7 @@ HTMLiniciarEvaluacion=function(result){
     //evaluacionG_fecha_valida = result.evaluacion_fecha;
     swal("Validación!", "Usted no tiene permiso dar el examen en la fecha "+result.evaluacion_fecha+"!", "warning");
 
-    AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
+    //AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
     AjaxTipoEvaluacion.Cargar(HTMLCargarTipoEvaluacion);
 
     $("#TipoEvaluacionForm").slideDown('fast');
@@ -254,7 +254,7 @@ HTMLiniciarEvaluacion=function(result){
     //evaluacionG_fecha_valida = result.evaluacion_fecha;
     swal("Validación!", "Usted no cuenta con una Evaluación actual!", "warning");
 
-    AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
+    //AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
     AjaxTipoEvaluacion.Cargar(HTMLCargarTipoEvaluacion);
 
     $("#TipoEvaluacionForm").slideDown('fast');
@@ -391,7 +391,7 @@ cerrarResultExamen=function(){
   $("#resultado_final").html('')
   $("#ResultFinalEvaluacion").hide();
 
-  AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
+  //AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
   AjaxTipoEvaluacion.Cargar(HTMLCargarTipoEvaluacion);
 
   $("#TipoEvaluacionForm").slideDown('fast');
@@ -410,7 +410,7 @@ HTMLAgregarEvaluacion=function(result){
     if( result.rst==1 ){
         msjG.mensaje('success',result.msj,4000);
 
-        AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
+        //AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
         AjaxTipoEvaluacion.Cargar(HTMLCargarTipoEvaluacion);
 
         $("#TipoEvaluacionForm").slideDown('fast');

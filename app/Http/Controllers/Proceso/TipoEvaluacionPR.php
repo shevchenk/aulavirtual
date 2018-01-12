@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Api\Api;
 use App\Models\Proceso\TipoEvaluacion;
-//use App\Models\Proceso\ProgramacionUnica;
+use App\Models\Proceso\ProgramacionUnica;
 //use App\Models\Proceso\Persona;
 use App\Models\Proceso\Programacion;
 use App\Models\Proceso\Evaluacion;
@@ -42,9 +42,10 @@ class TipoEvaluacionPR extends Controller
     {
         $idcliente = session('idcliente');
         $programacion = Programacion::find($r->programacion_id);
+        $programacion_unica = ProgramacionUnica::find($programacion->programacion_unica_id);
 
         $param_data = array('dni' => Auth::user()->dni,
-                              'programacion_externo_id' => $programacion->programacion_externo_id);
+                              'programacion_unica_externo_id' => $programacion_unica->programacion_unica_externo_id);
         // URL (CURL)
         $cli_links = DB::table('clientes_accesos_links')->where('cliente_acceso_id','=', $idcliente)
                                                         ->where('tipo','=', 11)
@@ -168,7 +169,7 @@ class TipoEvaluacionPR extends Controller
         $return['msj'] = "No hay registros aún";
         return response()->json($return);
     }
-    
+
     public function insertarTipoEvaluacion($objArr, $r)
     {
         DB::beginTransaction();
