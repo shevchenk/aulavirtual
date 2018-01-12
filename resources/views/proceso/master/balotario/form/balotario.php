@@ -38,10 +38,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Estado</label>
-                            <select class="form-control selectpicker show-menu-arrow" name="slct_estado" id="slct_estado">
-                                <option  value='0'>Inactivo</option>
-                                <option  value='1'>Activo</option>
-                            </select>
+                            <input type="text"  class="form-control mant" id="txt_estado" name="txt_estado" value="Activo" disabled="">
                         </div>
                     </div>
                      <div class="form-group">

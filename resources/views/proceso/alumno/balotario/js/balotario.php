@@ -134,7 +134,7 @@ HTMLCargarBalotario=function(result){
 //            "<td>"+
 //            "<input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'>";
 //        html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>";
-        if(r.modo==0){
+        if(r.modo==0 || (r.cantidad_maxima==0 || r.cantidad_pregunta==0)){
             html+='<td></td>';
         }else{
             html+='<td><a class="btn btn-white" onClick="VerBalotario2('+r.id+')"><i class="fa fa-search fa-lg"></i>Ver Balotario</a></td>';

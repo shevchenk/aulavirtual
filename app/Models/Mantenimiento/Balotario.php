@@ -38,7 +38,6 @@ class Balotario extends Model
         $balotario->tipo_evaluacion_id = trim( $r->tipo_evaluacion_id );
         $balotario->cantidad_maxima = trim( $r->cantidad_maxima );
         $balotario->cantidad_pregunta = trim( $r->cantidad_pregunta );
-        $balotario->estado = trim( $r->estado );
         $balotario->persona_id_updated_at=Auth::user()->id;
         $balotario->save();
     }
@@ -68,6 +67,12 @@ class Balotario extends Model
                         $cantidad_maxima=trim($r->cantidad_maxima);
                         if( $cantidad_maxima !='' ){
                             $query->where('v_balotarios.cantidad_maxima','like','%'.$cantidad_maxima.'%');
+                        }   
+                    }
+                    if( $r->has("tipo_evaluacion") ){
+                        $tipo_evaluacion=trim($r->tipo_evaluacion);
+                        if( $tipo_evaluacion !='' ){
+                            $query->where('vte.tipo_evaluacion','like','%'.$tipo_evaluacion.'%');
                         }   
                     }
                     if( $r->has("estado") ){

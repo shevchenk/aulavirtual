@@ -136,6 +136,7 @@
                     <hr>
                     <form id="BalotarioForm" style="display: none">
                         <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant" >
+                        <input type= "hidden" name="txt_estado" id="txt_estado" class="form-control mant" value="1">
                         <div class="panel panel-success">
                             <img id="imageCurso" class="panel-heading img-responsive" src='img/course/calculo2f.jpg' style="width:100%;min-height: 90px;">
                             <div class="panel-body table-responsive no-padding">
@@ -170,7 +171,7 @@
                                                         </div>
                                                     </div>
                                                 </th>
-                                                <th class="col-xs-2">
+<!--                                                <th class="col-xs-2">
                                                     <div class="form-group">
                                                         <label><h4>Estado:</h4></label>
                                                         <div class="input-group">
@@ -181,7 +182,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </th>
+                                                </th>-->
                                                 <th class="col-xs-1">[-]</th>
                                                 <th class="col-xs-1">[-]</th>
                                             </tr>
@@ -193,7 +194,7 @@
                                                 <th>Cantidad de Preguntas de Balotario</th>
                                                 <th>Cantidad de Preguntas de Evaluación</th>
                                                 <th>Tipo de Evaluación</th>
-                                                <th>Estado</th>
+<!--                                                <th>Estado</th>-->
                                                 <th>[-]</th>
                                                 <th>[-]</th>
                                             </tr>
