@@ -136,6 +136,7 @@
                     <hr>
                     <form id="BalotarioForm" style="display: none">
                         <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant" >
+                        <input type= "hidden" name="txt_estado" id="txt_estado" class="form-control mant" value="1">
                         <div class="panel panel-success">
                             <img id="imageCurso" class="panel-heading img-responsive" src='img/course/calculo2f.jpg' style="width:100%;min-height: 90px;">
                             <div class="panel-body table-responsive no-padding">

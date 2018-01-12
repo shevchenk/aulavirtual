@@ -112,7 +112,7 @@ HTMLGenerarBalotario2=function(result){
         AjaxBalotario.Cargar(HTMLCargarBalotario);
     }
     else{
-        msjG.mensaje('warning',result.msj,2000);
+        msjG.mensaje('warning',result.msj,6000);
     }
 }
 
@@ -129,15 +129,16 @@ HTMLCargarBalotario=function(result){
         html+="<tr id='trid_"+r.id+"'>"+
             "<td class='cantidad_maxima'>"+r.cantidad_maxima+"</td>"+
             "<td class='cantidad_pregunta'>"+r.cantidad_pregunta+"</td>"+
-            "<td class='tipo_evaluacion'>"+r.tipo_evaluacion+"</td>"+
-            "<td>"+
-            "<input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'>";
-        html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
-            '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar2(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
+            "<td class='tipo_evaluacion'><input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'>"+r.tipo_evaluacion+"</td>";
+//            "<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
+        html+='<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar2(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
+        if(r.cantidad_maxima!=0 && r.cantidad_pregunta!=0){
         if(r.modo==0){
             html+='<td><a class="btn btn-info" onClick="GenerarBalotario2('+r.id+')"><i class="fa fa-edit fa-lg"></i>Generar Balotario</a></td>';
         }else{
             html+='<td><a class="btn btn-white" onClick="VerBalotario2('+r.id+')"><i class="fa fa-search fa-lg"></i>Ver Balotario</a></td>';
+        }}else{
+             html+='<td></td>';
         }
         html+="</tr>";
     });
