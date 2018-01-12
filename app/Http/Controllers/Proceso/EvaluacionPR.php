@@ -14,6 +14,7 @@ use App\Models\Proceso\ProgramacionUnica;
 use App\Models\Proceso\Persona;
 use App\Models\Proceso\Programacion;
 use App\Models\Proceso\Evaluacion;
+use App\Models\Mantenimiento\Balotario;
 use App\Models\Proceso\EvaluacionDetalle;
 
 use App\Models\Mantenimiento\Respuesta;
@@ -246,15 +247,24 @@ class EvaluacionPR extends Controller
           $evaluacion = Evaluacion::where('programacion_id', '=', $r->programacion_id)
                                   ->where('tipo_evaluacion_id', '=', $r->tipo_evaluacion_id)
                                   ->first();
+
           $val_evaluacion = '';
           $evaluacion_fecha = '';
           if($evaluacion->estado_cambio == 0)
           {
             if($evaluacion->fecha_evaluacion == date('Y-m-d'))
             {
-              $renturnModel = Evaluacion::listarPreguntas($r);
-              $evaluacion_id = $evaluacion->id;
-              //$val_evaluacion = 1;
+              $balotario = Balotario::where('programacion_unica_id', '=', $r->programacion_unica_id)
+                                        ->where('tipo_evaluacion_id', '=', $r->tipo_evaluacion_id)
+                                        ->first();
+              if (count($balotario) == 0) {
+                $renturnModel = NULL;
+                $evaluacion_id = 0;
+                $val_evaluacion = 'error_balotario';
+              } else {
+                $renturnModel = Evaluacion::listarPreguntas($r);
+                $evaluacion_id = $evaluacion->id;
+              }
             }
             else
             {
@@ -273,10 +283,12 @@ class EvaluacionPR extends Controller
           */
 
             $return['rst'] = 1;
+
             $return['evaluacion_id'] = $evaluacion_id;
             $return['evaluacion_estado_cambio'] = $evaluacion->estado_cambio;
             $return['val_fecha_evaluacion'] = $val_evaluacion;
             $return['evaluacion_fecha'] = $evaluacion_fecha;
+
             $return['data'] = $renturnModel;
             $return['msj'] = "No hay registros aún";
             return response()->json($return);

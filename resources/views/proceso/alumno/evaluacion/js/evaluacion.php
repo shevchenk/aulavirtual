@@ -249,6 +249,21 @@ HTMLiniciarEvaluacion=function(result){
     $("#ResultEvaluacion").hide();
     return false;
   }
+  else if(result.val_fecha_evaluacion == 'error_balotario')
+  {
+    //evaluacionG_fecha_valida = result.evaluacion_fecha;
+    swal("Validación!", "Usted no cuenta con un Balotario asignado!", "warning");
+
+    AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
+    AjaxTipoEvaluacion.Cargar(HTMLCargarTipoEvaluacion);
+
+    $("#TipoEvaluacionForm").slideDown('fast');
+    $("#EvaluacionForm").slideDown('fast');
+
+    $("#resultado").html('')
+    $("#ResultEvaluacion").hide();
+    return false;
+  }
   else
   {
       if(evaluacionG == '') {
@@ -261,7 +276,7 @@ HTMLiniciarEvaluacion=function(result){
       var html = '';
           html += '<div class="panel panel-primary">'+
                   '<div class="panel-heading text-center">'+
-                      '<h4>'+tipo_evaluacion+' - '+curso+'<small style="color: #FFF;"> - <label id="hora"></label></small><h4>'+
+                      '<h4>'+tipo_evaluacion+' - '+curso+'<small style="color: #FFF;"> <label id="hora"></label></small><h4>'+
                   '</div>'+
                   '<div id="body-preguntas" class="panel-body" style="font-weight: normal;">'+
                       'Por favor complete las siguientes preguntas: '+
@@ -297,7 +312,7 @@ HTMLverEvaluacion=function(result){
    var html = '';
       html += '<div class="panel panel-primary">'+
             '<div class="panel-heading text-center">'+
-                '<h4>'+tipo_evaluacion+' - '+curso+'<small style="color: #FFF;"> - <label id="hora"></label></small><h4>'+
+                '<h4>'+tipo_evaluacion+' - '+curso+'<small style="color: #FFF;"> <label id="hora"></label></small><h4>'+
             '</div>'+
             '<div id="" class="panel-body" style="font-weight: normal;">'+
                 'A continuación su resultado de exámen: <br/><br/>';
