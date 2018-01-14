@@ -19,19 +19,21 @@
 
 @include( 'proceso.master.reprogramacion.js.gestor_ajax' )
 @include( 'proceso.master.reprogramacion.js.gestor' )
-@include( 'proceso.master.reprogramacion.js.balotario_ajax' )
-@include( 'proceso.master.reprogramacion.js.balotario' )
+@include( 'proceso.master.reprogramacion.js.evaluacion_ajax' )
+@include( 'proceso.master.reprogramacion.js.evaluacion' )
+@include( 'proceso.master.gestor.js.listapersona_ajax' )
+@include( 'proceso.master.gestor.js.listapersona' )
 
 @stop
 
 @section('content')
 <section class="content-header">
-    <h1>Generar Balotario
+    <h1>Generar Reprogramación
         <small>Proceso</small>
     </h1>
     <ol class="breadcrumb">
         <li><i class="fa fa-sitemap"></i> Proceso</li>
-        <li class="active">Generar Balotario</li>
+        <li class="active">Generar Reprogramación</li>
     </ol>
 </section>
 
@@ -138,9 +140,7 @@
                         <div class="panel panel-primary active" style="padding-bottom: 10px;">
                             <img id="imageCurso" class="panel-heading img-responsive" src='img/course/calculo2f.jpg' style="width:100%;min-height: 90px;">
                             <div class="panel-body table-responsive">
-                                <input type= "hidden" name="txt_programacion_id" id="txt_programacion_id" class="form-control mant">
                                 <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant">
-                                <input type="hidden" id="txt_curso" name="txt_curso" class="form-controlmant">
                                 <style media="screen">
                                     .rotar:hover{
                                         cursor: pointer;
@@ -165,5 +165,6 @@
 @stop
 
 @section('form')
-@include( 'proceso.master.reprogramacion.form.balotario' )
+@include( 'proceso.master.reprogramacion.form.evaluacion' )
+@include( 'proceso.master.gestor.form.listapersona' )
 @stop

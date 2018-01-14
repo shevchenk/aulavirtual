@@ -107,10 +107,10 @@ class TipoEvaluacionPR extends Controller
 
     public function validarTipoEvaluacionMaster(Request $r)
     {
-        $programacion = Programacion::find($r->programacion_id);
+        $programacion_unica = ProgramacionUnica::find($r->programacion_unica_id);
 
         $param_data = array('dni' => Auth::user()->dni,
-                              'programacion_externo_id' => $programacion->programacion_externo_id);
+                              'programacion_unica_externo_id' => $programacion_unica->programacion_unica_externo_id);
         // URL (CURL)
         $cli_links = DB::table('clientes_accesos_links')->where('cliente_acceso_id','=', 1)
                                                         ->where('tipo','=', 11)

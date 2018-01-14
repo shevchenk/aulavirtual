@@ -349,5 +349,21 @@ class EvaluacionPR extends Controller
             return response()->json($return);
         }
     }
+    
+    public function GenerateReprogramacion(Request $r ){
+        if ( $r->ajax() ) {
+            
+            $rst= Evaluacion::runGenerateReprogramacion($r);
+            
+            if($rst==1){
+                $return['msj'] = 'Reprogramación Generado';
+            }else{
+                $return['msj'] = 'Reprogramación no Generada';
+            }
+            
+            $return['rst'] = $rst;
+            return response()->json($return);
+        }
+    }
 
 }

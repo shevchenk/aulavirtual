@@ -119,5 +119,59 @@ class Evaluacion extends Model
         $evaluacion->persona_id_updated_at=Auth::user()->id;
         $evaluacion->save();
     }
+    
+    public static function runGenerateReprogramacion($r){
+
+        $result= Programacion::select("ve.*")
+                ->join('v_evaluaciones as ve',function($join){
+                    $join->on('v_programaciones.id','=','ve.programacion_id')
+                    ->where('ve.estado_cambio','=',0)
+                    ->where('ve.estado','=',1);
+                })
+                ->where(
+                      function($query) use ($r){
+                            if( $r->has("programacion_unica_id") ){
+                                $programacion_unica_id=trim($r->programacion_unica_id);
+                                if( $programacion_unica_id !='' ){
+                                    $query->where('v_programaciones.programacion_unica_id','=',$programacion_unica_id);
+                                }
+                            }
+                            if( $r->has("programacion_id") ){
+                                $programacion_id=trim($r->programacion_id);
+                                if( $programacion_id !='' ){
+                                    $query->where('ve.programacion_id','=',$programacion_id);
+                                }
+                            }
+                            if( $r->has("tipo_evaluacion_id") ){
+                                $tipo_evaluacion_id=trim($r->tipo_evaluacion_id);
+                                if( $tipo_evaluacion_id !='' ){
+                                    $query->where('ve.tipo_evaluacion_id','=',$tipo_evaluacion_id);
+                                }
+                            }
+                      }
+                )->get();
+
+        if(count($result)>0){
+            foreach ($result as $data){
+                $evaluacion =Evaluacion::find($data->id);
+                $evaluacion->fecha_reprogramada =$r->fecha_reprogramada;
+                $evaluacion->estado_cambio =3;
+                $evaluacion->persona_id_updated_at=Auth::user()->id;
+                $evaluacion->save();
+                
+                $evaluacion=new Evaluacion;
+                $evaluacion->programacion_id=$data->programacion_id;
+                $evaluacion->tipo_evaluacion_id=$data->tipo_evaluacion_id;
+                $evaluacion->fecha_evaluacion=$r->fecha_reprogramada;
+                $evaluacion->estado_cambio=0;
+                $evaluacion->persona_id_created_at=Auth::user()->id;
+                $evaluacion->save();
+            }
+            return 1;
+        }else{
+            return 2;
+        }
+
+    }
 
 }

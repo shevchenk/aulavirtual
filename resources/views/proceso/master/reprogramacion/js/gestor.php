@@ -1,6 +1,4 @@
 <script type="text/javascript">
-var AddEdit=0; //0: Editar | 1: Agregar
-var ProgramacionUnicaG={id:0,tipo_respuesta:"",estado:1}; // Datos Globales
 $(document).ready(function() {
 
     $("#TableProgramacionUnica").DataTable({
@@ -12,7 +10,6 @@ $(document).ready(function() {
         "autoWidth": false
     });
     
-
     AjaxProgramacionUnica.Cargar(HTMLCargarProgramacionUnica);
     
     $("#ProgramacionUnicaForm #TableProgramacionUnica select").change(function(){ AjaxProgramacionUnica.Cargar(HTMLCargarProgramacionUnica); });
@@ -20,13 +17,11 @@ $(document).ready(function() {
     
 });
 
-CargarEvaluaciones=function(id, curso_id,curso, imagen, boton){
+CargarEvaluacion=function(id, curso_id,curso, imagen, boton){
      masterG.pintar_fila(boton);
      $("#imageCurso").attr("src","img/course/"+imagen);
-     $("#EvaluacionForm #txt_programacion_id").val(12);
      $("#EvaluacionForm #txt_programacion_unica_id").val(id);
-     $("#EvaluacionForm #txt_curso").val(curso);
-     AjaxBalotario.Cargar(HTMLCargarTipoEvaluacion);
+     AjaxEvaluacion.Cargar(HTMLCargarTipoEvaluacion);
      $("#EvaluacionForm").css("display","");
 };
 
@@ -36,7 +31,7 @@ HTMLCargarProgramacionUnica=function(result){
     
     $.each(result.data.data,function(index,r){
                                         
-        html+='<tr id="trid_'+r.id+'" onClick="CargarEvaluaciones('+r.id+','+r.curso_id+',\''+r.curso+'\',\''+r.foto_cab+'\',this)">'+
+        html+='<tr id="trid_'+r.id+'" onClick="CargarEvaluacion('+r.id+','+r.curso_id+',\''+r.curso+'\',\''+r.foto_cab+'\',this)">'+
             "<td class='carrera'>"+r.carrera+"</td>"+
             "<td class='semestre'>"+r.semestre+"</td>"+
             "<td class='ciclo'>"+r.ciclo+"</td>"+
@@ -47,7 +42,6 @@ HTMLCargarProgramacionUnica=function(result){
             "<td class='docente'>"+r.docente+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
             "<td class='fecha_final'>"+r.fecha_final+"</td>";
-//            '<td><a class="btn btn-info btn-sm" onClick="CargarBalotario('+r.id+','+r.curso_id+',\''+r.curso+'\',this)"><i class="fa fa-th-list fa-lg"></i> </a></td>';
         html+="</tr>";
     });
     $("#TableProgramacionUnica tbody").html(html); 
