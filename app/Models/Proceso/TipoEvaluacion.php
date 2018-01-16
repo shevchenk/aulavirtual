@@ -48,6 +48,13 @@ class TipoEvaluacion extends Model
                         
                       }
                   );
+                  if($r->has("programacion_unica_id")){
+                      $sql->groupBy('e.id','te.id',
+                      'te.tipo_evaluacion',
+                      'te.tipo_evaluacion_externo_id',
+                      'te.estado',
+                      'e.estado_cambio');
+                  }
         $result = $sql->orderBy('te.id','asc')->paginate(20);
         return $result;
     }
