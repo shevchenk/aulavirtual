@@ -25,8 +25,8 @@ class TipoEvaluacion extends Model
                       'te.tipo_evaluacion',
                       'te.tipo_evaluacion_externo_id',
                       'te.estado',
-                      'e.estado_cambio',
-                      DB::raw('e.id AS evaluacion_id')
+                      DB::raw('MAX(e.estado_cambio) AS estado_cambio'),
+                      DB::raw('MAX(e.id) AS evaluacion_id')
                     )
                   ->where(
                       function($query) use ($r){
@@ -49,13 +49,9 @@ class TipoEvaluacion extends Model
                       }
                   );
                   if($r->has("programacion_unica_id")){
-                      $sql->groupBy('e.id','te.id',
-                      'te.tipo_evaluacion',
-                      'te.tipo_evaluacion_externo_id',
-                      'te.estado',
-                      'e.estado_cambio');
+                      $sql->groupBy('te.id','te.tipo_evaluacion');
                   }
-        $result = $sql->orderBy('te.id','asc')->paginate(20);
+        $result = $sql->paginate(20);
         return $result;
     }
 }
