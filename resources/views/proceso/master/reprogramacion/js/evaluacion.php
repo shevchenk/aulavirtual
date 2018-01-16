@@ -99,7 +99,7 @@ HTMLCargarTipoEvaluacion=function(result){
               '</div>'+
               '<div class="panel-body text-center">';
 
-          if(r.estado_cambio == 0){
+          if(r.estado_cambio == 0 && r.estado_cambio == 3){
             html+='<button type="button" class="btn btn-default" onClick="GenerarReprogramacion(1,'+programacion_unica_id+','+r.id+')" style="font-weight: bold;">Masiva</button>'+
                   '<button type="button" class="btn btn-default" onClick="GenerarReprogramacion(0,'+programacion_unica_id+','+r.id+')" style="font-weight: bold;">Individual</button>';
           } else {
