@@ -58,7 +58,8 @@ class Evaluacion extends Model
                       }
                   }
               )
-              ->groupBy('b.id', 'p.id','b.programacion_unica_id','b.cantidad_pregunta')
+              ->groupBy('b.id', 'p.id','b.programacion_unica_id','b.cantidad_pregunta','p.pregunta',
+              'p.puntaje')
               ->inRandomOrder()
               ->limit($balotario[0]->cantidad_pregunta)
               ->get();
