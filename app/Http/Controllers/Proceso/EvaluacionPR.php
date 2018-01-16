@@ -246,6 +246,7 @@ class EvaluacionPR extends Controller
 
           $evaluacion = Evaluacion::where('programacion_id', '=', $r->programacion_id)
                                   ->where('tipo_evaluacion_id', '=', $r->tipo_evaluacion_id)
+                                  ->where('estado_cambio', '=',0)
                                   ->first();
 
           $val_evaluacion = '';
