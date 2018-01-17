@@ -2,7 +2,8 @@
 var AjaxTipoEvaluacion={
     Cargar:function(evento,pag){
         var programacion_id = $("#EvaluacionForm #txt_programacion_id").val();
-        data={programacion_id:programacion_id};
+        var estado_cambio = $("#EvaluacionForm #txt_estado_cambio").val();
+        data={programacion_id:programacion_id,estado_cambio:estado_cambio};
         url='AjaxDinamic/Proceso.TipoEvaluacionPR@validarTipoEvaluacion';
         masterG.postAjax(url,data,evento);
     },

@@ -98,7 +98,7 @@ class Balotario extends Model
             })
             ->where('v_preguntas.estado','=',1)
             ->where('v_preguntas.tipo_evaluacion_id','=',$balotario->tipo_evaluacion_id)
-            ->whereNull('bp.pregunta_id')
+//            ->whereNull('bp.pregunta_id')
             ->inRandomOrder()
             ->limit($balotario->cantidad_maxima)->get();
             

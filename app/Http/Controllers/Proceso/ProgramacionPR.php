@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Proceso;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Proceso\Programacion;
+use App\Models\Proceso\ProgramacionUnica;
 use App\Models\Proceso\Persona;
 use App\Http\Controllers\Api\Api;
 use Illuminate\Support\Facades\Auth;
@@ -88,8 +89,8 @@ class ProgramacionPR extends Controller
     
     public function ListPersonaInProgramacionMaster(Request $r ){
         if ( $r->ajax() ) {
-
-            $param_data = array('programacion_unica_id' => $r->programacion_unica_id);
+            $programacion_unica= ProgramacionUnica::find($r->programacion_unica_id);
+            $param_data = array('programacion_unica_externo_id' => $programacion_unica->programacion_unica_externo_id);
 
             // URL (CURL)
             $cli_links = DB::table('clientes_accesos_links')->where('cliente_acceso_id','=',1)
@@ -115,7 +116,7 @@ class ProgramacionPR extends Controller
 
                 if($objArr->key[0]->id == @$tab_cli->id && $objArr->key[0]->token == @$tab_cli->key)
                 {
-                    $val = $this->insertarAlumno($objArr);
+                    $val = $this->insertarAlumno($objArr,$r);
                     if($val['return'] == true){
                         
                         $this->api->curl('localhost/Cliente/Retorno.php',$val['externo_id']);
@@ -153,7 +154,7 @@ class ProgramacionPR extends Controller
         }
     }
     
-    public function insertarAlumno($objArr){
+    public function insertarAlumno($objArr,$r){
         DB::beginTransaction();
         $array_curso='0';
         $array_programacion_unica='0';
@@ -185,7 +186,7 @@ class ProgramacionPR extends Controller
               {
                   $programacion = new Programacion();
                   $programacion->programacion_externo_id = trim($value->programacion_externo_id);
-                  $programacion->programacion_unica_id = $value->programacion_unica_id;
+                  $programacion->programacion_unica_id = $r->programacion_unica_id;
                   $programacion->persona_id = $alumno->id;
                   $programacion->persona_id_created_at=1;
               }

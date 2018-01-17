@@ -45,6 +45,12 @@ class TipoEvaluacion extends Model
                                 $query->where('vp.programacion_unica_id','=', $r->programacion_unica_id);
                             }
                         }
+                        if( $r->has("estado_cambio") ){
+                            $estado_cambio= explode(",",$r->estado_cambio);
+                            if( $estado_cambio !='' ){
+                                $query->whereIn('e.estado_cambio', $estado_cambio);
+                            }
+                        }
                         
                       }
                   );
