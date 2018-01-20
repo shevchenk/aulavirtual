@@ -29,8 +29,18 @@
                             <label>Alternativa</label>
                             <input type="text" onkeypress="return masterG.validaAlfanumerico(event, this);" class="form-control" id="txt_respuesta" name="txt_respuesta">
                         </div>
-                    </div>                 
+                    </div>
                     <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Correcto</label>
+                            <select class="form-control selectpicker show-menu-arrow" name="slct_correcto_id" id="slct_correcto_id">
+                                <option value>.::Seleccione::.</option>
+                                <option  value='0'>No</option>
+                                <option  value='1'>Si</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12 hidden">
                         <div class="form-group">
                             <label>Puntaje</label>
                             <input type="hidden"  class="form-control mant" id="txt_puntaje_max" name="txt_puntaje_max" disabled="">

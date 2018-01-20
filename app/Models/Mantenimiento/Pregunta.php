@@ -21,9 +21,9 @@ class Pregunta extends Model
     {
         $opcion = new Pregunta;
         $opcion->curso_id = trim( $r->curso_id );
-        $opcion->tipo_evaluacion_id = trim( $r->tipo_evaluacion_id );
+        $opcion->unidad_contenido_id = trim( $r->unidad_contenido_id );
         $opcion->pregunta = trim( $r->pregunta );
-        $opcion->puntaje = trim( $r->puntaje );
+        $opcion->puntaje =1;
         $opcion->estado = trim( $r->estado );
         $opcion->persona_id_created_at=Auth::user()->id;
         $opcion->save();
@@ -33,9 +33,9 @@ class Pregunta extends Model
     {
         $opcion = Pregunta::find($r->id);
         $opcion->curso_id = trim( $r->curso_id );
-        $opcion->tipo_evaluacion_id = trim( $r->tipo_evaluacion_id );
+        $opcion->unidad_contenido_id = trim( $r->unidad_contenido_id );
         $opcion->pregunta = trim( $r->pregunta );
-        $opcion->puntaje = trim( $r->puntaje );
+        $opcion->puntaje =1;
         $opcion->estado = trim( $r->estado );
         $opcion->persona_id_updated_at=Auth::user()->id;
         $opcion->save();
@@ -44,10 +44,10 @@ class Pregunta extends Model
 
     public static function runLoad($r)
     {
-        $sql = Pregunta::select('v_preguntas.id','v_preguntas.curso_id','v_preguntas.tipo_evaluacion_id','v_preguntas.pregunta',
-                                'v_preguntas.puntaje','v_preguntas.estado','vc.curso','vte.tipo_evaluacion')
+        $sql = Pregunta::select('v_preguntas.id','v_preguntas.curso_id','v_preguntas.unidad_contenido_id','v_preguntas.pregunta',
+                                'v_preguntas.puntaje','v_preguntas.estado','vc.curso','vuc.unidad_contenido')
                           ->join('v_cursos as vc','vc.id','=','v_preguntas.curso_id')
-                          ->join('v_tipos_evaluaciones as vte','vte.id','=','v_preguntas.tipo_evaluacion_id')
+                          ->join('v_unidades_contenido as vuc','vuc.id','=','v_preguntas.unidad_contenido_id')
                           ->where(
                               function($query) use ($r){
                                   if( $r->has("curso_id") ){
@@ -62,10 +62,10 @@ class Pregunta extends Model
                                           $query->where('vc.curso','like','%'.$curso.'%');
                                       }
                                   }
-                                  if( $r->has("tipo_evaluacion") ){
-                                      $tipo_evaluacion=trim($r->tipo_evaluacion);
-                                      if( $tipo_evaluacion !='' ){
-                                          $query->where('vte.tipo_evaluacion','like','%'.$tipo_evaluacion.'%');
+                                  if( $r->has("unidad_contenido") ){
+                                      $unidad_contenido=trim($r->unidad_contenido);
+                                      if( $unidad_contenido !='' ){
+                                          $query->where('vuc.unidad_contenido','like','%'.$unidad_contenido.'%');
                                       }
                                   }
                                   if( $r->has("pregunta") ){
@@ -75,7 +75,7 @@ class Pregunta extends Model
                                       }
                                   }
                                   if( $r->has("puntaje") ){
-                                      $puntaje=trim($r->puntaje);
+                                      $puntaje=trim(1);
                                       if( $puntaje !='' ){
                                           $query->where('v_preguntas.puntaje','like','%'.$puntaje.'%');
                                       }

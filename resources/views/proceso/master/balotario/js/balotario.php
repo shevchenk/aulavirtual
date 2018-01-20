@@ -1,6 +1,6 @@
 <script type="text/javascript">
 var AddEdit=0; //0: Editar | 1: Agregar
-var BalotarioG={id:0,tipo_evaluacion_id:0,tipo_evaluacion:'',cantidad_maxima:'',cantidad_pregunta:'',estado:1}; // Datos Globales
+var BalotarioG={id:0,tipo_evaluacion_id:0,unidad_contenido_id:'',tipo_evaluacion:'',cantidad_maxima:'',cantidad_pregunta:'',estado:1}; // Datos Globales
 $(document).ready(function() {
      $("#TableBalotario").DataTable({
         "paging": true,
@@ -23,11 +23,12 @@ $(document).ready(function() {
             $(this).find('.modal-footer .btn-primary').text('Actualizar').attr('onClick','AgregarEditarAjax2();');
             $("#ModalBalotarioForm").append("<input type='hidden' value='"+BalotarioG.id+"' name='id'>");
         }
-
+        var unidad_contenido_id = BalotarioG.unidad_contenido_id.split(",");
         $('#ModalBalotarioForm #txt_tipo_evaluacion_id').val(BalotarioG.tipo_evaluacion_id );
         $('#ModalBalotarioForm #txt_tipo_evaluacion').val( BalotarioG.tipo_evaluacion );
         $('#ModalBalotarioForm #txt_cantidad_maxima').val( BalotarioG.cantidad_maxima );
         $('#ModalBalotarioForm #txt_cantidad_pregunta').val( BalotarioG.cantidad_pregunta );
+        $('#ModalBalotarioForm #slct_unidad_contenido_id').selectpicker('val',unidad_contenido_id);
         $('#ModalBalotarioForm #slct_estado').selectpicker( 'val',BalotarioG.estado );
     });
 
@@ -49,6 +50,14 @@ ValidaForm2=function(){
         r=false;
         msjG.mensaje('warning','Ingrese Cantidad de Preguntas',4000);
     }
+    else if( $.trim( $("#ModalBalotarioForm #txt_cantidad_pregunta").val() )<4 ){
+        r=false;
+        msjG.mensaje('warning','Cantidad de Preguntas debe ser mayor a 4',4000);
+    }
+    else if( $.trim( $("#ModalBalotarioForm #slct_unidad_contenido_id").val() )=='' ){
+        r=false;
+        msjG.mensaje('warning','Seleccione Unidades de Contenido',4000);
+    }
     return r;
 }
 
@@ -59,6 +68,7 @@ AgregarEditar2=function(val,id){
     BalotarioG.tipo_evaluacion='';
     BalotarioG.cantidad_maxima='';
     BalotarioG.cantidad_pregunta='';
+    BalotarioG.unidad_contenido_id='';
     BalotarioG.estado='1';
 
     if( val==0 ){
@@ -68,6 +78,7 @@ AgregarEditar2=function(val,id){
         BalotarioG.cantidad_maxima=$("#TableBalotario #trid_"+id+" .cantidad_maxima").text();
         BalotarioG.tipo_evaluacion=$("#TableBalotario #trid_"+id+" .tipo_evaluacion").text();
         BalotarioG.cantidad_pregunta=$("#TableBalotario #trid_"+id+" .cantidad_pregunta").text();
+        BalotarioG.unidad_contenido_id=$("#TableBalotario #trid_"+id+" .unidad_contenido_id").val();
         BalotarioG.estado=$("#TableBalotario #trid_"+id+" .estado").val();
 
     }
@@ -129,7 +140,7 @@ HTMLCargarBalotario=function(result){
         html+="<tr id='trid_"+r.id+"'>"+
             "<td class='cantidad_maxima'>"+r.cantidad_maxima+"</td>"+
             "<td class='cantidad_pregunta'>"+r.cantidad_pregunta+"</td>"+
-            "<td class='tipo_evaluacion'><input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'>"+r.tipo_evaluacion+"</td>";
+            "<td class='tipo_evaluacion'><input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'><input type='hidden' class='unidad_contenido_id' value='"+r.unidad_contenido_id+"'>"+r.tipo_evaluacion+"</td>";
 //            "<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
         html+='<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar2(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
         if(r.cantidad_maxima!=0 && r.cantidad_pregunta!=0){
@@ -161,15 +172,41 @@ HTMLCargarBalotario=function(result){
         }
     });
 };
+HTMLCargarUnidadPregunta=function(result){
+    var html="";
+    $('#TableUnidadPregunta').DataTable().destroy();
 
-SlctCargarTipoEvaluacion=function(result){
-    var html="<option value='0'>.::Seleccione::.</option>";
     $.each(result.data,function(index,r){
-        html+="<option value="+r.id+">"+r.tipo_evaluacion+"</option>";
+        html+="<tr id='trid_"+r.id+"'>"+
+            "<td class='unidad_contenido'>"+r.unidad_contenido+"</td>"+
+            "<td class='cant'>"+r.cant+"</td>";
+        html+="</tr>";
     });
-    $("#ModalBalotario #slct_tipo_evaluacion_id").html(html);
-    $("#ModalBalotario #slct_tipo_evaluacion_id").selectpicker('refresh');
+    $("#TableUnidadPregunta tbody").html(html); 
+    $("#TableUnidadPregunta").DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false
+        
+    });
+};
 
+SlctCargarUnidadContenido=function(result){
+    var html="";
+    $.each(result.data,function(index,r){
+        html+="<option value="+r.id+">"+r.unidad_contenido+"</option>";
+    });
+    $("#ModalBalotarioForm #slct_unidad_contenido_id").html(html);
+    $("#ModalBalotarioForm #slct_unidad_contenido_id").selectpicker('refresh');
+
+};
+CargarSlct=function(slct){
+    if(slct==1){
+    AjaxBalotario.CargarUnidadContenido(SlctCargarUnidadContenido);
+    }
 };
 VerBalotario2=function(id){
          window.open("ReportDinamic/Mantenimiento.BalotarioEM@GenerarPDF?balotario_id="+id,

@@ -1,6 +1,6 @@
 <script type="text/javascript">
 var AddEdit=0; //0: Editar | 1: Agregar
-var PreguntaG={id:0,pregunta:"",puntaje:0,curso_id:0,tipo_evaluacion_id:0,estado:1}; // Pregunta Globales
+var PreguntaG={id:0,pregunta:"",puntaje:0,curso_id:0,unidad_contenido_id:0,estado:1}; // Pregunta Globales
 $(document).ready(function() {
 
     $("#TablePregunta").DataTable({
@@ -27,7 +27,7 @@ $(document).ready(function() {
         $('#ModalPreguntaForm #txt_pregunta').val( PreguntaG.pregunta );
         $('#ModalPreguntaForm #txt_puntaje').val( PreguntaG.puntaje );
         $('#ModalPreguntaForm #slct_curso_id').selectpicker('val', PreguntaG.curso_id );
-        $('#ModalPreguntaForm #slct_tipo_evaluacion_id').selectpicker('val', PreguntaG.tipo_evaluacion_id );
+        $('#ModalPreguntaForm #slct_unidad_contenido_id').selectpicker('val', PreguntaG.unidad_contenido_id );
         $('#ModalPreguntaForm #slct_estado').selectpicker( 'val',PreguntaG.estado );
         $('#ModalPreguntaForm #txt_pregunta').focus();
     });
@@ -44,18 +44,18 @@ ValidaForm2=function(){
         r=false;
         msjG.mensaje('warning','Seleccione Curso',4000);
     }
-    else if( $.trim( $("#ModalPreguntaForm #slct_tipo_evaluacion_id").val() )=='0' ){
+    else if( $.trim( $("#ModalPreguntaForm #slct_unidad_contenido_id").val() )=='0' ){
         r=false;
-        msjG.mensaje('warning','Seleccione Tipo Evaluación',4000);
+        msjG.mensaje('warning','Seleccione Unidad de Contenido',4000);
     }
     else if( $.trim( $("#ModalPreguntaForm #txt_pregunta").val() )=='' ){
         r=false;
         msjG.mensaje('warning','Ingrese Pregunta',4000);
     }
-    else if( $.trim( $("#ModalPreguntaForm #txt_puntaje").val() )=='' ){
-        r=false;
-        msjG.mensaje('warning','Ingrese Puntaje',4000);
-    }
+//    else if( $.trim( $("#ModalPreguntaForm #txt_puntaje").val() )=='' ){
+//        r=false;
+//        msjG.mensaje('warning','Ingrese Puntaje',4000);
+//    }
     return r;
 }
 
@@ -65,14 +65,14 @@ AgregarEditar2=function(val,id){
     PreguntaG.pregunta='';
     PreguntaG.puntaje='';
     PreguntaG.curso_id='0';
-    PreguntaG.tipo_evaluacion_id='0';
+    PreguntaG.unidad_contenido_id='0';
     PreguntaG.estado='1';
     if( val==0 ){
         PreguntaG.id=id;
         PreguntaG.pregunta=$("#TablePregunta #trid_"+id+" .pregunta").text();
         PreguntaG.puntaje=$("#TablePregunta #trid_"+id+" .puntaje").text();
         PreguntaG.curso_id=$("#TablePregunta #trid_"+id+" .curso_id").val();
-        PreguntaG.tipo_evaluacion_id=$("#TablePregunta #trid_"+id+" .tipo_evaluacion_id").val();
+        PreguntaG.unidad_contenido_id=$("#TablePregunta #trid_"+id+" .unidad_contenido_id").val();
         PreguntaG.estado=$("#TablePregunta #trid_"+id+" .estado").val();
     }
     $('#ModalPregunta').modal('show');
@@ -118,12 +118,12 @@ HTMLCargarPregunta=function(result){
 
         html+='<tr id="trid_'+r.id+'" onClick="CargarRespuesta('+r.id+',\''+r.pregunta+'\','+r.puntaje+',this)">'+
             "<td class='curso'>"+r.curso+"</td>"+
-            "<td class='tipo_evaluacion'>"+r.tipo_evaluacion+"</td>"+
+            "<td class='unidad_contenido'>"+r.unidad_contenido+"</td>"+
             "<td class='pregunta'>"+r.pregunta+"</td>"+
-            "<td class='puntaje'>"+r.puntaje+"</td>"+
+//            "<td class='puntaje'>"+r.puntaje+"</td>"+
             "<td>"+
             "<input type='hidden' class='curso_id' value='"+r.curso_id+"'>"+
-            "<input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'>";
+            "<input type='hidden' class='unidad_contenido_id' value='"+r.unidad_contenido_id+"'>";
         html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
             '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar2(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
   //      html+='<td><a class="btn btn-info btn-sm" onClick="CargarRespuesta('+r.id+',\''+r.pregunta+'\','+r.puntaje+',this)"><i class="fa fa-th-list fa-lg"></i> </a></td>';
@@ -149,18 +149,18 @@ HTMLCargarPregunta=function(result){
         
     });
 };
-SlctCargarTipoEvaluacion=function(result){
+SlctCargarUnidadContenido=function(result){
     var html="<option value='0'>.::Seleccione::.</option>";
     $.each(result.data,function(index,r){
-        html+="<option value="+r.id+">"+r.tipo_evaluacion+"</option>";
+        html+="<option value="+r.id+">"+r.unidad_contenido+"</option>";
     });
-    $("#ModalPregunta #slct_tipo_evaluacion_id").html(html);
-    $("#ModalPregunta #slct_tipo_evaluacion_id").selectpicker('refresh');
+    $("#ModalPregunta #slct_unidad_contenido_id").html(html);
+    $("#ModalPregunta #slct_unidad_contenido_id").selectpicker('refresh');
 
 };
 CargarSlct=function(slct){
     if(slct==3){
-    AjaxPregunta.CargarTipoEvaluacion(SlctCargarTipoEvaluacion);
+    AjaxPregunta.CargarUnidadContenido(SlctCargarUnidadContenido);
     }
 };
 CargarRespuesta=function(id,pregunta,puntaje,boton){   

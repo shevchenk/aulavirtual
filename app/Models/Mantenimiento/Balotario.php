@@ -26,7 +26,10 @@ class Balotario extends Model
         $balotario->tipo_evaluacion_id = trim( $r->tipo_evaluacion_id );
         $balotario->cantidad_maxima = trim( $r->cantidad_maxima );
         $balotario->cantidad_pregunta = trim( $r->cantidad_pregunta );
-        $balotario->estado = trim( $r->estado );
+        if( count($r->unidad_contenido_id)>0 ){
+            $unidad_contenido_id=implode(",", $r->unidad_contenido_id);
+            $balotario->unidad_contenido_id = trim( $unidad_contenido_id );
+        }
         $balotario->persona_id_created_at=Auth::user()->id;
         $balotario->save();
     }
@@ -38,6 +41,10 @@ class Balotario extends Model
         $balotario->tipo_evaluacion_id = trim( $r->tipo_evaluacion_id );
         $balotario->cantidad_maxima = trim( $r->cantidad_maxima );
         $balotario->cantidad_pregunta = trim( $r->cantidad_pregunta );
+        if( count($r->unidad_contenido_id)>0 ){
+            $unidad_contenido_id=implode(",", $r->unidad_contenido_id);
+            $balotario->unidad_contenido_id = trim( $unidad_contenido_id );
+        }
         $balotario->persona_id_updated_at=Auth::user()->id;
         $balotario->save();
     }
@@ -46,7 +53,7 @@ class Balotario extends Model
     public static function runLoad($r){
         
         $sql=Balotario::select('v_balotarios.id','vte.tipo_evaluacion','v_balotarios.cantidad_maxima','v_balotarios.cantidad_pregunta',
-                'v_balotarios.estado','v_balotarios.tipo_evaluacion_id','v_balotarios.modo')
+                'v_balotarios.estado','v_balotarios.tipo_evaluacion_id','v_balotarios.modo','v_balotarios.unidad_contenido_id')
             ->join('v_tipos_evaluaciones as vte','vte.id','=','v_balotarios.tipo_evaluacion_id')
             ->where( 
                     
@@ -90,19 +97,34 @@ class Balotario extends Model
     public static function runGenerateBallot($r){
             
         $balotario = Balotario::find($r->id);
+        $unidad_contenido= explode(',', $balotario->unidad_contenido_id);
+        $cantidad_pregunta=$balotario->cantidad_maxima/count($unidad_contenido);
         
-        $result=Pregunta::select("v_preguntas.id")
-            ->leftJoin('v_balotarios_preguntas as bp',function($join){
-                $join->on('bp.pregunta_id','=','v_preguntas.id')
-                ->where('bp.estado','=',1);
-            })
-            ->where('v_preguntas.estado','=',1)
-            ->where('v_preguntas.tipo_evaluacion_id','=',$balotario->tipo_evaluacion_id)
-//            ->whereNull('bp.pregunta_id')
-            ->inRandomOrder()
-            ->limit($balotario->cantidad_maxima)->get();
-            
-        if(count($result)>=$balotario->cantidad_maxima){
+        $cant=floor($balotario->cantidad_maxima/count($unidad_contenido));
+        $residuo=$balotario->cantidad_maxima%count($unidad_contenido);
+        $array = array();
+
+        for($i=0;$i<count($unidad_contenido);$i++){
+                $cantidad=$cant;
+                if($residuo>0){
+                        $cantidad++;
+                        $residuo--;
+                }
+                array_push($array,$cantidad);
+        }
+
+        for($i=0;$i<count($unidad_contenido);$i++){
+            $result=Pregunta::select("v_preguntas.id")
+                    ->leftJoin('v_balotarios_preguntas as bp',function($join){
+                        $join->on('bp.pregunta_id','=','v_preguntas.id')
+                        ->where('bp.estado','=',1);
+                    })
+                    ->where('v_preguntas.estado','=',1)
+                    ->where('v_preguntas.unidad_contenido_id','=',$unidad_contenido[$i])
+        //            ->whereNull('bp.pregunta_id')
+                    ->inRandomOrder()
+                    ->limit($array[$i])->get();
+                    
             foreach ($result as $data){
                 $balotario_pregunta = new BalotarioPregunta;
                 $balotario_pregunta->balotario_id =$balotario->id;
@@ -110,13 +132,17 @@ class Balotario extends Model
                 $balotario_pregunta->estado =1;
                 $balotario_pregunta->persona_id_created_at=Auth::user()->id;
                 $balotario_pregunta->save();
-            }
+            }        
+        }
             $balotario->modo=1;
             $balotario->save();
-            return 1;
-        }else{
-            return 2;
-        }
+            return 1;   
+//        if(count($result)>=$balotario->cantidad_maxima){
+//
+//            
+//        }else{
+//            return 2;
+//        }
 
     }
     

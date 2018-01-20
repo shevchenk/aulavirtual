@@ -37,6 +37,13 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
+                            <label>Unidad de Contenido</label>
+                             <select  class="form-control selectpicker" data-live-search="true" multiple id="slct_unidad_contenido_id" name="slct_unidad_contenido_id[]">
+                            </select>
+                        </div>
+                    </div>    
+                    <div class="col-md-12">
+                        <div class="form-group">
                             <label>Estado</label>
                             <input type="text"  class="form-control mant" id="txt_estado" name="txt_estado" value="Activo" disabled="">
                         </div>

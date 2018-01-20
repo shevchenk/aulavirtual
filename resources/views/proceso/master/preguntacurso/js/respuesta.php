@@ -1,6 +1,6 @@
 <script type="text/javascript">
 var AddEdit=0; //0: Editar | 1: Agregar
-var RespuestaG={id:0,respuesta:"",puntaje:0,pregunta_id:0,ipo_respuesta_id:0,estado:1}; // Datos Globales
+var RespuestaG={id:0,respuesta:"",puntaje:0,pregunta_id:0,correcto_id:0,ipo_respuesta_id:0,estado:1}; // Datos Globales
 $(document).ready(function() {
 
     $("#TableRespuesta").DataTable({
@@ -27,6 +27,7 @@ $(document).ready(function() {
         $('#ModalRespuestaForm #txt_respuesta').val( RespuestaG.respuesta );
         $('#ModalRespuestaForm #txt_puntaje').val( RespuestaG.puntaje );
         $('#ModalRespuestaForm #slct_pregunta_id').selectpicker('val', RespuestaG.pregunta_id );
+        $('#ModalRespuestaForm #slct_correcto_id').selectpicker('val', RespuestaG.correcto_id );
         $('#ModalRespuestaForm #slct_tipo_respuesta_id').selectpicker('val', RespuestaG.tipo_respuesta_id );
         $('#ModalRespuestaForm #slct_estado').selectpicker( 'val',RespuestaG.estado );
         $('#ModalRespuestaForm #txt_respuesta').focus();
@@ -52,14 +53,18 @@ ValidaForm3=function(){
         r=false;
         msjG.mensaje('warning','Ingrese alternativa',4000);
     }
-    else if( $.trim( $("#ModalRespuestaForm #txt_puntaje").val() )=='' ){
+    else if( $.trim( $("#ModalRespuestaForm #slct_correcto_id").val() )=='' ){
         r=false;
-        msjG.mensaje('warning','Ingrese Puntaje',4000);
+        msjG.mensaje('warning','Seleccione según sea o no correcta la alternativa',4000);
     }
-    else if( Number($("#ModalRespuestaForm #txt_puntaje").val())>Number($("#ModalRespuestaForm #txt_puntaje_max").val()) ){
-        r=false;
-        msjG.mensaje('warning','Puntaje de respuesta debe ser menor o igual al puntaje de la pregunta',4000);
-    }
+//    else if( $.trim( $("#ModalRespuestaForm #txt_puntaje").val() )=='' ){
+//        r=false;
+//        msjG.mensaje('warning','Ingrese Puntaje',4000);
+//    }
+//    else if( Number($("#ModalRespuestaForm #txt_puntaje").val())>Number($("#ModalRespuestaForm #txt_puntaje_max").val()) ){
+//        r=false;
+//        msjG.mensaje('warning','Puntaje de respuesta debe ser menor o igual al puntaje de la pregunta',4000);
+//    }
     return r;
 }
 
@@ -68,6 +73,7 @@ AgregarEditar3=function(val,id){
     RespuestaG.id='';
     RespuestaG.respuesta='';
     RespuestaG.puntaje='';
+    RespuestaG.correcto_id='';
     RespuestaG.pregunta_id='0';
     RespuestaG.tipo_respuesta_id='0';
     RespuestaG.estado='1';
@@ -75,6 +81,7 @@ AgregarEditar3=function(val,id){
         RespuestaG.id=id;
         RespuestaG.respuesta=$("#TableRespuesta #trid_"+id+" .respuesta").text();
         RespuestaG.puntaje=$("#TableRespuesta #trid_"+id+" .puntaje").text();
+        RespuestaG.correcto_id=$("#TableRespuesta #trid_"+id+" .correcto_id").val();
         RespuestaG.pregunta_id=$("#TableRespuesta #trid_"+id+" .pregunta_id").val();
         RespuestaG.tipo_respuesta_id=$("#TableRespuesta #trid_"+id+" .tipo_respuesta_id").val();
         RespuestaG.estado=$("#TableRespuesta #trid_"+id+" .estado").val();
@@ -123,9 +130,10 @@ HTMLCargarRespuesta=function(result){
             "<td class='pregunta'>"+r.pregunta+"</td>"+
             "<td class='tipo_respuesta'>"+r.tipo_respuesta+"</td>"+
             "<td class='respuesta'>"+r.respuesta+"</td>"+
-            "<td class='puntaje'>"+r.puntaje+"</td>"+
+//            "<td class='puntaje'>"+r.puntaje+"</td>"+
             "<td>"+
             "<input type='hidden' class='pregunta_id' value='"+r.pregunta_id+"'>"+
+            "<input type='hidden' class='correcto_id' value='"+r.correcto_id+"'>"+
             "<input type='hidden' class='tipo_respuesta_id' value='"+r.tipo_respuesta_id+"'>";
         html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
             '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar3(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';

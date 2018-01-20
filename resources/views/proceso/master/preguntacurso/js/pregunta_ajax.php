@@ -26,10 +26,10 @@ var AjaxPregunta={
         url='AjaxDinamic/Mantenimiento.PreguntaEM@EditStatus';
         masterG.postAjax(url,data,evento);
     },
-    CargarTipoEvaluacion:function(evento){
-        url='AjaxDinamic/Mantenimiento.PreguntaEM@ListTipoEvaluacion';
+    CargarUnidadContenido:function(evento){
+        url='AjaxDinamic/Mantenimiento.UnidadContenidoEM@ListUnidadContenido';
         data={};
         masterG.postAjax(url,data,evento);
-    }
+    },  
 };
 </script>

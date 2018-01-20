@@ -17,8 +17,8 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label id="label_curso">Tipo Evaluacion</label>
-                            <select  class="form-control selectpicker show-menu-arrow" data-live-search="true" id="slct_tipo_evaluacion_id" name="slct_tipo_evaluacion_id">
+                            <label id="label_curso">Unidad de Contenido</label>
+                            <select  class="form-control selectpicker show-menu-arrow" data-live-search="true" id="slct_unidad_contenido_id" name="slct_unidad_contenido_id">
                                 <option value="0">.::Seleccione::.</option>
                             </select>
                         </div>
@@ -26,10 +26,10 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Pregunta</label>
-                            <input type="text" onkeypress="return masterG.validaAlfanumerico(event, this);" class="form-control" id="txt_pregunta" name="txt_pregunta">
+                            <input type="text"  class="form-control" id="txt_pregunta" name="txt_pregunta">
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12 hidden">
                         <div class="form-group">
                             <label>Puntaje</label>
                             <input type="text" onkeyup="masterG.DecimalMax(this, 2);" onkeypress="return masterG.validaDecimal(event, this);" class="form-control" id="txt_puntaje" name="txt_puntaje">

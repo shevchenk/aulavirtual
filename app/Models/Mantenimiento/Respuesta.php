@@ -23,7 +23,8 @@ class Respuesta extends Model
         $opcion->pregunta_id = trim( $r->pregunta_id );
         $opcion->tipo_respuesta_id = trim( $r->tipo_respuesta_id );
         $opcion->respuesta = trim( $r->respuesta );
-        $opcion->puntaje = trim( $r->puntaje );
+        $opcion->puntaje =1;
+        $opcion->correcto = trim( $r->correcto_id );
         $opcion->estado = trim( $r->estado );
         $opcion->persona_id_created_at=Auth::user()->id;
         $opcion->save();
@@ -35,7 +36,8 @@ class Respuesta extends Model
         $opcion->pregunta_id = trim( $r->pregunta_id );
         $opcion->tipo_respuesta_id = trim( $r->tipo_respuesta_id );
         $opcion->respuesta = trim( $r->respuesta );
-        $opcion->puntaje = trim( $r->puntaje );
+        $opcion->puntaje =1;
+        $opcion->correcto = trim( $r->correcto_id );
         $opcion->estado = trim( $r->estado );
         $opcion->persona_id_updated_at=Auth::user()->id;
         $opcion->save();
@@ -45,7 +47,7 @@ class Respuesta extends Model
     public static function runLoad($r)
     {
         $sql=Respuesta::select('v_respuestas.id','v_respuestas.pregunta_id','v_respuestas.tipo_respuesta_id','v_respuestas.respuesta',
-                'v_respuestas.puntaje','v_respuestas.estado','vp.pregunta','vtr.tipo_respuesta')
+                'v_respuestas.puntaje','v_respuestas.estado','vp.pregunta','vtr.tipo_respuesta','v_respuestas.correcto as correcto_id')
             ->join('v_preguntas as vp','vp.id','=','v_respuestas.pregunta_id')
             ->join('v_tipos_respuestas as vtr','vtr.id','=','v_respuestas.tipo_respuesta_id')
             ->where( 

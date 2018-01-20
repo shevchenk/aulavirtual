@@ -104,16 +104,16 @@
                                                         </div>
                                                     </div>
                                                 </th>
-                                                <th class="col-xs-2">
+                                                <th class="col-xs-1">
                                                     <div class="form-group">
-                                                        <label><h4>Tipo Evaluacion:</h4></label>
+                                                        <label><h4>Unidad de Contenido:</h4></label>
                                                         <div class="input-group">
                                                             <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                                            <input type="text" class="form-control" name="txt_tipo_evaluacion" id="txt_tipo_evaluacion" placeholder="Tipo de Evaluacion" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
+                                                            <input type="text" class="form-control" name="txt_unidad" id="txt_unidad" placeholder="Unidad de Contenido" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
                                                         </div>
                                                     </div>
                                                 </th>
-                                                <th class="col-xs-2">
+                                                <th class="col-xs-3">
                                                     <div class="form-group">
                                                         <label><h4>Pregunta:</h4></label>
                                                         <div class="input-group">
@@ -122,7 +122,7 @@
                                                         </div>
                                                     </div>
                                                 </th>
-                                                <th class="col-xs-1">
+<!--                                                <th class="col-xs-1">
                                                     <div class="form-group">
                                                         <label><h4>Puntaje:</h4></label>
                                                         <div class="input-group">
@@ -130,8 +130,8 @@
                                                             <input type="text" class="form-control" name="txt_puntaje" id="txt_puntaje" placeholder="Puntaje" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
                                                         </div>
                                                     </div>
-                                                </th>
-                                                <th class="col-xs-2">
+                                                </th>-->
+                                                <th class="col-xs-1">
                                                     <div class="form-group">
                                                         <label><h4>Estado:</h4></label>
                                                         <div class="input-group">
@@ -151,9 +151,9 @@
                                         <tfoot>
                                             <tr class="cabecera">
                                                 <th>Curso</th>
-                                                <th>Tipo Evaluacion</th>
+                                                <th>Unidad de Contenido</th>
                                                 <th>Pregunta</th>
-                                                <th>Puntaje</th>
+<!--                                                <th>Puntaje</th>-->
                                                 <th>Estado</th>
                                                 <th>[-]</th>
                                             </tr>
@@ -178,7 +178,7 @@
                                     <table id="TableRespuesta" class="table table-bordered table-hover">
                                         <thead>
                                             <tr class="cabecera">
-                                                <th class="col-xs-2">
+                                                <th class="col-xs-3">
                                                     <div class="form-group">
                                                         <label><h4>Pregunta:</h4></label>
                                                         <div class="input-group">
@@ -196,7 +196,7 @@
                                                         </div>
                                                     </div>
                                                 </th>
-                                                <th class="col-xs-2">
+                                                <th class="col-xs-3">
                                                     <div class="form-group">
                                                         <label><h4>Alternativa:</h4></label>
                                                         <div class="input-group">
@@ -205,7 +205,7 @@
                                                         </div>
                                                     </div>
                                                 </th>
-                                                <th class="col-xs-1">
+<!--                                                <th class="col-xs-1">
                                                     <div class="form-group">
                                                         <label><h4>Puntaje:</h4></label>
                                                         <div class="input-group">
@@ -213,8 +213,8 @@
                                                             <input type="text" class="form-control" name="txt_puntaje" id="txt_puntaje" placeholder="Puntaje" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
                                                         </div>
                                                     </div>
-                                                </th>
-                                                <th class="col-xs-2">
+                                                </th>-->
+                                                <th class="col-xs-1">
                                                     <div class="form-group">
                                                         <label><h4>Estado:</h4></label>
                                                         <div class="input-group">
@@ -236,7 +236,7 @@
                                                 <th>Pregunta</th>
                                                 <th>Tipo Respuesta</th>
                                                 <th>Alternativa</th>
-                                                <th>Puntaje</th>
+<!--                                                <th>Puntaje</th>-->
                                                 <th>Estado</th>
                                                 <th>[-]</th>
                                             </tr>

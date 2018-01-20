@@ -34,9 +34,15 @@ var AjaxBalotario={
         url='AjaxDinamic/Mantenimiento.BalotarioEM@GenerateBallot';
         masterG.postAjax(url,data,evento);
     },
-    CargarTipoEvaluacion:function(evento){
-        url='AjaxDinamic/Mantenimiento.PreguntaEM@ListTipoEvaluacion';
+    CargarUnidadContenido:function(evento){
+        url='AjaxDinamic/Mantenimiento.UnidadContenidoEM@ListUnidadContenido';
         data={};
+        masterG.postAjax(url,data,evento);
+    },
+    CargarUnidadPregunta:function(evento,curso_id){
+        var data={curso_id:curso_id};
+        url='AjaxDinamic/Mantenimiento.UnidadContenidoEM@LoadUnidadPregunta';
+        $("#BalotarioForm input[type='hidden']").not('.mant').remove();
         masterG.postAjax(url,data,evento);
     },
 };
