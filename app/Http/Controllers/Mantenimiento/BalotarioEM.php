@@ -222,13 +222,13 @@ class BalotarioEM extends Controller
             
             $rst=Balotario::runGenerateBallot($r);
             
-            if($rst==1){
+            if($rst['rst']==1){
                 $return['msj'] = 'Balotario Generado';
             }else{
-                $return['msj'] = 'Balotario no Generado por falta de preguntas';
+                $return['msj'] = 'Balotario no Generado por que falta '.$rst['falta'].' pregunta(s) en: '.$rst['unidad_contenido'];
             }
             
-            $return['rst'] = $rst;
+            $return['rst'] = $rst['rst'];
             return response()->json($return);
         }
     }

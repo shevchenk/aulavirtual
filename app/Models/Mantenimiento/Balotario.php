@@ -98,7 +98,6 @@ class Balotario extends Model
             
         $balotario = Balotario::find($r->id);
         $unidad_contenido= explode(',', $balotario->unidad_contenido_id);
-        $cantidad_pregunta=$balotario->cantidad_maxima/count($unidad_contenido);
         
         $cant=floor($balotario->cantidad_maxima/count($unidad_contenido));
         $residuo=$balotario->cantidad_maxima%count($unidad_contenido);
@@ -112,7 +111,20 @@ class Balotario extends Model
                 }
                 array_push($array,$cantidad);
         }
-
+        
+        for($i=0;$i<count($unidad_contenido);$i++){
+               $pregunta=Pregunta::select('vuc.unidad_contenido')
+                                   ->where('v_preguntas.unidad_contenido_id','=',$unidad_contenido[$i])
+                                   ->where('v_preguntas.estado','=',1)
+                                   ->join('v_unidades_contenido as vuc','vuc.id','=','v_preguntas.unidad_contenido_id')->get();
+               if(count($pregunta)<$array[$i]){
+                   $data['rst']=2;
+                   $data['unidad_contenido']=$pregunta[$i]->unidad_contenido;
+                   $data['falta']=$array[$i]-count($pregunta);
+                   return $data;
+               }     
+        }
+        
         for($i=0;$i<count($unidad_contenido);$i++){
             $result=Pregunta::select("v_preguntas.id")
                     ->leftJoin('v_balotarios_preguntas as bp',function($join){
@@ -136,13 +148,8 @@ class Balotario extends Model
         }
             $balotario->modo=1;
             $balotario->save();
-            return 1;   
-//        if(count($result)>=$balotario->cantidad_maxima){
-//
-//            
-//        }else{
-//            return 2;
-//        }
+            $data['rst']=1;
+            return $data;   
 
     }
     

@@ -130,6 +130,24 @@
                         <div class="panel panel-success">
                             <img id="imageCurso" class="panel-heading img-responsive" src='img/course/calculo2f.jpg' style="width:100%;min-height: 90px;">
                             <div class="panel-body table-responsive no-padding">
+                                <div class="col-md-6 col-md-offset-3">
+                                     <table id="TableUnidadPregunta" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr class="cabecera">
+                                                <th>Unidad Contenido</th>
+                                                <th># de Preguntas</th>>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="cabecera">
+                                               <th>Unidad Contenido</th>
+                                               <th># de Preguntas</th>>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
                                 <div class="col-md-12">
                                     <table id="TableBalotario" class="table table-bordered table-hover">
                                         <thead>
