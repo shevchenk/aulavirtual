@@ -120,4 +120,14 @@ class ContenidoRespuestaPR extends Controller
          }
      }
 
+     public function guardarNotaRpta(Request $r )
+     {
+         if ( $r->ajax() ) {
+             ContenidoRespuesta::guardarNotaRpta($r);
+             $return['rst'] = 1;
+             $return['msj'] = 'Registro actualizado';
+             return response()->json($return);
+         }
+     }
+
 }
