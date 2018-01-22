@@ -140,7 +140,7 @@ HTMLCargarBalotario=function(result){
         html+="<tr id='trid_"+r.id+"'>"+
             "<td class='cantidad_maxima'>"+r.cantidad_maxima+"</td>"+
             "<td class='cantidad_pregunta'>"+r.cantidad_pregunta+"</td>"+
-            "<td class='tipo_evaluacion'><input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'>"+r.tipo_evaluacion+"</td>";
+            "<td class='tipo_evaluacion'><input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'><input type='hidden' class='unidad_contenido_id' value='"+r.unidad_contenido_id+"'>"+r.tipo_evaluacion+"</td>";
 //            "<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
         html+='<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar2(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
         if(r.cantidad_maxima!=0 && r.cantidad_pregunta!=0){
