@@ -253,7 +253,7 @@ class EvaluacionPR extends Controller
           $evaluacion_fecha = '';
           if($evaluacion->estado_cambio == 0)
           {
-            if($evaluacion->fecha_evaluacion == date('Y-m-d'))
+            if($evaluacion->fecha_evaluacion_inicial <= date('Y-m-d') && $evaluacion->fecha_evaluacion_final >= date('Y-m-d'))
             {
               $balotario = Balotario::where('programacion_unica_id', '=', $r->programacion_unica_id)
                                         ->where('tipo_evaluacion_id', '=', $r->tipo_evaluacion_id)
@@ -273,7 +273,8 @@ class EvaluacionPR extends Controller
               $renturnModel = NULL;
               $evaluacion_id = 0;
               $val_evaluacion = 'error_fecha';
-              $evaluacion_fecha = $evaluacion->fecha_evaluacion;
+              //$evaluacion_fecha = $evaluacion->fecha_evaluacion;
+              $evaluacion_fecha = date('Y-m-d');
             }
           }
 

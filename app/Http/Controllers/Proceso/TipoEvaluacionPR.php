@@ -201,8 +201,7 @@ class TipoEvaluacionPR extends Controller
                                       ->where('tipo_evaluacion_id', '=', trim($tipoeval->id))
                                       ->first();
 
-              $r['fecha_evaluacion'] = $value->fecha_evaluacion;
-
+              //$r['fecha_evaluacion'] = $value->fecha_evaluacion;
               if(count($evaluacion) == 0) // Insert
               {
                 $r['tipo_evaluacion_id'] = $tipoeval->id;
@@ -211,10 +210,10 @@ class TipoEvaluacionPR extends Controller
               }
               else
               {
-                if($value->evaluaciones_estado == 0){
+                if ($value->evaluaciones_estado == 0) {
                   $evaluacion->estado_cambio = 2;
                 }
-                $evaluacion->fecha_evaluacion = $value->fecha_evaluacion;
+                //$evaluacion->fecha_evaluacion = $value->fecha_evaluacion;
                 $evaluacion->estado = $value->evaluaciones_estado;
 
                 $evaluacion->persona_id_updated_at=Auth::user()->id;
