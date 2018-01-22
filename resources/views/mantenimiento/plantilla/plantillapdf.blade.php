@@ -65,7 +65,7 @@
                     @if (isset($preguntas))
                     <ol>
                         @foreach ( $preguntas as $key => $val)
-                        <li>{{ $key }}<span style="color: red">- Puntaje: {{ $val[0]->puntaje }}</span></li>
+                        <li>{{ $key }}</li>
                         <ul>
                             @foreach ( $val as $k)
                             <li>{{ $k->respuesta }}</li>

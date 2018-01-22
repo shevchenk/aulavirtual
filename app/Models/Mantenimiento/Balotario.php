@@ -113,14 +113,15 @@ class Balotario extends Model
         }
         
         for($i=0;$i<count($unidad_contenido);$i++){
-               $pregunta=Pregunta::select('vuc.unidad_contenido')
+               $preguntas=Pregunta::select('v_preguntas.id')
                                    ->where('v_preguntas.unidad_contenido_id','=',$unidad_contenido[$i])
-                                   ->where('v_preguntas.estado','=',1)
-                                   ->join('v_unidades_contenido as vuc','vuc.id','=','v_preguntas.unidad_contenido_id')->get();
-               if(count($pregunta)<$array[$i]){
+                                   ->where('v_preguntas.estado','=',1)->get();
+               
+               if(count($preguntas)<$array[$i]){
+                   $unidad_contenido= UnidadContenido::find($unidad_contenido[$i]);
                    $data['rst']=2;
-                   $data['unidad_contenido']=$pregunta[$i]->unidad_contenido;
-                   $data['falta']=$array[$i]-count($pregunta);
+                   $data['unidad_contenido']=$unidad_contenido->unidad_contenido;
+                   $data['falta']=$array[$i]-count($preguntas);
                    return $data;
                }     
         }
