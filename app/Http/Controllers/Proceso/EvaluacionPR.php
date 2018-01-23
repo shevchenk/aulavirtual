@@ -250,7 +250,8 @@ class EvaluacionPR extends Controller
                                   ->first();
 
           $val_evaluacion = '';
-          $evaluacion_fecha = '';
+          $evaluacion_fecha_inicial = '';
+          $evaluacion_fecha_final = '';
           if($evaluacion->estado_cambio == 0)
           {
             if($evaluacion->fecha_evaluacion_inicial <= date('Y-m-d') && $evaluacion->fecha_evaluacion_final >= date('Y-m-d'))
@@ -272,9 +273,10 @@ class EvaluacionPR extends Controller
             {
               $renturnModel = NULL;
               $evaluacion_id = 0;
-              $val_evaluacion = 'error_fecha';
-              //$evaluacion_fecha = $evaluacion->fecha_evaluacion;
-              $evaluacion_fecha = date('Y-m-d');
+              $val_evaluacion = 'error_fecha';              
+              //$evaluacion_fecha = date('Y-m-d');
+              $evaluacion_fecha_inicial = $evaluacion->fecha_evaluacion_inicial;
+              $evaluacion_fecha_final = $evaluacion->fecha_evaluacion_final;
             }
           }
 
@@ -283,8 +285,8 @@ class EvaluacionPR extends Controller
             $return['evaluacion_id'] = $evaluacion_id;
             $return['evaluacion_estado_cambio'] = $evaluacion->estado_cambio;
             $return['val_fecha_evaluacion'] = $val_evaluacion;
-            $return['evaluacion_fecha'] = $evaluacion_fecha;
-
+            $return['evaluacion_fecha_inicial'] = $evaluacion_fecha_inicial;
+            $return['evaluacion_fecha_final'] = $evaluacion_fecha_final;
             $return['data'] = $renturnModel;
             $return['msj'] = "No hay registros aún";
             return response()->json($return);

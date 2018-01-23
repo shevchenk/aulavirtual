@@ -237,7 +237,8 @@ HTMLiniciarEvaluacion=function(result){
   if(result.val_fecha_evaluacion == 'error_fecha')
   {
     //evaluacionG_fecha_valida = result.evaluacion_fecha;
-    swal("Validación!", "Usted no tiene permiso dar el examen en la fecha "+result.evaluacion_fecha+"!", "warning");
+    //swal("Validación!", "Usted no tiene permiso dar el examen en la fecha "+result.evaluacion_fecha+"!", "warning");
+    swal("Validación!", "Rango de fecha valido "+result.evaluacion_fecha_inicial+" a "+result.evaluacion_fecha_final, "warning");
 
     //AjaxEvaluacion.Cargar(HTMLCargarEvaluacion);
     AjaxTipoEvaluacion.Cargar(HTMLCargarTipoEvaluacion);
@@ -311,18 +312,18 @@ HTMLverEvaluacion=function(result){
 
    var html = '';
       html += '<div class="panel panel-primary">'+
-            '<div class="panel-heading text-center">'+
-                '<h4>'+tipo_evaluacion+' - '+curso+'<small style="color: #FFF;"> <label id="hora"></label></small><h4>'+
-            '</div>'+
-            '<div id="" class="panel-body" style="font-weight: normal;">'+
-                'A continuación su resultado de exámen: <br/><br/>';
+              '<div class="panel-heading text-center">'+
+                  '<h4>'+tipo_evaluacion+' - '+curso+'<small style="color: #FFF;"> <label id="hora"></label></small><h4>'+
+              '</div>'+
+              '<div id="" class="panel-body" style="font-weight: normal;">'+
+                  'A continuación su resultado de exámen: <br/><br/>';
 
           html += '<ul class="list-group">';
           var total_p = 0;
             $.each(result.data,function(index, r){
-                html += '<li class="list-group-item list-group-item-info" style="font-weight: bold;">'+r.pregunta+'</li>';
+                html += '<li class="list-group-item list-group-item-info" style="font-weight: bold;"><strong>'+(index+1)+'.- </strong>'+r.pregunta+'</li>';
 
-                html += '<li class="list-group-item"><span class="badge">'+r.puntaje+'</span>'+r.respuesta+'</li>';
+                html += '<li class="list-group-item"><span class="badge">'+r.puntaje+'</span><strong>R: </strong>'+r.respuesta+'</li>';
                 total_p = total_p + parseInt(r.puntaje);
             });
 
