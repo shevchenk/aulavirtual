@@ -28,6 +28,14 @@ class Curso extends Model
             ->Join('v_personas AS pdoc', function($join){
                 $join->on('pu.persona_id','=','pdoc.id');
             })
+            ->leftJoin('v_evaluaciones AS e', function($join){
+                $join->on('e.programacion_id','=','p.id')
+                ->where('e.estado','=',1)
+                ->where('e.estado_cambio','<',2);
+            })
+            ->leftJoin('v_tipos_evaluaciones AS te', function($join){
+                $join->on('te.id','=','e.tipo_evaluacion_id');
+            })
             ->select(
             'p.id',
             DB::raw('p.programacion_unica_id as pu_id'),
@@ -37,7 +45,8 @@ class Curso extends Model
             'c.curso','c.foto','pu.ciclo','pu.carrera','pu.semestre','c.foto_cab',
             DB::raw('DATE(pu.fecha_inicio) as fecha_inicio'),
             DB::raw('DATE(pu.fecha_final) as fecha_final'),
-            DB::raw("CONCAT(pdoc.nombre,' ', pdoc.paterno,' ', pdoc.materno) as docente")
+            DB::raw("CONCAT(pdoc.nombre,' ', pdoc.paterno,' ', pdoc.materno) as docente"),
+            DB::raw("GROUP_CONCAT( CONCAT(te.tipo_evaluacion,' => ',e.nota) SEPARATOR '<br>' ) evals")
             )
             ->where(
                 function($query) use ($r){
@@ -103,7 +112,10 @@ class Curso extends Model
                       }
                   }
                 }
-            );
+            )->groupBy('p.id', 'p.programacion_unica_id', 'pu.curso_id', 'palu.dni', 'palu.nombre', 'palu.paterno', 
+                        'palu.materno', 'c.curso', 'c.foto', 'pu.ciclo', 'pu.carrera', 'pu.semestre', 'c.foto_cab',
+                        'pu.fecha_inicio', 'pu.fecha_final', 'pdoc.nombre', 'pdoc.paterno', 'pdoc.materno');
+        
         $result = $sql->orderBy('p.id','asc')->paginate(10);
         return $result;
     }

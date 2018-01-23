@@ -94,7 +94,7 @@
                                               </div>
                                           </div>
                                       </th>
-                                      <th class="col-xs-2">
+                                      <th class="col-xs-1">
                                           <div class="form-group">
                                               <label><h4>Fecha Inicio</h4></label>
                                               <div class="input-group">
@@ -103,13 +103,22 @@
                                               </div>
                                           </div>
                                       </th>
-                                      <th class="col-xs-2">
+                                      <th class="col-xs-1">
                                           <div class="form-group">
                                               <label><h4>Fecha Final</h4></label>
                                               <div class="input-group">
                                                   <div class="input-group-addon"><i class="fa fa-search"></i></div>
                                                   <input type="text" class="form-control" name="txt_fecha_final" id="txt_fecha_final" placeholder="Hora Final" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
                                               </div>
+                                          </div>
+                                      </th>
+                                      <th class="col-xs-2">
+                                          <div class="form-group text-center">
+                                              <label><h4> <div class=""><i class="glyphicon glyphicon-book"></i></div> Evaluaciones</h4></label>
+                                              <!-- <div class="input-group">
+                                                  <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                  <input type="text" class="form-control" name="txt_nota" id="txt_nota" placeholder="Nota" onkeypress="return masterG.enterGlobal(event,'.input-group',1);">
+                                              </div> -->
                                           </div>
                                       </th>
                                       <!--<th class="col-xs-1">[-]</th>-->
@@ -126,6 +135,7 @@
                                     <th>Docente</th>
                                     <th>Fecha Inicio</th>
                                     <th>Fecha Final</th>
+                                    <th>Evaluaciones</th>
                                     <!--<th>[-]</th>-->
                                   </tr>
                               </tfoot>

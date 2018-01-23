@@ -127,7 +127,8 @@ HTMLCargarEvaluacion=function(result){
             "&nbsp</a>"+r.curso+"</td>"+
             "<td class='docente'>"+r.docente+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
-            "<td class='fecha_final'>"+r.fecha_final+"</td>";
+            "<td class='fecha_final'>"+r.fecha_final+"</td>"+
+            "<td class='evals'>"+r.evals+"</td>";
         //html +='<a class="btn btn-primary btn-sm" onClick="CargarContenido('+r.pu_id+','+r.curso_id+',\''+r.curso+'\')"><i class="fa fa-plus fa-lg"></i> </a></td>';
         html+="</tr>";
     });
