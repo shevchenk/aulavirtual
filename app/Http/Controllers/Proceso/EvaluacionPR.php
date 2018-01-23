@@ -315,36 +315,30 @@ class EvaluacionPR extends Controller
             {
               $val = false;
               $nota_puntaje = 0;
+              $puntos= 20/count($datos);
               foreach ($datos as $key => $value)
               {
                 $r['evaluacion_id'] = $value->evaluacion_id;
                 $r['pregunta_id'] = $value->pregunta_id;
                 $r['respuesta_id'] = $value->respuesta_id;
                 $respuesta = Respuesta::find($value->respuesta_id);
-                $r['puntaje'] = $respuesta->puntaje;
+                $r['puntaje'] = 0;
+                if( $respuesta->correcto==1 ){
+                  $r['puntaje'] = $puntos;
+                }
 
-                $evaluacion = EvaluacionDetalle::where('evaluacion_id', '=', trim($value->evaluacion_id))
-                                                ->where('pregunta_id', '=', $value->pregunta_id)
-                                                ->where('respuesta_id', '=', $value->respuesta_id)
-                                                ->where('estado', '=', 1)
-                                                ->first();
-                if (count($evaluacion) == 0) {
+               
                   EvaluacionDetalle::runNew($r);
                   $id_evaluacion = $value->evaluacion_id;
-                  $nota_puntaje += $respuesta->puntaje;
-                  $val = true;
-                }
+                  $nota_puntaje += $r['puntaje'];
+                
               }
 
-              // ACTUALIZA LA NOTA y ESTADO
-              if($val == true)
-              {
                 $r['id'] = $id_evaluacion;
                 $r['nota'] = $nota_puntaje;
                 $r['estado_cambio'] = 1;
                 Evaluacion::runEdit($r);
-              }
-              // --
+
             }
 
             $return['rst'] = 1;
