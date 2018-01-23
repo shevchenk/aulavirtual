@@ -1,6 +1,6 @@
 <script type="text/javascript">
 var AddEdit=0; //0: Editar | 1: Agregar
-var BalotarioG={id:0,tipo_evaluacion_id:0,unidad_contenido_id:'',tipo_evaluacion:'',cantidad_maxima:'',cantidad_pregunta:'',estado:1}; // Datos Globales
+var BalotarioG={id:0,tipo_evaluacion_id:0,unidad_contenido_id:'',tipo_evaluacion:'',cantidad_maxima:'',cantidad_pregunta:'',modo:0,estado:1}; // Datos Globales
 $(document).ready(function() {
      $("#TableBalotario").DataTable({
         "paging": true,
@@ -30,6 +30,9 @@ $(document).ready(function() {
         $('#ModalBalotarioForm #txt_cantidad_pregunta').val( BalotarioG.cantidad_pregunta );
         $('#ModalBalotarioForm #slct_unidad_contenido_id').selectpicker('val',unidad_contenido_id);
         $('#ModalBalotarioForm #slct_estado').selectpicker( 'val',BalotarioG.estado );
+        if(BalotarioG.modo==1){
+            $('#ModalBalotarioForm #txt_cantidad_maxima').prop('readonly', true);
+        }
     });
 
     $('#ModalBalotario').on('hidden.bs.modal', function (event) {
@@ -44,15 +47,20 @@ ValidaForm2=function(){
 
     if( $.trim( $("#ModalBalotarioForm #txt_cantidad_maxima").val() )=='' ){
         r=false;
-        msjG.mensaje('warning','Ingrese Cantidad Máxima de Preguntas',4000);
+        msjG.mensaje('warning','Ingrese Cantidad de Preguntas de Balotario',4000);
     }
-    else if( $.trim( $("#ModalBalotarioForm #txt_cantidad_pregunta").val() )=='' ){
+    else if( $.trim( $("#ModalBalotarioForm #txt_cantidad_pregunta").val() )=='' || $.trim( $("#ModalBalotarioForm #txt_cantidad_pregunta").val() )<4){
         r=false;
-        msjG.mensaje('warning','Ingrese Cantidad de Preguntas',4000);
+        msjG.mensaje('warning','Ingrese Cantidad de Preguntas de Evaluación mayor o igual a 4',4000);
     }
-    else if( $.trim( $("#ModalBalotarioForm #txt_cantidad_pregunta").val() )<4 ){
+    else if( $.trim( $("#ModalBalotarioForm #txt_cantidad_pregunta").val() )!=4 && $.trim( $("#ModalBalotarioForm #txt_cantidad_pregunta").val() )!=5 && 
+             $.trim( $("#ModalBalotarioForm #txt_cantidad_pregunta").val() )!=10 && $.trim( $("#ModalBalotarioForm #txt_cantidad_pregunta").val() )!=20 ){
         r=false;
-        msjG.mensaje('warning','Cantidad de Preguntas debe ser mayor a 4',4000);
+        msjG.mensaje('warning','Cantidad de Preguntas de Evaluación debe ser múltiplo de 20',4000);
+    }
+    else if( $.trim( $("#ModalBalotarioForm #txt_cantidad_maxima").val() ) < $.trim( $("#ModalBalotarioForm #txt_cantidad_pregunta").val() ) ){
+        r=false;
+        msjG.mensaje('warning','Cantidad de Preguntas de Balotario debe ser mayor o igual a Cantidad de Preguntas de Evaluación',4000);
     }
     else if( $.trim( $("#ModalBalotarioForm #slct_unidad_contenido_id").val() )=='' ){
         r=false;
@@ -69,6 +77,7 @@ AgregarEditar2=function(val,id){
     BalotarioG.cantidad_maxima='';
     BalotarioG.cantidad_pregunta='';
     BalotarioG.unidad_contenido_id='';
+    BalotarioG.modo='';
     BalotarioG.estado='1';
 
     if( val==0 ){
@@ -79,6 +88,7 @@ AgregarEditar2=function(val,id){
         BalotarioG.tipo_evaluacion=$("#TableBalotario #trid_"+id+" .tipo_evaluacion").text();
         BalotarioG.cantidad_pregunta=$("#TableBalotario #trid_"+id+" .cantidad_pregunta").text();
         BalotarioG.unidad_contenido_id=$("#TableBalotario #trid_"+id+" .unidad_contenido_id").val();
+        BalotarioG.modo=$("#TableBalotario #trid_"+id+" .modo").val();
         BalotarioG.estado=$("#TableBalotario #trid_"+id+" .estado").val();
 
     }
@@ -140,7 +150,9 @@ HTMLCargarBalotario=function(result){
         html+="<tr id='trid_"+r.id+"'>"+
             "<td class='cantidad_maxima'>"+r.cantidad_maxima+"</td>"+
             "<td class='cantidad_pregunta'>"+r.cantidad_pregunta+"</td>"+
-            "<td class='tipo_evaluacion'><input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'><input type='hidden' class='unidad_contenido_id' value='"+r.unidad_contenido_id+"'>"+r.tipo_evaluacion+"</td>";
+            "<td class='tipo_evaluacion'>"+
+            "<input type='hidden' class='modo' value='"+r.modo+"'>"+
+            "<input type='hidden' class='tipo_evaluacion_id' value='"+r.tipo_evaluacion_id+"'><input type='hidden' class='unidad_contenido_id' value='"+r.unidad_contenido_id+"'>"+r.tipo_evaluacion+"</td>";
 //            "<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
         html+='<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar2(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
         if(r.cantidad_maxima!=0 && r.cantidad_pregunta!=0){

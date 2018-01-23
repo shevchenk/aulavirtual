@@ -155,7 +155,8 @@ class Evaluacion extends Model
         if(count($result)>0){
             foreach ($result as $data){
                 $evaluacion =Evaluacion::find($data->id);
-                $evaluacion->fecha_reprogramada =$r->fecha_reprogramada;
+                $evaluacion->fecha_reprogramada_inicial =$r->fecha_reprogramada_inicial;
+                $evaluacion->fecha_reprogramada_final =$r->fecha_reprogramada_final;
                 $evaluacion->estado_cambio =3;
                 $evaluacion->persona_id_updated_at=Auth::user()->id;
                 $evaluacion->save();
@@ -163,7 +164,8 @@ class Evaluacion extends Model
                 $evaluacion=new Evaluacion;
                 $evaluacion->programacion_id=$data->programacion_id;
                 $evaluacion->tipo_evaluacion_id=$data->tipo_evaluacion_id;
-                $evaluacion->fecha_evaluacion=$r->fecha_reprogramada;
+                $evaluacion->fecha_evaluacion_inicial=$r->fecha_reprogramada_inicial;
+                $evaluacion->fecha_evaluacion_final=$r->fecha_reprogramada_final;
                 $evaluacion->estado_cambio=0;
                 $evaluacion->persona_id_created_at=Auth::user()->id;
                 $evaluacion->save();

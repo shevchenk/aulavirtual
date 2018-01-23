@@ -25,7 +25,8 @@ $(document).ready(function() {
         $('#ModalEvaluacionForm #txt_programacion_id').val(EvaluacionG.programacion_id);
         $('#ModalEvaluacionForm #txt_tipo_evaluacion_id').val(EvaluacionG.tipo_evaluacion_id);
         $('#ModalEvaluacionForm #txt_programacion_unica_id').val(EvaluacionG.programacion_unica_id);
-        $('#ModalEvaluacionForm #txt_fecha_reprogramada').val( EvaluacionG.fecha_reprogramada );
+        $('#ModalEvaluacionForm #txt_fecha_reprogramada_inicial').val( EvaluacionG.fecha_reprogramada );
+        $('#ModalEvaluacionForm #txt_fecha_reprogramada_final').val( EvaluacionG.fecha_reprogramada );
     });
 
     $('#ModalEvaluacion').on('hidden.bs.modal', function (event) {
@@ -41,9 +42,13 @@ ValidaForm2=function(){
         r=false;
         msjG.mensaje('warning','Seleccione Alumno',4000);
     }
-    else if( $.trim( $("#ModalEvaluacionForm #txt_fecha_reprogramada").val() )=='' ){
+    else if( $.trim( $("#ModalEvaluacionForm #txt_fecha_reprogramada_inicial").val() )=='' || $.trim( $("#ModalEvaluacionForm #txt_fecha_reprogramada_final").val() )==''){
         r=false;
-        msjG.mensaje('warning','Ingrese Fecha de Reprogramación',4000);
+        msjG.mensaje('warning','Ingrese Rango de Fechas de Reprogramación',4000);
+    }
+    else if( $.trim( $("#ModalEvaluacionForm #txt_fecha_reprogramada_inicial").val() ) > $.trim( $("#ModalEvaluacionForm #txt_fecha_reprogramada_final").val() )){
+        r=false;
+        msjG.mensaje('warning','La fecha Inicial debe ser menor o igual a la Final',4000);
     }
     return r;
 }

@@ -25,13 +25,13 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Cantidad Máxima</label>
+                            <label>Cantidad de Preguntas de Balotario</label>
                             <input type="text" onkeyup="masterG.DecimalMax(this, 2);" onkeypress="return masterG.validaDecimal(event, this);" class="form-control" id="txt_cantidad_maxima" name="txt_cantidad_maxima">
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Cantidad de Preguntas</label>
+                            <label>Cantidad de Preguntas de Evaluación</label>
                             <input type="text" onkeyup="masterG.DecimalMax(this, 2);" onkeypress="return masterG.validaDecimal(event, this);" class="form-control" id="txt_cantidad_pregunta" name="txt_cantidad_pregunta">
                         </div>
                     </div>

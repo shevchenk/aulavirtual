@@ -22,10 +22,16 @@
                         </span>
                     </div>
                     </div> 
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label>Fecha de Ampliación</label>
-                            <input type="text" class="form-control fecha" id="txt_fecha_reprogramada" name="txt_fecha_reprogramada" readonly="" >
+                            <input type="text" class="form-control fecha" id="txt_fecha_reprogramada_inicial" name="txt_fecha_reprogramada_inicial" readonly="" >
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Fecha de Ampliación</label>
+                            <input type="text" class="form-control fecha" id="txt_fecha_reprogramada_final" name="txt_fecha_reprogramada_final" readonly="" >
                         </div>
                     </div>
                     <div class="form-group"> 
