@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Mantenimiento\Curso;
-use App\Models\Mantenimiento\TipoEvaluacion;
+use App\Models\Mantenimiento\UnidadContenido;
 use App\Models\Mantenimiento\Pregunta;
 use App\Models\Mantenimiento\Respuesta;
 
@@ -62,17 +62,17 @@ class CargaPR extends Controller {
                     }
                     $curso = Curso::where('curso', '=', trim(utf8_encode($detfile[0])))
                                     ->where('estado','=',1)->first();
-                    $tipoevaluacion = TipoEvaluacion::where('tipo_evaluacion', '=', trim(utf8_encode($detfile[1])))
+                    $unidadcontenido =UnidadContenido::where('unidad_contenido', '=', trim(utf8_encode($detfile[1])))
                                                     ->where('estado','=',1)->first();
 
-                    if (count($tipoevaluacion) == 0 or count($curso) == 0) {
+                    if (count($unidadcontenido) == 0 or count($curso) == 0) {
                         
                         if(count($curso) == 0){
                               $msg_error = ($i+1).'- Motivo: No se encontro Curso: '.trim(utf8_encode($detfile[0])).'<br>'; 
                               array_push($array_error, $msg_error);
                         }
-                        if(count($tipoevaluacion) == 0){
-                              $msg_error = ($i+1).'- Motivo: No se encontro tipo de evaluación: '.trim(utf8_encode($detfile[1])).'<br>'; 
+                        if(count($unidadcontenido) == 0){
+                              $msg_error = ($i+1).'- Motivo: No se encontro Unidad de Contenido: '.trim(utf8_encode($detfile[1])).'<br>'; 
                               array_push($array_error, $msg_error);  
                         }
                         $no_pasa=$no_pasa+1;
@@ -83,19 +83,20 @@ class CargaPR extends Controller {
 
                         $pregunta = new Pregunta;
                         $pregunta->curso_id = $curso->id;
-                        $pregunta->tipo_evaluacion_id = $tipoevaluacion->id;
+                        $pregunta->unidad_contenido_id = $unidadcontenido->id;
                         $pregunta->pregunta = trim(utf8_encode($detfile[2]));
-                        $pregunta->puntaje = trim($detfile[3]);
+                        $pregunta->puntaje = 1;
                         $pregunta->persona_id_created_at = Auth::user()->id;
                         $pregunta->save();
 
-                        for ($h = 4; $h < count($detfile); $h += 2) {
+                        for ($h = 3; $h < count($detfile); $h += 2) {
                             if (trim($detfile[$h]) != '') {
                                 $respuesta = new Respuesta;
                                 $respuesta->pregunta_id = $pregunta->id;
                                 $respuesta->tipo_respuesta_id = 1;
                                 $respuesta->respuesta = trim(utf8_encode($detfile[$h]));
-                                $respuesta->puntaje = $detfile[$h + 1];
+                                $respuesta->puntaje = 1;
+                                $respuesta->correcto = $detfile[$h + 1];
                                 $respuesta->persona_id_created_at = Auth::user()->id;
                                 $respuesta->save();
                             }
