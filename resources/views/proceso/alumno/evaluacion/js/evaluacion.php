@@ -235,8 +235,8 @@ verEvaluacion=function(evaluacion_id, programacion_id, tipo_evaluacion, curso){
 };
 
 HTMLiniciarEvaluacion=function(result){
-  var tipo_evaluacionG = $("#ResultEvaluacion #txt_tipo_evaluacion").val();
-  var cursoG = $("#ResultEvaluacion #txt_curso").val();
+  tipo_evaluacionG = $("#ResultEvaluacion #txt_tipo_evaluacion").val();
+  cursoG = $("#ResultEvaluacion #txt_curso").val();
 
   if(result.val_fecha_evaluacion == 'error_fecha')
   {
