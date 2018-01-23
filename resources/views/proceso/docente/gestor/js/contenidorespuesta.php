@@ -27,7 +27,7 @@ HTMLCargarContenidoRespuesta=function(result){
             html+='<td class="nota">'+r.nota+'</td>';
             html+='<td class="nota"><button type="button" onClick="" class="btn btn-default" disabled>Guardar</button></td>';          
         } else {
-            html+='<td class="nota"><input type="text" class="form-control" id="nota'+r.id+'" name="nota'+r.id+'" style="width: 20%;" value="'+r.nota+'"></td>';
+            html+='<td class="nota"><input type="number" class="form-control" id="nota'+r.id+'" name="nota'+r.id+'" style="width: 30%;" value="'+(r.nota*1)+'" max="99"></td>';
             html+='<td class="nota"><button type="button" onClick="guardarNotaRpta('+r.id+', '+r.contenido_id+');" class="btn btn-primary">Guardar</button></td>';
         }
          
@@ -64,15 +64,10 @@ guardarNotaRpta=function(id, contenido_id){
     },
     function(){
         //alert($('#nota'+id).val());
-        //$('#nota'+id).prop('readonly', true);
         AjaxContenidoRespuesta.GuardarNotaRpta(HTMLGuardarNotaRpta);
     });
     
 };
-
-/*CambiarEstado=function(estado,id){
-    AjaxTipoEvaluacion.CambiarEstado(HTMLCambiarEstado,estado,id);
-}*/
 
 HTMLGuardarNotaRpta=function(result){
     if( result.rst==1 ){
