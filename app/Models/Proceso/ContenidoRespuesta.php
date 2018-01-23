@@ -16,8 +16,20 @@ class ContenidoRespuesta extends Model
                 'v_contenidos_respuestas.created_at','v_contenidos_respuestas.respuesta',
                 'v_contenidos_respuestas.ruta_respuesta', 'v_contenidos_respuestas.nota', 
                 'v_contenidos_respuestas.estado', 'v_contenidos_respuestas.created_at')
-            ->join('v_programaciones as vpr','vpr.id','=','v_contenidos_respuestas.programacion_id')
+            ->join('v_programaciones as vpr',function($join){
+                $join->on('vpr.id','=','v_contenidos_respuestas.programacion_id');
+            })
             ->join('v_personas as vpe','vpe.id','=','vpr.persona_id')
+            ->where( 
+                function($query) use ($r){
+                    if( $r->has("programacion_id")){
+                        $programacion_id=trim($r->programacion_id);
+                        if( $programacion_id !=''){
+                            $query->where('vpr.id','=',$r->programacion_id);
+                        }
+                    }
+                }
+            )
             ->where('v_contenidos_respuestas.contenido_id','=',$r->contenido_id)
             ->where('v_contenidos_respuestas.estado','=',1)
             ->orderBy('v_contenidos_respuestas.created_at','desc')->get();

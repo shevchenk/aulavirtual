@@ -122,6 +122,12 @@
                                                         </div>
                                                     </div>
                                                 </th>
+                                                <th class="col-xs-1">
+                                                    <div class="form-group">
+                                                        <label><h4>Exportar Notas:</h4></label>
+
+                                                    </div>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -135,6 +141,7 @@
                                                 <th>Docente</th>
                                                 <th>Fecha Inicio</th>
                                                 <th>Fecha Final</th>
+                                                <th>[]</th>
                                             </tr>
                                         </tfoot>
                                     </table>

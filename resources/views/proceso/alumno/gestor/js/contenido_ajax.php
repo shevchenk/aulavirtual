@@ -39,7 +39,8 @@ var AjaxContenido={
     },
     CargarRespuestaContenido:function(evento){
         var contenido_id=$("#frmRepuestaAlum #txt_contenido_id").val();
-        var data={contenido_id:contenido_id};
+        var programacion_id=$("#ContenidoForm #txt_programacion_id").val();
+        var data={contenido_id:contenido_id,programacion_id:programacion_id};
         url='AjaxDinamic/Proceso.ContenidoRespuestaPR@Load';
         $("#frmRepuestaAlum input[type='hidden']").not('.mant').remove();
         masterG.postAjax(url,data,evento);

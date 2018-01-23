@@ -51,8 +51,8 @@ HTMLCargarProgramacionUnica=function(result){
             "&nbsp</a>"+r.curso+"</td>"+
             "<td class='docente'>"+r.docente+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
-            "<td class='fecha_final'>"+r.fecha_final+"</td>";
-           // '<td><a class="btn btn-info btn-sm" onClick="CargarContenido('+r.id+','+r.curso_id+',\''+r.curso+'\',\''+r.foto_cab+'\',this)"><i class="fa fa-th-list fa-lg"></i> </a></td>';
+            "<td class='fecha_final'>"+r.fecha_final+"</td>"+
+            '<td><a class="btn btn-success btn-sm" href="ReportDinamic/Proceso.ProgramacionUnicaPR@ExportNota?programacion_unica_id='+r.id+'" target="_blank"><i class="glyphicon glyphicon-download-alt"></i> Export</a></td>';
         html+="</tr>";
     });
     $("#TableProgramacionUnica tbody").html(html); 

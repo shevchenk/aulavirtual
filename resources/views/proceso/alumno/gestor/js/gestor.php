@@ -103,7 +103,7 @@ HTMLCargarEvaluacion=function(result){
             estadohtml='<span id="'+r.id+'" onClick="CambiarEstado(0,'+r.id+')" class="btn btn-success">Activo</span>';
         }*/
 
-        html+='<tr id="trid_'+r.id+'" onClick="CargarContenido('+r.pu_id+','+r.curso_id+',\''+r.curso+'\',\''+r.foto_cab+'\',this)">'+
+        html+='<tr id="trid_'+r.id+'" onClick="CargarContenido('+r.id+','+r.pu_id+','+r.curso_id+',\''+r.curso+'\',\''+r.foto_cab+'\',this)">'+
             "<td class='carrera'>"+r.carrera+"</td>"+
             "<td class='semestre'>"+r.semestre+"</td>"+
             "<td class='ciclo'>"+r.ciclo+"</td>"+
@@ -139,8 +139,9 @@ HTMLCargarEvaluacion=function(result){
 };
 
 
-CargarContenido=function(id,curso_id,curso,imagen,boton){
+CargarContenido=function(programacion_id,id,curso_id,curso,imagen,boton){
      masterG.pintar_fila(boton);
+     $("#ContenidoForm #txt_programacion_id").val(programacion_id);
      $("#ContenidoForm #txt_programacion_unica_id").val(id);
      $("#ModalContenidoForm #txt_programacion_unica_id").val(id);
      $("#ModalContenidoForm #txt_curso_id").val(curso_id);

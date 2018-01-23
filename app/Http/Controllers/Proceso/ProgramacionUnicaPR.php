@@ -5,7 +5,7 @@ use DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-
+use Excel;
 use App\Http\Controllers\Api\Api;
 use App\Models\Proceso\ProgramacionUnica;
 use App\Models\Proceso\Curso;
@@ -286,4 +286,80 @@ class ProgramacionUnicaPR extends Controller{
         return $data;
     }
 
+    public function ExportNota(Request $r ){
+        
+        ini_set('memory_limit', '1024M');
+        set_time_limit(300);
+        $renturnModel = ProgramacionUnica::runExportNota($r);
+        
+        Excel::create('Matricula', function($excel) use($renturnModel) {
+
+        $excel->setTitle('Reporte de Matriculas')
+              ->setCreator('Jorge Salcedo')
+              ->setCompany('JS Soluciones')
+              ->setDescription('Matrícula PAE o Seminarios');
+
+        $excel->sheet('Matricula', function($sheet) use($renturnModel) {
+            $sheet->setOrientation('landscape');
+            $sheet->setPageMargin(array(
+                0.25, 0.30, 0.25, 0.30
+            ));
+
+            $sheet->setStyle(array(
+                'font' => array(
+                    'name'      =>  'Bookman Old Style',
+                    'size'      =>  8,
+                    'bold'      =>  false
+                )
+            ));
+
+            $sheet->cell('A1', function($cell) {
+                $cell->setValue('REPORTE DE MATRICULAS');
+                $cell->setFont(array(
+                    'family'     => 'Bookman Old Style',
+                    'size'       => '20',
+                    'bold'       =>  true
+                ));
+            });
+            $sheet->mergeCells('A1:'.$renturnModel['max'].'1');
+            $sheet->cells('A1:'.$renturnModel['max'].'1', function($cells) {
+                $cells->setBorder('solid', 'none', 'none', 'solid');
+                $cells->setAlignment('center');
+                $cells->setValignment('center');
+            });
+            
+            $sheet->setWidth($renturnModel['length']);
+            $sheet->fromArray(array(
+                array(''),
+                $renturnModel['cabecera2']
+            ));
+
+            $data=json_decode(json_encode($renturnModel['data']), true);
+            $sheet->rows($data);
+
+            $sheet->cells('A3:'.$renturnModel['max'].'3', function($cells) {
+                $cells->setBorder('solid', 'none', 'none', 'solid');
+                $cells->setAlignment('center');
+                $cells->setValignment('center');
+                $cells->setFont(array(
+                    'family'     => 'Bookman Old Style',
+                    'size'       => '10',
+                    'bold'       =>  true
+                ));
+            });
+            
+            $sheet->setAutoSize(array(
+                'Q', 'R','S','T','U','V'
+            ));
+
+            $count = $sheet->getHighestRow();
+
+            $sheet->getStyle('Q4:V'.$count)->getAlignment()->setWrapText(true);
+            
+            $sheet->setBorder('A3:'.$renturnModel['max'].$count, 'thin');
+
+        });
+        
+        })->export('xlsx');
+    }
 }

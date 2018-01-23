@@ -142,6 +142,7 @@
                         <div class="panel-body table-responsive no-padding">
                             <div class="col-md-12">
                                 <input type= "hidden" name="txt_programacion_unica_id" id="txt_programacion_unica_id" class="form-control mant" >
+                                <input type= "hidden" name="txt_programacion_id" id="txt_programacion_id" class="form-control mant" >
                                 <div class="box box-solid">
                                     <div class="box-body">
                                         <div class="box-group" id="DivContenido">
