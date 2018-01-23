@@ -124,14 +124,14 @@ class CargaPR extends Controller {
     public function ExportPlantilla(Request $r ){
         $renturnModel = $this->runExportPlantilla($r);
         
-        Excel::create('Seminario', function($excel) use($renturnModel) {
+        Excel::create('Plantilla', function($excel) use($renturnModel) {
 
-        $excel->setTitle('Reporte de Seminarios')
+        $excel->setTitle('Plantilla de carga')
               ->setCreator('Jorge Salcedo')
               ->setCompany('JS Soluciones')
-              ->setDescription('Matrícula PAE o Seminarios');
+              ->setDescription('Plantilla de carga de preguntas y respuestas');
 
-        $excel->sheet('Seminarios', function($sheet) use($renturnModel) {
+        $excel->sheet('Plantillas', function($sheet) use($renturnModel) {
             $sheet->setOrientation('landscape');
             $sheet->setPageMargin(array(
                 0.25, 0.30, 0.25, 0.30
