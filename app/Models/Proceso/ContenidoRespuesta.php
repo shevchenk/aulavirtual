@@ -11,10 +11,11 @@ class ContenidoRespuesta extends Model
     protected   $table = 'v_contenidos_respuestas';
 
     public static function runLoad($r){
-        $result=ContenidoRespuesta::select('v_contenidos_respuestas.id',
+        $result=ContenidoRespuesta::select('v_contenidos_respuestas.id', 'v_contenidos_respuestas.contenido_id',
                 DB::raw("CONCAT_WS(' ',vpe.paterno,vpe.materno,vpe.nombre) as alumno"),
                 'v_contenidos_respuestas.created_at','v_contenidos_respuestas.respuesta',
-                'v_contenidos_respuestas.ruta_respuesta', 'v_contenidos_respuestas.estado', 'v_contenidos_respuestas.created_at')
+                'v_contenidos_respuestas.ruta_respuesta', 'v_contenidos_respuestas.nota', 
+                'v_contenidos_respuestas.estado', 'v_contenidos_respuestas.created_at')
             ->join('v_programaciones as vpr','vpr.id','=','v_contenidos_respuestas.programacion_id')
             ->join('v_personas as vpe','vpe.id','=','vpr.persona_id')
             ->where('v_contenidos_respuestas.contenido_id','=',$r->contenido_id)
@@ -23,8 +24,8 @@ class ContenidoRespuesta extends Model
         return $result;
     }
 
-    public static function runEditStatus($r){
-
+    public static function runEditStatus($r)
+    {
         $contenido = ContenidoRespuesta::find($r->id);
         $contenido->estado = trim( $r->estadof );
         $contenido->persona_id_updated_at=Auth::user()->id;
@@ -55,6 +56,14 @@ class ContenidoRespuesta extends Model
         $contenido->save();
     }
     // --
+
+    public static function guardarNotaRpta($r)
+    {
+        $contenido = ContenidoRespuesta::find($r->id);
+        $contenido->nota = trim( $r->nota );
+        $contenido->persona_id_updated_at=Auth::user()->id;
+        $contenido->save();
+    }
 
     public function fileToFile($file, $url){
         if ( !is_dir('file') ) {
