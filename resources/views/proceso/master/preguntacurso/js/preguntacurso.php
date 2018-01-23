@@ -37,6 +37,10 @@ $(document).ready(function() {
         $("#ModalCursoForm input[type='hidden']").not('.mant').remove();
     });
     
+    $(document).on('click', '#btnplantilla', function(event) {
+            $(this).attr('href','ReportDinamic/Proceso.CargaPR@ExportPlantilla?id=1');
+    });
+    
 });
 
 ValidaForm=function(){

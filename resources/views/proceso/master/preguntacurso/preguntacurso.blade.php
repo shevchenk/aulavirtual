@@ -78,6 +78,9 @@
                                         <div class='btn btn-success btn-sm' class="btn btn-success" data-toggle="modal" data-target="#ModalMasivo">
                                             <i class="fa fa-plus fa-lg"></i>&nbsp;Masivo (Preguntas y Respuestas)
                                         </div>
+                                        <a class="btn btn-info btn-sm" id="btnplantilla" name="btnplantilla" href="" target="_blank">
+                                            <i class="glyphicon glyphicon-download-alt"></i>&nbsp;Plantilla (Cabecera)
+                                        </a>
                                     </div>
                                 </div><!-- .box-body -->
                             </div>

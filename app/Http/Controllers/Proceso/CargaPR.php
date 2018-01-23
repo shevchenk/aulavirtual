@@ -10,6 +10,7 @@ use App\Models\Mantenimiento\Curso;
 use App\Models\Mantenimiento\UnidadContenido;
 use App\Models\Mantenimiento\Pregunta;
 use App\Models\Mantenimiento\Respuesta;
+use Excel;
 
 class CargaPR extends Controller {
 
@@ -118,6 +119,102 @@ class CargaPR extends Controller {
 
             return response()->json($return);
         }
+    }
+    
+    public function ExportPlantilla(Request $r ){
+        $renturnModel = $this->runExportPlantilla($r);
+        
+        Excel::create('Seminario', function($excel) use($renturnModel) {
+
+        $excel->setTitle('Reporte de Seminarios')
+              ->setCreator('Jorge Salcedo')
+              ->setCompany('JS Soluciones')
+              ->setDescription('Matrícula PAE o Seminarios');
+
+        $excel->sheet('Seminarios', function($sheet) use($renturnModel) {
+            $sheet->setOrientation('landscape');
+            $sheet->setPageMargin(array(
+                0.25, 0.30, 0.25, 0.30
+            ));
+
+            $sheet->setStyle(array(
+                'font' => array(
+                    'name'      =>  'Bookman Old Style',
+                    'size'      =>  8,
+                    'bold'      =>  false
+                )
+            ));
+
+            $sheet->cell('A1', function($cell) {
+                $cell->setValue('CARGA DE PREGUNTAS Y RESPUESTAS');
+                $cell->setFont(array(
+                    'family'     => 'Bookman Old Style',
+                    'size'       => '20',
+                    'bold'       =>  true
+                ));
+            });
+            $sheet->mergeCells('A1:'.$renturnModel['max'].'1');
+            $sheet->cells('A1:'.$renturnModel['max'].'1', function($cells) {
+                $cells->setBorder('solid', 'none', 'none', 'solid');
+                $cells->setAlignment('center');
+                $cells->setValignment('center');
+            });
+
+            $sheet->setWidth($renturnModel['length']);
+            $sheet->fromArray(array(
+                array(''),
+                $renturnModel['cabecera']
+            ));
+
+            $data=json_decode(json_encode($renturnModel['data']), true);
+            $sheet->rows($data);
+
+            $sheet->cells('A3:'.$renturnModel['max'].'3', function($cells) {
+                $cells->setBorder('solid', 'none', 'none', 'solid');
+                $cells->setAlignment('center');
+                $cells->setValignment('center');
+                $cells->setFont(array(
+                    'family'     => 'Bookman Old Style',
+                    'size'       => '10',
+                    'bold'       =>  true
+                ));
+            });
+            
+            $sheet->setAutoSize(array(
+                'M', 'N','O'
+            ));
+
+            $count = $sheet->getHighestRow();
+
+            $sheet->getStyle('M4:O'.$count)->getAlignment()->setWrapText(true);
+            
+            $sheet->setBorder('A3:'.$renturnModel['max'].$count, 'thin');
+
+        });
+        
+        })->export('xlsx');
+    }
+    
+    public static function runExportPlantilla($r){
+        
+        $rsql= array();
+
+        $length=array(
+            'A'=>5,'B'=>15,'C'=>20,'D'=>20,'E'=>20,'F'=>15,'G'=>15,'H'=>25,'I'=>30,
+            'J'=>15,'K'=>15,
+        );
+        $cabecera=array(
+            'Curso','Unidad de Contenido','Pregunta','Respuesta 1','Alternativa Correcta 1','Respuesta 2','Alternativa Correcta 2',
+            'Respuesta 3','Alternativa Correcta 3','Respuesta n','Alternativa Correcta n'
+        );
+        $campos=array();
+
+        $r['data']=$rsql;
+        $r['cabecera']=$cabecera;
+        $r['campos']=$campos;
+        $r['length']=$length;
+        $r['max']='K'; // Max. Celda en LETRA
+        return $r;
     }
 
 }
