@@ -204,6 +204,8 @@
                     <hr>
                     <form id="ContenidoRespuestaForm" style="display: none">
                         <input type= "hidden" name="txt_contenido_id" id="txt_contenido_id" class="form-control mant" >
+                        <input type= "hidden" name="txt_contenido_respuesta_id" id="txt_contenido_respuesta_id" class="form-control mant" >
+                        <input type= "hidden" name="txt_nota_cr" id="txt_nota_cr" class="form-control mant" >
                         <div class="panel panel-warning">
                             <div class="panel-heading" style="background-color: #FFE699;color:black">
                                 <center>.::Respuesta de Contenido::.<b id="titulo_tarea"></b></center>
@@ -217,6 +219,8 @@
                                                 <th>Respuesta</th>
                                                 <th>Archivo</th>
                                                 <th>Fecha</th>
+                                                <th>Nota</th>
+                                                <th>[]</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -227,6 +231,8 @@
                                                 <th>Respuesta</th>
                                                 <th>Archivo</th>
                                                 <th>Fecha</th>
+                                                <th>Nota</th>
+                                                <th>[]</th>
                                             </tr>
                                         </tfoot>
                                     </table>
