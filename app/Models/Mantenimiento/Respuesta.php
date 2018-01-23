@@ -4,6 +4,7 @@ namespace App\Models\Mantenimiento;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class Respuesta extends Model
 {
@@ -47,7 +48,8 @@ class Respuesta extends Model
     public static function runLoad($r)
     {
         $sql=Respuesta::select('v_respuestas.id','v_respuestas.pregunta_id','v_respuestas.tipo_respuesta_id','v_respuestas.respuesta',
-                'v_respuestas.puntaje','v_respuestas.estado','vp.pregunta','vtr.tipo_respuesta','v_respuestas.correcto as correcto_id')
+                'v_respuestas.puntaje','v_respuestas.estado','vp.pregunta','vtr.tipo_respuesta','v_respuestas.correcto as correcto_id',
+                DB::raw('CASE v_respuestas.correcto  WHEN 0 THEN "No" WHEN 1 THEN "Si" END AS alternativa_correcta'))
             ->join('v_preguntas as vp','vp.id','=','v_respuestas.pregunta_id')
             ->join('v_tipos_respuestas as vtr','vtr.id','=','v_respuestas.tipo_respuesta_id')
             ->where( 
@@ -65,10 +67,10 @@ class Respuesta extends Model
                             $query->where('vp.pregunta','like','%'.$pregunta.'%');
                         }   
                     }
-                    if( $r->has("tipo_respuesta") ){
-                        $tipo_respuesta=trim($r->tipo_respuesta);
-                        if( $tipo_respuesta !='' ){
-                            $query->where('vtr.tipo_respuesta','like','%'.$tipo_respuesta.'%');
+                    if( $r->has("alternativa_correcta") ){
+                        $alternativa_correcta=trim($r->alternativa_correcta);
+                        if( $alternativa_correcta !='' ){
+                            $query->where('v_respuestas.correcto','=',$r->alternativa_correcta);
                         }   
                     }
                     if( $r->has("respuesta") ){

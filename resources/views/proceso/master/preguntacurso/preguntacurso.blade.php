@@ -189,10 +189,13 @@
                                                 </th>
                                                 <th class="col-xs-2">
                                                     <div class="form-group">
-                                                        <label><h4>Tipo Respuesta:</h4></label>
+                                                        <label><h4>Aternativa Correcta:</h4></label>
                                                         <div class="input-group">
-                                                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                                            <input type="text" class="form-control" name="txt_tipo_respuesta" id="txt_tipo_respuesta" placeholder="Tipo de Respuesta" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
+                                                            <select class="form-control" name="slct_alternativa_correcta" id="slct_alternativa_correcta">
+                                                                <option value='' selected>.::Todo::.</option>
+                                                                <option value='0'>No</option>
+                                                                <option value='1'>Si</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </th>
@@ -234,7 +237,7 @@
                                         <tfoot>
                                             <tr class="cabecera">
                                                 <th>Pregunta</th>
-                                                <th>Tipo Respuesta</th>
+                                                <th>Aternativa Correcta</th>
                                                 <th>Alternativa</th>
 <!--                                                <th>Puntaje</th>-->
                                                 <th>Estado</th>

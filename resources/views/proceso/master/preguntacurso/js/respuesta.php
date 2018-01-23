@@ -128,7 +128,7 @@ HTMLCargarRespuesta=function(result){
 
         html+="<tr id='trid_"+r.id+"'>"+
             "<td class='pregunta'>"+r.pregunta+"</td>"+
-            "<td class='tipo_respuesta'>"+r.tipo_respuesta+"</td>"+
+            "<td class='alternativa_correcta'>"+r.alternativa_correcta+"</td>"+
             "<td class='respuesta'>"+r.respuesta+"</td>"+
 //            "<td class='puntaje'>"+r.puntaje+"</td>"+
             "<td>"+

@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Correcto</label>
+                            <label>Alternativa Correcta</label>
                             <select class="form-control selectpicker show-menu-arrow" name="slct_correcto_id" id="slct_correcto_id">
                                 <option value>.::Seleccione::.</option>
                                 <option  value='0'>No</option>
