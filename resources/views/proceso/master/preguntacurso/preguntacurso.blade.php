@@ -112,7 +112,7 @@
                                                         <label><h4>Unidad de Contenido:</h4></label>
                                                         <div class="input-group">
                                                             <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                                            <input type="text" class="form-control" name="txt_unidad" id="txt_unidad" placeholder="Unidad de Contenido" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
+                                                            <input type="text" class="form-control" name="unidad_contenido" id="unidad_contenido" placeholder="Unidad de Contenido" onkeypress="return masterG.enterGlobal(event, '.input-group', 1);">
                                                         </div>
                                                     </div>
                                                 </th>
