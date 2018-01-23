@@ -90,6 +90,7 @@ class Evaluacion extends Model
               )
               ->where(
                   function($query) use ($r){
+                      $query->where('ed.estado', '=', 1);
                       $query->where('e.id', '=', $r->evaluacion_id);
                   }
               )
