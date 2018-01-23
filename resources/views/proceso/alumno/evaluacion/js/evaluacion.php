@@ -312,7 +312,7 @@ verContenidoIniciarEvaluacion = function (){
               html += '</ul>';
             }
 
-          html += '<div id="footer-preguntas" class="panel-footer"><span class="text-left">Pregunta N°'+(ceval+1)+" de "+data_evaluacion_preg.length()+' de </span><button type="button" id="'+data_evaluacion_preg[ceval].pregunta_id+'" onClick="verSiguientePregunta(this.id);" class="btn btn-primary btn-sigue-pregu text-right">Siguiente</button></div>'+
+          html += '<div id="footer-preguntas" class="col-md-12 panel-footer"><div class="col-md-8 text-left">Pregunta N° '+(ceval+1)+" de "+data_evaluacion_preg.length+' </div><div class="col-md-4 text-right"><button type="button" id="'+data_evaluacion_preg[ceval].pregunta_id+'" onClick="verSiguientePregunta(this.id);" class="btn btn-primary btn-sigue-pregu">Siguiente</button></div></div>'+
                 '</div>';
     
     $("#resultado").html(html)
