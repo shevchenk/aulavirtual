@@ -86,7 +86,7 @@ class Evaluacion extends Model
               'p.pregunta',
               DB::raw('r.id AS respuesta_id'),
               'r.respuesta',
-              'r.puntaje'
+              'ed.puntaje'
               )
               ->where(
                   function($query) use ($r){
