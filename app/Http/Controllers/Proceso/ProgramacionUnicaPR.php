@@ -291,15 +291,15 @@ class ProgramacionUnicaPR extends Controller{
         ini_set('memory_limit', '1024M');
         set_time_limit(300);
         $renturnModel = ProgramacionUnica::runExportNota($r);
-        
-        Excel::create('Matricula', function($excel) use($renturnModel) {
 
-        $excel->setTitle('Reporte de Matriculas')
+        Excel::create('Notas', function($excel) use($renturnModel) {
+
+        $excel->setTitle('Reporte de Notas')
               ->setCreator('Jorge Salcedo')
               ->setCompany('JS Soluciones')
-              ->setDescription('Matrícula PAE o Seminarios');
+              ->setDescription('Reporte de Notas');
 
-        $excel->sheet('Matricula', function($sheet) use($renturnModel) {
+        $excel->sheet('Nota', function($sheet) use($renturnModel) {
             $sheet->setOrientation('landscape');
             $sheet->setPageMargin(array(
                 0.25, 0.30, 0.25, 0.30
@@ -313,53 +313,28 @@ class ProgramacionUnicaPR extends Controller{
                 )
             ));
 
-            $sheet->cell('A1', function($cell) {
-                $cell->setValue('REPORTE DE MATRICULAS');
-                $cell->setFont(array(
-                    'family'     => 'Bookman Old Style',
-                    'size'       => '20',
-                    'bold'       =>  true
-                ));
-            });
-            $sheet->mergeCells('A1:'.$renturnModel['max'].'1');
-            $sheet->cells('A1:'.$renturnModel['max'].'1', function($cells) {
-                $cells->setBorder('solid', 'none', 'none', 'solid');
-                $cells->setAlignment('center');
-                $cells->setValignment('center');
-            });
-            
-            $sheet->setWidth($renturnModel['length']);
-            $sheet->fromArray(array(
-                array(''),
-                $renturnModel['cabecera2']
-            ));
+            $valores=array(
+                        'data' => json_decode(json_encode($renturnModel['data']), true),
+                        'campos'=>$renturnModel['campos'],
+                        'cabecera1'=>$renturnModel['cabecera1'],
+                        'cabecant'=>$renturnModel['cabecantNro'],
+                        'cabecera2'=>$renturnModel['cabecera2']
+                    );
 
-            $data=json_decode(json_encode($renturnModel['data']), true);
-            $sheet->rows($data);
-
-            $sheet->cells('A3:'.$renturnModel['max'].'3', function($cells) {
-                $cells->setBorder('solid', 'none', 'none', 'solid');
-                $cells->setAlignment('center');
-                $cells->setValignment('center');
-                $cells->setFont(array(
-                    'family'     => 'Bookman Old Style',
-                    'size'       => '10',
-                    'bold'       =>  true
-                ));
-            });
-            
+            $sheet->loadView('reporte.exportar.nota', $valores);
             $sheet->setAutoSize(array(
-                'Q', 'R','S','T','U','V'
+                'R','S','T','U'
             ));
 
             $count = $sheet->getHighestRow();
 
-            $sheet->getStyle('Q4:V'.$count)->getAlignment()->setWrapText(true);
+            $sheet->getStyle('R5:U'.$count)->getAlignment()->setWrapText(true);
             
             $sheet->setBorder('A3:'.$renturnModel['max'].$count, 'thin');
 
         });
         
         })->export('xlsx');
+        
     }
 }

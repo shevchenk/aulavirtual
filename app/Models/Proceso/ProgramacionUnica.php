@@ -73,159 +73,119 @@ class ProgramacionUnica extends Model
     }
     
     public static function runLoadNota($r){
+
+        $abc=array('C','D','E','F','G','H','I','J','K','L','M','N');
+        $aux_unidad_contenido_id=0;
+        $aux_key_fin=0;
+        $aux_cantNro=0;
         
-        $id=Auth::user()->id;
-        $sql=DB::table('mat_matriculas AS mm')
-            ->join('mat_matriculas_detalles AS mmd',function($join){
-                $join->on('mmd.matricula_id','=','mm.id')
-                ->where('mmd.estado',1);
-            })
-            ->join('personas AS p',function($join){
-                $join->on('p.id','=','mm.persona_id');
-            })
-            ->join('mat_alumnos AS ma',function($join){
-                $join->on('ma.persona_id','=','p.id');
+        $length=array('A'=>5,'B'=>15);
+        $cabecera1=array('Alumnos');
+        $cabecera2=array('N°','Alumno');
+        $max='B';
+        $cabecantLetra=array('A2:B2');
+        $campos=array('alumno');
+        $cabecantNro=array(2);
+        
+        $left_unidad_contenido=DB::table('v_unidades_contenido as vuco')
+                                ->select('vuco.id','vuco.unidad_contenido','vco.id as contenido_id')
+                                ->join('v_contenidos as vco', function($join)use($r){
+                                    $join->on('vco.unidad_contenido_id','=','vuco.id')
+                                         ->where('vco.tipo_respuesta','=',1)
+                                         ->where('vco.programacion_unica_id','=',$r->programacion_unica_id)
+                                         ->where('vco.estado','=',1);
+                                })
+                                ->where('vuco.id','!=',1)
+                                ->orderBy('vuco.id')->get();
 
-            })
-            ->join('sucursales AS s',function($join){
-                $join->on('s.id','=','mm.sucursal_id');
-
-            })
-            ->join('mat_tipos_participantes AS mtp',function($join){
-                $join->on('mtp.id','=','mm.tipo_participante_id');
-
-            })
-            ->join('mat_programaciones AS mp',function($join){
-                $join->on('mp.id','=','mmd.programacion_id');
-
-            })
-            ->join('mat_cursos AS mc',function($join){
-                $join->on('mc.id','=','mp.curso_id');
-
-            })
-            ->join('personas AS pcaj',function($join){
-                $join->on('pcaj.id','=','mm.persona_caja_id');
-
-            })
-            ->join('personas AS pmar',function($join){
-                $join->on('pmar.id','=','mm.persona_marketing_id');
-
-            })
-            ->join('personas AS pmat',function($join){
-                $join->on('pmat.id','=','mm.persona_matricula_id');
-
-            })
-            ->select('mm.id','p.dni','p.nombre','p.paterno','p.materno','p.telefono','p.celular','p.email','ma.direccion',
-                     'mm.fecha_matricula','s.sucursal','mtp.tipo_participante','mm.nro_pago_inscripcion','mm.monto_pago_inscripcion','mm.nro_pago','mm.monto_pago',
-                     DB::raw('GROUP_CONCAT( IF(mp.sucursal_id=1,"OnLine","Presencial") ORDER BY mmd.id SEPARATOR "\n") modalidad'),
-                     DB::raw('GROUP_CONCAT( mc.curso ORDER BY mmd.id SEPARATOR "\n") cursos'),
-                     DB::raw('GROUP_CONCAT( IFNULL(mmd.nro_pago,"") ORDER BY mmd.id SEPARATOR "\n") nro_pago_c'),
-                     DB::raw('GROUP_CONCAT( IFNULL(mmd.monto_pago,0) ORDER BY mmd.id SEPARATOR "\n") monto_pago_c'),
-                     DB::raw('GROUP_CONCAT( mmd.nro_pago_certificado ORDER BY mmd.id SEPARATOR "\n") nro_pago_certificado'),
-                     DB::raw('GROUP_CONCAT( mmd.monto_pago_certificado ORDER BY mmd.id SEPARATOR "\n") monto_pago_certificado'),
-                     'mm.nro_promocion','mm.monto_promocion',
-                     DB::raw('SUM(mmd.monto_pago)+SUM(mmd.monto_pago_certificado) subtotal'),
-                     DB::raw('(mm.monto_pago_inscripcion+mm.monto_pago+SUM(mmd.monto_pago)+SUM(mmd.monto_pago_certificado)+SUM(mm.monto_promocion)) total'),
-                     DB::raw('CONCAT_WS(" ",pcaj.paterno,pcaj.materno,pcaj.nombre) as cajera'),
-                     DB::raw('CONCAT_WS(" ",pmar.paterno,pmar.materno,pmar.nombre) as marketing'),
-                     DB::raw('CONCAT_WS(" ",pmat.paterno,pmat.materno,pmat.nombre) as matricula'),
-                    'mm.observacion',DB::raw('COUNT(mmd.id) ndet'))
-            ->where( 
-                function($query) use ($r){
-
-                    if( $r->has("fecha_inicial") AND $r->has("fecha_final")){
-                        $inicial=trim($r->fecha_inicial);
-                        $final=trim($r->fecha_final);
-                        if( $inicial !=''AND $final!=''){
-                            $query ->whereBetween(DB::raw('DATE_FORMAT(mm.fecha_matricula,"%Y-%m")'), array($r->fecha_inicial,$r->fecha_final));
-                        }
-                    }
-
-                    if( $r->has("fecha_ini") AND $r->has("fecha_fin")){
-                        $inicial=trim($r->fecha_ini);
-                        $final=trim($r->fecha_fin);
-                        if( $inicial !=''AND $final!=''){
-                            $query ->whereBetween('mm.fecha_matricula', array($r->fecha_ini,$r->fecha_fin));
-                        }
-                    }
+        $sql= ProgramacionUnica::select(DB::raw("CONCAT_WS(' ',vpe.paterno,vpe.materno,vpe.nombre) as alumno"))
+                ->join('v_programaciones as vpro', function($join){
+                  $join->on('vpro.programacion_unica_id','=','v_programaciones_unicas.id')
+                     ->where('vpro.estado','=',1);
+                })
+                ->join('v_personas as vpe', function($join){
+                    $join->on('vpe.id','=','vpro.persona_id');
+                });
+        $array_groupby=array('vpe.id');
+        foreach($left_unidad_contenido as $key => $res){
+            $sql->addSelect(DB::raw("IFNULL(vcore$key.nota,0) as t$key"))
+                ->leftjoin('v_contenidos_respuestas as vcore'.$key, function($join)use($res,$key){
+                    $join->where('vcore'.$key.'.contenido_id','=',$res->contenido_id)
+                         ->where('vcore'.$key.'.estado','=',1)
+                         ->on('vcore'.$key.'.persona_id_created_at','=','vpe.id');
+                });
+            array_push($array_groupby,"vcore$key.nota");
+            array_push($cabecera2,"Tarea");
+            array_push($campos,"t$key");
+            $length[$abc[$key]]=20;
+            $max=$abc[$key];
+            
+            if($aux_unidad_contenido_id!==$res->id){
+                $aux_unidad_contenido_id = $res->id;
+                array_push($cabecera1,$res->unidad_contenido);
+                $aux_key_fin=$key;
+                array_push($cabecantLetra,$abc[$key].'3:'.$abc[$aux_key_fin].'3');
+                if ($key > 0) {
+                   array_push($cabecantNro,$aux_cantNro);
                 }
-            )
-            ->where('mm.estado',1)
-            ->where('mc.tipo_curso',1)
-            ->whereRaw('mm.sucursal_id IN (SELECT DISTINCT(ppv.sucursal_id)
-                            FROM personas_privilegios_sucursales ppv
-                            WHERE ppv.persona_id='.$id.')')
-            ->groupBy('mm.id','p.dni','p.nombre','p.paterno','p.materno','p.telefono','p.celular','p.email','ma.direccion',
-                     'mm.fecha_matricula','s.sucursal','mtp.tipo_participante','mm.nro_pago_inscripcion','mm.monto_pago_inscripcion','mm.nro_pago','mm.monto_pago','mm.nro_promocion','mm.monto_promocion',
-                     'pcaj.paterno','pcaj.materno','pcaj.nombre',
-                     'pmar.paterno','pmar.materno','pmar.nombre',
-                     'pmat.paterno','pmat.materno','pmat.nombre','mm.observacion');
+                $aux_cantNro=1;
+            }else{
+                $aux_key_fin=$key;
+                $aux_cantNro++;
+            }
+        }
+        array_push($cabecantNro,$aux_cantNro);
 
-        $result = $sql->orderBy('mm.id','asc')->get();
-        return $result;
+        $result =$sql->where('v_programaciones_unicas.id','=',$r->programacion_unica_id)
+                     ->groupBy($array_groupby)->get();
+        
+        $rst['data']=$result;
+        $rst['length']=$length;
+        $rst['cabecera1']=$cabecera1;
+        $rst['max']=$max;
+        $rst['cabecera2']=$cabecera2;
+        $rst['cabecantLetra']=$cabecantLetra;
+        $rst['campos']=$campos;
+        $rst['cabecantNro']=$cabecantNro;
+        return $rst;
     }
 
     public static function runExportNota($r)
     {
-//        $rsql= Reporte::runLoadPAE($r);
-        $rsql=array();
+        $rsql= ProgramacionUnica::runLoadNota($r);
+//        dd($rsql['cabecantNro']);
         $length=array(
-            'A'=>5,'B'=>15,'C'=>20,'D'=>20,'E'=>20,'F'=>15,'G'=>15,'H'=>25,'I'=>30,
-            'J'=>15,'K'=>15,'L'=>15,
-            'M'=>15,'N'=>15,
-            'O'=>15,'P'=>15,
-            'Q'=>15,'R'=>15,'S'=>15, 'T'=>15, 'U'=>15,'V'=>15,
-            'W'=>20,'X'=>20,
-            'Y'=>20,'Z'=>20,
-            'AA'=>20,'AB'=>20,'AC'=>20,'AD'=>30
+            'A'=>5,'B'=>15,'C'=>20,'D'=>20,'E'=>20,'F'=>15
         );
 
         $cabecera1=array(
-            'Alumnos','Matrícula','Inscripción','Matrícula',
-            'Cursos','Promociones','Pagos','Responsable'
+            'Alumnos','Unidad I','Unidad II','Unidad II','Unidad IV'
         );
 
         $cabecantNro=array(
-            9,3,2,2,
-            5,2,2,4
+            2,1,1,1,
+            1
         );
 
         $cabecantLetra=array(
-            'A3:I3','J3:L3','M3:N3','O3:P3',
-            'Q3:V3','W3:X3','Y3:Z3','AA3:AD3'
+            'A3:B3'
         );
 
         $cabecera2=array(
-            'N°','DNI','Nombre','Paterno','Materno','Telefono','Celular','Email','Dirección',
-            'Fecha Matrícula','Sucursal','Tipo Participante',
-            'Nro Pago Ins','Monto Pago Ins',
-            'Nro Pago Mat','Monto Pago Mat',
-            'Modalidad','Cursos','Nro Pago','Monto Pago','Nro Pago Certificado','Monto Pago Certificado',
-            'Nro Pago Promoción','Monto Pago Promoción',
-            'Sub Total Curso','Total Pagado',
-            'Cajera','Marketing','Matrícula',
-            'Observacion'
+            'N°','Alumno','Tarea 1','Tarea 1','Tarea 1','Tarea 1'
         );
         $campos=array(
-             'id','dni','nombre','paterno','materno','telefono','celular','email','direccion',
-             'fecha_matricula','sucursal','tipo_participante',
-             'nro_pago_inscripcion','monto_pago_inscripcion',
-             'nro_pago','monto_pago',
-             'modalidad','cursos','nro_pago_c','monto_pago_c','nro_pago_certificado','monto_pago_certificado',
-             'nro_promocion','monto_promocion',
-             'subtotal','total',
-             'cajera','marketing','matricula',
-             'observacion'
+             'id','alumno','nota0','nota1','nota2','nota3'
         );
 
-        $r['data']=$rsql;
-        $r['cabecera1']=$cabecera1;
-        $r['cabecantLetra']=$cabecantLetra;
-        $r['cabecantNro']=$cabecantNro;
-        $r['cabecera2']=$cabecera2;
-        $r['campos']=$campos;
-        $r['length']=$length;
-        $r['max']='AD';
+        $r['data']=$rsql['data'];
+        $r['cabecera1']=$rsql['cabecera1'];
+        $r['cabecantLetra']=$rsql['cabecantLetra'];
+        $r['cabecantNro']=$rsql['cabecantNro'];
+        $r['cabecera2']=$rsql['cabecera2'];
+        $r['campos']=$rsql['campos'];
+        $r['length']=$rsql['length'];
+        $r['max']=$rsql['max'];
         return $r;
     }
 
