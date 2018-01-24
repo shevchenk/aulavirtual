@@ -107,35 +107,52 @@ class ProgramacionUnica extends Model
                     $join->on('vpe.id','=','vpro.persona_id');
                 });
         $array_groupby=array('vpe.id','vpe.paterno','vpe.materno','vpe.nombre');
-        foreach($left_unidad_contenido as $key => $res){
-            $sql->addSelect(DB::raw("IFNULL(vcore$key.nota,0) as t$key"))
-                ->leftjoin('v_contenidos_respuestas as vcore'.$key, function($join)use($res,$key){
-                    $join->where('vcore'.$key.'.contenido_id','=',$res->contenido_id)
-                         ->where('vcore'.$key.'.estado','=',1)
-                         ->on('vcore'.$key.'.persona_id_created_at','=','vpe.id');
-                });
-            array_push($array_groupby,"vcore$key.nota");
-            array_push($cabecera2,"Tarea");
-            array_push($campos,"t$key");
-            $length[$abc[$key]]=20;
-            $max=$abc[$key];
-            
-            if($aux_unidad_contenido_id!==$res->id){
-                $aux_unidad_contenido_id = $res->id;
-                array_push($cabecera1,$res->unidad_contenido);
-                $aux_key_fin=$key;
-                array_push($cabecantLetra,$abc[$key].'3:'.$abc[$aux_key_fin].'3');
-                if ($key > 0) {
-                   array_push($cabecantNro,$aux_cantNro);
-                }
-                $aux_cantNro=1;
-            }else{
-                $aux_key_fin=$key;
-                $aux_cantNro++;
-            }
-        }
-        array_push($cabecantNro,$aux_cantNro);
+        if(count($left_unidad_contenido)>0){
+            foreach($left_unidad_contenido as $key => $res){
+                $sql->addSelect(DB::raw("IFNULL(vcore$key.nota,0) as t$key"))
+                    ->leftjoin('v_contenidos_respuestas as vcore'.$key, function($join)use($res,$key){
+                        $join->where('vcore'.$key.'.contenido_id','=',$res->contenido_id)
+                             ->where('vcore'.$key.'.estado','=',1)
+                             ->on('vcore'.$key.'.persona_id_created_at','=','vpe.id');
+                    });
+                array_push($array_groupby,"vcore$key.nota");
+                array_push($cabecera2,"Tarea");
+                array_push($campos,"t$key");
+                $length[$abc[$key]]=20;
+                $max=$abc[$key+1];
 
+                if($aux_unidad_contenido_id!==$res->id){
+                    $aux_unidad_contenido_id = $res->id;
+                    array_push($cabecera1,$res->unidad_contenido);
+                    $aux_key_fin=$key;
+                    array_push($cabecantLetra,$abc[$key].'3:'.$abc[$aux_key_fin].'3');
+                    if ($key > 0) {
+                       array_push($cabecantNro,$aux_cantNro);
+                    }
+                    $aux_cantNro=1;
+                }else{
+                    $aux_key_fin=$key;
+                    $aux_cantNro++;
+                }
+            }
+            $sql->addSelect(DB::raw("SUM(vcoret.nota)/COUNT(IFNULL(vcoret.nota,0)) as promedio"))
+                ->leftjoin('v_contenidos as vco', function($join){
+                        $join->where('vco.tipo_respuesta','=',1)
+                             ->where('vco.estado','=',1)
+                             ->on('vco.programacion_unica_id','=','v_programaciones_unicas.id');
+                    })
+                ->leftjoin('v_contenidos_respuestas as vcoret', function($join){
+                        $join->on('vcoret.persona_id_created_at','=','vpe.id')
+                             ->where('vcoret.estado','=',1)
+                             ->on('vcoret.contenido_id','=','vco.id');
+                    });
+
+            array_push($cabecantNro,$aux_cantNro);
+            array_push($cabecera2,"Promedio");
+            array_push($campos,"promedio");
+            array_push($cabecantNro,1);
+        }
+        
         $result =$sql->where('v_programaciones_unicas.id','=',$r->programacion_unica_id)
                      ->groupBy($array_groupby)->get();
         
@@ -153,7 +170,7 @@ class ProgramacionUnica extends Model
     public static function runExportNota($r)
     {
         $rsql= ProgramacionUnica::runLoadNota($r);
-//        dd($rsql['cabecantNro']);
+//        dd($rsql['data']);
         $length=array(
             'A'=>5,'B'=>15,'C'=>20,'D'=>20,'E'=>20,'F'=>15
         );

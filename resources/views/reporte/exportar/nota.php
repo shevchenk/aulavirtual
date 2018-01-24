@@ -20,7 +20,7 @@
                     ?>
                 </tr>
                 <tr style="background-color:#A7C0DC;">
-                    <?php 
+                   <?php
                         foreach ( $cabecera2 as $cab){
                             echo "<th style='text-align: center;'>".$cab."</th>";
                         }

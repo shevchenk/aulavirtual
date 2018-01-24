@@ -320,7 +320,7 @@ class ProgramacionUnicaPR extends Controller{
                         'cabecant'=>$renturnModel['cabecantNro'],
                         'cabecera2'=>$renturnModel['cabecera2']
                     );
-
+//            dd($renturnModel['max']);
             $sheet->loadView('reporte.exportar.nota', $valores);
             $sheet->setAutoSize(array(
                 'R','S','T','U'
