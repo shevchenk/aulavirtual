@@ -106,7 +106,7 @@ class ProgramacionUnica extends Model
                 ->join('v_personas as vpe', function($join){
                     $join->on('vpe.id','=','vpro.persona_id');
                 });
-        $array_groupby=array('vpe.id');
+        $array_groupby=array('vpe.id','vpe.paterno','vpe.materno','vpe.nombre');
         foreach($left_unidad_contenido as $key => $res){
             $sql->addSelect(DB::raw("IFNULL(vcore$key.nota,0) as t$key"))
                 ->leftjoin('v_contenidos_respuestas as vcore'.$key, function($join)use($res,$key){
