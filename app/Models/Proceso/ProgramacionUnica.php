@@ -135,7 +135,7 @@ class ProgramacionUnica extends Model
                     $aux_cantNro++;
                 }
             }
-            $sql->addSelect(DB::raw("SUM(vcoret.nota)/COUNT(IFNULL(vcoret.nota,0)) as promedio"))
+            $sql->addSelect(DB::raw("SUM(IFNULL(vcoret.nota,0))/COUNT(IFNULL(vcoret.nota,0)) as promedio"))
                 ->leftjoin('v_contenidos as vco', function($join){
                         $join->where('vco.tipo_respuesta','=',1)
                              ->where('vco.estado','=',1)
