@@ -74,7 +74,7 @@ class ProgramacionUnica extends Model
     
     public static function runLoadNota($r){
 
-        $abc=array('C','D','E','F','G','H','I','J','K','L','M','N');
+        $abc=array('C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
         $aux_unidad_contenido_id=0;
         $aux_key_fin=0;
         $aux_cantNro=0;

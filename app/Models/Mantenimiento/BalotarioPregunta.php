@@ -11,7 +11,7 @@ class BalotarioPregunta extends Model
     
     public static function runLoad($r){
         
-        $sql=BalotarioPregunta::select('v_balotarios_preguntas.id','vp.pregunta','vr.respuesta','vp.puntaje')
+        $sql=BalotarioPregunta::select('v_balotarios_preguntas.id','vp.pregunta','vr.respuesta','vp.puntaje','vp.imagen')
             ->join('v_preguntas as vp','vp.id','=','v_balotarios_preguntas.pregunta_id')
             ->join('v_respuestas as vr','vr.pregunta_id','=','vp.id')
             ->where('v_balotarios_preguntas.balotario_id','=',$r->balotario_id)

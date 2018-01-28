@@ -1,6 +1,6 @@
 <script type="text/javascript">
 var AddEdit=0; //0: Editar | 1: Agregar
-var PreguntaG={id:0,pregunta:"",puntaje:0,curso_id:0,unidad_contenido_id:0,estado:1}; // Pregunta Globales
+var PreguntaG={id:0,pregunta:"",puntaje:0,curso_id:0,imagen_archivo:'',imagen_nombre:'',unidad_contenido_id:0,estado:1}; // Pregunta Globales
 $(document).ready(function() {
 
     $("#TablePregunta").DataTable({
@@ -29,6 +29,14 @@ $(document).ready(function() {
         $('#ModalPreguntaForm #slct_curso_id').selectpicker('val', PreguntaG.curso_id );
         $('#ModalPreguntaForm #slct_unidad_contenido_id').selectpicker('val', PreguntaG.unidad_contenido_id );
         $('#ModalPreguntaForm #slct_estado').selectpicker( 'val',PreguntaG.estado );
+        if(PreguntaG.imagen_nombre!='null'){
+            $('#ModalPreguntaForm #txt_imagen_nombre').val(PreguntaG.imagen_nombre);
+            $('#ModalPreguntaForm .img-circle').attr('src',PreguntaG.imagen_archivo);
+        }else{
+            $('#ModalPreguntaForm #txt_imagen_nombre').val('');
+            $('#ModalPreguntaForm .img-circle').attr('src','notting');
+        }
+        $('#ModalPreguntaForm #txt_imagen_archivo').val('');
         $('#ModalPreguntaForm #txt_pregunta').focus();
     });
 
@@ -67,6 +75,8 @@ AgregarEditar2=function(val,id){
     PreguntaG.curso_id='0';
     PreguntaG.unidad_contenido_id='0';
     PreguntaG.estado='1';
+    PreguntaG.imagen_archivo='';
+    PreguntaG.imagen_nombre='';
     if( val==0 ){
         PreguntaG.id=id;
         PreguntaG.pregunta=$("#TablePregunta #trid_"+id+" .pregunta").text();
@@ -74,6 +84,14 @@ AgregarEditar2=function(val,id){
         PreguntaG.curso_id=$("#TablePregunta #trid_"+id+" .curso_id").val();
         PreguntaG.unidad_contenido_id=$("#TablePregunta #trid_"+id+" .unidad_contenido_id").val();
         PreguntaG.estado=$("#TablePregunta #trid_"+id+" .estado").val();
+        PreguntaG.imagen=$("#TablePregunta #trid_"+id+" .imagen").val();
+        if(PreguntaG.imagen!=null){
+            PreguntaG.imagen_archivo='img/question/'+PreguntaG.imagen;
+            PreguntaG.imagen_nombre=PreguntaG.imagen;
+        }else {
+            PreguntaG.imagen_archivo='';
+            PreguntaG.imagen_nombre='';
+        }   
     }
     $('#ModalPregunta').modal('show');
 }
@@ -123,6 +141,7 @@ HTMLCargarPregunta=function(result){
 //            "<td class='puntaje'>"+r.puntaje+"</td>"+
             "<td>"+
             "<input type='hidden' class='curso_id' value='"+r.curso_id+"'>"+
+            "<input type='hidden' class='imagen' value='"+r.imagen+"'>"+
             "<input type='hidden' class='unidad_contenido_id' value='"+r.unidad_contenido_id+"'>";
         html+="<input type='hidden' class='estado' value='"+r.estado+"'>"+estadohtml+"</td>"+
             '<td><a class="btn btn-primary btn-sm" onClick="AgregarEditar2(0,'+r.id+')"><i class="fa fa-edit fa-lg"></i> </a></td>';
@@ -172,5 +191,19 @@ CargarRespuesta=function(id,pregunta,puntaje,boton){
      AjaxRespuesta.Cargar(HTMLCargarRespuesta);
      $("#RespuestaForm").css("display","");
      
+};
+onImagenPregunta = function (event) {
+        var files = event.target.files || event.dataTransfer.files;
+        if (!files.length)
+            return;
+        var image = new Image();
+        var reader = new FileReader();
+        reader.onload = (e) => {
+            $('#ModalPreguntaForm #txt_imagen_archivo').val(e.target.result);
+            $('#ModalPreguntaForm .img-circle').attr('src',e.target.result);
+        };
+        reader.readAsDataURL(files[0]);
+        $('#ModalPreguntaForm #txt_imagen_nombre').val(files[0].name);
+//        console.log(files[0].name);
 };
 </script>

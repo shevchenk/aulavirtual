@@ -240,7 +240,7 @@ class BalotarioEM extends Controller
 
         $preguntas = array();
         foreach ($renturnModel as $data) {
-        $pregunta = $data->pregunta;
+        $pregunta = $data->pregunta.'|'.$data->imagen;
             if (isset($preguntas[$pregunta])) {
                 $preguntas[$pregunta][] = $data;
             } else {

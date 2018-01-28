@@ -65,7 +65,14 @@
                     @if (isset($preguntas))
                     <ol>
                         @foreach ( $preguntas as $key => $val)
-                        <li>{{ $key }}</li>
+                        @php 
+                        $k=explode('|',$key); 
+                        $img='';
+                        if($k[1]!=null){
+                        $img='<img src="img/question/'.$k[1].'" style="width:200px"><br>';
+                        }
+                        @endphp
+                        <li><?php echo $img ?>{{ $k[0] }}</li>
                         <ul>
                             @foreach ( $val as $k)
                             <li>{{ $k->respuesta }}</li>
