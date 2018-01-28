@@ -46,7 +46,7 @@ class Curso extends Model
             DB::raw('DATE(pu.fecha_inicio) as fecha_inicio'),
             DB::raw('DATE(pu.fecha_final) as fecha_final'),
             DB::raw("CONCAT(pdoc.nombre,' ', pdoc.paterno,' ', pdoc.materno) as docente"),
-            DB::raw("GROUP_CONCAT( CONCAT(te.tipo_evaluacion,' => ',e.nota) SEPARATOR '<br>' ) evals")
+            DB::raw("IFNULL(GROUP_CONCAT( CONCAT(te.tipo_evaluacion,' => ',e.nota) SEPARATOR '<br>' ), '') evals")
             )
             ->where(
                 function($query) use ($r){
