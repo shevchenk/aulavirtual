@@ -137,7 +137,11 @@ HTMLCargarPregunta=function(result){
         html+='<tr id="trid_'+r.id+'" onClick="CargarRespuesta('+r.id+',\''+r.pregunta+'\','+r.puntaje+',this)">'+
             "<td class='curso'>"+r.curso+"</td>"+
             "<td class='unidad_contenido'>"+r.unidad_contenido+"</td>"+
-            "<td class='pregunta'>"+r.pregunta+"</td>"+
+            "<td class='pregunta'>";
+            if(r.imagen!=null){
+                html+="<img src='img/question/"+r.imagen+"' style='height: 40px;width: 40px;'>&nbsp;"; 
+            }
+        html+=r.pregunta+"</td>"+
 //            "<td class='puntaje'>"+r.puntaje+"</td>"+
             "<td>"+
             "<input type='hidden' class='curso_id' value='"+r.curso_id+"'>"+
