@@ -279,6 +279,7 @@ HTMLiniciarEvaluacion=function(result){
         data_evaluacion_preg.push({
                         "pregunta_id" : r.pregunta_id,
                         "pregunta" : r.pregunta,
+                        "imagen" : r.imagen,
                         "cantidad_pregunta" : r.cantidad_pregunta,
                         "alternativas" : r.alternativas
                     });
@@ -302,18 +303,32 @@ verContenidoIniciarEvaluacion = function (){
 
             if(data_evaluacion_preg)
             {
-              html += '<ul class="list-group grupo_preguntas">'+
-                        '<p style="padding: 10px 15px;">'+(ceval+1)+'.- '+data_evaluacion_preg[ceval].pregunta+' </p>';
+              html += '<ul class="list-group grupo_preguntas">';
+              
+              if(data_evaluacion_preg[ceval].imagen != '')
+                html += '<p style="padding: 0px 15px;"><img src="img/question/'+data_evaluacion_preg[ceval].imagen+'" class="img-circle" alt=""></p>';
+                        
+              html += '<p style="padding: 10px 15px;">'+(ceval+1)+'.- '+data_evaluacion_preg[ceval].pregunta+' </p>';
 
                 var alternativas = data_evaluacion_preg[ceval].alternativas.split("|");
                 $.each(alternativas, function(index, a){
                     var data = a.split(":");
-                    html += '<button type="button" class="list-group-item"><span class="badge" style="background-color: #FFF; padding: 0px 0px;"><div class="radio"><label><input type="radio" name="rbalternativas'+data_evaluacion_preg[ceval].pregunta_id+'" id="rbp'+data[0]+'" value="'+data[0]+'" aria-label="..."></label></div></span>'+data[1]+'</button>';
+                    html += '<button type="button" class="list-group-item"><span class="badge" style="background-color: #FFF; padding: 0px 0px;">';
+                    
+                    //html += '<div class="radio"><label><input type="radio" name="rbalternativas'+data_evaluacion_preg[ceval].pregunta_id+'" id="rbp'+data[0]+'" value="'+data[0]+'" aria-label="..."></label></div></span>'+data[1];
+
+                    html += '<div class="radio">'+
+                                      '<label style="font-size: 1.5em">'+
+                                          '<input type="radio" id="rbp'+data[0]+'" name="rbalternativas'+data_evaluacion_preg[ceval].pregunta_id+'" value="'+data[0]+'" aria-label="...">'+
+                                          '<span class="cr"><i class="cr-icon fa fa-circle" style="color: #337ab7;"></i></span>'+                                          
+                                      '</label>'+
+                                  '</div></span>';
+                    html += data[1]+'</button>';
                 });
               html += '</ul>';
             }
 
-          html += '<div id="footer-preguntas" class="col-md-12 panel-footer"><div class="col-md-8 text-left">Pregunta N° '+(ceval+1)+" de "+data_evaluacion_preg.length+' </div><div class="col-md-4 text-right"><button type="button" id="'+data_evaluacion_preg[ceval].pregunta_id+'" onClick="verSiguientePregunta(this.id);" class="btn btn-primary btn-sigue-pregu">Siguiente</button></div></div>'+
+          html += '<div id="footer-preguntas" class="col-md-12 panel-footer btn-primary"><div class="col-md-8 text-left">Pregunta N° '+(ceval+1)+" de "+data_evaluacion_preg.length+' </div><div class="col-md-4 text-right"><button type="button" id="'+data_evaluacion_preg[ceval].pregunta_id+'" onClick="verSiguientePregunta(this.id);" class="btn btn-default btn-sigue-pregu">Siguiente</button></div></div>'+
                 '</div>';
     
     $("#resultado").html(html)
@@ -337,7 +352,12 @@ HTMLverEvaluacion=function(result){
           html += '<ul class="list-group">';
           var total_p = 0;
             $.each(result.data,function(index, r){
-                html += '<li class="list-group-item list-group-item-info" style="font-weight: bold;"><strong>'+(index+1)+'.- </strong>'+r.pregunta+'</li>';
+                html += '<li class="list-group-item list-group-item-info" style="font-weight: bold;">';
+
+                if((r.imagen*1) != 0)
+                  html += '<p style="padding: 0px 15px;"><img src="img/question/'+r.imagen+'" class="img-circle" alt=""></p>';
+
+                html += '<strong>'+(index+1)+'.- </strong>'+r.pregunta+'</li>';
 
                 html += '<li class="list-group-item"><span class="badge">'+r.puntaje+'</span><strong>R: </strong>'+r.respuesta+'</li>';
                 total_p = total_p + parseInt(r.puntaje);
@@ -351,7 +371,7 @@ HTMLverEvaluacion=function(result){
           html += '</ul>';
 
       html += '</div>';
-      html += '<div id="" class="panel-footer text-right"><button type="button" id="btncerrar_examen" onClick="cerrarResultExamen();" class="btn btn-default btn-sigue-pregu">Cerrar</button></div>'+
+      html += '<div id="" class="panel-footer text-right btn-primary"><button type="button" id="btncerrar_examen" onClick="cerrarResultExamen();" class="btn btn-default btn-sigue-pregu">Cerrar</button></div>'+
             '</div>';
     $("#resultado_final").html(html)
     $("#ResultFinalEvaluacion").slideDown('slow');

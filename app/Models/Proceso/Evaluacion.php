@@ -36,6 +36,7 @@ class Evaluacion extends Model
               'b.cantidad_pregunta',
               DB::raw('p.id AS pregunta_id'),
               'p.pregunta',
+              'p.imagen',
               'p.puntaje',
               DB::raw('GROUP_CONCAT(CONCAT(r.id, ":", r.respuesta) SEPARATOR "|") as alternativas')
               )
@@ -58,7 +59,7 @@ class Evaluacion extends Model
                       }
                   }
               )
-              ->groupBy('b.id', 'p.id','b.programacion_unica_id','b.cantidad_pregunta','p.pregunta',
+              ->groupBy('b.id', 'p.id','b.programacion_unica_id','b.cantidad_pregunta','p.pregunta', 'p.imagen',
               'p.puntaje')
               ->inRandomOrder()
               ->limit($balotario[0]->cantidad_pregunta)
@@ -84,6 +85,7 @@ class Evaluacion extends Model
               'e.id',
               DB::raw('p.id AS pregunta_id'),
               'p.pregunta',
+              'p.imagen',
               DB::raw('r.id AS respuesta_id'),
               'r.respuesta',
               'ed.puntaje'
