@@ -41,7 +41,8 @@ HTMLCargarProgramacionUnica=function(result){
             "<td class='docente'>"+r.docente+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
             "<td class='fecha_final'>"+r.fecha_final+"</td>"+
-            '<td><a class="btn btn-success btn-sm" href="ReportDinamic/Proceso.ProgramacionUnicaPR@ExportAuditoria?programacion_unica_id='+r.id+'" target="_blank"><i class="glyphicon glyphicon-download-alt"></i> Export</a></td>';
+            '<td><a class="btn btn-success btn-sm" href="ReportDinamic/Proceso.ProgramacionUnicaPR@ExportAuditoriaE?programacion_unica_id='+r.id+'" target="_blank"><i class="glyphicon glyphicon-download-alt"></i> Export</a></td>'+
+            '<td><a class="btn btn-success btn-sm" href="ReportDinamic/Proceso.ProgramacionUnicaPR@ExportAuditoriaC?programacion_unica_id='+r.id+'" target="_blank"><i class="glyphicon glyphicon-download-alt"></i> Export</a></td>';
         html+="</tr>";
     });
     $("#TableProgramacionUnica tbody").html(html); 

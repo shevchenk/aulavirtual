@@ -8,7 +8,7 @@
     </head>
 
     <body>
-        <h1 colspan='15'>Auditoria de Reprogramaciones</h1>
+        <h1 colspan='15'>Auditoria de Reprogramaciones de Evaluaciones</h1>
 
         <table border="1">
             <thead>

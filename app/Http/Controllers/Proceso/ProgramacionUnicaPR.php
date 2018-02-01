@@ -338,20 +338,20 @@ class ProgramacionUnicaPR extends Controller{
         
     }
     
-    public function ExportAuditoria(Request $r ){
+    public function ExportAuditoriaE(Request $r ){
         
         ini_set('memory_limit', '1024M');
         set_time_limit(300);
-        $renturnModel = ProgramacionUnica::runExportAuditoria($r);
+        $renturnModel = ProgramacionUnica::runExportAuditoriaE($r);
 
-        Excel::create('Notas', function($excel) use($renturnModel) {
+        Excel::create('Auditoria Evaluación', function($excel) use($renturnModel) {
 
-        $excel->setTitle('Reporte de Auditoria')
+        $excel->setTitle('Reporte de Auditoria de Evaluaciones')
               ->setCreator('Jorge Salcedo')
               ->setCompany('JS Soluciones')
-              ->setDescription('Reporte de Auditoria');
+              ->setDescription('Reporte de Auditoria de Evaluaciones');
 
-        $excel->sheet('Nota', function($sheet) use($renturnModel) {
+        $excel->sheet('Auditoria', function($sheet) use($renturnModel) {
             $sheet->setOrientation('landscape');
             $sheet->setPageMargin(array(
                 0.25, 0.30, 0.25, 0.30
@@ -372,8 +372,61 @@ class ProgramacionUnicaPR extends Controller{
                         'cabecant'=>$renturnModel['cabecantNro'],
                         'cabecera2'=>$renturnModel['cabecera2']
                     );
-//            dd($valores);exit();
-            $sheet->loadView('reporte.exportar.auditoria', $valores);
+            
+            $sheet->loadView('reporte.exportar.auditoriae', $valores);
+            $sheet->setAutoSize(array(
+                'R','S','T','U'
+            ));
+
+            $count = $sheet->getHighestRow();
+
+            $sheet->getStyle('R5:U'.$count)->getAlignment()->setWrapText(true);
+            
+            $sheet->setBorder('A3:'.$renturnModel['max'].$count, 'thin');
+
+        });
+        
+        })->export('xlsx');
+        
+    }
+    
+    public function ExportAuditoriaC(Request $r ){
+        
+        ini_set('memory_limit', '1024M');
+        set_time_limit(300);
+        $renturnModel = ProgramacionUnica::runExportAuditoriaC($r);
+
+        Excel::create('Auditoria Contenido', function($excel) use($renturnModel) {
+
+        $excel->setTitle('Reporte de Auditoria de Contenido')
+              ->setCreator('Jorge Salcedo')
+              ->setCompany('JS Soluciones')
+              ->setDescription('Reporte de Auditoria de Contenido');
+
+        $excel->sheet('Auditoria', function($sheet) use($renturnModel) {
+            $sheet->setOrientation('landscape');
+            $sheet->setPageMargin(array(
+                0.25, 0.30, 0.25, 0.30
+            ));
+
+            $sheet->setStyle(array(
+                'font' => array(
+                    'name'      =>  'Bookman Old Style',
+                    'size'      =>  8,
+                    'bold'      =>  false
+                )
+            ));
+
+            $valores=array(
+                        'dataI' => json_decode(json_encode($renturnModel['dataI']), true),
+                        'dataM' => json_decode(json_encode($renturnModel['dataM']), true),
+                        'campos'=>$renturnModel['campos'],
+                        'cabecera1'=>$renturnModel['cabecera1'],
+                        'cabecant'=>$renturnModel['cabecantNro'],
+                        'cabecera2'=>$renturnModel['cabecera2']
+                    );
+            
+            $sheet->loadView('reporte.exportar.auditoriac', $valores);
             $sheet->setAutoSize(array(
                 'R','S','T','U'
             ));

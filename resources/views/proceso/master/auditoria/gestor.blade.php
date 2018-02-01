@@ -113,7 +113,13 @@
                                                 </th>
                                                 <th class="col-xs-1">
                                                     <div class="form-group">
-                                                        <label><h4>Exportar Auditoria:</h4></label>
+                                                        <label><h4>Auditoria Evaluacion:</h4></label>
+
+                                                    </div>
+                                                </th>
+                                                <th class="col-xs-1">
+                                                    <div class="form-group">
+                                                        <label><h4>Auditoria Contenido:</h4></label>
 
                                                     </div>
                                                 </th>
@@ -130,6 +136,7 @@
                                                 <th>Docente</th>
                                                 <th>Fecha Inicio</th>
                                                 <th>Fecha Final</th>
+                                                <th>[]</th>
                                                 <th>[]</th>
                                             </tr>
                                         </tfoot>

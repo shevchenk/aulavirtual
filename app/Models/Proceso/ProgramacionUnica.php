@@ -206,7 +206,7 @@ class ProgramacionUnica extends Model
         return $r;
     }
     
-        public static function runLoadAuditoria($r){
+    public static function runLoadAuditoriaE($r){
 
         $sql= ProgramacionUnica::select(DB::raw("CONCAT_WS(' ',vpe.paterno,vpe.materno,vpe.nombre) as alumno"),
                 "vev.fecha_reprogramada_inicial","vev.fecha_reprogramada_final",
@@ -232,9 +232,8 @@ class ProgramacionUnica extends Model
         return $result;
     }
 
-    public static function runExportAuditoria($r)
-    {
-        $rsql= ProgramacionUnica::runLoadAuditoria($r);
+    public static function runExportAuditoriaE($r){
+        $rsql= ProgramacionUnica::runLoadAuditoriaE($r);
 
         $length=array(
             'A'=>5,'B'=>15,'C'=>20,'D'=>20,'E'=>20
@@ -268,6 +267,80 @@ class ProgramacionUnica extends Model
         $r['campos']=$campos;
         $r['length']=$length;
         $r['max']='E';
+        return $r;
+    }
+    
+    public static function runLoadAuditoriaC($r){
+
+        $sqlM= ProgramacionUnica::select(DB::raw("CONCAT_WS(' ',vpe.paterno,vpe.materno,vpe.nombre) as alumno"),
+                "vco.fecha_ampliada",DB::raw("CONCAT_WS(' ',vpea.paterno,vpea.materno,vpea.nombre) as registra"))
+                ->join('v_programaciones as vpro', function($join){
+                  $join->on('vpro.programacion_unica_id','=','v_programaciones_unicas.id')
+                     ->where('vpro.estado','=',1);
+                })
+                ->join('v_personas as vpe', function($join){
+                    $join->on('vpe.id','=','vpro.persona_id');
+                })
+                ->join('v_contenidos as vco', function($join){
+                    $join->on('vco.programacion_unica_id','=','v_programaciones_unicas.id')
+                         ->where('vco.estado',1)
+                         ->whereNotNull('vco.fecha_ampliada');
+                })
+                ->leftjoin('v_personas as vpea', function($join){
+                    $join->on('vpea.id','=','vco.persona_masivo');
+                });
+        
+        $resultM =$sqlM->where('v_programaciones_unicas.id','=',$r->programacion_unica_id)->get();
+        
+        $sqlI= ProgramacionUnica::select(DB::raw("CONCAT_WS(' ',vpe.paterno,vpe.materno,vpe.nombre) as alumno"),
+                "vev.fecha_ampliacion  as fecha_ampliada",DB::raw("CONCAT_WS(' ',vpea.paterno,vpea.materno,vpea.nombre) as registra"))
+                ->join('v_programaciones as vpro', function($join){
+                  $join->on('vpro.programacion_unica_id','=','v_programaciones_unicas.id')
+                     ->where('vpro.estado','=',1);
+                })
+                ->join('v_personas as vpe', function($join){
+                    $join->on('vpe.id','=','vpro.persona_id');
+                })
+                ->leftjoin('v_contenidos_programaciones as vev', function($join){
+                    $join->on('vev.programacion_id','=','vpro.id')
+                         ->where('vev.estado','=',1);
+                })
+                ->join('v_personas as vpea', function($join){
+                    $join->on('vpea.id','=','vev.persona_id_created_at');
+                });
+        
+        $resultI =$sqlI->where('v_programaciones_unicas.id','=',$r->programacion_unica_id)->get();
+        
+        $result['resultM']=$resultM;
+        $result['resultI']=$resultI;
+        return $result;
+    }
+
+    public static function runExportAuditoriaC($r){
+        $rsql= ProgramacionUnica::runLoadAuditoriaC($r);
+        
+        $cabecera1=array(
+            '','','',''
+        );
+
+        $cabecantNro=array(
+            1,1,1,1
+        );
+
+        $cabecera2=array(
+            'N°','Alumno','fecha_ampliada','Registra'
+        );
+        $campos=array(
+             'alumno','fecha_ampliada','registra'
+        );
+
+        $r['dataI']=$rsql['resultI'];
+        $r['dataM']=$rsql['resultM'];
+        $r['cabecera1']=$cabecera1;
+        $r['cabecantNro']=$cabecantNro;
+        $r['cabecera2']=$cabecera2;
+        $r['campos']=$campos;
+        $r['max']='D';
         return $r;
     }
 
