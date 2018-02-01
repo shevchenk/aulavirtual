@@ -136,6 +136,9 @@ class Contenido extends Model
             }
             if($r->fecha_ampliada!=''){
                 $contenido->fecha_ampliada =$r->fecha_ampliada;
+                if( $r->fecha_ampliada!=$contenido->fecha_ampliada ){
+                    $contenido->persona_masivo=Auth::user()->id;
+                }
             }
         }else{
             $contenido->fecha_inicio = null;
