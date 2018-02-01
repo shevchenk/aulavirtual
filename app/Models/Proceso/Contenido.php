@@ -135,10 +135,10 @@ class Contenido extends Model
                 $contenido->hora_final =$r->hora_final;
             }
             if($r->fecha_ampliada!=''){
-                $contenido->fecha_ampliada =$r->fecha_ampliada;
                 if( $r->fecha_ampliada!=$contenido->fecha_ampliada ){
                     $contenido->persona_masivo=Auth::user()->id;
                 }
+                $contenido->fecha_ampliada =$r->fecha_ampliada;
             }
         }else{
             $contenido->fecha_inicio = null;
