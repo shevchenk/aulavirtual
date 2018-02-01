@@ -284,9 +284,9 @@ class ProgramacionUnica extends Model
                 ->join('v_contenidos as vco', function($join){
                     $join->on('vco.programacion_unica_id','=','v_programaciones_unicas.id')
                          ->where('vco.estado',1)
-                         ->whereNotNull('vco.fecha_ampliada');
+                         ->whereNotNull('vco.persona_masivo');
                 })
-                ->leftjoin('v_personas as vpea', function($join){
+                ->join('v_personas as vpea', function($join){
                     $join->on('vpea.id','=','vco.persona_masivo');
                 });
         
