@@ -320,8 +320,60 @@ class ProgramacionUnicaPR extends Controller{
                         'cabecant'=>$renturnModel['cabecantNro'],
                         'cabecera2'=>$renturnModel['cabecera2']
                     );
-//            dd($renturnModel['max']);
+
             $sheet->loadView('reporte.exportar.nota', $valores);
+            $sheet->setAutoSize(array(
+                'R','S','T','U'
+            ));
+
+            $count = $sheet->getHighestRow();
+
+            $sheet->getStyle('R5:U'.$count)->getAlignment()->setWrapText(true);
+            
+            $sheet->setBorder('A3:'.$renturnModel['max'].$count, 'thin');
+
+        });
+        
+        })->export('xlsx');
+        
+    }
+    
+    public function ExportAuditoria(Request $r ){
+        
+        ini_set('memory_limit', '1024M');
+        set_time_limit(300);
+        $renturnModel = ProgramacionUnica::runExportAuditoria($r);
+
+        Excel::create('Notas', function($excel) use($renturnModel) {
+
+        $excel->setTitle('Reporte de Auditoria')
+              ->setCreator('Jorge Salcedo')
+              ->setCompany('JS Soluciones')
+              ->setDescription('Reporte de Auditoria');
+
+        $excel->sheet('Nota', function($sheet) use($renturnModel) {
+            $sheet->setOrientation('landscape');
+            $sheet->setPageMargin(array(
+                0.25, 0.30, 0.25, 0.30
+            ));
+
+            $sheet->setStyle(array(
+                'font' => array(
+                    'name'      =>  'Bookman Old Style',
+                    'size'      =>  8,
+                    'bold'      =>  false
+                )
+            ));
+
+            $valores=array(
+                        'data' => json_decode(json_encode($renturnModel['data']), true),
+                        'campos'=>$renturnModel['campos'],
+                        'cabecera1'=>$renturnModel['cabecera1'],
+                        'cabecant'=>$renturnModel['cabecantNro'],
+                        'cabecera2'=>$renturnModel['cabecera2']
+                    );
+//            dd($valores);exit();
+            $sheet->loadView('reporte.exportar.auditoria', $valores);
             $sheet->setAutoSize(array(
                 'R','S','T','U'
             ));

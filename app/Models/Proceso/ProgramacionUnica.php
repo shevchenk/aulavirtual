@@ -205,5 +205,70 @@ class ProgramacionUnica extends Model
         $r['max']=$rsql['max'];
         return $r;
     }
+    
+        public static function runLoadAuditoria($r){
+
+        $sql= ProgramacionUnica::select(DB::raw("CONCAT_WS(' ',vpe.paterno,vpe.materno,vpe.nombre) as alumno"),
+                "vev.fecha_reprogramada_inicial","vev.fecha_reprogramada_final",
+                DB::raw("CONCAT_WS(' ',vpea.paterno,vpea.materno,vpea.nombre) as registra"))
+                ->join('v_programaciones as vpro', function($join){
+                  $join->on('vpro.programacion_unica_id','=','v_programaciones_unicas.id')
+                     ->where('vpro.estado','=',1);
+                })
+                ->join('v_personas as vpe', function($join){
+                    $join->on('vpe.id','=','vpro.persona_id');
+                })
+                ->leftjoin('v_evaluaciones as vev', function($join){
+                    $join->on('vev.programacion_id','=','vpro.id')
+                         ->where('vev.estado_cambio','=',3)
+                         ->where('vev.estado','=',1);
+                })
+                ->join('v_personas as vpea', function($join){
+                    $join->on('vpea.id','=','vev.persona_id_updated_at');
+                });
+        
+        $result =$sql->where('v_programaciones_unicas.id','=',$r->programacion_unica_id)->get();
+        
+        return $result;
+    }
+
+    public static function runExportAuditoria($r)
+    {
+        $rsql= ProgramacionUnica::runLoadAuditoria($r);
+
+        $length=array(
+            'A'=>5,'B'=>15,'C'=>20,'D'=>20,'E'=>20
+        );
+
+        $cabecera1=array(
+            '','','',''
+        );
+
+        $cabecantNro=array(
+            2,1,1,1,
+            1
+        );
+
+        $cabecantLetra=array(
+            'A3:B3'
+        );
+
+        $cabecera2=array(
+            'N°','Alumno','Fecha Inicial','Fecha  Final','Registra'
+        );
+        $campos=array(
+             'alumno','fecha_reprogramada_inicial','fecha_reprogramada_final','registra'
+        );
+
+        $r['data']=$rsql;
+        $r['cabecera1']=$cabecera1;
+        $r['cabecantLetra']=$cabecantLetra;
+        $r['cabecantNro']=$cabecantNro;
+        $r['cabecera2']=$cabecera2;
+        $r['campos']=$campos;
+        $r['length']=$length;
+        $r['max']='E';
+        return $r;
+    }
 
 }
