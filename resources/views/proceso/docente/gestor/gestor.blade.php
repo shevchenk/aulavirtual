@@ -113,6 +113,11 @@
                                                         </div>
                                                     </div>
                                                 </th>
+                                                <th class="col-xs-2">
+                                                    <div class="form-group">
+                                                        <label><h4>Replicar:</h4></label>
+                                                    </div>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -125,6 +130,7 @@
                                                 <th>Curso</th>
                                                 <th>Fecha Inicio</th>
                                                 <th>Fecha Final</th>
+                                                <th>[Replicar]</th>
                                             </tr>
                                         </tfoot>
                                     </table>

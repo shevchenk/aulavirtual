@@ -128,6 +128,18 @@
 
                                                     </div>
                                                 </th>
+                                                <th class="col-xs-1">
+                                                    <div class="form-group">
+                                                        <label><h4>Plantilla:</h4></label>
+
+                                                    </div>
+                                                </th>
+                                                <th class="col-xs-1">
+                                                    <div class="form-group">
+                                                        <label><h4>Replicar:</h4></label>
+
+                                                    </div>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -142,6 +154,8 @@
                                                 <th>Fecha Inicio</th>
                                                 <th>Fecha Final</th>
                                                 <th>[]</th>
+                                                <th>[Plantilla]</th>
+                                                <th>[Replicar]</th>
                                             </tr>
                                         </tfoot>
                                     </table>

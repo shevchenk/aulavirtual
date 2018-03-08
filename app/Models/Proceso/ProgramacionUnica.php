@@ -3,6 +3,7 @@ namespace App\Models\Proceso;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProgramacionUnica extends Model
 {
@@ -10,14 +11,18 @@ class ProgramacionUnica extends Model
 
     public static function runLoad($r)
     {
-        $result=ProgramacionUnica::select('v_programaciones_unicas.id',
+        $result=ProgramacionUnica::select('v_programaciones_unicas.id','v_programaciones_unicas.plantilla',
                                 DB::raw('DATE(v_programaciones_unicas.fecha_inicio) as fecha_inicio'),
                                 DB::raw('DATE(v_programaciones_unicas.fecha_final) as fecha_final'),
                                 'vc.curso','vc.foto','vc.foto_cab','v_programaciones_unicas.curso_id',
                                 'v_programaciones_unicas.ciclo','v_programaciones_unicas.carrera','v_programaciones_unicas.semestre',
-                                DB::raw('CONCAT_WS(" ",vp.paterno,vp.materno,vp.nombre) as docente'),'vp.dni')
+                                DB::raw('CONCAT_WS(" ",vp.paterno,vp.materno,vp.nombre) as docente'),'vp.dni',DB::raw('COUNT(vco.id) as cant_contenido'))
                                 ->join('v_cursos as vc','vc.id','=','v_programaciones_unicas.curso_id')
                                 ->join('v_personas as vp','vp.id','=','v_programaciones_unicas.persona_id')
+                                ->leftjoin('v_contenidos as vco', function($join)use($r){
+                                    $join->on('vco.programacion_unica_id','=','v_programaciones_unicas.id')
+                                         ->where('vco.estado','=',1);
+                                })
                                 ->where(
                                     function($query) use ($r){
                                        $query->where('v_programaciones_unicas.estado','=',1);
@@ -67,6 +72,7 @@ class ProgramacionUnica extends Model
                                         }
                                     }
                                 )
+                                ->groupBy('v_programaciones_unicas.id')
                                 ->orderBy('v_programaciones_unicas.id','asc')->paginate(10);
 
         return $result;
@@ -342,6 +348,90 @@ class ProgramacionUnica extends Model
         $r['campos']=$campos;
         $r['max']='D';
         return $r;
+    }
+    
+    public static function runEditTemplate($r){
+        
+        $pro_unica = ProgramacionUnica::find($r->id);
+        $pro_unica->plantilla = trim( $r->estadot );
+        $pro_unica->persona_id_updated_at=1;
+        $pro_unica->save();
+        
+        $actualizar= ProgramacionUnica::where('curso_id','=',$pro_unica->curso_id)
+                                       ->where('id','!=',$pro_unica->id)->get();
+        
+        foreach($actualizar as $value){
+            $pro_unica = ProgramacionUnica::find($value->id);
+            $pro_unica->plantilla=0;
+            $pro_unica->save();  
+        }
+    }
+    
+    public static function runReplicarTemplate($r){
+
+        $programacion_unica= ProgramacionUnica::where("curso_id","=",$r->curso_id)
+                                              ->where("plantilla","=",1)->first();
+        
+        if($programacion_unica){
+            $data=Contenido::where("programacion_unica_id","=",$programacion_unica->id)->get();
+
+            foreach ($data as $result){
+                $contenido = new Contenido;
+                $contenido->programacion_unica_id =$r->programacion_unica_id;
+                $contenido->curso_id =$result->curso_id;
+                $contenido->contenido =$result->contenido;
+                $contenido->tipo_respuesta =$result->tipo_respuesta;
+                $contenido->titulo_contenido =$result->titulo_contenido;
+                $contenido->unidad_contenido_id =$result->unidad_contenido_id;
+
+                if($result->fecha_inicio!=''){
+                    $contenido->fecha_inicio =$result->fecha_inicio ;
+                }
+                if($result->fecha_final!=''){
+                    $contenido->fecha_final =$result->fecha_final;
+                }
+                if($result->fecha_ampliada!=''){
+                    $contenido->fecha_ampliada =$result->fecha_ampliada;
+                }
+                $contenido->referencia=  $result->referencia;
+                $contenido->estado =$result->estado;
+                $contenido->persona_id_created_at=Auth::user()->id;
+                $contenido->save();
+
+                if ( !is_dir('file/content/c'.$contenido->id) ) {
+                     mkdir('file/content/c'.$contenido->id,0777);
+                }
+                $file_archivo=explode('/', $result->ruta_contenido);
+                $file_fichero = 'file/content/'.$result->ruta_contenido;
+                $file_nuevo_fichero = 'file/content/c'.$contenido->id.'/'.$file_archivo[1];
+
+                copy($file_fichero,$file_nuevo_fichero);
+                $contenido->ruta_contenido='c'.$contenido->id.'/'.$file_archivo[1];
+
+                if($result->foto!='default/nodisponible.png'){
+                    $archivo=explode('/', $result->foto);
+                    $fichero = 'file/content/'.$result->foto;
+                    $nuevo_fichero = 'file/content/c'.$contenido->id.'/'.$archivo[1];
+
+                    copy($fichero,$nuevo_fichero);
+                    $contenido->foto='c'.$contenido->id.'/'.$archivo[1]; 
+                }else{
+                    $contenido->foto=$result->foto; 
+                }
+
+                $contenido->save();
+            }
+            
+            $r['rst']=1;
+            $r['msj']="Registro actualizado";
+            return $r;
+            
+        }else{
+            
+            $r['rst']=2;
+            $r['msj']="No hay un template designado";
+            return $r;
+        }       
     }
 
 }

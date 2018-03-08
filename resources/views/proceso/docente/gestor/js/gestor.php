@@ -20,6 +20,21 @@ $(document).ready(function() {
     
 });
 
+ReplicarTemplate=function(curso_id,id){
+   // sweetalertG.confirm("¿Estás seguro?", "Confirme la eliminación", function(){
+        AjaxProgramacionUnica.ReplicarTemplate(HTMLReplicarTemplate,curso_id,id);
+   // });
+};
+
+HTMLReplicarTemplate=function(result){
+    if( result.rst==1 ){
+        msjG.mensaje('success',result.msj,4000);
+        AjaxProgramacionUnica.Cargar(HTMLCargarProgramacionUnica);
+    }else{
+        msjG.mensaje('warning',result.msj,3000);
+    }
+};
+
 CargarContenido=function(id,curso_id,curso,imagen,boton){   
      masterG.pintar_fila(boton);
      CargarSlct(2);
@@ -50,9 +65,11 @@ HTMLCargarProgramacionUnica=function(result){
             "<img src='img/course/"+r.foto+"' style='height: 40px;width: 40px;'>"+
             "&nbsp"+r.curso+"</td>"+
             "<td class='fecha_inicio'>"+r.fecha_inicio+"</td>"+
-            "<td class='fecha_final'>"+r.fecha_final+"</td>";
-         //   '<td><a class="btn btn-info btn-sm" onClick="CargarContenido('+r.id+','+r.curso_id+',\''+r.curso+'\',\''+r.foto_cab+'\',this)"><i class="fa fa-th-list fa-lg"></i> </a></td>';
-        html+="</tr>";
+            "<td class='fecha_final'>"+r.fecha_final+"</td><td>";
+        if(r.cant_contenido==0){
+            html+='<a id="'+r.id+'" onClick="ReplicarTemplate('+r.curso_id+','+r.id+')" class="btn btn-info btn-sm"><i class="glyphicon glyphicon-duplicate"></i></a>';
+        }
+        html+="</td></tr>";
     });
     $("#TableProgramacionUnica tbody").html(html); 
     $("#TableProgramacionUnica").DataTable({

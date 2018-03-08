@@ -442,4 +442,22 @@ class ProgramacionUnicaPR extends Controller{
         })->export('xlsx');
         
     }
+    
+    public function EditTemplate(Request $r ){
+        if ( $r->ajax() ) {
+            ProgramacionUnica::runEditTemplate($r);
+            $return['rst'] = 1;
+            $return['msj'] = 'Registro actualizado';
+            return response()->json($return);
+        }
+    }
+    
+    public function ReplicarTemplate(Request $r ){
+        if ( $r->ajax() ) {
+            $result=ProgramacionUnica::runReplicarTemplate($r);
+            $return['rst'] = $result["rst"];
+            $return['msj'] = $result["msj"];
+            return response()->json($return);
+        }
+    }
 }

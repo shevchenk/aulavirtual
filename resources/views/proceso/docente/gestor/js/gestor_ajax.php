@@ -9,6 +9,11 @@ var AjaxProgramacionUnica={
         
         url='AjaxDinamic/Proceso.ProgramacionUnicaPR@validarProgramacion';
         masterG.postAjax(url,data,evento);
+    },
+    ReplicarTemplate:function(evento,curso_id,id){
+        var data={programacion_unica_id:id,curso_id:curso_id};
+        url='AjaxDinamic/Proceso.ProgramacionUnicaPR@ReplicarTemplate';
+        masterG.postAjax(url,data,evento);
     }
 };
 
