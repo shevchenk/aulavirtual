@@ -1,5 +1,5 @@
 {
-    "status": "error",
-    "message": "Su Parametro de seguridad son incorrectos",
+    "status": "success",
+    "message": "Proceso ejecutado satisfactoriamente",
     "server": "::1"
 }
