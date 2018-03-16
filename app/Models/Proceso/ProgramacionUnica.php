@@ -72,7 +72,10 @@ class ProgramacionUnica extends Model
                                         }
                                     }
                                 )
-                                ->groupBy('v_programaciones_unicas.id')
+                                ->groupBy('v_programaciones_unicas.id','v_programaciones_unicas.plantilla','v_programaciones_unicas.fecha_inicio',
+                                'v_programaciones_unicas.fecha_final','vc.curso','vc.foto','vc.foto_cab','v_programaciones_unicas.curso_id',
+                                'v_programaciones_unicas.ciclo','v_programaciones_unicas.carrera','v_programaciones_unicas.semestre',
+                                'vp.paterno','vp.materno','vp.nombre','vp.dni')
                                 ->orderBy('v_programaciones_unicas.id','asc')->paginate(10);
 
         return $result;
