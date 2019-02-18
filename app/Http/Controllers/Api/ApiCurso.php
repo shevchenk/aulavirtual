@@ -137,7 +137,7 @@ class ApiCurso extends Controller
                                                     ->where('estado','=', 1)
                                                     ->first();
             if(count($tab_cli) == 0)
-                $valores['mensaje'] = 'ID Cliente no Registrado!';
+                $valores['mensaje'] = 'ID Cliente no Registrado!'.$url;
             else
             {
               // URL (CURL)
